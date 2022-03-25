@@ -1,0 +1,35 @@
+{
+  "name": "campusSchool3.0",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env BASE_URL=http://campustest.9451.org:10201 NODE_ENV=development nuxt",
+    "build": "nuxt build",
+    "start": "cross-env BASE_URL=http://campustest.9451.org:10201 NODE_ENV=production nuxt start",
+    "start:wykj": "cross-env BASE_URL=http://wykj.9451.org:10201 NODE_ENV=production nuxt start",
+    "start:jdztc": "cross-env BASE_URL=http://mianhuatang.jcivt.com:10201 NODE_ENV=production nuxt start",
+    "start:aimht": "cross-env BASE_URL=http://campus.aimht.cn:10201 NODE_ENV=production nuxt start",
+    "start:dlfy": "cross-env BASE_URL=http://zhxy.dlfy.edu.cn:10201 NODE_ENV=production nuxt start",
+    "generate": "nuxt generate"
+  },
+  "config": {
+    "nuxt": {
+      "host": "0.0.0.0",
+      "port": "8889"
+    }
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.12.2",
+    "core-js": "^3.6.5",
+    "cross-env": "^7.0.3",
+    "crypto": "^1.0.1",
+    "echarts": "^4.6.0",
+    "element-ui": "^2.14.1",
+    "moment": "^2.24.0",
+    "nuxt": "^2.14.6",
+    "qs": "^6.9.1",
+    "vue-i18n": "^8.15.3",
+    "vue-quill-editor": "^3.0.6"
+  },
+  "devDependencies": {}
+}
