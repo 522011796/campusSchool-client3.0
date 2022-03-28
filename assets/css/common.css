@@ -201,6 +201,9 @@ a{
 .color-sub-grand{
   color: #606266;
 }
+.color-sub-title{
+  color: #606266;
+}
 .bg-success{
   background: #67C23A;
 }
@@ -979,6 +982,15 @@ ul{
   color: #FFF;
   background-color: #0CB5AF;
   border-color: #0CB5AF;
+}
+.dialog-header-block{
+  height: 50px;
+  line-height: 50px;
+}
+.custon-dialog-max-height{
+  min-height: 400px;
+  max-height: 500px;
+  overflow-y: auto
 }
 /***自定义radio组件颜色***/
 /*.el-radio__input.is-checked + .el-radio__label {

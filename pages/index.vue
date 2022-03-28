@@ -81,7 +81,7 @@
             </div>
             <div class="padding-lr-10 padding-tb-10" :style="{height: divHeight.height1 * 0.43 - 62 + 'px', 'overflow-y': 'auto'}">
               <el-row :gutter="16">
-                <el-col :span="6" v-for="n in 20" :key="n" class="margin-bottom-20">
+                <el-col :span="6" v-for="(item, index) in 20" :key="index" @click.native="serverClick($event, item)" class="margin-bottom-20">
                   <el-card shadow="always" :body-style="{padding: '12px',background: '#EBEEF5'}">
                     <div class="moon-content-text-ellipsis-class">
                       <el-image class="block-icon-class">
@@ -116,7 +116,7 @@
         </div>
         <div class="padding-lr-10 padding-tb-10 font-size-12 color-white" :style="{height: divHeight.height1 * 0.4 - 60 + 'px','overflowY': 'auto'}">
           <el-row :gutter="16">
-            <el-col :span="4" v-for="n in 20" :key="n" class="margin-bottom-20">
+            <el-col :span="4" v-for="(item, index) in 20" :key="index" class="margin-bottom-20" @click.native="serverClick($event, item)">
               <el-card shadow="always" :body-style="{padding: '12px',background: '#EBEEF5'}">
                 <div class="moon-content-text-ellipsis-class">
                   <el-image class="block-icon-class">
@@ -135,19 +135,92 @@
       </div>
     </div>
     <div class="moon-clearfix"></div>
+
+    <!--服务-->
+    <dialog-normal top="10vh" width-style="850px" :visible="dialogServer" :show-footer="false">
+      <div slot="title">
+        <div class="dialog-header-block padding-lr-10">
+          <el-row>
+            <el-col :span="12">
+              <div>
+                <i class="fa fa-file-text color-warning"></i>
+                <span>xxxxxx</span>
+                <span class="color-muted font-size-12 margin-left-10">
+                  <label>{{$t("部门")}}:</label>
+                  <label>xxxxxx</label>
+                </span>
+                <span class="color-muted font-size-12 margin-left-10">
+                  <label>{{$t("类别")}}:</label>
+                  <label>xxxxxx</label>
+                </span>
+              </div>
+            </el-col>
+            <el-col :span="12">
+              <div class="text-right layout-inline font-size-12">
+                <div style="width: 140px;display: inline-block">
+                  <el-rate
+                    text-color="#ff9900"
+                    score-template="{value}">
+                  </el-rate>
+                </div>
+                <span class="color-grand" style="position: relative;top: 2px;">
+                  <label>{{$t("评价")}}:</label>
+                  <label>(0)</label>
+                </span>
+                <span class="margin-left-10">
+                  <el-button size="mini" type="primary" @click="closeDialog">{{$t("关闭")}}</el-button>
+                  <el-button size="mini" type="success" @click="detailClick">{{$t("业务办理")}}</el-button>
+                </span>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+      </div>
+      <div class="custon-dialog-max-height">
+        <div class="margin-top-10 font-size-14">
+          <div>
+            <span class="color-sub-title font-bold">{{$t("服务说明")}}</span>
+          </div>
+          <div class="line-height"></div>
+        </div>
+        <div class="margin-top-10 color-sub-title font-size-14">
+          <div style="line-height: 30px">
+            1、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
+            2、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
+            3、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
+            4、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
+            5、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
+            6、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
+            7、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
+            8、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
+            9、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
+            10、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
+          </div>
+        </div>
+      </div>
+    </dialog-normal>
+
+    <drawer-layout-right tabindex="0" @changeDrawer="closeDialog" :visible="dialogServerDetail" size="600px" title="" @right-close="cancelDrawDialog">
+      <div slot="content" class="color-muted">
+      </div>
+    </drawer-layout-right>
   </div>
 </template>
 
 <script>
   import mixins from "../utils/mixins";
   import {common} from "../utils/api/url";
+  import DialogNormal from "~/components/utils/dialog/DialogNormal";
   export default {
     name: 'index',
     mixins: [mixins],
-    components: {},
+    components: {DialogNormal},
     data(){
       return {
-        activeTab: 1
+        activeTab: 1,
+        dialogServer: false,
+        dialogServerDetail: false,
+        testArea: ''
       }
     },
     mounted() {
@@ -167,6 +240,21 @@
       },
       menuClick(event, item){
         item.active = true;
+      },
+      serverClick($event, item){
+        this.dialogServer = true;
+      },
+      closeDialog(event){
+        this.dialogServer = false;
+      },
+      cancelDialog(){
+        this.dialogServer = false;
+      },
+      cancelDrawDialog(){
+        this.dialogServerDetail = false;
+      },
+      detailClick(){
+        this.dialogServerDetail = true;
       }
     }
   }

@@ -111,6 +111,15 @@ export default {
         'height1': '',
         'overflow-y': 'hidden',
         'overflow-x': 'hidden'
+      },
+      tableHeight: {
+        'height': '',
+      },
+      drawHeight: {
+        'height': ''
+      },
+      drawHeight2: {
+        'height': ''
       }
     }
   },
@@ -252,6 +261,9 @@ export default {
         this.divHeight2.height = (window.innerHeight - 60) * 0.4 + 'px';
         this.divHeight1.height1 = (window.innerHeight - 60) * 0.6;
         this.divHeight2.height1 = (window.innerHeight - 60) * 0.4;
+        this.tableHeight.height = (window.innerHeight - 60) * 0.86 - 30;
+        this.drawHeight.height = window.innerHeight - 80 + 'px';
+        this.drawHeight2.height = window.innerHeight - 15 + 'px';
       }
     },
     async initVersionData(){

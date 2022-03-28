@@ -71,7 +71,7 @@
           </div>
 
           <span slot="reference">
-            <label class="moon-top-right-item top-18">
+            <label class="moon-top-right-item top-18" @click="myInfo">
               <el-avatar size="small" v-if="headImage != undefined" :src="headImage"></el-avatar>
               <el-avatar size="small" v-else src="/img/head-boy.png"></el-avatar>
             </label>
@@ -85,7 +85,7 @@
             <span class="moon-top-middle-menu-item margin-right-20">
 
             </span>
-            <span class="moon-top-middle-menu-item-text">
+            <span class="moon-top-middle-menu-item-text" @click="menuClick">
               <label class="item moon-top-middle-menu-item-text-active font-bold">{{$t("办事大厅")}}</label>
             </span>
           </div>
@@ -287,6 +287,22 @@
               }
               this.loading = false;
             });
+          }
+        });
+      },
+      myInfo(){
+        this.$router.push({
+          path: '/myInfo',
+          query: {
+
+          }
+        });
+      },
+      menuClick(){
+        this.$router.push({
+          path: '/',
+          query: {
+
           }
         });
       }
