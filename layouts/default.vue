@@ -39,26 +39,26 @@
                 </template>
               </template>
             </div>
-            <div class="moon-top-user-info-opr">
-              <el-row>
-                <el-col :span="12" @click.native="updatePhoneInfo">
-                  <div>
-                    <a href="javascript:;" class="color-white font-size-12">
-                      <i class="fa fa-phone"></i>
-                      {{$t("修改手机")}}
-                    </a>
-                  </div>
-                </el-col>
-                <el-col :span="12" @click.native="updatePwdInfo">
-                  <div>
-                    <a href="javascript:;" class="color-white font-size-12">
-                      <i class="fa fa-lock"></i>
-                      {{$t("修改密码")}}
-                    </a>
-                  </div>
-                </el-col>
-              </el-row>
-            </div>
+<!--            <div class="moon-top-user-info-opr">-->
+<!--              <el-row>-->
+<!--                <el-col :span="12" @click.native="updatePhoneInfo">-->
+<!--                  <div>-->
+<!--                    <a href="javascript:;" class="color-white font-size-12">-->
+<!--                      <i class="fa fa-phone"></i>-->
+<!--                      {{$t("修改手机")}}-->
+<!--                    </a>-->
+<!--                  </div>-->
+<!--                </el-col>-->
+<!--                <el-col :span="12" @click.native="updatePwdInfo">-->
+<!--                  <div>-->
+<!--                    <a href="javascript:;" class="color-white font-size-12">-->
+<!--                      <i class="fa fa-lock"></i>-->
+<!--                      {{$t("修改密码")}}-->
+<!--                    </a>-->
+<!--                  </div>-->
+<!--                </el-col>-->
+<!--              </el-row>-->
+<!--            </div>-->
             <div class="moon-top-user-info-opr">
               <el-row>
                 <el-col :span="24">
@@ -123,7 +123,7 @@
         </div>
         <div class="block-bottom" :style="divHeight2"></div>
         <div class="block-main">
-          <nuxt></nuxt>
+          <nuxt ref="childRef"></nuxt>
         </div>
       </template>
     </div>
@@ -207,8 +207,8 @@
       async init() {
         await this.getSessionInfo();
       },
-      search(){
-
+      search(data){
+        this.initServer(data);
       },
       updatePhoneInfo(){
         if (this.loginUserPhone && this.loginUserPhone != ""){

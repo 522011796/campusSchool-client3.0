@@ -59,22 +59,25 @@
               <span>{{$t("类别")}}</span>
             </div>
             <div :style="{height: divHeight.height1 * 0.43 - 40 + 'px', 'overflowY': 'auto'}">
-              <div class="block-item-left-header-item" :class="index == 0 ? 'left-menu-active' : ''" v-for="(item, index) in 10" :key="index">
+              <div class="block-item-left-header-item" :class="activeMenu === '' ? 'left-menu-active' : ''" @click="selMenu($event, '')">
+                <span>{{$t("全部")}}</span>
+              </div>
+              <div class="block-item-left-header-item" :class="activeMenu === index ? 'left-menu-active' : ''" v-for="(item, index) in 10" :key="index" @click="selMenu($event, index)">
                 <span>xxxx</span>
               </div>
             </div>
           </div>
           <div class="block-item-right-tag-content" :style="{height: divHeight.height1 * 0.43 + 'px'}">
             <div class="block-item-left-header">
-              <span class="font-bold block-item-header-tab" :class="activeTab == 1 ? 'color-grand': 'color-muted'" @click="tabClick(1)">
+              <span class="font-bold block-item-header-tab" :class="activeTab === 0 ? 'color-grand': 'color-muted'" @click="tabClick(0)">
                 <i class="fa fa-user"></i>
                 {{$t("学生办事")}}
               </span>
-              <span class="font-bold block-item-header-tab" :class="activeTab == 2 ? 'color-grand': 'color-muted'" @click="tabClick(2)">
+              <span class="font-bold block-item-header-tab" :class="activeTab === 1 ? 'color-grand': 'color-muted'" @click="tabClick(1)">
                 <i class="fa fa-users"></i>
                 {{$t("老师办事")}}
               </span>
-              <span class="font-bold block-item-header-tab" :class="activeTab == 3 ? 'color-grand': 'color-muted'" @click="tabClick(3)">
+              <span class="font-bold block-item-header-tab" :class="activeTab === 2 ? 'color-grand': 'color-muted'" @click="tabClick(2)">
                 <i class="fa fa-flag"></i>
                 {{$t("单位办事")}}
               </span>
@@ -200,7 +203,7 @@
       </div>
     </dialog-normal>
 
-    <drawer-layout-right tabindex="0" @changeDrawer="closeDialog" :visible="dialogServerDetail" size="600px" title="" @right-close="cancelDrawDialog">
+    <drawer-layout-right tabindex="0" @changeDrawer="closeDetailDialog" :visible="dialogServerDetail" size="600px" title="" @right-close="cancelDrawDialog">
       <div slot="content" class="color-muted">
       </div>
     </drawer-layout-right>
@@ -220,7 +223,8 @@
         activeTab: 1,
         dialogServer: false,
         dialogServerDetail: false,
-        testArea: ''
+        testArea: '',
+        activeMenu: ''
       }
     },
     mounted() {
@@ -229,7 +233,7 @@
       });
     },
     created() {
-
+      this.initServer();
     },
     methods: {
       layoutInit(){
@@ -237,6 +241,7 @@
       },
       tabClick(data){
         this.activeTab = data;
+        this.appletType = data;
       },
       menuClick(event, item){
         item.active = true;
@@ -247,6 +252,9 @@
       closeDialog(event){
         this.dialogServer = false;
       },
+      closeDetailDialog(){
+        this.dialogServerDetail = false;
+      },
       cancelDialog(){
         this.dialogServer = false;
       },
@@ -255,6 +263,10 @@
       },
       detailClick(){
         this.dialogServerDetail = true;
+      },
+      selMenu(event, item){
+        this.activeMenu = item;
+        this.categoryId = item;
       }
     }
   }

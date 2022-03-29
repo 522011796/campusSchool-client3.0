@@ -94,6 +94,13 @@ export default {
       currentVersion: '',
       versionData: [],
       currentDateStatus: null,
+      serverDataList: [],
+      serverDataLikeList: [],
+      appletId: '',
+      categoryId: '',
+      departmentPath: '',
+      formType: '',
+      searchKey: '',
       divHeight: {
         'height': '',
         'height1': '',
@@ -132,6 +139,22 @@ export default {
     this.g_HH();
   },
   methods: {
+    initServer(data){
+      let params = {
+        appletId: this.appletId,
+        appletType: this.appletType,
+        categoryId: this.categoryId,
+        departmentPath: this.departmentPath,
+        formType: '',
+        searchKey: data ? data.input : '',
+      };
+      this.$axios.get(common.server_list_list, {params: params}).then(res => {
+        if (res.data.data){
+          console.log(res.data.data.list);
+          this.serverDataList = res.data.data.list;
+        }
+      });
+    },
     //*****以下函数为公共调用，主要用于封装，全部用两个__开头命名，（后期增加，前期未统一处理，所以前期是分别再不同的页面中）****/
     /**
      * 设置下拉数据选择

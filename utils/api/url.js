@@ -561,4 +561,6 @@ export const common = {
   student_parent_unbind: '/proxy/user/user/unbind',//解绑学生信息
   student_parent_reset_pwd: '/proxy/uup/pass/reset',//重置学生密码
 
+  server_list_list: '/proxy/school/applet/form/list2',//服务列表
+
 };
