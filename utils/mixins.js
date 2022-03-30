@@ -101,6 +101,12 @@ export default {
       departmentPath: '',
       formType: '',
       searchKey: '',
+      categorys: [],
+      recommends: [],
+      noticeDataList: [],
+      deptMixinsList: [],
+      categoryMixinsList: [],
+      loginStatusInfo: false,
       divHeight: {
         'height': '',
         'height1': '',
@@ -150,8 +156,61 @@ export default {
       };
       this.$axios.get(common.server_list_list, {params: params}).then(res => {
         if (res.data.data){
-          console.log(res.data.data.list);
-          this.serverDataList = res.data.data.list;
+          this.serverDataList = res.data.data;
+        }
+      });
+    },
+    initApplet(data, type){
+      let params = {};
+      if (type == 2 && data != ""){
+        params['deptId'] = data.departmentId;
+      }else if (type == 1 && data != ""){
+        params['categoryId'] = data.id;
+      }
+      this.$axios.get(common.server_applet_list, {params: params}).then(res => {
+        if (res.data.data){
+          this.categorys = res.data.data;
+        }
+      });
+    },
+    initCategoryList(){
+      let params = {};
+      this.$axios.get(common.server_type_all_list, {params: params}).then(res => {
+        if (res.data.data){
+          this.categoryMixinsList = res.data.data;
+        }
+      });
+    },
+    initDeptList(){
+      let params = {};
+      this.$axios.get(common.server_dept_all_list, {params: params}).then(res => {
+        if (res.data.data){
+          this.deptMixinsList = res.data.data;
+        }
+      });
+    },
+    async getCategoryInfo(){
+      let params = {};
+      await this.$axios.get(common.server_type_all_list, {params: params}).then(res => {
+        if (res.data.data){
+          for (let i = 0; i < res.data.data.length; i++){
+            res.data.data[i]['label'] = res.data.data[i].categoryName;
+            if (res.data.data[i]['appletList']){
+              for (let j = 0; j < res.data.data[i]['appletList'].length; j++){
+                res.data.data[i]['appletList'][j]['label'] = res.data.data[i]['appletList'][j].appletName;
+              }
+              res.data.data[i]['children'] = res.data.data[i]['appletList'];
+            }
+          }
+          this.categorys = res.data.data;
+        }
+      });
+    },
+    initRecommend(){
+      let params = {};
+      this.$axios.get(common.server_list_list3, {params: params}).then(res => {
+        if (res.data.data){
+          this.recommends = res.data.data;
         }
       });
     },
@@ -313,6 +372,19 @@ export default {
       await this.$axios.post(common.noread_count, params).then(res => {
         if (res.data.data){
           this.auditCount = res.data.data[-2].waitCount;
+        }
+      });
+    },
+    /**
+     * 获取session
+     * 采用同步执行，为了在需要使用的时候，可以先执行完成后再执行下一步操作
+     * @returns {Promise<void>}
+     */
+    async getLoginStatus() {
+      let params = {};
+      await this.$axios.post(common.logincheck, params).then(res => {
+        if (res.data.data){
+          this.loginStatusInfo = res.data.data.loginCheck;
         }
       });
     },

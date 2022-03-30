@@ -35,13 +35,13 @@
           <div class="right-bottom-triangle"></div>
           <div class="left-bottom-triangle"></div>
 
-          <label class="login-user-change-tag select-none" v-if="userType == 1" @click="changeUserType(2)"><i class="fa fa-retweet font-size-12"></i> {{$t("切换教师")}}</label>
-          <label class="login-user-change-tag select-none" v-if="userType == 2" @click="changeUserType(1)"><i class="fa fa-retweet font-size-12"></i> {{$t("切换管理员")}}</label>
+          <label class="login-user-change-tag select-none" v-if="userType == 1" @click="changeUserType(2)"><i class="fa fa-retweet font-size-12"></i> {{$t("切换教职工")}}</label>
+          <label class="login-user-change-tag select-none" v-if="userType == 2" @click="changeUserType(1)"><i class="fa fa-retweet font-size-12"></i> {{$t("切换学生")}}</label>
           <div>
             <span class="login-user-title">{{$t("用户登录")}}</span>
             ｜
-            <span class="color-muted font-size-12" v-if="userType == 1">{{$t("管理员登录")}}</span>
-            <span class="color-muted font-size-12" v-if="userType == 2">{{$t("教师登录")}}</span>
+            <span class="color-muted font-size-12" v-if="userType == 1">{{$t("学生登录")}}</span>
+            <span class="color-muted font-size-12" v-if="userType == 2">{{$t("教职工登录")}}</span>
           </div>
           <div class="line-height"></div>
           <div class="margin-top-30">
@@ -143,7 +143,7 @@
               <div class="text-center login-bottom-other margin-top-10">
                 <label class="color-muted" @click="changeSubType(1)"><i class="fa fa-user-circle-o"></i> {{$t("账号/手机号")}}</label>
                 <label class="color-muted" @click="changeSubType(2)"><i class="fa fa-id-card-o"></i> {{$t("身份证")}}</label>
-                <label class="color-muted" @click="changeSubType(3)"><i class="fa fa-credit-card"></i> {{$t("工号")}}</label>
+<!--                <label class="color-muted" @click="changeSubType(3)"><i class="fa fa-credit-card"></i> {{$t("工号")}}</label>-->
               </div>
             </div>
           </div>
@@ -207,7 +207,7 @@
     components: {DialogNormal,TimeoutButton},
     data(){
       return {
-        userType: '1',
+        userType: '2',
         userSubType: '1',
         dialogLoading: false,
         modalVisible: false,
@@ -267,19 +267,19 @@
           return;
         }
         let params = {
-          clientType: 0,
+          clientType: 4,
           accountType: 0,
           account: this.form.username,
           password: getmd5(this.form.password),
         };
         if (this.userSubType == 3){
-          params['campusNo'] = this.form.campusNo;
-          params['accountType'] = 1;
+          //params['campusNo'] = this.form.campusNo;
+          params['accountType'] = 4;
         }else if (this.userSubType == 2){
-          params['accountType'] = 3;
+          params['accountType'] = 4;
         }
         if (this.userType == 1){
-          userType = 2;
+          userType = 5;
         }if (this.userType == 2){
           userType = 4;
         }

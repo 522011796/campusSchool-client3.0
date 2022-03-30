@@ -8,6 +8,7 @@
       </div>
       <div class="pull-right moon-top-right">
         <el-popover
+          v-if="loginStatusInfo == true"
           popper-class="custom-user-popover"
           placement="bottom"
           transition="zoom-in-center"
@@ -61,7 +62,7 @@
 <!--            </div>-->
             <div class="moon-top-user-info-opr">
               <el-row>
-                <el-col :span="24">
+                <el-col :span="24" @click.native="logout">
                   <div>
                     <a href="javascript:;" class="color-white">{{$t("退出")}}</a>
                   </div>
@@ -90,20 +91,37 @@
             </span>
           </div>
 
-          <div class="pull-right">
+          <div class="pull-right margin-right-5">
             <span class="moon-top-middle-menu-title-icon">
-              <my-input-button ref="teacher width-150" size="mini" plain width-class="width: 180px" :clearable="true" :placeholder="$t('服务名称')" @click="search"></my-input-button>
+<!--              <my-input-button ref="teacher width-150" size="mini" plain width-class="width: 180px" :clearable="true" :placeholder="$t('服务名称')" @click="search"></my-input-button>-->
+              <el-autocomplete
+                suffix-icon="el-input__icon el-icon-search"
+                size="mini"
+                class="inline-input"
+                v-model="inputValue"
+                :fetch-suggestions="querySearch"
+                :placeholder="$t('服务名称')"
+                :trigger-on-focus="false"
+                @select="handleSelect"
+              >
+              </el-autocomplete>
             </span>
-            <span class="moon-top-middle-menu-title-icon">
+            <span class="moon-top-middle-menu-title-icon" v-if="loginStatusInfo == true">
               <el-button size="mini" class="el-button--0CB5AF">
                 <i class="fa fa-tags"></i>
                 {{$t("课表")}}
               </el-button>
             </span>
-            <span class="moon-top-middle-menu-title-icon">
+            <span class="moon-top-middle-menu-title-icon" v-if="loginStatusInfo == true">
               <el-button size="mini" class="el-button--0CB5AF">
                 <i class="fa fa-bell"></i>
                 {{$t("消息")}}
+              </el-button>
+            </span>
+            <span class="moon-top-middle-menu-title-icon" v-if="loginStatusInfo == false">
+              <el-button size="mini" type="success" @click="loginPage">
+                <i class="fa fa-user"></i>
+                {{$t("登录")}}
               </el-button>
             </span>
           </div>
@@ -151,6 +169,7 @@
         modalPwdCustomVisible: false,
         activeTabName: 'all',
         menuTabList: [],
+        inputValue: '',
         form: {
           name: '',
           logo: '',
@@ -205,7 +224,10 @@
         }
       },
       async init() {
-        await this.getSessionInfo();
+        await this.getLoginStatus();
+        if (this.loginStatusInfo == true){
+          await this.getSessionInfo();
+        }
       },
       search(data){
         this.initServer(data);
@@ -303,6 +325,34 @@
           path: '/',
           query: {
 
+          }
+        });
+      },
+      querySearch(queryString, cb) {
+        let params = {
+          searchKey: queryString,
+        };
+        this.$axios.get(common.server_list_list, {params: params, loading: false}).then(res => {
+          if (res.data.data){
+            for (let i = 0; i < res.data.data.length; i++){
+              res.data.data['value'] = res.data.data[i].form_name;
+            }
+            cb(res.data.data);
+          }
+        });
+      },
+      handleSelect(item) {
+        console.log(item);
+      },
+      loginPage(){
+        this.$router.push({
+          path: '/login'
+        });
+      },
+      logout(){
+        this.$axios.post(common.logout_url).then(res => {
+          if (res.data.code == 200){
+            this.$router.push("/login");
           }
         });
       }

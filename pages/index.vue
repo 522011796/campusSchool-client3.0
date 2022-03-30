@@ -4,7 +4,7 @@
       <div class="block-left-top-item" :style="{height: divHeight.height1 * 0.43 + 'px'}">
         <div>
           <div class="text-center block-logo-class" :style="{top: (divHeight.height1 * 0.43 * 0.27)+'px'}">
-            <el-avatar :size="100" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"></el-avatar>
+            <el-avatar :size="100" :src="campusLogo"></el-avatar>
           </div>
           <div class="text-center color-muted font-bold block-logotext-class" :style="{top: (divHeight.height1 * 0.43 * 0.27)+'px'}">
             {{$t("网上办事大厅")}}
@@ -34,7 +34,7 @@
         </div>
         <div class="margin-top-10 padding-lr-10 font-size-12 color-white">
           <div class="block-item-item">
-            <el-row v-for="n in 8" :key="n">
+            <el-row v-for="(item, index) in noticeDataList" :key="index">
               <el-col :span="16">
                 <div class="moon-content-text-ellipsis-class">
                   <span>
@@ -56,15 +56,55 @@
         <div>
           <div class="pull-left block-item-left-tag-menu">
             <div class="block-item-left-header text-center">
-              <span>{{$t("类别")}}</span>
+<!--              <el-button size="mini" type="text" @click="selType(110)">-->
+<!--                <span :class="activeType == 110 ? 'color-0CB5AF' : 'color-white'">{{$t("类别")}}</span>-->
+<!--              </el-button>-->
+<!--              <el-button size="mini" type="text" @click="selType(4)">-->
+<!--                <span :class="activeType == 4 ? 'color-0CB5AF' : 'color-white'">{{$t("部门")}}</span>-->
+<!--              </el-button>-->
+              <el-row>
+                <el-col :span="12" @click.native="selType(110)">
+                  <span class="tab-type-item tab-type-item-active-left">
+                    <el-dropdown trigger="click" placement="bottom">
+                      <label class="font-size-12">
+                        {{$t("类别")}}
+                        <i class="fa fa-caret-down"></i>
+                      </label>
+                      <el-dropdown-menu slot="dropdown">
+                        <div style="height: 200px;overflow-y: auto">
+                          <el-dropdown-item @click.native="dropdownItem($event, 'all', 1)">{{$t("全部")}}</el-dropdown-item>
+                        <el-dropdown-item v-for="(item, index) in categoryMixinsList" :key="index" @click.native="dropdownItem($event, item, 1)">{{ item.categoryName }}</el-dropdown-item>
+                        </div>
+                      </el-dropdown-menu>
+                    </el-dropdown>
+                  </span>
+                </el-col>
+                <el-col :span="12" @click.native="selType(4)">
+                  <span class="tab-type-item tab-type-item-active-right">
+                    <el-dropdown trigger="click" placement="bottom">
+                      <label class="font-size-12">
+                        {{$t("部门")}}
+                        <i class="fa fa-caret-down"></i>
+                      </label>
+                      <el-dropdown-menu slot="dropdown">
+                        <div style="height: 200px;overflow-y: auto">
+                          <el-dropdown-item @click.native="dropdownItem($event, 'all', 2)">{{$t("全部")}}</el-dropdown-item>
+                          <el-dropdown-item v-for="(item, index) in deptMixinsList" :key="index" @click.native="dropdownItem($event, item, 2)">{{ item.departmentName }}</el-dropdown-item>
+                        </div>
+                      </el-dropdown-menu>
+                    </el-dropdown>
+                  </span>
+                </el-col>
+              </el-row>
             </div>
             <div :style="{height: divHeight.height1 * 0.43 - 40 + 'px', 'overflowY': 'auto'}">
               <div class="block-item-left-header-item" :class="activeMenu === '' ? 'left-menu-active' : ''" @click="selMenu($event, '')">
                 <span>{{$t("全部")}}</span>
               </div>
-              <div class="block-item-left-header-item" :class="activeMenu === index ? 'left-menu-active' : ''" v-for="(item, index) in 10" :key="index" @click="selMenu($event, index)">
-                <span>xxxx</span>
+              <div class="block-item-left-header-item moon-content-text-ellipsis-class" :class="activeMenu === item.id ? 'left-menu-active' : ''" v-for="(item, index) in categorys" :key="index" @click="selMenu($event, item)">
+                <span>{{ item.applet_name }}</span>
               </div>
+<!--              <my-el-tree :type="activeTypeVal" sub-type="" @node-click="nodeClick" @all-click="nodeClick"></my-el-tree>-->
             </div>
           </div>
           <div class="block-item-right-tag-content" :style="{height: divHeight.height1 * 0.43 + 'px'}">
@@ -84,7 +124,7 @@
             </div>
             <div class="padding-lr-10 padding-tb-10" :style="{height: divHeight.height1 * 0.43 - 62 + 'px', 'overflow-y': 'auto'}">
               <el-row :gutter="16">
-                <el-col :span="6" v-for="(item, index) in 20" :key="index" @click.native="serverClick($event, item)" class="margin-bottom-20">
+                <el-col :span="6" v-for="(item, index) in serverDataList" :key="index" @click.native="serverClick($event, item)" class="margin-bottom-20">
                   <el-card shadow="always" :body-style="{padding: '12px',background: '#EBEEF5'}">
                     <div class="moon-content-text-ellipsis-class">
                       <el-image class="block-icon-class">
@@ -93,7 +133,7 @@
                         </div>
                       </el-image>
                       <span>
-                        总是显示总是显示
+                        {{ item.form_name }}
                       </span>
                     </div>
                   </el-card>
@@ -119,16 +159,16 @@
         </div>
         <div class="padding-lr-10 padding-tb-10 font-size-12 color-white" :style="{height: divHeight.height1 * 0.4 - 60 + 'px','overflowY': 'auto'}">
           <el-row :gutter="16">
-            <el-col :span="4" v-for="(item, index) in 20" :key="index" class="margin-bottom-20" @click.native="serverClick($event, item)">
+            <el-col :span="4" v-for="(item, index) in recommends" :key="index" class="margin-bottom-20" @click.native="serverClick($event, item)">
               <el-card shadow="always" :body-style="{padding: '12px',background: '#EBEEF5'}">
                 <div class="moon-content-text-ellipsis-class">
-                  <el-image class="block-icon-class">
+                  <el-image class="block-icon-class" :src="item.form_logo">
                     <div slot="error" class="block-icon-class">
                       <i class="el-icon-picture-outline font-size-15"></i>
                     </div>
                   </el-image>
                   <span>
-                    总是显示总是显示
+                    {{ item.form_name }}
                   </span>
                 </div>
               </el-card>
@@ -140,68 +180,7 @@
     <div class="moon-clearfix"></div>
 
     <!--服务-->
-    <dialog-normal top="10vh" width-style="850px" :visible="dialogServer" :show-footer="false">
-      <div slot="title">
-        <div class="dialog-header-block padding-lr-10">
-          <el-row>
-            <el-col :span="12">
-              <div>
-                <i class="fa fa-file-text color-warning"></i>
-                <span>xxxxxx</span>
-                <span class="color-muted font-size-12 margin-left-10">
-                  <label>{{$t("部门")}}:</label>
-                  <label>xxxxxx</label>
-                </span>
-                <span class="color-muted font-size-12 margin-left-10">
-                  <label>{{$t("类别")}}:</label>
-                  <label>xxxxxx</label>
-                </span>
-              </div>
-            </el-col>
-            <el-col :span="12">
-              <div class="text-right layout-inline font-size-12">
-                <div style="width: 140px;display: inline-block">
-                  <el-rate
-                    text-color="#ff9900"
-                    score-template="{value}">
-                  </el-rate>
-                </div>
-                <span class="color-grand" style="position: relative;top: 2px;">
-                  <label>{{$t("评价")}}:</label>
-                  <label>(0)</label>
-                </span>
-                <span class="margin-left-10">
-                  <el-button size="mini" type="primary" @click="closeDialog">{{$t("关闭")}}</el-button>
-                  <el-button size="mini" type="success" @click="detailClick">{{$t("业务办理")}}</el-button>
-                </span>
-              </div>
-            </el-col>
-          </el-row>
-        </div>
-      </div>
-      <div class="custon-dialog-max-height">
-        <div class="margin-top-10 font-size-14">
-          <div>
-            <span class="color-sub-title font-bold">{{$t("服务说明")}}</span>
-          </div>
-          <div class="line-height"></div>
-        </div>
-        <div class="margin-top-10 color-sub-title font-size-14">
-          <div style="line-height: 30px">
-            1、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
-            2、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
-            3、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
-            4、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
-            5、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
-            6、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
-            7、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
-            8、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
-            9、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
-            10、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
-          </div>
-        </div>
-      </div>
-    </dialog-normal>
+    <my-server-dialog :visible="dialogServer" width-style="850px" :data="serverDetailData" @close="closeDialog" @detailClick="detailClick"></my-server-dialog>
 
     <drawer-layout-right tabindex="0" @changeDrawer="closeDetailDialog" :visible="dialogServerDetail" size="600px" title="" @right-close="cancelDrawDialog">
       <div slot="content" class="color-muted">
@@ -214,17 +193,23 @@
   import mixins from "../utils/mixins";
   import {common} from "../utils/api/url";
   import DialogNormal from "~/components/utils/dialog/DialogNormal";
+  import MyElTree from "~/components/tree/MyElTree";
+  import MyServerDialog from "~/components/dialog/MyServerDialog";
   export default {
     name: 'index',
     mixins: [mixins],
-    components: {DialogNormal},
+    components: {MyServerDialog, MyElTree, DialogNormal},
     data(){
       return {
-        activeTab: 1,
+        activeTypeVal: '110',
+        activeType: '110',
+        activeTab: 0,
         dialogServer: false,
         dialogServerDetail: false,
         testArea: '',
-        activeMenu: ''
+        activeMenu: '',
+        treeId: '',
+        serverDetailData: {}
       }
     },
     mounted() {
@@ -233,7 +218,12 @@
       });
     },
     created() {
+      this.appletType = this.activeTab;
+      this.initCategoryList();
+      this.initDeptList();
       this.initServer();
+      this.initApplet();
+      this.initRecommend();
     },
     methods: {
       layoutInit(){
@@ -242,6 +232,7 @@
       tabClick(data){
         this.activeTab = data;
         this.appletType = data;
+        this.initServer();
       },
       menuClick(event, item){
         item.active = true;
@@ -265,8 +256,32 @@
         this.dialogServerDetail = true;
       },
       selMenu(event, item){
-        this.activeMenu = item;
-        this.categoryId = item;
+        this.activeMenu = '';
+        if (item){
+          this.activeMenu = item.id;
+        }
+        this.appletId = item.id;
+        this.initServer();
+      },
+      selType(type){
+        this.activeType = type + '';
+        this.activeTypeVal = type + '';
+        this.appletId = '';
+        this.departmentPath = '';
+        this.appletType = this.activeTab;
+        //this.initServer();
+      },
+      nodeClick(data){
+        if (this.activeType == 110){
+          this.appletId = data.id;
+        }else {
+          this.departmentPath = data.department_path;
+        }
+        this.appletType = this.activeTab;
+        this.initServer();
+      },
+      dropdownItem(event, item, type){
+        this.initApplet(item, type);
       }
     }
   }
@@ -368,5 +383,18 @@
 .left-menu-active{
   background: rgba(242,246,252, 0.3);
   color: #606266;
+}
+.tab-type-item{
+  height: 100%;
+  width: 100%;
+  display: inline-block;
+  color: #606266;
+}
+.tab-type-item-active-left{
+  background: #0CB5AF;
+  color: #FFFFFF;
+}
+.tab-type-item-active-right{
+  color: #FFFFFF;
 }
 </style>

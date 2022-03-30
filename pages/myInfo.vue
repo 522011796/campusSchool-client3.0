@@ -245,7 +245,7 @@
           </div>
           <div class="block-item-bg font-size-12 margin-top-10 color-sub-title">
             <el-steps direction="vertical" space="60px">
-              <el-step v-for="n in 5">
+              <el-step v-for="(item, index) in 5" :key="index">
                 <div slot="icon">
                   <i class="fa fa-flag" style="font-size: 12px"></i>
                 </div>
@@ -288,11 +288,14 @@
       });
     },
     created() {
-
+      this.init();
     },
     methods: {
       layoutInit(){
 
+      },
+      async init(){
+        await this.getSessionInfo();
       },
       tabClick(data){
         this.activeTab = data;

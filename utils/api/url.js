@@ -561,6 +561,13 @@ export const common = {
   student_parent_unbind: '/proxy/user/user/unbind',//解绑学生信息
   student_parent_reset_pwd: '/proxy/uup/pass/reset',//重置学生密码
 
-  server_list_list: '/proxy/school/applet/form/list2',//服务列表
+  server_applet_list: '/proxy/school/applet/list2',//应用列表不分页
+  server_list_list: '/proxy/school/applet/form/list2',//服务列表不分页
+  server_type_all_list_tree: '/proxy/school/applet/category/tree',//类别列表树形不分页
+  server_type_all_list: '/proxy/school/applet/category/list',//类别列表不分页
+  server_dept_all_list: '/proxy/school/applet/dept/all',//应用部门不分页
+  server_list_list3: '/proxy/school/applet/form/list3',//推荐列表不分页
+
+  logincheck: '/proxy/user/loginCheck',//登录状态
 
 };
