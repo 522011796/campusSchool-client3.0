@@ -2,10 +2,11 @@
   <div>
     <dialog-normal
       :top="top"
-      :width="widthStyle"
+      :width-style="widthStyle"
       :visible.sync="visible"
       :show-close="false"
       :modal-append-to-body="false"
+      :show-footer="false"
       :before-close="handleBeforeClose"
       @close="closeDialog">
       <div slot="title">
@@ -14,29 +15,29 @@
             <el-col :span="12">
               <div>
                 <i class="fa fa-file-text color-warning"></i>
-                <span>xxxxxx</span>
+                <span>{{ data.form_name }}</span>
                 <span class="color-muted font-size-12 margin-left-10">
-                  <label>{{$t("部门")}}:</label>
-                  <label>xxxxxx</label>
+                  <label class="color-sub-title">{{$t("部门")}}:</label>
+                  <label>{{ data.department_names }}</label>
                 </span>
                 <span class="color-muted font-size-12 margin-left-10">
-                  <label>{{$t("类别")}}:</label>
-                  <label>xxxxxx</label>
+                  <label class="color-sub-title">{{$t("类别")}}:</label>
+                  <label>{{ data.category_name }}</label>
                 </span>
               </div>
             </el-col>
             <el-col :span="12">
               <div class="text-right layout-inline font-size-12">
-                <div style="width: 140px;display: inline-block">
-                  <el-rate
-                    text-color="#ff9900"
-                    score-template="{value}">
-                  </el-rate>
-                </div>
-                <span class="color-grand" style="position: relative;top: 2px;">
-                  <label>{{$t("评价")}}:</label>
-                  <label>(0)</label>
-                </span>
+<!--                <div style="width: 140px;display: inline-block">-->
+<!--                  <el-rate-->
+<!--                    text-color="#ff9900"-->
+<!--                    score-template="{value}">-->
+<!--                  </el-rate>-->
+<!--                </div>-->
+<!--                <span class="color-grand" style="position: relative;top: 2px;">-->
+<!--                  <label>{{$t("评价")}}:</label>-->
+<!--                  <label>(0)</label>-->
+<!--                </span>-->
                 <span class="margin-left-10">
                   <el-button size="mini" type="primary" @click="closeDialog">{{$t("关闭")}}</el-button>
                   <el-button size="mini" type="success" @click="detailClick">{{$t("业务办理")}}</el-button>
@@ -54,17 +55,8 @@
           <div class="line-height"></div>
         </div>
         <div class="margin-top-10 color-sub-title font-size-14">
-          <div style="line-height: 30px">
-            1、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
-            2、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
-            3、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
-            4、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
-            5、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
-            6、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
-            7、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
-            8、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
-            9、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
-            10、xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/>
+          <div style="line-height: 30px; white-space: pre-line">
+            <pre>{{data.des}}</pre>
           </div>
         </div>
       </div>
@@ -73,8 +65,10 @@
 </template>
 
 <script>
+  import DialogNormal from "~/components/utils/dialog/DialogNormal";
   export default {
     name: 'myServerDialog',
+    components: {DialogNormal},
     props: {
       top: {
         default: '10vh',
@@ -131,7 +125,7 @@
         this.$emit("cancel", data);
       },
       detailClick(){
-        this.$emit("detailClick");
+        this.$emit("detailClick", this.data);
       }
     }
   }

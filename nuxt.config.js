@@ -35,6 +35,7 @@ export default {
     '@/plugins/qs',
     '@/plugins/moment',
     '@/plugins/echarts',
+    { src: "~plugins/formCreate", ssr: false },
     { src: "~plugins/vue-quill-custom-editor.js", ssr: false },
   ],
 

@@ -567,6 +567,11 @@ export const common = {
   server_type_all_list: '/proxy/school/applet/category/list',//类别列表不分页
   server_dept_all_list: '/proxy/school/applet/dept/all',//应用部门不分页
   server_list_list3: '/proxy/school/applet/form/list3',//推荐列表不分页
+  server_form_add: '/proxy/school/applet/form/apply/add',//自定义表单添加
+  server_form_allInfo: '/proxy/school/applet/form/content/allInfo',//服务表单所有数据
+  server_form_audit_page: '/proxy/school/applet/form/apply/page',//服务审批表单分页
+  server_form_audit_query: '/proxy/school/applet/form/apply/query',//服务审批详细列表
+  server_form_audit_handle: '/proxy/school/applet/form/apply/handle',//服务审批操作
 
   logincheck: '/proxy/user/loginCheck',//登录状态
 

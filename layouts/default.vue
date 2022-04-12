@@ -72,7 +72,7 @@
           </div>
 
           <span slot="reference">
-            <label class="moon-top-right-item top-18" @click="myInfo">
+            <label class="moon-top-right-item top-18">
               <el-avatar size="small" v-if="headImage != undefined" :src="headImage"></el-avatar>
               <el-avatar size="small" v-else src="/img/head-boy.png"></el-avatar>
             </label>
@@ -113,7 +113,7 @@
               </el-button>
             </span>
             <span class="moon-top-middle-menu-title-icon" v-if="loginStatusInfo == true">
-              <el-button size="mini" class="el-button--0CB5AF">
+              <el-button size="mini" class="el-button--0CB5AF" @click="myInfo">
                 <i class="fa fa-bell"></i>
                 {{$t("消息")}}
               </el-button>

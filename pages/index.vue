@@ -182,8 +182,28 @@
     <!--服务-->
     <my-server-dialog :visible="dialogServer" width-style="850px" :data="serverDetailData" @close="closeDialog" @detailClick="detailClick"></my-server-dialog>
 
-    <drawer-layout-right tabindex="0" @changeDrawer="closeDetailDialog" :visible="dialogServerDetail" size="600px" title="" @right-close="cancelDrawDialog">
+    <drawer-layout-right tabindex="0" @changeDrawer="closeDetailDialog" :visible="dialogServerDetail" size="700px" :title="formCreateTitleData" @right-close="cancelDrawDialog">
       <div slot="content" class="color-muted">
+        <form-create v-if="formCreateRuleData != ''" v-model="fApi" :rule="formCreateRuleData" :option="formCreateOptionData"/>
+      </div>
+      <div slot="footer">
+        <div class="text-right padding-lr-10">
+          <template v-if="customUserStatus == true">
+            <span>{{$t("审批人")}}</span>:
+            <el-select size="mini" v-model="auditSelUser" multiple collapse-tags placeholder="请选择审批人">
+              <el-option
+                v-for="item in auditUsers"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </template>
+          <el-button size="small" @click="handleFormCancel">取 消</el-button>
+          <el-button v-if="fromCreateBtnShow == true" size="small" type="primary" :loading="btnLoading" @click="handleFormOk">
+            {{ fromCreateBtnText }}
+          </el-button>
+        </div>
       </div>
     </drawer-layout-right>
   </div>
@@ -195,21 +215,36 @@
   import DialogNormal from "~/components/utils/dialog/DialogNormal";
   import MyElTree from "~/components/tree/MyElTree";
   import MyServerDialog from "~/components/dialog/MyServerDialog";
+  import DrawerLayoutRight from "~/components/utils/dialog/DrawerLayoutRight";
+  import {MessageError, MessageSuccess, MessageWarning} from "~/utils/utils";
   export default {
     name: 'index',
     mixins: [mixins],
-    components: {MyServerDialog, MyElTree, DialogNormal},
+    components: {DrawerLayoutRight, MyServerDialog, MyElTree, DialogNormal},
     data(){
       return {
         activeTypeVal: '110',
         activeType: '110',
         activeTab: 0,
+        formCreateData: '',
+        formCreateRuleData: [],
+        formCreateOptionData: {},
+        fApi: {},
+        formCreateTitleData: '',
+        formCreateIdData: '',
+        fromCreateOptions: '',
+        fromCreateBtnText: '',
+        fromCreateBtnShow: true,
         dialogServer: false,
         dialogServerDetail: false,
+        btnLoading: false,
+        customUserStatus: false,
         testArea: '',
         activeMenu: '',
         treeId: '',
-        serverDetailData: {}
+        serverDetailData: {},
+        auditUsers: [],
+        auditSelUser: []
       }
     },
     mounted() {
@@ -229,6 +264,34 @@
       layoutInit(){
 
       },
+      initAuditUser(id){
+        let params = {
+          id: id
+        };
+        this.$axios.get(common.server_form_allInfo, {params: params}).then(res => {
+          if (res.data.code == 200){
+            let auditUser = [];
+            console.log(res.data.data);
+            let processList = res.data.data.processList;
+            this.customUserStatus = false;
+            for (let i = 0; i < processList.length; i++){
+              if (processList[i].htype == 'CustomUser'){
+                let processUser = processList[i].hid;
+                let processUserName = processList[i].hname;
+                for (let j = 0; j < processUser.length; j++){
+                  auditUser.push({
+                    label: processUserName[j],
+                    value: processUser[j],
+                    text: processUserName[j]
+                  });
+                }
+                this.customUserStatus = true;
+              }
+            }
+            this.auditUsers = auditUser;
+          }
+        });
+      },
       tabClick(data){
         this.activeTab = data;
         this.appletType = data;
@@ -238,12 +301,19 @@
         item.active = true;
       },
       serverClick($event, item){
+        this.serverDetailData = item;
         this.dialogServer = true;
       },
       closeDialog(event){
         this.dialogServer = false;
       },
       closeDetailDialog(){
+        this.formCreateRuleData = [];
+        this.formCreateOptionData = {};
+        this.auditSelUser = [];
+        this.auditUsers = [];
+        this.customUserStatus = false;
+        this.btnLoading = false;
         this.dialogServerDetail = false;
       },
       cancelDialog(){
@@ -252,7 +322,19 @@
       cancelDrawDialog(){
         this.dialogServerDetail = false;
       },
-      detailClick(){
+      async detailClick(data){
+        let rules = '';
+        await this.getSessionInfo();
+        this.formCreateTitleData = data.form_name;
+        this.formCreateIdData = data.id;
+        this.fromCreateBtnShow = data.submit_button;
+        this.fromCreateBtnText = data.button_name != "" ? data.button_name : this.$t("提交")
+        if (data.form_content != null && data.form_content != ''){
+          this.formCreateRuleData = JSON.parse(data.form_content).rule;
+          this.formCreateOptionData = JSON.parse(data.form_content).option;
+        }
+        this.initAuditUser(data.id);
+
         this.dialogServerDetail = true;
       },
       selMenu(event, item){
@@ -282,6 +364,50 @@
       },
       dropdownItem(event, item, type){
         this.initApplet(item, type);
+      },
+      handleFormCancel(){
+        this.dialogServerDetail = false;
+      },
+      handleFormOk(){
+        this.fApi.submit((formData, fApi)=>{
+          let url = "";
+          let ruleList = [];
+          if (this.auditSelUser.length == 0 && this.customUserStatus == true){
+            MessageWarning(this.$t("请选择审批人！"));
+            return;
+          };
+          let params = {
+            appletFormId: this.formCreateIdData,
+            userId: this.loginUserId,
+            //applyContent: JSON.stringify(formData),
+            customHandleUserIds: JSON.stringify(this.auditSelUser),
+          }
+          let rule = fApi.rule;
+          for (let i = 0; i < rule.length; i++){
+            let obj = {
+              field: rule[i].field,
+              title: rule[i].title,
+              type: rule[i].type,
+              value: rule[i].value
+            }
+            ruleList.push(obj);
+          }
+          console.log(JSON.stringify(formData));
+          params['applyContent'] = JSON.stringify(ruleList);
+
+          url = common.server_form_add;
+          params = this.$qs.stringify(params);
+          this.btnLoading = true;
+          this.$axios.post(url, params, {loading: false}).then(res => {
+            if (res.data.code == 200){
+              this.dialogServerDetail = false;
+              MessageSuccess(res.data.desc);
+            }else {
+              MessageError(res.data.desc);
+            }
+            this.btnLoading = false;
+          });
+        });
       }
     }
   }

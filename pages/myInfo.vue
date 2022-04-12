@@ -16,7 +16,10 @@
         </div>
         <div class="margin-top-10 padding-lr-10 font-size-12 color-white" :style="{height: divHeight.height1 * 0.43 - 60 + 'px', 'overflow-y': 'auto'}">
           <div class="block-item-item color-sub-title">
-            <el-row v-for="n in 20" :key="n" class="border-bottom-1">
+            <div v-if="collectionList.length == 0" class="text-center">
+              <span class="color-muted">{{$t("暂无数据")}}</span>
+            </div>
+            <el-row v-if="collectionList.length > 0" v-for="(item, index) in collectionList" :key="index" class="border-bottom-1">
               <el-col :span="16">
                 <div class="moon-content-text-ellipsis-class">
                   <img src="" class="block-icon1-class">
@@ -53,7 +56,10 @@
         </div>
         <div class="margin-top-10 padding-lr-10 font-size-12 color-white" :style="{height: divHeight.height1 * 0.43 - 70 + 'px', 'overflow-y': 'auto'}">
           <div class="block-item-item color-sub-title">
-            <el-row v-for="n in 8" :key="n">
+            <div v-if="noticeList.length == 0" class="text-center">
+                <span class="color-muted">{{$t("暂无数据")}}</span>
+            </div>
+            <el-row v-if="noticeList.length > 0" v-for="(item, index) in noticeList" :key="index">
               <el-col :span="16">
                 <div class="moon-content-text-ellipsis-class">
                   <span>
@@ -79,17 +85,14 @@
               <span>{{$t("个人中心")}}</span>
             </div>
             <div :style="{height: divHeight.height1 * 0.86 - 35 + 'px', 'overflowY': 'auto'}">
-              <div class="block-item-left-header-item" :class="activeMenu == 0 ? 'left-menu-active' : ''">
+              <div class="block-item-left-header-item" @click="activeMenuClick($event, 1)" :class="activeMenu == 1 ? 'left-menu-active' : ''">
                 <span>{{$t("我待办的")}}</span>
-                <span>(0)</span>
               </div>
-              <div class="block-item-left-header-item" :class="activeMenu == 1 ? 'left-menu-active' : ''">
+              <div class="block-item-left-header-item" @click="activeMenuClick($event, 2)" :class="activeMenu == 2 ? 'left-menu-active' : ''">
                 <span>{{$t("我发起的")}}</span>
-                <span>(0)</span>
               </div>
-              <div class="block-item-left-header-item" :class="activeMenu == 2 ? 'left-menu-active' : ''">
+              <div class="block-item-left-header-item" @click="activeMenuClick($event, 4)" :class="activeMenu == 4 ? 'left-menu-active' : ''">
                 <span>{{$t("我已办的")}}</span>
-                <span>(0)</span>
               </div>
             </div>
           </div>
@@ -101,26 +104,26 @@
               size="medium"
               :max-height="tableHeight.height"
               style="width: 100%">
-              <el-table-column
-                align="center"
-                :label="$t('业务编号')">
-                <template slot-scope="scope">
-                  <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                    <div class="text-center">1</div>
-                    <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                        1
-                    </span>
-                  </el-popover>
-                </template>
-              </el-table-column>
+<!--              <el-table-column-->
+<!--                align="center"-->
+<!--                :label="$t('业务编号')">-->
+<!--                <template slot-scope="scope">-->
+<!--                  <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">-->
+<!--                    <div class="text-center">1</div>-->
+<!--                    <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">-->
+<!--                        1-->
+<!--                    </span>-->
+<!--                  </el-popover>-->
+<!--                </template>-->
+<!--              </el-table-column>-->
               <el-table-column
                 align="center"
                 :label="$t('申请日期')">
                 <template slot-scope="scope">
                   <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                    <div class="text-center">1</div>
+                    <div class="text-center">{{$moment(scope.row.applyTime).format("YYYY-MM-DD HH:mm")}}</div>
                     <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                        1
+                        {{$moment(scope.row.applyTime).format("YYYY-MM-DD HH:mm")}}
                     </span>
                   </el-popover>
                 </template>
@@ -130,9 +133,9 @@
                 :label="$t('名称')">
                 <template slot-scope="scope">
                   <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                    <div class="text-center">1</div>
+                    <div class="text-center">{{scope.row.formName}}</div>
                     <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                        1
+                      {{scope.row.formName}}
                     </span>
                   </el-popover>
                 </template>
@@ -142,21 +145,24 @@
                 :label="$t('服务部门')">
                 <template slot-scope="scope">
                   <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                    <div class="text-center">1</div>
+                    <div class="text-center">{{scope.row.departmentName}}</div>
                     <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                        1
+                      {{scope.row.departmentName}}
                     </span>
                   </el-popover>
                 </template>
               </el-table-column>
               <el-table-column
                 align="center"
-                :label="$t('进度')">
+                :label="$t('状态')">
                 <template slot-scope="scope">
                   <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
                     <div class="text-center">1</div>
                     <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                        1
+                      <label v-if="scope.row.status === -1" class="color-warning">{{$t("撤销")}}</label>
+                      <label v-if="scope.row.status === 0" class="color-warning">{{$t("待审核")}}</label>
+                      <label v-if="scope.row.status === 3" class="color-success">{{$t("通过")}}</label>
+                      <label v-if="scope.row.status === 4" class="color-danger">{{$t("未通过")}}</label>
                     </span>
                   </el-popover>
                 </template>
@@ -166,9 +172,13 @@
                 :label="$t('更新时间')">
                 <template slot-scope="scope">
                   <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                    <div class="text-center">1</div>
+                    <div class="text-center">
+                      <label v-if="scope.row.handleTime">{{$moment(scope.row.handleTime).format("YYYY-MM-DD HH:mm")}}</label>
+                      <label v-else>--</label>
+                    </div>
                     <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                        1
+                      <label v-if="scope.row.handleTime">{{$moment(scope.row.handleTime).format("YYYY-MM-DD HH:mm")}}</label>
+                      <label v-else>--</label>
                     </span>
                   </el-popover>
                 </template>
@@ -178,7 +188,7 @@
                 width="100"
                 :label="$t('操作')">
                 <template slot-scope="scope">
-                  <a href="javascript:;" class="color-grand" @click="detailClick">{{$t("详情")}}</a>
+                  <a href="javascript:;" class="color-grand" @click="detailClick($event, scope.row)">{{$t("详情")}}</a>
                 </template>
               </el-table-column>
             </el-table>
@@ -198,27 +208,30 @@
           <el-row>
             <el-col :span="12">
               <span>{{$t("申请人")}}:</span>
-              <span>xxx</span>
+              <span>{{ detailData.applyUserName }}</span>
             </el-col>
             <el-col :span="12">
               <span>{{$t("学号/工号")}}:</span>
-              <span>xxx</span>
+              <span>{{ detailData.userNo }}</span>
             </el-col>
           </el-row>
           <el-row class="margin-top-5">
             <el-col :span="12">
               <span>{{$t("服务名称")}}:</span>
-              <span>xxx</span>
+              <span>{{ detailData.formName }}</span>
             </el-col>
             <el-col :span="12">
               <span>{{$t("班级/部门")}}:</span>
-              <span>xxx</span>
+              <span>
+                <label v-if="detailData.userType == 5">{{ detailData.className }}</label>
+                <label v-if="detailData.userType == 4">{{ detailData.departmentName }}</label>
+              </span>
             </el-col>
           </el-row>
           <el-row class="margin-top-5">
             <el-col :span="12">
               <span>{{$t("申请日期")}}:</span>
-              <span>xxx</span>
+              <span>{{ $moment(detailData.applyTime).format("YYYY-MM-DD HH:mm") }}</span>
             </el-col>
           </el-row>
         </div>
@@ -230,9 +243,13 @@
               </span>
             </div>
             <div class="block-item-bg font-size-12 margin-top-10 color-sub-title">
-              <div class="block-item-row padding-lr-10 font-bold" v-for="n in 5">
-                <span class="color-muted">字段A: </span>
-                <span>xxxxxxx</span>
+              <div class="block-item-row padding-lr-10 font-bold" v-for="(item, index) in detailApplyContentData">
+                <span class="color-muted" style="position: relative;top: -13px">{{item.title}}: </span>
+                <el-tooltip class="item" effect="dark" :content="item.value" placement="top">
+                  <span class="moon-content-text-ellipsis-class" style="max-width: 400px;display: inline-block">
+                    {{ item.value }}
+                  </span>
+                </el-tooltip>
               </div>
             </div>
         </div>
@@ -245,20 +262,107 @@
           </div>
           <div class="block-item-bg font-size-12 margin-top-10 color-sub-title">
             <el-steps direction="vertical" space="60px">
-              <el-step v-for="(item, index) in 5" :key="index">
+              <el-step v-for="(item, index) in detailApplyAuditList" :key="index">
                 <div slot="icon">
                   <i class="fa fa-flag" style="font-size: 12px"></i>
                 </div>
                 <div slot="title" class="font-size-12">
-                  步骤 1
+                  <span v-if="item.nodeType == 'handle'" class="color-success">
+                    {{ $t("审批") }}
+                    <label v-if="item.andor == 'and'"> ({{ $t("与签") }}) </label>
+                    <label v-if="item.andor == 'or'"> ({{ $t("或签") }}) </label>
+                  </span>
+                  <span v-if="item.nodeType == 'cc'" class="color-warning">{{ $t("抄送") }}</span>
                 </div>
-                <div slot="description" class="font-size-12">
-                  描述性文字
+                <div slot="description" class="font-size-12 color-sub-title">
+                  <div>
+                    <template v-if="item.nodeType == 'handle'">
+                      <div v-for="(itemUser, indexUser) in item.handleUserList" :key="indexUser">
+                        <span class="color-grand"> <i class="fa fa-user"></i> {{ itemUser.userName }} </span>
+                        <span class="margin-left-10">
+                          <label v-if="itemUser.status === -1" class="color-warning">{{$t("撤销")}}</label>
+                          <label v-if="itemUser.status === 0" class="color-warning">{{$t("待审核")}}</label>
+                          <label v-if="itemUser.status === 3" class="color-success">{{$t("通过")}}</label>
+                          <label v-if="itemUser.status === 4" class="color-danger">{{$t("未通过")}}</label>
+                        </span>
+                      </div>
+                    </template>
+                    <template v-if="item.nodeType == 'cc'">
+                      <el-tag size="mini" v-for="(itemUser, indexUser) in item.handleUserNameList" :key="indexUser" v-if="indexUser <= 5">
+                        <div class="moon-content-text-ellipsis-class" style="width: 50px">
+                          {{ itemUser }}
+                        </div>
+                      </el-tag>
+
+                      <el-popover
+                        placement="left"
+                        width="200"
+                        trigger="hover"
+                        v-if="item.handleUserNameList.length > 5">
+                        <div style="height: 100px;overflow-y: auto">
+                          <div v-for="(itemUser, indexUser) in item.handleUserNameList" :key="indexUser">
+                            <div class="font-size-12 padding-tb-5">
+                              <span>{{itemUser}}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <el-tag slot="reference" size="mini" type="success">
+                          <div class="moon-content-text-ellipsis-class padding-lr-5">
+                            <i class="fa fa-user"></i>
+                            <label class="margin-left-5">{{item.handleUserNameList.length}}</label>
+                          </div>
+                        </el-tag>
+                      </el-popover>
+                    </template>
+                  </div>
                 </div>
               </el-step>
             </el-steps>
           </div>
         </div>
+      </div>
+
+      <div slot="footer">
+        <template v-if="activeMenu == 1">
+          <div class="text-right padding-lr-10">
+            <el-button size="small" @click="handleCancel">取 消</el-button>
+            <el-button size="small" type="success" @click="handleOk($event, detailData, 1)">同 意</el-button>
+<!--            <el-button size="small" type="primary" @click="handleOk($event, detailData, 6)">转 交</el-button>-->
+            <el-button size="small" type="primary" @click="handleOk($event, detailData, -1)">撤 销</el-button>
+            <el-popover
+              placement="top"
+              width="200"
+              @hide="cancelPop"
+              v-model="visibleNo">
+              <div class="margin-bottom-10">
+                <el-input
+                  type="textarea"
+                  :rows="2"
+                  placeholder="请输入内容"
+                  v-model="textarea">
+                </el-input>
+              </div>
+              <div style="text-align: right; margin: 0">
+                <el-button size="mini" type="text" @click="cancelPop">取消</el-button>
+                <el-button type="primary" size="mini" @click="handleOk($event, detailData, 2)">确定</el-button>
+              </div>
+              <el-button slot="reference" type="warning" size="small">{{$t("驳回")}}</el-button>
+            </el-popover>
+          </div>
+        </template>
+        <template v-if="activeMenu == 2">
+          <div class="text-right padding-lr-10">
+            <el-button size="small" @click="handleCancel">取 消</el-button>
+            <el-button size="small" type="primary" @click="handleOk($event, detailData, -1)">撤 销</el-button>
+          </div>
+        </template>
+        <template v-if="activeMenu == 4">
+          <div v-if="detailData.status == 5" class="text-center bg-warning color-white" @click="handleCancel">无需审批</div>
+          <div v-if="detailData.status == 8" class="text-center bg-warning color-white" @click="handleCancel">审批中</div>
+          <div v-if="detailData.status == -1" class="text-center bg-warning color-white" @click="handleCancel">已撤销</div>
+          <div v-if="detailData.status == 3" class="text-center bg-success color-white" @click="handleCancel">通过</div>
+          <div v-if="detailData.status == 4" class="text-center bg-danger color-white" @click="handleCancel">未通过</div>
+        </template>
       </div>
     </drawer-layout-right>
   </div>
@@ -268,6 +372,7 @@
   import mixins from "../utils/mixins";
   import {common} from "../utils/api/url";
   import DialogNormal from "~/components/utils/dialog/DialogNormal";
+  import {MessageError, MessageSuccess} from "~/utils/utils";
   export default {
     name: 'index',
     mixins: [mixins],
@@ -276,10 +381,20 @@
       return {
         activeTab: 1,
         activeMenu: 1,
+        auditStatus: 1,
         dialogServer: false,
         dialogServerDetail: false,
         testArea: '',
-        tableData: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+        collectionList: [],
+        noticeList: [],
+        auditList: [],
+        tableData: [],
+        detailData: '',
+        detailApplyContentData: [],
+        detailApplyAuditList: [],
+        textarea: '',
+        visibleOk: false,
+        visibleNo: false
       }
     },
     mounted() {
@@ -288,6 +403,7 @@
       });
     },
     created() {
+      this.initAuditList();
       this.init();
     },
     methods: {
@@ -296,6 +412,36 @@
       },
       async init(){
         await this.getSessionInfo();
+      },
+      initAuditList(){
+        let params = {
+          page: this.page,
+          num: this.num,
+          queryApplyListType: this.activeMenu
+        };
+        this.$axios.get(common.server_form_audit_page, {params: params}).then(res=>{
+          if (res.data.code == 200){
+            if (res.data.data){
+              this.tableData = res.data.data.list;
+              this.total = res.data.data.total;
+              this.num = res.data.data.num;
+              this.page = res.data.data.page;
+            }
+          }
+        });
+      },
+      initAuditDetailList(id){
+        let params = {
+          id: id
+        };
+        this.$axios.get(common.server_form_audit_query, {params: params}).then(res=>{
+          if (res.data.code == 200){
+            if (res.data.data){
+              console.log(res.data.data.handleList);
+              this.detailApplyAuditList = res.data.data.handleList;
+            }
+          }
+        });
       },
       tabClick(data){
         this.activeTab = data;
@@ -307,7 +453,11 @@
         this.dialogServer = true;
       },
       closeDialog(event){
+        this.detailData = '';
+        this.detailApplyContentData = [];
+        this.detailApplyAuditList = [];
         this.dialogServer = false;
+        this.dialogServerDetail = false;
       },
       cancelDialog(){
         this.dialogServer = false;
@@ -318,18 +468,54 @@
       sizeChange(event){
         this.page = 1;
         this.num = event;
-        this.init();
+        this.initAuditList();
       },
       currentPage(event){
         this.page = event;
-        this.init();
+        this.initAuditList();
       },
       jumpPage(data){
         this.page = data;
-        this.init();
+        this.initAuditList();
       },
-      detailClick(){
+      detailClick($event, item){
+        this.detailData = item;
+        if (item.applyContent  && item.applyContent != "[]"){
+          this.detailApplyContentData = JSON.parse(item.applyContent);
+        }
+        console.log(item);
+        this.initAuditDetailList(item._id);
         this.dialogServerDetail = true;
+      },
+      activeMenuClick(event, type){
+        this.activeMenu = type;
+        this.page = 1;
+        this.initAuditList();
+      },
+      cancelPop(){
+        this.textarea = '';
+        this.visibleOk = false;
+        this.visibleNo = false;
+      },
+      handleCancel(){
+        this.dialogServerDetail = false;
+      },
+      handleOk(event, data, type){
+        let params = {
+          id: data._id,
+          status: type,
+          des: this.textarea
+        };
+        params = this.$qs.stringify(params);
+        this.$axios.post(common.server_form_audit_handle, params).then(res => {
+          if (res.data.code == 200){
+            this.initAuditList();
+            this.dialogServerDetail = false;
+            MessageSuccess(res.data.desc);
+          }else {
+            MessageError(res.data.desc);
+          }
+        });
       }
     }
   }
