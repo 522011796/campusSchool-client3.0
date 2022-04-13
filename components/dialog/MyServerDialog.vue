@@ -13,12 +13,12 @@
         <div class="dialog-header-block padding-lr-10">
           <el-row>
             <el-col :span="12">
-              <div>
+              <div style="height: 30px;line-height: 30px">
                 <i class="fa fa-file-text color-warning"></i>
                 <span>{{ data.form_name }}</span>
                 <span class="color-muted font-size-12 margin-left-10">
                   <label class="color-sub-title">{{$t("部门")}}:</label>
-                  <label>{{ data.department_names }}</label>
+                  <label class="moon-content-text-ellipsis-class" style="width: 200px;display: inline-block;position: relative;top: 10px">{{ data.department_names }}</label>
                 </span>
                 <span class="color-muted font-size-12 margin-left-10">
                   <label class="color-sub-title">{{$t("类别")}}:</label>
