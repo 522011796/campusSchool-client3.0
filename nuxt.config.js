@@ -25,6 +25,7 @@ export default {
     'quill/dist/quill.snow.css',
     'quill/dist/quill.bubble.css',
     'quill/dist/quill.core.css',
+    'vant/lib/index.less',
   ],
   loading: false,
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
@@ -37,6 +38,8 @@ export default {
     '@/plugins/echarts',
     { src: "~plugins/formCreate", ssr: false },
     { src: "~plugins/vue-quill-custom-editor.js", ssr: false },
+    {src: '@/plugins/vant-ui', ssr: true},
+    '@/plugins/vuePageTrasition',
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)

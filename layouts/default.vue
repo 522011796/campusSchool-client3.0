@@ -1,6 +1,6 @@
 <template>
   <div class="moon-container">
-    <div class="moon-top-menu">
+    <div class="moon-top-menu min-width-1200">
       <div class="pull-left moon-top-logo moon-top-logo-shadow animated fadeInLeftBig">
         <span class="color-white moon-top-logo-title">
           <img src="~static/img/system-logo.png" style="height: 50px;width: 220px;position: relative; top: 5px;left: -10px">
@@ -136,10 +136,10 @@
       </div>
 
       <template v-if="showContent == true">
-        <div class="block-top" :style="divHeight1">
+        <div class="block-top min-width-1200" :style="divHeight1">
           <img src="~static/img/bg.png" style="height: 100%;width: 100%">
         </div>
-        <div class="block-bottom" :style="divHeight2"></div>
+        <div class="block-bottom min-width-1200" :style="divHeight2"></div>
         <div class="block-main">
           <nuxt ref="childRef"></nuxt>
         </div>

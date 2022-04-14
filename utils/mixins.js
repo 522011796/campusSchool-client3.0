@@ -125,6 +125,42 @@ export default {
         'overflow-y': 'hidden',
         'overflow-x': 'hidden'
       },
+      divHeight3: {
+        'height': '',
+        'height1': '',
+        'overflow-y': 'hidden',
+        'overflow-x': 'hidden'
+      },
+      divHeight4: {
+        'height': '',
+        'height1': '',
+        'overflow-y': 'hidden',
+        'overflow-x': 'hidden'
+      },
+      divHeight5: {
+        'height': '',
+        'height1': '',
+        'overflow-y': 'auto',
+        'overflow-x': 'hidden'
+      },
+      divHeight6: {
+        'height': '',
+        'height1': '',
+        'overflow-y': 'auto',
+        'overflow-x': 'hidden'
+      },
+      divHeight7: {
+        'height': '',
+        'height1': '',
+        'overflow-y': 'auto',
+        'overflow-x': 'hidden'
+      },
+      divHeight8: {
+        'height': '',
+        'height1': '',
+        'overflow-y': 'auto',
+        'overflow-x': 'hidden'
+      },
       tableHeight: {
         'height': '',
       },
@@ -343,6 +379,12 @@ export default {
         this.divHeight2.height = (window.innerHeight - 60) * 0.4 + 'px';
         this.divHeight1.height1 = (window.innerHeight - 60) * 0.6;
         this.divHeight2.height1 = (window.innerHeight - 60) * 0.4;
+        this.divHeight3.height = window.innerHeight - 60 + 'px';
+        this.divHeight4.height = window.innerHeight + 'px';
+        this.divHeight5.height = window.innerHeight - 350 + 'px';
+        this.divHeight6.height = window.innerHeight - 70 + 'px';
+        this.divHeight7.height = window.innerHeight - 90 + 'px';
+        this.divHeight8.height = window.innerHeight * 0.85 - 60 + 'px';
         this.tableHeight.height = (window.innerHeight - 60) * 0.86 - 30;
         this.drawHeight.height = window.innerHeight - 80 + 'px';
         this.drawHeight2.height = window.innerHeight - 15 + 'px';
