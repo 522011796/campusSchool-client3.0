@@ -87,6 +87,11 @@
             <el-button size="mini" type="primary" @click="handleOk($event, detailData, -1)">撤 销</el-button>
           </div>
         </template>
+        <template v-if="active == 3">
+          <div class="text-right padding-lr-10">
+            <el-button size="mini" type="warning">抄送信息</el-button>
+          </div>
+        </template>
         <template v-if="active == 4">
           <div class="text-right">
             <el-button plain type="primary" size="mini" v-if="detailData.status == 5" class="text-center color-white">无需审批</el-button>
@@ -261,12 +266,13 @@
       layoutInit(){
 
       },
-      init(){
+      async init(){
         let params = {
           page: this.page,
           num: this.num,
           queryApplyListType: this.active
         };
+        await this.getSessionInfo();
         this.$axios.get(common.server_form_audit_page, {params: params}).then(res=>{
           if (res.data.code == 200){
             if (res.data.data){
