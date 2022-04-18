@@ -14,7 +14,7 @@
         <van-tab name="2">
           <span slot="title" class="font-size-12">{{$t('单位办事')}}</span>
         </van-tab>
-        <van-tab name="5">
+        <van-tab name="5" v-if="loginUserType == 4">
           <span slot="title" class="font-size-12">
             <i class="fa fa-send"></i>
             {{$t('待办事项')}}
@@ -94,12 +94,13 @@
       }
     },
     mounted() {
-      this.$nextTick(() => {
 
-      });
     },
     created() {
       this.active = this.$route.query.activeType ? this.$route.query.activeType : 6;
+      if (this.$route.query.sessionId){
+        this.initAppConfig();
+      }
       if (this.active == 6){
         this.initAppRecommend();
       }else {
@@ -109,6 +110,10 @@
     methods: {
       layoutInit(){
 
+      },
+      async initAppConfig(){
+        await this.autoLoginApp();
+        await this.getSessionInfo();
       },
       initAppRecommend(){
         let params = {};

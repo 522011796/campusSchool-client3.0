@@ -1,10 +1,18 @@
 import global from "~/utils/global";
 import {common} from "~/utils/api/url";
-import {setChildren, setCollegeChildren, setSchoolBuildChildren, setDormBuildChildren, setDeptChildren} from "~/utils/utils";
+import {
+  setChildren,
+  setCollegeChildren,
+  setSchoolBuildChildren,
+  setDormBuildChildren,
+  setDeptChildren,
+  MessageSuccess, MessageError
+} from "~/utils/utils";
 
 export default {
   data (){
     return {
+      testLogin: '',
       value: '',
       testDefault: '',
       //公共属性
@@ -107,6 +115,7 @@ export default {
       deptMixinsList: [],
       categoryMixinsList: [],
       loginStatusInfo: false,
+      globalAppType: '',
       divHeight: {
         'height': '',
         'height1': '',
@@ -181,6 +190,37 @@ export default {
     this.g_HH();
   },
   methods: {
+    async autoLoginCheckApp(){
+      let params = {};
+      params = this.$qs.stringify(params);
+      this.dialogLoading = true;
+      await this.$axios.post(common.login_check, params, {loading: false}).then(res => {
+        if (res.data.code == 200){
+          this.testLogin = res.data.data.loginCheck;
+          if(res.data.data.loginCheck == false){
+            this.autoLoginApp();
+          }
+        }else {
+
+        }
+      });
+    },
+    async autoLoginApp(){
+      let params = {
+        clientType: 3,
+        accountType: 5,
+        account: this.$route.query.sessionId
+      };
+      params = this.$qs.stringify(params);
+      this.dialogLoading = true;
+      await this.$axios.post(common.login_url, params, {loading: false}).then(res => {
+        if (res.data.code == 200){
+
+        }else {
+
+        }
+      });
+    },
     initServer(data){
       let params = {
         appletId: this.appletId,
@@ -424,7 +464,7 @@ export default {
      */
     async getLoginStatus() {
       let params = {};
-      await this.$axios.post(common.logincheck, params).then(res => {
+      await this.$axios.post(common.login_check, params).then(res => {
         if (res.data.data){
           this.loginStatusInfo = res.data.data.loginCheck;
         }

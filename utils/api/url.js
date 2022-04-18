@@ -573,6 +573,6 @@ export const common = {
   server_form_audit_query: '/proxy/school/applet/form/apply/query',//服务审批详细列表
   server_form_audit_handle: '/proxy/school/applet/form/apply/handle',//服务审批操作
 
-  logincheck: '/proxy/user/loginCheck',//登录状态
+  login_check: '/proxy/user/loginCheck',//登录状态
 
 };

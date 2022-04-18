@@ -248,9 +248,7 @@
       }
     },
     mounted() {
-      this.$nextTick(() => {
 
-      });
     },
     created() {
       this.appletType = this.activeTab;

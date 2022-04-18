@@ -4,9 +4,9 @@ export default {
     title: '棉花糖智慧校园管理平台',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'viewport', content: 'width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,viewport-fit=cover' },
       { hid: 'description', name: 'description', content: '' },
-      { name: "referrer", content: "no-referrer" }
+      { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
