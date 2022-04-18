@@ -1,5 +1,5 @@
 <template>
-  <div :style="divHeight4" class="bg-app-success">
+  <div :style="divHeight4">
     <vue-page-transition name="fade-in-right">
       <nuxt></nuxt>
     </vue-page-transition>

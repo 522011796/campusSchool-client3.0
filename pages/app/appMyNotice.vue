@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="bg-app-success header-title-block color-white">
+    <div class="header-title-block color-white" :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' ">
       <van-row>
         <van-col span="4">
           <div class="text-left padding-lr-10">
@@ -296,6 +296,9 @@
       returnIndex(){
         this.$router.push({
           path: '/app/appIndex',
+          query: {
+            userType: this.loginUserAppType
+          }
         });
       },
       dataDetail(event, item){

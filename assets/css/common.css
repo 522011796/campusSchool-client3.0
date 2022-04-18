@@ -212,7 +212,8 @@ a{
   background: rgba(73, 197, 105, 1);
 }
 .bg-app-success_teacher{
-  background: #00D3A1;
+  /*background: #00D3A1;*/
+  background: rgb(53, 154, 255, 1);
 }
 .bg-success{
   background: #67C23A;

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="bg-app-success header-title-block">
+    <div class="header-title-block" :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' ">
       <van-tabs v-model="active" @click="activeTabMenu" type="card" class="padding-top-10" color="#1EA084" title-active-color="#ffffff" title-inactive-color="#ffffff" background="#949494">
         <van-tab name="6">
           <span slot="title" class="font-size-12">{{$t('推荐服务')}}</span>
@@ -14,7 +14,7 @@
         <van-tab name="2">
           <span slot="title" class="font-size-12">{{$t('单位办事')}}</span>
         </van-tab>
-        <van-tab name="5" v-if="loginUserType == 4">
+        <van-tab name="5" v-if="loginUserAppType == 4">
           <span slot="title" class="font-size-12">
             <i class="fa fa-send"></i>
             {{$t('待办事项')}}
@@ -113,7 +113,7 @@
       },
       async initAppConfig(){
         await this.autoLoginApp();
-        await this.getSessionInfo();
+        //await this.getSessionInfo();
       },
       initAppRecommend(){
         let params = {};
@@ -138,7 +138,8 @@
           this.$router.push({
             path: '/app/appAllServer',
             query: {
-              activeType: this.active
+              activeType: this.active,
+              userType: this.loginUserAppType
             }
           });
         }else {
@@ -146,7 +147,8 @@
             path: '/app/appServer',
             query: {
               id: item.id,
-              activeType: this.active
+              activeType: this.active,
+              userType: this.loginUserAppType
             }
           });
         }
@@ -158,7 +160,8 @@
           this.$router.push({
             path: '/app/appMyNotice',
             query: {
-              id: parseInt(name)
+              id: parseInt(name),
+              userType: this.loginUserAppType
             }
           });
         }else if (name == 6){

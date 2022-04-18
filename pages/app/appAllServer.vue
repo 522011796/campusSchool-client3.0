@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="bg-app-success header-title-block">
+    <div class="header-title-block" :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' ">
       <van-row>
         <van-col span="4">
           <div class="text-left padding-lr-10 color-white">
@@ -108,7 +108,8 @@
             path: '/app/appServer',
             query: {
               id: item.id,
-              activeType: this.active
+              activeType: this.active,
+              userType: this.loginUserAppType
             }
           });
         }
@@ -120,7 +121,8 @@
           this.$router.push({
             path: '/app/appMyNotice',
             query: {
-              id: parseInt(name)
+              id: parseInt(name),
+              userType: this.loginUserAppType
             }
           });
         }else if (name == 6){
@@ -136,6 +138,7 @@
           path: '/app/appIndex',
           query: {
             activeType: this.$route.query.activeType,
+          userType: this.loginUserAppType
           }
         });
       },

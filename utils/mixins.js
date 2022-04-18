@@ -25,6 +25,7 @@ export default {
       campusName: global.campusName,
       organizeName: global.organizeName,
       loginUserType: global.loginUserType,
+      loginUserAppType: '',
       loginUserPhone: global.loginUserPhone,
       campusLogo: global.campusLogo,
       majorId: global.majorId,
@@ -188,8 +189,12 @@ export default {
   },
   created() {
     this.g_HH();
+    this.getUrl();
   },
   methods: {
+    getUrl(){
+      this.loginUserAppType = this.$route.query.userType;
+    },
     async autoLoginCheckApp(){
       let params = {};
       params = this.$qs.stringify(params);

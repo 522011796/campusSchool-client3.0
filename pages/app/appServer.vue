@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="bg-app-success header-title-block color-white">
+    <div class="header-title-block color-white" :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' ">
       <van-row>
         <van-col span="12">
           <div class="text-left padding-lr-10">
@@ -80,6 +80,7 @@
           query: {
             id: this.serverDetail.id,
             activeType: this.$route.query.activeType,
+            userType: this.loginUserAppType
           }
         });
       },
@@ -88,6 +89,7 @@
           path: '/app/appIndex',
           query: {
             activeType: this.$route.query.activeType,
+            userType: this.loginUserAppType
           }
         });
       }
