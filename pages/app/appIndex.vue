@@ -14,7 +14,7 @@
         <van-tab name="2">
           <span slot="title" class="font-size-12">{{$t('单位办事')}}</span>
         </van-tab>
-        <van-tab name="5" v-if="loginUserAppType == 4">
+        <van-tab name="5">
           <span slot="title" class="font-size-12">
             <i class="fa fa-send"></i>
             {{$t('待办事项')}}

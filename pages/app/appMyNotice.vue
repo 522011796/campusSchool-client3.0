@@ -6,12 +6,11 @@
           <div class="text-left padding-lr-10">
             <span class="font-bold font-size-14" @click="returnIndex">
               <i class="fa fa-chevron-left"></i>
-              {{$t("返回")}}
             </span>
           </div>
         </van-col>
         <van-col span="16">
-          <van-tabs @click="activeTabMenu" style="padding-top: 8px" v-model="active" color="#ffffff" title-active-color="#ffffff" title-inactive-color="#ffffff" background="#00D3A1">
+          <van-tabs type="card" @click="activeTabMenu" class="padding-top-10" color="#1EA084" title-active-color="#ffffff" title-inactive-color="#ffffff" background="#949494">
             <van-tab name="1" :title="$t('我待办')"></van-tab>
             <van-tab name="2" :title="$t('我提交')"></van-tab>
             <van-tab name="3" :title="$t('抄送我')"></van-tab>
