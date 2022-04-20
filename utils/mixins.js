@@ -175,6 +175,18 @@ export default {
         'overflow-y': 'auto',
         'overflow-x': 'hidden'
       },
+      divHeight9: {
+        'height': '',
+        'height1': '',
+        'overflow-y': 'auto',
+        'overflow-x': 'hidden'
+      },
+      divHeight10: {
+        'height': '',
+        'height1': '',
+        'overflow-y': 'auto',
+        'overflow-x': 'hidden'
+      },
       tableHeight: {
         'height': '',
       },
@@ -193,6 +205,7 @@ export default {
     });
   },
   created() {
+    this.getUrl();
     this.g_HH();
   },
   methods: {
@@ -424,6 +437,8 @@ export default {
     },
     g_HH(){
       if (process.browser) {
+        let itemHeight = this.globalAppShow == 'ios' ? (60 + parseFloat(this.navHeight)) : 60;
+        this.testDefault = itemHeight;
         this.divHeight.height = window.innerHeight - 60 + 'px';
         this.divHeight.height1 = window.innerHeight - 60;
         this.divHeight1.height = (window.innerHeight - 60) * 0.6 + 'px';
@@ -432,13 +447,16 @@ export default {
         this.divHeight2.height1 = (window.innerHeight - 60) * 0.4;
         this.divHeight3.height = window.innerHeight - 60 + 'px';
         this.divHeight4.height = window.innerHeight + 'px';
-        this.divHeight5.height = window.innerHeight - 350 + 'px';
+        this.divHeight5.height = window.innerHeight - itemHeight - 200 + 'px';
         this.divHeight6.height = window.innerHeight - 70 + 'px';
         this.divHeight7.height = window.innerHeight - 90 + 'px';
         this.divHeight8.height = window.innerHeight * 0.85 - 60 + 'px';
+        this.divHeight9.height = window.innerHeight - itemHeight - 70 + 'px';
+        this.divHeight10.height = window.innerHeight - itemHeight + 'px';
         this.tableHeight.height = (window.innerHeight - 60) * 0.86 - 30;
         this.drawHeight.height = window.innerHeight - 80 + 'px';
         this.drawHeight2.height = window.innerHeight - 15 + 'px';
+        console.log(40+this.navHeight);
       }
     },
     async initVersionData(){

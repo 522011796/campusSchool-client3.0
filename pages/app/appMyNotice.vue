@@ -25,7 +25,7 @@
     </div>
 
     <div style="margin-top:1px;" class="margin-left-10 margin-right-10">
-      <div class="content-block padding-lr-10 padding-tb-10" :style="divHeight6">
+      <div class="content-block padding-lr-10 padding-tb-10" :style="divHeight10">
         <van-empty v-if="tableData.length == 0" description="暂无数据" />
         <div v-else class="content-block-item padding-lr-10 padding-tb-10" style="position: relative" v-for="(item, index) in tableData" @click="dataDetail($event, item)">
           <div class="content-block-item-tag bg-danger" v-if="item.status === -1">

@@ -157,7 +157,12 @@
                 :label="$t('状态')">
                 <template slot-scope="scope">
                   <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                    <div class="text-center">1</div>
+                    <div class="text-center">
+                      <label v-if="scope.row.status === -1" class="color-warning">{{$t("撤销")}}</label>
+                      <label v-if="scope.row.status === 0" class="color-warning">{{$t("待审核")}}</label>
+                      <label v-if="scope.row.status === 3" class="color-success">{{$t("通过")}}</label>
+                      <label v-if="scope.row.status === 4" class="color-danger">{{$t("未通过")}}</label>
+                    </div>
                     <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
                       <label v-if="scope.row.status === -1" class="color-warning">{{$t("撤销")}}</label>
                       <label v-if="scope.row.status === 0" class="color-warning">{{$t("待审核")}}</label>

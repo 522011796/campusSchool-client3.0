@@ -78,7 +78,7 @@
             <van-row>
               <van-col span="12">
                 <div class="text-left moon-content-text-ellipsis-class">
-                  <span>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span>
+                  <span>xxxxxxxxxxxxx{{index}}</span>
                 </div>
               </van-col>
               <van-col span="12">

@@ -31,11 +31,11 @@
         </van-col>
       </van-row>
     </div>
-    <div class="content-block" :style="divHeight3">
+    <div class="content-block">
       <form action="/">
         <van-search v-model="serchName" placeholder="请输入服务名称" @search="onSearch" @clear="onClear"/>
       </form>
-      <div class="margin-top-5">
+      <div class="margin-top-5" :style="divHeight9">
         <van-grid :gutter="10">
           <van-grid-item v-for="(item, index) in serverAppList" :key="index" icon="photo-o" @click="serverBlock($event, item)">
             <div slot="icon" class="text-center">

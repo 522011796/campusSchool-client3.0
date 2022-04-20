@@ -29,7 +29,7 @@
     </div>
 
     <div style="margin-top:1px;" class="margin-left-10 margin-right-10">
-      <div class="content-block padding-lr-10" :style="divHeight6">
+      <div class="content-block padding-lr-10" :style="divHeight10">
         <div style="line-height: 30px; white-space: pre-line">
           <pre>{{ serverDetail.des }}</pre>
         </div>
