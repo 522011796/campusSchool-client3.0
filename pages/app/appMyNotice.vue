@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <div :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' " :style="{height: navHeight+'px'}"></div>
     <div class="header-title-block color-white" :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' ">
       <van-row>
         <van-col span="4">
@@ -286,6 +287,11 @@
       serverBlock(event){
         this.$router.push({
           path: '/app/appServerForm',
+          query: {
+            userType: this.loginUserAppType,
+            navH: this.navHeight,
+            appType: this.globalAppShow
+          }
         });
       },
       activeTabMenu(name){
@@ -296,7 +302,9 @@
         this.$router.push({
           path: '/app/appIndex',
           query: {
-            userType: this.loginUserAppType
+            userType: this.loginUserAppType,
+            navH: this.navHeight,
+            appType: this.globalAppShow
           }
         });
       },

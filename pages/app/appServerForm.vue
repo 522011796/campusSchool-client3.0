@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' " :style="{height: navHeight+'px'}"></div>
     <div class="header-title-block color-white" :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' ">
       <van-row>
         <van-col span="6">
@@ -157,7 +158,9 @@
           query: {
             id: this.$route.query.id,
             activeType: this.$route.query.activeType,
-            userType: this.loginUserAppType
+            userType: this.loginUserAppType,
+            navH: this.navHeight,
+            appType: this.globalAppShow
           }
         });
       }

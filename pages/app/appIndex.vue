@@ -1,26 +1,42 @@
 <template>
   <div class="container">
+    <div :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' " :style="{height: navHeight+'px'}"></div>
     <div class="header-title-block" :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' ">
-      <van-tabs v-model="active" @click="activeTabMenu" type="card" class="padding-top-10" color="#1EA084" title-active-color="#ffffff" title-inactive-color="#ffffff" background="#949494">
-        <van-tab name="6">
-          <span slot="title" class="font-size-12">{{$t('推荐服务')}}</span>
-        </van-tab>
-        <van-tab name="0">
-          <span slot="title" class="font-size-12">{{$t('学生办事')}}</span>
-        </van-tab>
-        <van-tab name="1">
-          <span slot="title" class="font-size-12">{{$t('老师办事')}}</span>
-        </van-tab>
-        <van-tab name="2">
-          <span slot="title" class="font-size-12">{{$t('单位办事')}}</span>
-        </van-tab>
-        <van-tab name="5">
+      <van-col span="2">
+        <div class="text-left padding-lr-10 color-white" v-if="globalAppShow && globalAppShow != ''">
+            <span class="font-bold font-size-14" @click="returnIndex">
+              <i class="fa fa-chevron-left"></i>
+            </span>
+        </div>
+        <div v-else>
+          &nbsp;
+        </div>
+      </van-col>
+      <van-col span="20">
+        <van-tabs v-model="active" @click="activeTabMenu" type="card" class="padding-top-10" color="#1EA084" title-active-color="#ffffff" title-inactive-color="#ffffff" background="#949494">
+          <van-tab name="6">
+            <span slot="title" class="font-size-12">{{$t('推荐服务')}}</span>
+          </van-tab>
+          <van-tab name="0">
+            <span slot="title" class="font-size-12">{{$t('学生办事')}}</span>
+          </van-tab>
+          <van-tab name="1">
+            <span slot="title" class="font-size-12">{{$t('老师办事')}}</span>
+          </van-tab>
+          <van-tab name="2">
+            <span slot="title" class="font-size-12">{{$t('单位办事')}}</span>
+          </van-tab>
+          <van-tab name="5">
           <span slot="title" class="font-size-12">
             <i class="fa fa-send"></i>
-            {{$t('待办事项')}}
+            {{$t('待办')}}
           </span>
-        </van-tab>
-      </van-tabs>
+          </van-tab>
+        </van-tabs>
+      </van-col>
+      <van-col span="2">
+        &nbsp;
+      </van-col>
     </div>
     <div class="content-block" :style="divHeight3">
       <div class="margin-top-30">
@@ -82,10 +98,11 @@
   import {common} from "../../utils/api/url";
 
   import mixins from "~/utils/mixins";
+  import mixinsBridge from "~/utils/mixinsBridge";
   export default {
     name: 'appIndex',
     layout: 'defaultAppScreen',
-    mixins: [mixins],
+    mixins: [mixins,mixinsBridge],
     data(){
       return {
         active: 6,
@@ -139,7 +156,9 @@
             path: '/app/appAllServer',
             query: {
               activeType: this.active,
-              userType: this.loginUserAppType
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow
             }
           });
         }else {
@@ -148,7 +167,9 @@
             query: {
               id: item.id,
               activeType: this.active,
-              userType: this.loginUserAppType
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow
             }
           });
         }
@@ -161,7 +182,9 @@
             path: '/app/appMyNotice',
             query: {
               id: parseInt(name),
-              userType: this.loginUserAppType
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow
             }
           });
         }else if (name == 6){
@@ -171,6 +194,9 @@
           this.active = name;
           this.initAppServer();
         }
+      },
+      returnIndex(){
+        this.returnGlobalMain(1);
       }
     }
   }
