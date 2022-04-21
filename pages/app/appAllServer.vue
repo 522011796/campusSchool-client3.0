@@ -33,7 +33,7 @@
     </div>
     <div class="content-block">
       <form action="/">
-        <van-search v-model="serchName" placeholder="请输入服务名称" @search="onSearch" @clear="onClear"/>
+        <van-search v-model="serchName" placeholder="请输入服务名称" @input="onSearch" @clear="onClear"/>
       </form>
       <div class="margin-top-5" :style="divHeight9">
         <van-grid :gutter="10">
@@ -90,9 +90,10 @@
           }
         });
       },
-      initAppServer(){
+      initAppServer(value){
         let params = {
           appletType: this.active,
+          searchKey: value
         };
         this.$axios.get(common.server_list_list, {params: params}).then(res => {
           if (res.data.data){
@@ -119,6 +120,7 @@
       activeTabMenu(name){
         this.noticeAppList = [];
         this.serverAppList = [];
+        this.serchName = '';
         if (name == 5){
           this.$router.push({
             path: '/app/appMyNotice',
@@ -150,6 +152,7 @@
       },
       onSearch(value){
         console.log(value);
+        this.initAppServer(value);
       },
       onClear(){
 
