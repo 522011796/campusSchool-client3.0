@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" ref="myInfoRef">
     <div class="pull-left block-left" :style="divHeight">
       <div class="block-left-top-item" :style="{height: divHeight.height1 * 0.43 + 'px'}">
         <div class="block-item-title padding-lr-10">
@@ -370,6 +370,9 @@
         </template>
       </div>
     </drawer-layout-right>
+
+    <!--服务-->
+    <my-server-dialog :visible="dialogServer" width-style="850px" :data="serverDetailData" @close="closeDialog" @detailClick="detailClick"></my-server-dialog>
   </div>
 </template>
 
@@ -399,7 +402,8 @@
         detailApplyAuditList: [],
         textarea: '',
         visibleOk: false,
-        visibleNo: false
+        visibleNo: false,
+        serverDetailData: {}
       }
     },
     mounted() {
@@ -410,6 +414,7 @@
     created() {
       this.initAuditList();
       this.init();
+      this.$parent.$parent.searchServerBlock = false;
     },
     methods: {
       layoutInit(){
@@ -455,6 +460,7 @@
         item.active = true;
       },
       serverClick($event, item){
+        this.serverDetailData = item;
         this.dialogServer = true;
       },
       closeDialog(event){

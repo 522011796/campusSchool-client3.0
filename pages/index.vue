@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" ref="indexRef">
     <div class="pull-left block-left" :style="divHeight">
       <div class="block-left-top-item" :style="{height: divHeight.height1 * 0.43 + 'px'}">
         <div>
@@ -257,6 +257,7 @@
       this.initServer();
       this.initApplet();
       this.initRecommend();
+      this.$parent.$parent.searchServerBlock = true;
     },
     methods: {
       layoutInit(){
