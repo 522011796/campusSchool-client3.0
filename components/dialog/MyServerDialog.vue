@@ -12,7 +12,7 @@
       <div slot="title">
         <div class="dialog-header-block padding-lr-10">
           <el-row>
-            <el-col :span="12">
+            <el-col :span="18">
               <div style="height: 30px;line-height: 30px">
                 <i class="fa fa-file-text color-warning"></i>
                 <span>{{ data.form_name }}</span>
@@ -26,7 +26,7 @@
                 </span>
               </div>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="6">
               <div class="text-right layout-inline font-size-12">
 <!--                <div style="width: 140px;display: inline-block">-->
 <!--                  <el-rate-->

@@ -456,7 +456,6 @@ export default {
         this.tableHeight.height = (window.innerHeight - 60) * 0.86 - 30;
         this.drawHeight.height = window.innerHeight - 80 + 'px';
         this.drawHeight2.height = window.innerHeight - 15 + 'px';
-        console.log(40+this.navHeight);
       }
     },
     async initVersionData(){

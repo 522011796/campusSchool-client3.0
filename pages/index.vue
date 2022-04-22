@@ -127,7 +127,7 @@
                 <el-col :span="6" v-for="(item, index) in serverDataList" :key="index" @click.native="serverClick($event, item)" class="margin-bottom-20">
                   <el-card shadow="always" :body-style="{padding: '12px',background: '#EBEEF5'}">
                     <div class="moon-content-text-ellipsis-class">
-                      <el-image class="block-icon-class">
+                      <el-image class="block-icon-class" :src="item.form_logo">
                         <div slot="error" class="block-icon-class">
                           <i class="el-icon-picture-outline font-size-15"></i>
                         </div>
