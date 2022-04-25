@@ -40,35 +40,38 @@
                 </template>
               </template>
             </div>
-<!--            <div class="moon-top-user-info-opr">-->
-<!--              <el-row>-->
-<!--                <el-col :span="12" @click.native="updatePhoneInfo">-->
-<!--                  <div>-->
-<!--                    <a href="javascript:;" class="color-white font-size-12">-->
-<!--                      <i class="fa fa-phone"></i>-->
-<!--                      {{$t("修改手机")}}-->
-<!--                    </a>-->
-<!--                  </div>-->
-<!--                </el-col>-->
-<!--                <el-col :span="12" @click.native="updatePwdInfo">-->
-<!--                  <div>-->
-<!--                    <a href="javascript:;" class="color-white font-size-12">-->
-<!--                      <i class="fa fa-lock"></i>-->
-<!--                      {{$t("修改密码")}}-->
-<!--                    </a>-->
-<!--                  </div>-->
-<!--                </el-col>-->
-<!--              </el-row>-->
-<!--            </div>-->
             <div class="moon-top-user-info-opr">
               <el-row>
-                <el-col :span="24" @click.native="logout">
+                <el-col :span="12">
+                  <div v-if="loginStatusInfo == true" @click="myInfo">
+                    <a href="javascript:;" class="color-white font-size-12">
+                      <i class="fa fa-user"></i>
+                      {{$t("个人中心")}}
+                    </a>
+                  </div>
+                  <div v-else>
+                    &nbsp;
+                  </div>
+                </el-col>
+                <el-col :span="12" @click.native="logout">
                   <div>
-                    <a href="javascript:;" class="color-white">{{$t("退出")}}</a>
+                    <a href="javascript:;" class="color-white font-size-12">
+                      <i class="fa fa-sign-out"></i>
+                      {{$t("退出")}}
+                    </a>
                   </div>
                 </el-col>
               </el-row>
             </div>
+<!--            <div class="moon-top-user-info-opr">-->
+<!--              <el-row>-->
+<!--                <el-col :span="24" @click.native="logout">-->
+<!--                  <div>-->
+<!--                    <a href="javascript:;" class="color-white">{{$t("退出")}}</a>-->
+<!--                  </div>-->
+<!--                </el-col>-->
+<!--              </el-row>-->
+<!--            </div>-->
           </div>
 
           <span slot="reference">
@@ -106,18 +109,18 @@
               >
               </el-autocomplete>
             </span>
-            <span class="moon-top-middle-menu-title-icon" v-if="loginStatusInfo == true">
-              <el-button size="mini" class="el-button--0CB5AF">
-                <i class="fa fa-tags"></i>
-                {{$t("课表")}}
-              </el-button>
-            </span>
-            <span class="moon-top-middle-menu-title-icon" v-if="loginStatusInfo == true">
-              <el-button size="mini" class="el-button--0CB5AF" @click="myInfo">
-                <i class="fa fa-bell"></i>
-                {{$t("消息")}}
-              </el-button>
-            </span>
+<!--            <span class="moon-top-middle-menu-title-icon" v-if="loginStatusInfo == true">-->
+<!--              <el-button size="mini" class="el-button&#45;&#45;0CB5AF">-->
+<!--                <i class="fa fa-tags"></i>-->
+<!--                {{$t("课表")}}-->
+<!--              </el-button>-->
+<!--            </span>-->
+<!--            <span class="moon-top-middle-menu-title-icon" v-if="loginStatusInfo == true">-->
+<!--              <el-button size="mini" class="el-button&#45;&#45;0CB5AF" @click="myInfo">-->
+<!--                <i class="fa fa-bell"></i>-->
+<!--                {{$t("消息")}}-->
+<!--              </el-button>-->
+<!--            </span>-->
             <span class="moon-top-middle-menu-title-icon" v-if="loginStatusInfo == false">
               <el-button size="mini" type="success" @click="loginPage">
                 <i class="fa fa-user"></i>
