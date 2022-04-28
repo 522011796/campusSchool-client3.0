@@ -382,17 +382,9 @@
             customHandleUserIds: JSON.stringify(this.auditSelUser),
           }
           let rule = fApi.rule;
-          for (let i = 0; i < rule.length; i++){
-            let obj = {
-              field: rule[i].field,
-              title: rule[i].title,
-              type: rule[i].type,
-              value: rule[i].value
-            }
-            ruleList.push(obj);
-          }
-          console.log(JSON.stringify(formData));
-          params['applyContent'] = JSON.stringify(ruleList);
+          let ruleObjList =  this.setRuleChild(rule, ruleList);
+          //console.log(ruleObjList);
+          params['applyContent'] = JSON.stringify(ruleObjList);
 
           url = common.server_form_add;
           params = this.$qs.stringify(params);
@@ -407,6 +399,26 @@
             this.btnLoading = false;
           });
         });
+      },
+      setRuleChild(rule, ruleList){
+        let obj = {};
+        for (let i = 0; i < rule.length; i++){
+          if (rule[i]['children'] && rule[i]['children'].length > 0){
+            this.setRuleChild(rule[i]['children'], ruleList);
+            continue;
+          }else {
+            if (rule[i].field){
+              obj = {
+                field: rule[i].field,
+                title: rule[i].title,
+                type: rule[i].type,
+                value: rule[i].value
+              }
+              ruleList.push(obj);
+            }
+          }
+        }
+        return ruleList;
       }
     }
   }
