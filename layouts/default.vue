@@ -142,7 +142,7 @@
         <div class="block-top min-width-1200" :style="divHeight1">
           <img src="~static/img/bg.png" style="height: 100%;width: 100%">
         </div>
-        <div class="block-bottom min-width-1200" :style="divHeight2"></div>
+<!--        <div class="block-bottom min-width-1200" :style="divHeight2"></div>-->
         <div class="block-main">
           <nuxt ref="childRef"></nuxt>
         </div>

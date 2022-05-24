@@ -441,9 +441,9 @@ export default {
         this.testDefault = itemHeight;
         this.divHeight.height = window.innerHeight - 60 + 'px';
         this.divHeight.height1 = window.innerHeight - 60;
-        this.divHeight1.height = (window.innerHeight - 60) * 0.6 + 'px';
+        this.divHeight1.height = (window.innerHeight - 60) * 1 + 'px';
         this.divHeight2.height = (window.innerHeight - 60) * 0.4 + 'px';
-        this.divHeight1.height1 = (window.innerHeight - 60) * 0.6;
+        this.divHeight1.height1 = (window.innerHeight - 60) * 1;
         this.divHeight2.height1 = (window.innerHeight - 60) * 0.4;
         this.divHeight3.height = window.innerHeight - 60 + 'px';
         this.divHeight4.height = window.innerHeight + 'px';

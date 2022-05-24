@@ -94,6 +94,9 @@
               <div class="block-item-left-header-item" @click="activeMenuClick($event, 4)" :class="activeMenu == 4 ? 'left-menu-active' : ''">
                 <span>{{$t("我已办的")}}</span>
               </div>
+              <div class="block-item-left-header-item" @click="activeMenuClick($event, 3)" :class="activeMenu == 3 ? 'left-menu-active' : ''">
+                <span>{{$t("抄送我的")}}</span>
+              </div>
             </div>
           </div>
           <div class="block-item-right-tag-content" :style="{height: divHeight.height1 + 'px'}">
