@@ -629,6 +629,7 @@ export default {
         let arr = [];
         if (res.data.data){
           this.dataDept = setDeptChildren(res.data.data[0].child_list, arr, 'child_list', 'children', type);
+          console.log(this.dataDept);
         }
       });
     },

@@ -1,128 +1,122 @@
 <template>
   <div class="container" ref="indexRef">
-    <div>
-      <div class="pull-right block-left padding-lr-10" :style="divHeight">
-        <div class="block-left-bottom-item" :style="{height: divHeight.height1 * 0.47 + 'px'}">
-          <div class="block-item-title padding-lr-10">
-            <el-row>
-              <el-col :span="12">
-                <div class="color-sub-grand font-bold font-size-12">
+    <div class="pull-left block-left" :style="divHeight">
+      <div class="block-left-top-item" :style="{height: divHeight.height1 * 0.43 + 'px'}">
+        <div>
+          <div class="text-center block-logo-class" :style="{top: (divHeight.height1 * 0.43 * 0.27)+'px'}">
+            <el-avatar :size="100" :src="campusLogo"></el-avatar>
+          </div>
+          <div class="text-center color-muted font-bold block-logotext-class" :style="{top: (divHeight.height1 * 0.43 * 0.27)+'px'}">
+            {{$t("网上办事大厅")}}
+          </div>
+        </div>
+      </div>
+      <div class="block-left-bottom-item" :style="{height: divHeight.height1 * 0.4 + 'px'}">
+        <div class="block-item-title padding-lr-10">
+          <el-row>
+            <el-col :span="12">
+              <div class="color-muted font-bold font-size-12">
                 <span>
                   <i class="fa fa-volume-up"></i>
                   <label>{{$t("通知公告")}}</label>
                 </span>
-                </div>
-              </el-col>
-              <el-col :span="12">
-                <div class="color-grand font-bold font-size-12 text-right">
+              </div>
+            </el-col>
+            <el-col :span="12">
+              <div class="color-grand font-bold font-size-12 text-right">
                 <span>
                   <label>{{$t("更多")}}</label>
                   <i class="fa fa-list"></i>
                 </span>
-                </div>
-              </el-col>
-            </el-row>
-          </div>
-          <div class="margin-top-10 padding-lr-10 font-size-12 color-white">
-            <div class="block-item-item">
-              <el-row v-for="(item, index) in noticeDataList" :key="index">
-                <el-col :span="16">
-                  <div class="moon-content-text-ellipsis-class">
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+        <div class="margin-top-10 padding-lr-10 font-size-12 color-white">
+          <div class="block-item-item">
+            <el-row v-for="(item, index) in noticeDataList" :key="index">
+              <el-col :span="16">
+                <div class="moon-content-text-ellipsis-class">
                   <span>
                     <i class="fa fa-volume-up"></i>
                     <label>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</label>
                   </span>
-                  </div>
-                </el-col>
-                <el-col :span="8" class="text-right">
-                  <span>2022-11-11</span>
-                </el-col>
-              </el-row>
-            </div>
-          </div>
-        </div>
-
-        <div class="block-right-bottom-item" :style="{height: divHeight.height1 * 0.47 + 'px'}">
-          <div class="block-item-title padding-lr-10">
-            <el-row>
-              <el-col :span="24">
-                <div class="color-sub-grand font-bold font-size-12">
-                <span>
-                  <i class="fa fa-map"></i>
-                  <label>{{$t("推荐服务")}}</label>
-                </span>
                 </div>
               </el-col>
-            </el-row>
-          </div>
-          <div class="padding-lr-10 padding-tb-10 font-size-12 color-white" :style="{height: divHeight.height1 * 0.4 - 60 + 'px','overflowY': 'auto'}">
-            <el-row :gutter="16">
-              <el-col :span="8" v-for="(item, index) in recommends" :key="index" class="margin-bottom-20" @click.native="serverClick($event, item)">
-                <el-card shadow="always" :body-style="{padding: '12px',background: '#EBEEF5'}">
-                  <div class="moon-content-text-ellipsis-class">
-                    <el-image class="block-icon-class" :src="item.form_logo">
-                      <div slot="error" class="block-icon-class">
-                        <i class="el-icon-picture-outline font-size-15"></i>
-                      </div>
-                    </el-image>
-                    <span>
-                    {{ item.form_name }}
-                  </span>
-                  </div>
-                </el-card>
+              <el-col :span="8" class="text-right">
+                <span>2022-11-11</span>
               </el-col>
             </el-row>
           </div>
         </div>
       </div>
-      <div class="padding-lr-10" :style="divHeight">
-        <div class="margin-top-10">
+    </div>
+    <div class="block-right" :style="divHeight">
+      <div class="block-right-top-item" :style="{height: divHeight.height1 * 0.43 + 'px'}">
+        <div>
           <div class="pull-left block-item-left-tag-menu">
-            <div class="block-item-left-header text-center" @click="selMenu($event, '')">
+            <div class="block-item-left-header text-center">
               <label class="font-size-12">
                 {{$t("部门筛选")}}
               </label>
+<!--              <el-row>-->
+<!--                <el-col :span="12" @click.native="selType(110)">-->
+<!--                  <span class="tab-type-item tab-type-item-active-left">-->
+<!--                    <el-dropdown trigger="click" placement="bottom">-->
+<!--                      <label class="font-size-12">-->
+<!--                        {{$t("类别")}}-->
+<!--                        <i class="fa fa-caret-down"></i>-->
+<!--                      </label>-->
+<!--                      <el-dropdown-menu slot="dropdown">-->
+<!--                        <div style="height: 200px;overflow-y: auto">-->
+<!--                          <el-dropdown-item @click.native="dropdownItem($event, 'all', 1)">{{$t("全部")}}</el-dropdown-item>-->
+<!--                        <el-dropdown-item v-for="(item, index) in categoryMixinsList" :key="index" @click.native="dropdownItem($event, item, 1)">{{ item.categoryName }}</el-dropdown-item>-->
+<!--                        </div>-->
+<!--                      </el-dropdown-menu>-->
+<!--                    </el-dropdown>-->
+<!--                  </span>-->
+<!--                </el-col>-->
+<!--                <el-col :span="12" @click.native="selType(4)">-->
+<!--                  <span class="tab-type-item tab-type-item-active-right">-->
+<!--                    <el-dropdown trigger="click" placement="bottom">-->
+<!--                      <label class="font-size-12">-->
+<!--                        {{$t("部门")}}-->
+<!--                        <i class="fa fa-caret-down"></i>-->
+<!--                      </label>-->
+<!--                      <el-dropdown-menu slot="dropdown">-->
+<!--                        <div style="height: 200px;overflow-y: auto">-->
+<!--                          <el-dropdown-item @click.native="dropdownItem($event, 'all', 2)">{{$t("全部")}}</el-dropdown-item>-->
+<!--                          <el-dropdown-item v-for="(item, index) in deptMixinsList" :key="index" @click.native="dropdownItem($event, item, 2)">{{ item.departmentName }}</el-dropdown-item>-->
+<!--                        </div>-->
+<!--                      </el-dropdown-menu>-->
+<!--                    </el-dropdown>-->
+<!--                  </span>-->
+<!--                </el-col>-->
+<!--              </el-row>-->
             </div>
-            <div :style="{height: divHeight.height1 - 60 + 'px', 'overflowY': 'auto'}">
-<!--              <div class="block-item-left-header-item" :class="activeMenu === '' ? 'left-menu-active' : ''" @click="selMenu($event, '')">-->
-<!--                <span>{{$t("全部")}}</span>-->
-<!--              </div>-->
-<!--              <div class="block-item-left-header-item moon-content-text-ellipsis-class" :class="activeMenu === item.id ? 'left-menu-active' : ''" v-for="(item, index) in deptMixinsList" :key="index" @click="selMenu($event, item)">-->
-<!--                <span>{{ item.departmentName }}</span>-->
-<!--              </div>-->
-              <el-menu
-                :default-active="defaultMenuActive"
-                background-color="rgba(96, 98, 102, 0)"
-                text-color="#fff"
-                active-text-color="#ffd04b"
-                class="el-menu-vertical-demo">
-                <template v-for="(item, index) in dataDept">
-                  <el-submenu v-if="item.child_list.length > 0" :index="index+''">
-                    <template slot="title">
-                      <span @click="selMenu($event, item, index)">{{ item.department_name }}</span>
-                    </template>
-                    <el-menu-item-group v-if="item.child_list.length > 0">
-                      <el-menu-item v-for="(itemChild, indexChild) in item.child_list" :key="indexChild" :index="index+'-'+indexChild" @click="selMenu($event, itemChild, index+'-'+indexChild)">{{ itemChild.department_name }}</el-menu-item>
-                    </el-menu-item-group>
-                  </el-submenu>
-                  <el-menu-item v-else :index="index+''" @click="selMenu($event, item, index)">{{ item.department_name }}</el-menu-item>
-                </template>
-              </el-menu>
+            <div :style="{height: divHeight.height1 * 0.43 - 40 + 'px', 'overflowY': 'auto'}">
+              <div class="block-item-left-header-item" :class="activeMenu === '' ? 'left-menu-active' : ''" @click="selMenu($event, '')">
+                <span>{{$t("全部")}}</span>
+              </div>
+              <div class="block-item-left-header-item moon-content-text-ellipsis-class" :class="activeMenu === item.id ? 'left-menu-active' : ''" v-for="(item, index) in deptMixinsList" :key="index" @click="selMenu($event, item)">
+                <span>{{ item.departmentName }}</span>
+              </div>
+<!--              <my-el-tree :type="activeTypeVal" sub-type="" @node-click="nodeClick" @all-click="nodeClick"></my-el-tree>-->
             </div>
           </div>
-          <div class="block-item-right-tag-content" :style="{height: divHeight.height1 - 19 + 'px'}">
+          <div class="block-item-right-tag-content" :style="{height: divHeight.height1 * 0.43 + 'px'}">
             <div class="block-item-left-header">
               <el-row>
                 <el-col :span="20">
-                  <span class="font-bold block-item-header-tab" :class="activeTab === 0 ? 'color-grand': 'color-sub-grand'" @click="tabClick(0)">
+                  <span class="font-bold block-item-header-tab" :class="activeTab === 0 ? 'color-grand': 'color-muted'" @click="tabClick(0)">
                     <i class="fa fa-user"></i>
                     {{$t("学生办事")}}
                   </span>
-                  <span class="font-bold block-item-header-tab" :class="activeTab === 1 ? 'color-grand': 'color-sub-grand'" @click="tabClick(1)">
+                  <span class="font-bold block-item-header-tab" :class="activeTab === 1 ? 'color-grand': 'color-muted'" @click="tabClick(1)">
                     <i class="fa fa-users"></i>
                     {{$t("老师办事")}}
                   </span>
-                  <span class="font-bold block-item-header-tab" :class="activeTab === 2 ? 'color-grand': 'color-sub-grand'" @click="tabClick(2)">
+                  <span class="font-bold block-item-header-tab" :class="activeTab === 2 ? 'color-grand': 'color-muted'" @click="tabClick(2)">
                     <i class="fa fa-flag"></i>
                     {{$t("单位办事")}}
                   </span>
@@ -130,13 +124,13 @@
                 <el-col :span="4" class="text-right" style="position: relative">
                   <span class="margin-right-20">
                     <el-dropdown class="custon-el-dropdown-block" trigger="click" type="default" size="mini" placement="bottom" split-button>
-                      <label class="font-size-12 color-sub-grand">
-                        {{activeTypeText}}
+                      <label class="font-size-12 color-muted">
+                        {{$t("类别")}}
                       </label>
                       <el-dropdown-menu slot="dropdown">
                         <div style="height: 200px;overflow-y: auto">
-                          <el-dropdown-item @click.native="dropdownItem($event, 'all', 1, '全部')">{{$t("全部")}}</el-dropdown-item>
-                          <el-dropdown-item v-for="(item, index) in categoryMixinsList" :key="index" @click.native="dropdownItem($event, item, 1, item.categoryName)">{{ item.categoryName }}</el-dropdown-item>
+                          <el-dropdown-item @click.native="dropdownItem($event, 'all', 1)">{{$t("全部")}}</el-dropdown-item>
+                          <el-dropdown-item v-for="(item, index) in categoryMixinsList" :key="index" @click.native="dropdownItem($event, item, 1)">{{ item.categoryName }}</el-dropdown-item>
                         </div>
                       </el-dropdown-menu>
                     </el-dropdown>
@@ -144,7 +138,7 @@
                 </el-col>
               </el-row>
             </div>
-            <div class="padding-lr-10 padding-tb-10" :style="{height: divHeight.height1 - 80 + 'px', 'overflow-y': 'auto'}">
+            <div class="padding-lr-10 padding-tb-10" :style="{height: divHeight.height1 * 0.43 - 62 + 'px', 'overflow-y': 'auto'}">
               <el-row :gutter="16">
                 <el-col :span="6" v-for="(item, index) in serverDataList" :key="index" @click.native="serverClick($event, item)" class="margin-bottom-20">
                   <el-card shadow="always" :body-style="{padding: '12px',background: '#EBEEF5'}">
@@ -165,6 +159,38 @@
           </div>
         </div>
         <div class="moon-clearfix"></div>
+      </div>
+      <div class="block-right-bottom-item" :style="{height: divHeight.height1 * 0.4 + 'px'}">
+        <div class="block-item-title padding-lr-10">
+          <el-row>
+            <el-col :span="24">
+              <div class="color-muted font-bold font-size-12">
+                <span>
+                  <i class="fa fa-map"></i>
+                  <label>{{$t("推荐服务")}}</label>
+                </span>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+        <div class="padding-lr-10 padding-tb-10 font-size-12 color-white" :style="{height: divHeight.height1 * 0.4 - 60 + 'px','overflowY': 'auto'}">
+          <el-row :gutter="16">
+            <el-col :span="4" v-for="(item, index) in recommends" :key="index" class="margin-bottom-20" @click.native="serverClick($event, item)">
+              <el-card shadow="always" :body-style="{padding: '12px',background: '#EBEEF5'}">
+                <div class="moon-content-text-ellipsis-class">
+                  <el-image class="block-icon-class" :src="item.form_logo">
+                    <div slot="error" class="block-icon-class">
+                      <i class="el-icon-picture-outline font-size-15"></i>
+                    </div>
+                  </el-image>
+                  <span>
+                    {{ item.form_name }}
+                  </span>
+                </div>
+              </el-card>
+            </el-col>
+          </el-row>
+        </div>
       </div>
     </div>
     <div class="moon-clearfix"></div>
@@ -213,8 +239,6 @@
     components: {DrawerLayoutRight, MyServerDialog, MyElTree, DialogNormal},
     data(){
       return {
-        defaultMenuActive: '',
-        activeTypeText: '类别',
         activeTypeVal: '110',
         activeType: '110',
         activeTab: 0,
@@ -245,7 +269,7 @@
     created() {
       this.appletType = this.activeTab;
       this.initCategoryList();
-      this.getDeptInfo(2);
+      this.initDeptList();
       this.initServer();
       this.initApplet();
       this.initRecommend();
@@ -262,6 +286,7 @@
         this.$axios.get(common.server_form_allInfo, {params: params}).then(res => {
           if (res.data.code == 200){
             let auditUser = [];
+            console.log(res.data.data);
             let processList = res.data.data.processList;
             this.customUserStatus = false;
             for (let i = 0; i < processList.length; i++){
@@ -327,17 +352,12 @@
 
         this.dialogServerDetail = true;
       },
-      selMenu(event, item, index){
-        // this.activeMenu = '';
-        // if (item){
-        //   this.activeMenu = item.id;
-        // }
-        // this.appletId = item.id;
-        // this.initServer();
-        this.departmentPath = item.department_path;
-        this.appletType = this.activeTab;
-        this.defaultMenuActive = index + '';
-        console.log(this.defaultMenuActive);
+      selMenu(event, item){
+        this.activeMenu = '';
+        if (item){
+          this.activeMenu = item.id;
+        }
+        this.appletId = item.id;
         this.initServer();
       },
       selType(type){
@@ -357,10 +377,9 @@
         this.appletType = this.activeTab;
         this.initServer();
       },
-      dropdownItem(event, item, type, text){
+      dropdownItem(event, item, type){
         //this.initApplet(item, type);
         this.categoryId = item.id;
-        this.activeTypeText = text;
         this.initServer();
       },
       handleFormCancel(){
@@ -445,10 +464,10 @@
   margin-top: 40px;
 }
 .block-left-bottom-item{
-  background: rgba(255,255,255, 0.6);
-  width: 100%;
+  background: rgba(255,255,255, 0.4);
+  width: 90%;
   margin: 0 auto;
-  margin-top: 10px;
+  margin-top: 30px;
   box-shadow: 0px 0px 10px #909399;
 }
 .block-right-top-item{
@@ -459,10 +478,10 @@
   box-shadow: 0px 0px 10px #909399;
 }
 .block-right-bottom-item{
-  background: rgba(255,255,255, 0.6);
-  width: 100%;
+  background: rgba(255,255,255, 0.4);
+  width: 95%;
   margin: 0 auto;
-  margin-top: 20px;
+  margin-top: 30px;
   box-shadow: 0px 0px 10px #909399;
 }
 .block-logo-class{
@@ -489,9 +508,9 @@
   top: 3px
 }
 .block-item-left-tag-menu{
-  width: 180px;
+  width: 140px;
   height: 100%;
-  background: rgba(96, 98, 102, 0.85);
+  background: rgba(96, 98, 102, 0.7);
 }
 .block-item-left-header{
   height: 40px;
@@ -508,9 +527,8 @@
   text-align: center;
 }
 .block-item-right-tag-content{
-  margin-left: 180px;
+  margin-left: 140px;
   height: 100%;
-  background: rgba(255, 255, 255, 0.6);
 }
 .block-item-header-tab{
   display: inline-block;
@@ -533,8 +551,5 @@
 }
 .tab-type-item-active-right{
   color: #FFFFFF;
-}
-.block-left{
-  width: 400px;
 }
 </style>
