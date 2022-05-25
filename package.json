@@ -19,6 +19,7 @@
     }
   },
   "dependencies": {
+    "@form-create/component-wangeditor": "^2.5.15",
     "@form-create/element-ui": "^2.5.19",
     "@nuxtjs/axios": "^5.12.2",
     "browserslist": "^4.20.2",
@@ -35,7 +36,7 @@
     "qs": "^6.9.1",
     "vant": "^2.12.47",
     "vue-i18n": "^8.15.3",
-    "vue-quill-editor": "^3.0.6",
-    "vue-page-transition": "^0.2.2"
+    "vue-page-transition": "^0.2.2",
+    "vue-quill-editor": "^3.0.6"
   }
 }

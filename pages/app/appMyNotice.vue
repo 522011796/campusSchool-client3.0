@@ -89,16 +89,18 @@
         </template>
         <template v-if="active == 3">
           <div class="text-right padding-lr-10">
-            <el-button size="mini" type="warning">抄送信息</el-button>
+            <el-tag size="small" type="info">抄送信息</el-tag>
           </div>
         </template>
         <template v-if="active == 4">
           <div class="text-right">
-            <el-button plain type="primary" size="mini" v-if="detailData.status == 5" class="text-center color-white">无需审批</el-button>
-            <el-button plain type="warning" size="mini" v-if="detailData.status == 8" class="text-center color-white">审批中</el-button>
-            <el-button plain type="warning" size="mini" v-if="detailData.status == -1" class="text-center color-white">已撤销</el-button>
-            <el-button plain type="success" size="mini" v-if="detailData.status == 3" class="text-center color-white">已通过</el-button>
-            <el-button plain type="danger" size="mini" v-if="detailData.status == 4" class="text-center color-white">未通过</el-button>
+            <el-tag type="primary" size="small" v-if="detailData.status == 5" class="text-center color-white">无需审批</el-tag>
+            <el-tag type="warning" size="small" v-if="detailData.status == 8" class="text-center color-white">审批中</el-tag>
+            <el-tag type="warning" size="small" v-if="detailData.status == -1" class="text-center color-white">已撤销</el-tag>
+            <el-tag type="success" size="small" v-if="detailData.status == 3" class="text-center color-white">已通过</el-tag>
+            <el-tag type="danger" size="small" v-if="detailData.status == 4" class="text-center color-white">未通过</el-tag>
+            <el-tag type="danger" size="small" v-if="detailData.status == 2" class="text-center color-white">已驳回</el-tag>
+            <el-tag type="danger" size="small" v-if="detailData.status == 1" class="text-center color-white">已通过</el-tag>
           </div>
         </template>
       </div>
@@ -150,14 +152,29 @@
               </span>
           </div>
           <div class="block-item-bg font-size-12 margin-top-10 color-sub-title">
-            <div class="block-item-row font-bold margin-bottom-5" v-for="(item, index) in detailApplyContentData">
-              <span class="color-muted" style="position: relative;top: -3px">{{item.title}}: </span>
-              <el-tooltip class="item" effect="dark" :content="item.value" placement="top">
-                  <span class="moon-content-text-ellipsis-class" style="max-width: 300px;display: inline-block">
-                    {{ item.value }}
-                  </span>
-              </el-tooltip>
-            </div>
+<!--            <div class="block-item-row font-bold margin-bottom-5" v-for="(item, index) in detailApplyContentData">-->
+<!--              <span class="color-muted" style="position: relative;top: -3px">{{item.title}}: </span>-->
+<!--              <el-tooltip class="item" effect="dark" :content="item.value" placement="top">-->
+<!--                  <span class="moon-content-text-ellipsis-class" style="max-width: 300px;display: inline-block">-->
+<!--                    {{ item.value }}-->
+<!--                  </span>-->
+<!--              </el-tooltip>-->
+<!--            </div>-->
+            <template v-for="(item, index) in detailApplyContentData">
+              <div v-if="item.type != 'fc-editor'" class="block-item-row padding-lr-10 font-bold">
+                <span class="color-muted" style="position: relative;top: -3px">{{item.title}}: </span>
+                <el-tooltip class="item" effect="dark" :content="item.value" placement="top">
+                    <span class="moon-content-text-ellipsis-class" style="max-width: 400px;display: inline-block">
+                      {{ item.value }}
+                    </span>
+                </el-tooltip>
+              </div>
+              <div v-else class="padding-lr-10">
+                <span class="color-muted font-bold" style="position: relative;top: -150px">{{item.title}}: </span>
+                <div v-if="item.type == 'fc-editor'"  v-html="item.value" style="width: 270px;height: 150px;overflow-y:auto;display: inline-block;border: 1px solid #dddddd;border-radius: 5px;padding: 10px">
+                </div>
+              </div>
+            </template>
           </div>
         </div>
         <div class="margin-top-10 padding-lr-10">
@@ -191,6 +208,13 @@
                           <label v-if="itemUser.status === 0" class="color-warning">{{$t("待审核")}}</label>
                           <label v-if="itemUser.status === 3" class="color-success">{{$t("通过")}}</label>
                           <label v-if="itemUser.status === 4" class="color-danger">{{$t("未通过")}}</label>
+                          <label v-if="itemUser.status === 1" class="color-warning">{{$t("已通过")}}</label>
+                          <label v-if="itemUser.status === 2" class="color-warning">{{$t("已驳回")}}</label>
+                          <label v-if="itemUser.status === 5" class="color-warning">{{$t("无需审批")}}</label>
+                          <label v-if="itemUser.status === 8" class="color-warning">{{$t("审批中")}}</label>
+                        </span>
+                        <span class="margin-left-10" v-if="itemUser.handleTime">
+                          <label class="color-muted">{{$moment(itemUser.handleTime).format("YYYY-MM-DD HH:mm:ss")}}</label>
                         </span>
                       </div>
                     </template>

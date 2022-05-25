@@ -98,26 +98,45 @@
               <div class="block-item-left-header-item" :class="activeMenu === '' ? 'left-menu-active' : ''" @click="selMenu($event, '')">
                 <span>{{$t("全部")}}</span>
               </div>
-              <div class="block-item-left-header-item moon-content-text-ellipsis-class" :class="activeMenu === item.id ? 'left-menu-active' : ''" v-for="(item, index) in categorys" :key="index" @click="selMenu($event, item)">
-                <span>{{ item.applet_name }}</span>
+              <div class="block-item-left-header-item moon-content-text-ellipsis-class" :class="activeMenu === item.id ? 'left-menu-active' : ''" v-for="(item, index) in deptMixinsList" :key="index" @click="selMenu($event, item)">
+                <span>{{ item.departmentName }}</span>
               </div>
 <!--              <my-el-tree :type="activeTypeVal" sub-type="" @node-click="nodeClick" @all-click="nodeClick"></my-el-tree>-->
             </div>
           </div>
           <div class="block-item-right-tag-content" :style="{height: divHeight.height1 * 0.43 + 'px'}">
             <div class="block-item-left-header">
-              <span class="font-bold block-item-header-tab" :class="activeTab === 0 ? 'color-grand': 'color-muted'" @click="tabClick(0)">
-                <i class="fa fa-user"></i>
-                {{$t("学生办事")}}
-              </span>
-              <span class="font-bold block-item-header-tab" :class="activeTab === 1 ? 'color-grand': 'color-muted'" @click="tabClick(1)">
-                <i class="fa fa-users"></i>
-                {{$t("老师办事")}}
-              </span>
-              <span class="font-bold block-item-header-tab" :class="activeTab === 2 ? 'color-grand': 'color-muted'" @click="tabClick(2)">
-                <i class="fa fa-flag"></i>
-                {{$t("单位办事")}}
-              </span>
+              <el-row>
+                <el-col :span="20">
+                  <span class="font-bold block-item-header-tab" :class="activeTab === 0 ? 'color-grand': 'color-muted'" @click="tabClick(0)">
+                    <i class="fa fa-user"></i>
+                    {{$t("学生办事")}}
+                  </span>
+                  <span class="font-bold block-item-header-tab" :class="activeTab === 1 ? 'color-grand': 'color-muted'" @click="tabClick(1)">
+                    <i class="fa fa-users"></i>
+                    {{$t("老师办事")}}
+                  </span>
+                  <span class="font-bold block-item-header-tab" :class="activeTab === 2 ? 'color-grand': 'color-muted'" @click="tabClick(2)">
+                    <i class="fa fa-flag"></i>
+                    {{$t("单位办事")}}
+                  </span>
+                </el-col>
+                <el-col :span="4" class="text-right" style="position: relative">
+                  <span class="margin-right-20">
+                    <el-dropdown class="custon-el-dropdown-block" trigger="click" type="default" size="mini" placement="bottom" split-button>
+                      <label class="font-size-12 color-muted">
+                        {{$t("类别")}}
+                      </label>
+                      <el-dropdown-menu slot="dropdown">
+                        <div style="height: 200px;overflow-y: auto">
+                          <el-dropdown-item @click.native="dropdownItem($event, 'all', 1)">{{$t("全部")}}</el-dropdown-item>
+                          <el-dropdown-item v-for="(item, index) in categoryMixinsList" :key="index" @click.native="dropdownItem($event, item, 1)">{{ item.categoryName }}</el-dropdown-item>
+                        </div>
+                      </el-dropdown-menu>
+                    </el-dropdown>
+                  </span>
+                </el-col>
+              </el-row>
             </div>
             <div class="padding-lr-10 padding-tb-10" :style="{height: divHeight.height1 * 0.43 - 62 + 'px', 'overflow-y': 'auto'}">
               <el-row :gutter="16">
@@ -359,7 +378,9 @@
         this.initServer();
       },
       dropdownItem(event, item, type){
-        this.initApplet(item, type);
+        //this.initApplet(item, type);
+        this.categoryId = item.id;
+        this.initServer();
       },
       handleFormCancel(){
         this.dialogServerDetail = false;

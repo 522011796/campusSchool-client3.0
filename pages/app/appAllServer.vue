@@ -82,8 +82,10 @@
       layoutInit(){
 
       },
-      initAppRecommend(){
-        let params = {};
+      initAppRecommend(value){
+        let params = {
+          searchKey: value
+        };
         this.$axios.get(common.server_list_list3, {params: params}).then(res => {
           if (res.data.data){
             this.serverAppList = res.data.data;
@@ -152,7 +154,11 @@
       },
       onSearch(value){
         console.log(value);
-        this.initAppServer(value);
+        if (this.active == 6){
+          this.initAppRecommend(value);
+        }else {
+          this.initAppServer(value);
+        }
       },
       onClear(){
 

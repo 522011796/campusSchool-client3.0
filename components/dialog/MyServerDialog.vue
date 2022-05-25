@@ -56,7 +56,7 @@
         </div>
         <div class="margin-top-10 color-sub-title font-size-14">
           <div style="line-height: 30px; white-space: pre-line">
-            <pre>{{data.des}}</pre>
+            <pre style="white-space: pre-wrap;word-wrap: break-word;">{{data.des}}</pre>
           </div>
         </div>
       </div>

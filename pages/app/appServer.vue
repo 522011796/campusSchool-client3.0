@@ -13,10 +13,10 @@
         </van-col>
         <van-col span="12">
           <div class="text-right padding-lr-10">
-            <span>
-              <van-rate v-model="rateValue" size="8"/>
-              <label class="font-size-12">(0)</label>
-            </span>
+<!--            <span>-->
+<!--              <van-rate v-model="rateValue" size="8"/>-->
+<!--              <label class="font-size-12">(0)</label>-->
+<!--            </span>-->
             <span style="position: relative;top: -5px">
               <van-button plain size="mini" type="primary" @click="serverBlock($event)">
                 <i class="fa fa-edit"></i>
@@ -30,8 +30,8 @@
 
     <div style="margin-top:1px;" class="margin-left-10 margin-right-10">
       <div class="content-block padding-lr-10" :style="divHeight10">
-        <div style="line-height: 30px; white-space: pre-line">
-          <pre>{{ serverDetail.des }}</pre>
+        <div style="line-height: 30px; white-space: pre-line;word-wrap:break-word">
+          <pre style="white-space: pre-wrap;word-wrap: break-word;">{{ serverDetail.des }}</pre>
         </div>
       </div>
     </div>
