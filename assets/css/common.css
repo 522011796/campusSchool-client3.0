@@ -1031,13 +1031,31 @@ ul{
   color: #dddddd;
 }
 .custon-el-dropdown-block button{
-  background: #cccccc;
+  background: #cccccc !important;
 }
 .custon-el-dropdown-block button:hover{
-  background: #cccccc;
+  background: #cccccc !important;
 }
 .custon-el-dropdown-block.el-dropdown .el-dropdown__caret-button.el-button--default::before {
   background: #bbbbbb !important;
+}
+.custon-nav-menu .el-icon-arrow-down:before {
+  content: "";
+  font-size: 16px;
+}
+.custon-nav-menu .el-menu-item, .custon-nav-menu .el-submenu__title {
+  height: 50px;
+  line-height: 50px;
+  position: relative;
+  -webkit-box-sizing: border-box;
+  white-space: nowrap;
+  list-style: none;
+}
+.custon-nav-menu .el-menu-item-group__title {
+  padding: 0px 0 0px 0px;
+  line-height: normal;
+  font-size: 12px;
+  color: #909399;
 }
 /***自定义radio组件颜色***/
 /*.el-radio__input.is-checked + .el-radio__label {

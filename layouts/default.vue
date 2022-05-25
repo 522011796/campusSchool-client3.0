@@ -90,7 +90,7 @@
 
             </span>
             <span class="moon-top-middle-menu-item-text" @click="menuClick">
-              <label class="item moon-top-middle-menu-item-text-active font-bold">{{$t("办事大厅")}}</label>
+              <label class="item moon-top-middle-menu-item-text-active font-bold">{{$t("一站式服务大厅")}}</label>
             </span>
           </div>
 
@@ -395,7 +395,7 @@
   height: 50px;
   line-height: 50px;
   top: 10px;
-  width: 90px;
+  width: 140px;
   display: inline-block;
 }
 .moon-top-middle-menu-item-text-active:after {
@@ -403,8 +403,8 @@
   display: inline-block;
   position: absolute;
   bottom: 0px;
-  left: calc(50% - 45px);
-  width: 70px;
+  left: calc(50% - 65px);
+  width: 105px;
   height: 3px;
   background: #E6A23C;
 }

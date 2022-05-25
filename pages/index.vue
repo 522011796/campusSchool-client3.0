@@ -95,12 +95,12 @@
                 background-color="rgba(96, 98, 102, 0)"
                 text-color="#fff"
                 active-text-color="#ffd04b"
-                class="el-menu-vertical-demo">
+                class="el-menu-vertical-demo custon-nav-menu">
                 <template v-for="(item, index) in dataDept">
                   <el-submenu v-if="item.child_list.length > 0" :index="index+''">
-                    <template slot="title">
-                      <span @click="selMenu($event, item, index)">{{ item.department_name }}</span>
-                    </template>
+                    <div style="width: 100%" slot="title" @click="selMenu($event, item, index)">
+                      <span>{{ item.department_name }}</span>
+                    </div>
                     <el-menu-item-group v-if="item.child_list.length > 0">
                       <el-menu-item v-for="(itemChild, indexChild) in item.child_list" :key="indexChild" :index="index+'-'+indexChild" @click="selMenu($event, itemChild, index+'-'+indexChild)">{{ itemChild.department_name }}</el-menu-item>
                     </el-menu-item-group>
@@ -129,7 +129,7 @@
                 </el-col>
                 <el-col :span="4" class="text-right" style="position: relative">
                   <span class="margin-right-20">
-                    <el-dropdown class="custon-el-dropdown-block" trigger="click" type="default" size="mini" placement="bottom" split-button>
+                    <el-dropdown class="custon-el-dropdown-block" trigger="click" type="default" size="small" placement="bottom" split-button>
                       <label class="font-size-12 color-sub-grand">
                         {{activeTypeText}}
                       </label>
