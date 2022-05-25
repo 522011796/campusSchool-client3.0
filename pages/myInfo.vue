@@ -145,12 +145,16 @@
               </el-table-column>
               <el-table-column
                 align="center"
-                :label="$t('服务部门')">
+                :label="$t('部门/班级')">
                 <template slot-scope="scope">
                   <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                    <div class="text-center">{{scope.row.departmentName}}</div>
+                    <div class="text-center">
+                      <label v-if="scope.row.departmentName">{{scope.row.departmentName}}</label>
+                      <label v-if="scope.row.className">{{scope.row.className}}</label>
+                    </div>
                     <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                      {{scope.row.departmentName}}
+                      <label v-if="scope.row.departmentName">{{scope.row.departmentName}}</label>
+                      <label v-if="scope.row.className">{{scope.row.className}}</label>
                     </span>
                   </el-popover>
                 </template>
