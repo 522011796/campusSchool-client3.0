@@ -270,7 +270,7 @@
                   <span v-if="!item.value || item.value.length <= 0">
                     <div style="height: 20px;line-height: 20px"></div>
                   </span>
-                  <span v-else style="display: inline-block;margin-right: 5px;" v-for="(itemImg, indexImg) in item.value" :key="indexImg">
+                  <span v-else class="custom-avatar" style="display: inline-block;margin-right: 5px;" v-for="(itemImg, indexImg) in item.value" :key="indexImg">
                     <el-avatar shape="square" size="small" :src="itemImg"></el-avatar>
                   </span>
                 </div>
