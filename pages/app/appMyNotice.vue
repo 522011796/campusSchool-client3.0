@@ -161,13 +161,23 @@
 <!--              </el-tooltip>-->
 <!--            </div>-->
             <template v-for="(item, index) in detailApplyContentData">
-              <div v-if="item.type != 'fc-editor'" class="block-item-row padding-lr-10 font-bold">
+              <div v-if="item.type != 'fc-editor' && item.type != 'upload'" class="block-item-row padding-lr-10 font-bold">
                 <span class="color-muted" style="position: relative;top: -3px">{{item.title}}: </span>
                 <el-tooltip class="item" effect="dark" :content="item.value" placement="top">
                     <span class="moon-content-text-ellipsis-class" style="max-width: 400px;display: inline-block">
                       {{ item.value }}
                     </span>
                 </el-tooltip>
+              </div>
+              <div v-else-if="item.type != 'fc-editor' && item.type == 'upload'" class="padding-lr-10 font-bold">
+                <span v-if="!item.value || item.value.length <= 0" class="color-muted" style="position: relative;top: 10px">{{item.title}}: </span>
+                <span v-else class="color-muted" style="position: relative;top: -13px">{{item.title}}: </span>
+                <span v-if="!item.value || item.value.length <= 0">
+                    <div style="height: 20px;line-height: 20px"></div>
+                  </span>
+                <span v-else style="display: inline-block;margin-right: 5px;" v-for="(itemImg, indexImg) in item.value" :key="indexImg">
+                    <el-avatar shape="square" size="small" :src="itemImg"></el-avatar>
+                  </span>
               </div>
               <div v-else class="padding-lr-10">
                 <span class="color-muted font-bold" style="position: relative;top: -150px">{{item.title}}: </span>

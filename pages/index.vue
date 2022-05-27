@@ -322,6 +322,21 @@
         if (data.form_content != null && data.form_content != ''){
           this.formCreateRuleData = JSON.parse(data.form_content).rule;
           this.formCreateOptionData = JSON.parse(data.form_content).option;
+          for (let i = 0; i < this.formCreateRuleData.length; i++){
+            if (this.formCreateRuleData[i].type == "upload"){
+              this.formCreateRuleData[i]['props'] = {
+                uploadType: 'image',
+                action: '/proxy/school/multipartFile/upload',
+                data : {
+                  "path": "applet"
+                },
+                onSuccess(res, file){
+                  file.url = res.data.url || ''
+                  console.log(res)
+                }
+              }
+            }
+          }
         }
         this.initAuditUser(data.id);
 
