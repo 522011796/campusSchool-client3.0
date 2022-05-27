@@ -92,6 +92,20 @@
             if (res.data.data.formContent != null && res.data.data.formContent != ''){
               this.formCreateRuleData = JSON.parse(res.data.data.formContent).rule;
               this.formCreateOptionData = JSON.parse(res.data.data.formContent).option;
+              for (let i = 0; i < this.formCreateRuleData.length; i++){
+                if (this.formCreateRuleData[i].type == "upload"){
+                  this.formCreateRuleData[i]['props'] = {
+                    uploadType: 'image',
+                    action: '/proxy/school/multipartFile/upload',
+                    data : {
+                      "path": "applet"
+                    },
+                    onSuccess(res, file){
+                      file.url = res.data.url || ''
+                    }
+                  }
+                }
+              }
             }
 
             for (let i = 0; i < processList.length; i++){
