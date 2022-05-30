@@ -46,20 +46,41 @@
           <div class="line-height"></div>
           <div class="margin-top-30">
             <div class="animated fadeInLeft" v-show="userType == 1">
-              <div>
+              <div v-if="userSubType == 1">
                 <div>
-                  <span class="login-title-label">{{$t("用户名")}}</span>
+                  <div>
+                    <span class="login-title-label">{{$t("用户名")}}</span>
+                  </div>
+                  <div class="margin-top-5">
+                    <el-input v-model="form.username" @keyup.enter.native="login"></el-input>
+                  </div>
                 </div>
-                <div class="margin-top-5">
-                  <el-input v-model="form.username" @keyup.enter.native="login"></el-input>
+                <div class="margin-top-20">
+                  <div>
+                    <span class="login-title-label">{{$t("密码")}}</span>
+                  </div>
+                  <div class="margin-top-5">
+                    <el-input :show-password="true" v-model="form.password" @keyup.enter.native="login"></el-input>
+                  </div>
                 </div>
               </div>
-              <div class="margin-top-20">
+
+              <div v-if="userSubType == 2">
                 <div>
-                  <span class="login-title-label">{{$t("密码")}}</span>
+                  <div>
+                    <span class="login-title-label">{{$t("身份证号码")}}</span>
+                  </div>
+                  <div class="margin-top-5">
+                    <el-input v-model="form.username"></el-input>
+                  </div>
                 </div>
-                <div class="margin-top-5">
-                  <el-input :show-password="true" v-model="form.password" @keyup.enter.native="login"></el-input>
+                <div class="margin-top-20">
+                  <div>
+                    <span class="login-title-label">{{$t("密码")}}</span>
+                  </div>
+                  <div class="margin-top-5">
+                    <el-input :show-password="true" v-model="form.password" @keyup.enter.native="login"></el-input>
+                  </div>
                 </div>
               </div>
             </div>
@@ -138,7 +159,7 @@
                 </el-button>
               </div>
             </div>
-            <div class="login-bottom-other-block margin-top-40" v-if="userType == 2">
+            <div class="login-bottom-other-block margin-top-40" v-if="userType == 2 || userType == 1">
               <div class="line-height"></div>
               <div class="text-center login-bottom-other margin-top-10">
                 <label class="color-muted" @click="changeSubType(1)"><i class="fa fa-user-circle-o"></i> {{$t("账号/手机号")}}</label>
@@ -174,9 +195,9 @@
           <el-form-item :label="$t('验证码')" prop="code">
             <el-input v-model="formAuth.code" class="width-260">
               <template slot="append">
-                &lt;!&ndash;<timeout-button :action="updatePhoneMms" :data="{newPhone: this.formAuth.phone, userId: this.formAuth.userId}" :auth-before="authBefore">
-                <template>{{$t("获取验证码")}}</template>
-              </timeout-button>&ndash;&gt;
+                <timeout-button :action="updatePhoneMms" :data="{newPhone: this.formAuth.phone, userId: this.formAuth.userId}" :auth-before="authBefore">
+                  <template>{{$t("获取验证码")}}</template>
+                </timeout-button>
               </template>
             </el-input>
           </el-form-item>
@@ -209,6 +230,7 @@
       return {
         userType: '2',
         userSubType: '1',
+        userAccountType : '0',
         dialogLoading: false,
         modalVisible: false,
         showContent: false,
@@ -252,6 +274,7 @@
         this.form.username = "";
         this.form.password = "";
         this.form.campusNo = "";
+        this.userSubType = "1";
         this.userType = type;
       },
       changeSubType(type){
@@ -259,6 +282,11 @@
         this.form.password = "";
         this.form.campusNo = "";
         this.userSubType = type;
+        if (type == 1){
+          this.userAccountType = 0;
+        }else if (type == 2){
+          this.userAccountType = 3;
+        }
       },
       login(){
         let userType = "";
@@ -272,11 +300,11 @@
           account: this.form.username,
           password: getmd5(this.form.password),
         };
-        if (this.userSubType == 3){
+        if (this.userSubType == 1){
           //params['campusNo'] = this.form.campusNo;
-          params['accountType'] = 4;
+          params['accountType'] = 0;
         }else if (this.userSubType == 2){
-          params['accountType'] = 4;
+          params['accountType'] = 3;
         }
         if (this.userType == 1){
           userType = 5;

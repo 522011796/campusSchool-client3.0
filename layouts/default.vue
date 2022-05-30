@@ -38,6 +38,16 @@
                     <span>{{organizeName}}</span>
                   </div>
                 </template>
+                <template v-if="loginUserType == 5">
+                  <div class="moon-top-user-info-item">
+                    <i class="fa fa-user-circle"></i>
+                    <span>{{realName}}</span>
+                  </div>
+                  <div class="moon-top-user-info-item">
+                    <i class="fa fa-id-card"></i>
+                    <span>{{loginUserName}}</span>
+                  </div>
+                </template>
               </template>
             </div>
             <div class="moon-top-user-info-opr">
