@@ -49,7 +49,7 @@
               <div v-if="userSubType == 1">
                 <div>
                   <div>
-                    <span class="login-title-label">{{$t("用户名")}}</span>
+                    <span class="login-title-label">{{$t("用户名/手机号")}}</span>
                   </div>
                   <div class="margin-top-5">
                     <el-input v-model="form.username" @keyup.enter.native="login"></el-input>
