@@ -1061,8 +1061,15 @@ ul{
   display: block;
   height: 100%;
   width: 100%;
-
   vertical-align: middle;
+}
+.el-image-viewer__close {
+  top: 40px;
+  right: 40px;
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
+  color: #fff;
 }
 /***自定义radio组件颜色***/
 /*.el-radio__input.is-checked + .el-radio__label {
