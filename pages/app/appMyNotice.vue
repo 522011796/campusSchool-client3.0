@@ -162,15 +162,15 @@
 <!--            </div>-->
             <template v-for="(item, index) in detailApplyContentData">
               <div v-if="item.type != 'fc-editor' && item.type != 'upload'" class="block-item-row padding-lr-10 font-bold">
-                <span class="color-muted" style="position: relative;top: -3px">{{item.title}}: </span>
+                <span class="color-muted moon-content-text-ellipsis-class" style="position: relative;top: 0px;max-width: 28%;display: inline-block">{{item.title}}: </span>
                 <el-tooltip class="item" effect="dark" :content="item.value" placement="top">
-                    <span class="moon-content-text-ellipsis-class" style="max-width: 400px;display: inline-block">
+                    <span class="moon-content-text-ellipsis-class" style="max-width: 240px;display: inline-block">
                       {{ item.value }}
                     </span>
                 </el-tooltip>
               </div>
               <div v-else-if="item.type != 'fc-editor' && item.type == 'upload'" class="padding-lr-10 font-bold">
-                <span v-if="!item.value || item.value.length <= 0" class="color-muted" style="position: relative;top: 10px">{{item.title}}: </span>
+                <span v-if="!item.value || item.value.length <= 0" class="color-muted moon-content-text-ellipsis-class" style="position: relative;top: 10px;max-width: 28%;display: inline-block">{{item.title}}: </span>
                 <span v-else class="color-muted" style="position: relative;top: -13px">{{item.title}}: </span>
                 <span v-if="!item.value || item.value.length <= 0">
                     <div style="height: 20px;line-height: 20px"></div>
@@ -180,8 +180,8 @@
                 </span>
               </div>
               <div v-else class="padding-lr-10">
-                <span class="color-muted font-bold" style="position: relative;top: -150px">{{item.title}}: </span>
-                <div v-if="item.type == 'fc-editor'"  v-html="item.value" style="width: 270px;height: 150px;overflow-y:auto;display: inline-block;border: 1px solid #dddddd;border-radius: 5px;padding: 10px">
+                <span class="color-muted font-bold moon-content-text-ellipsis-class" style="position: relative;top: -150px;max-width: 28%;display: inline-block">{{item.title}}: </span>
+                <div v-if="item.type == 'fc-editor'"  v-html="item.value" style="width: 70%;height: 150px;overflow-y:auto;display: inline-block;border: 1px solid #dddddd;border-radius: 5px;padding: 10px">
                 </div>
               </div>
             </template>
