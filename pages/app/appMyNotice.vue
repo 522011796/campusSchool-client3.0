@@ -175,9 +175,9 @@
                 <span v-if="!item.value || item.value.length <= 0">
                     <div style="height: 20px;line-height: 20px"></div>
                   </span>
-                <span v-else class="custom-avatar" style="display: inline-block;margin-right: 5px;" v-for="(itemImg, indexImg) in item.value" :key="indexImg">
+                <span v-else class="custom-avatar" style="display: inline-block;margin-right: 5px;" v-for="(itemImg, indexImg) in item.value" :key="indexImg" @click="readFile(itemImg)">
                     <el-avatar shape="square" size="small" :src="itemImg" fit="fill"></el-avatar>
-                  </span>
+                </span>
               </div>
               <div v-else class="padding-lr-10">
                 <span class="color-muted font-bold" style="position: relative;top: -150px">{{item.title}}: </span>
@@ -269,6 +269,7 @@
 <script>
   import {common} from "../../utils/api/url";
   import { Toast } from 'vant';
+  import { ImagePreview } from 'vant'
 
   import mixins from "~/utils/mixins";
   import {MessageError, MessageSuccess} from "~/utils/utils";
@@ -386,6 +387,12 @@
           }else {
             Toast(res.data.desc);
           }
+        });
+      },
+      readFile(file){//预览
+        ImagePreview({
+          images: [file],
+          closeable: false,
         });
       }
     }

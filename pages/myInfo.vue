@@ -271,7 +271,11 @@
                     <div style="height: 20px;line-height: 20px"></div>
                   </span>
                   <span v-else class="custom-avatar" style="display: inline-block;margin-right: 5px;" v-for="(itemImg, indexImg) in item.value" :key="indexImg">
-                    <el-avatar shape="square" size="small" :src="itemImg"></el-avatar>
+<!--                    <el-avatar shape="square" size="small" :src="itemImg"></el-avatar>-->
+                    <el-image style="width: 30px; height: 30px"
+                              :src="itemImg"
+                              :preview-src-list="item.value">
+                    </el-image>
                   </span>
                 </div>
                 <div v-else class="padding-lr-10">
@@ -434,7 +438,9 @@
         textarea: '',
         visibleOk: false,
         visibleNo: false,
-        serverDetailData: {}
+        serverDetailData: {},
+        show: false,
+        index: 0,
       }
     },
     mounted() {
