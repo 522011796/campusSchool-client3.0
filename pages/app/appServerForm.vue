@@ -24,9 +24,9 @@
               </el-select>
             </template>
             <span style="position: relative;top: -5px">
-              <van-button plain size="small" type="primary" :loading="btnLoading" @click="serverSubBlock($event)">
+              <van-button plain size="small" type="primary" v-if="fromCreateBtnShow == true" :loading="btnLoading" @click="serverSubBlock($event)">
                 <i class="fa fa-edit"></i>
-                {{$t("提交")}}
+                {{ fromCreateBtnText }}
               </van-button>
             </span>
           </div>
@@ -61,6 +61,8 @@
         formCreateOptionData: {},
         btnLoading: false,
         customUserStatus: false,
+        fromCreateBtnShow: true,
+        fromCreateBtnText: '',
         auditUsers: [],
         auditSelUser: []
       }
@@ -88,6 +90,8 @@
             this.serverDetail = res.data.data;
             let processList = res.data.data.processList;
             this.customUserStatus = false;
+            this.fromCreateBtnShow = res.data.data.submitButton;
+            this.fromCreateBtnText = res.data.data.buttonName != "" ? res.data.data.buttonName : this.$t("提交")
 
             if (res.data.data.formContent != null && res.data.data.formContent != ''){
               this.formCreateRuleData = JSON.parse(res.data.data.formContent).rule;
