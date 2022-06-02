@@ -314,6 +314,7 @@
       },
       async detailClick(data){
         let rules = '';
+        let list = [];
         await this.getSessionInfo();
         this.formCreateTitleData = data.form_name;
         this.formCreateIdData = data.id;
@@ -322,25 +323,36 @@
         if (data.form_content != null && data.form_content != ''){
           this.formCreateRuleData = JSON.parse(data.form_content).rule;
           this.formCreateOptionData = JSON.parse(data.form_content).option;
-          for (let i = 0; i < this.formCreateRuleData.length; i++){
-            if (this.formCreateRuleData[i].type == "upload"){
-              this.formCreateRuleData[i]['props'] = {
-                uploadType: 'image',
-                action: '/proxy/school/multipartFile/upload',
-                data : {
-                  "path": "applet"
-                },
-                onSuccess(res, file){
-                  file.url = res.data.url || ''
-                  console.log(res)
-                }
-              }
-            }
-          }
+          this.setFormChildren(this.formCreateRuleData, list, 'children');
         }
         this.initAuditUser(data.id);
 
         this.dialogServerDetail = true;
+      },
+      setFormChildren(array, obj, param){
+        let _self = this;
+        if (array && array.length > 0){
+          array.map(function (item,index) {
+            if(item[param] != undefined && item[param].length > 0){
+              _self.setFormChildren(item[param], obj, param);
+            }else {
+              if (item.type == "upload"){
+                item['props'] = {
+                  uploadType: 'image',
+                  action: '/proxy/school/multipartFile/upload',
+                  data : {
+                    "path": "applet"
+                  },
+                  onSuccess(res, file){
+                    file.url = res.data.url || ''
+                    console.log(res)
+                  }
+                }
+              }
+            }
+          });
+          return obj;
+        }
       },
       selMenu(event, item, index){
         // this.activeMenu = '';

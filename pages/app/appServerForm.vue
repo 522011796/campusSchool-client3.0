@@ -80,6 +80,7 @@
 
       },
       async init(){
+        let list = [];
         let params = {
           id: this.$route.query.id
         };
@@ -96,20 +97,7 @@
             if (res.data.data.formContent != null && res.data.data.formContent != ''){
               this.formCreateRuleData = JSON.parse(res.data.data.formContent).rule;
               this.formCreateOptionData = JSON.parse(res.data.data.formContent).option;
-              for (let i = 0; i < this.formCreateRuleData.length; i++){
-                if (this.formCreateRuleData[i].type == "upload"){
-                  this.formCreateRuleData[i]['props'] = {
-                    uploadType: 'image',
-                    action: '/proxy/school/multipartFile/upload',
-                    data : {
-                      "path": "applet"
-                    },
-                    onSuccess(res, file){
-                      file.url = res.data.url || ''
-                    }
-                  }
-                }
-              }
+              this.setFormChildren(this.formCreateRuleData, list, 'children');
             }
 
             for (let i = 0; i < processList.length; i++){
@@ -129,6 +117,31 @@
             this.auditUsers = auditUser;
           }
         });
+      },
+      setFormChildren(array, obj, param){
+        let _self = this;
+        if (array && array.length > 0){
+          array.map(function (item,index) {
+            if(item[param] != undefined && item[param].length > 0){
+              _self.setFormChildren(item[param], obj, param);
+            }else {
+              if (item.type == "upload"){
+                item['props'] = {
+                  uploadType: 'image',
+                  action: '/proxy/school/multipartFile/upload',
+                  data : {
+                    "path": "applet"
+                  },
+                  onSuccess(res, file){
+                    file.url = res.data.url || ''
+                    console.log(res)
+                  }
+                }
+              }
+            }
+          });
+          return obj;
+        }
       },
       serverSubBlock(){
         this.fApi.submit((formData, fApi)=>{
