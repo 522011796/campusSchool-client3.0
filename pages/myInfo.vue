@@ -330,7 +330,9 @@
                     <template v-if="item.nodeType == 'cc'">
                       <el-tag size="mini" v-for="(itemUser, indexUser) in item.handleUserNameList" :key="indexUser" v-if="indexUser <= 5">
                         <div class="moon-content-text-ellipsis-class" style="width: 50px">
-                          {{ itemUser }}
+                          <el-tooltip class="item" effect="dark" :content="itemUser" placement="top-start">
+                            <span>{{ itemUser }}</span>
+                          </el-tooltip>
                         </div>
                       </el-tag>
 
@@ -368,7 +370,7 @@
             <el-button size="small" @click="handleCancel">取 消</el-button>
             <el-button size="small" type="success" @click="handleOk($event, detailData, 1)">同 意</el-button>
 <!--            <el-button size="small" type="primary" @click="handleOk($event, detailData, 6)">转 交</el-button>-->
-            <el-button size="small" type="primary" @click="handleOk($event, detailData, -1)">撤 销</el-button>
+<!--            <el-button size="small" type="primary" @click="handleOk($event, detailData, -1)">撤 销</el-button>-->
             <el-popover
               placement="top"
               width="200"
