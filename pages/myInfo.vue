@@ -368,14 +368,15 @@
         <template v-if="activeMenu == 1">
           <div class="text-right padding-lr-10">
             <el-button size="small" @click="handleCancel">取 消</el-button>
-            <el-button size="small" type="success" @click="handleOk($event, detailData, 1)">同 意</el-button>
+            <el-button v-if="detailApplyAuditUserData.agreen1 == true" size="small" type="success" @click="handleOk($event, detailData, 1)">同 意</el-button>
 <!--            <el-button size="small" type="primary" @click="handleOk($event, detailData, 6)">转 交</el-button>-->
 <!--            <el-button size="small" type="primary" @click="handleOk($event, detailData, -1)">撤 销</el-button>-->
             <el-popover
               placement="top"
               width="200"
               @hide="cancelPop"
-              v-model="visibleNo">
+              v-model="visibleNo"
+              v-if="detailApplyAuditUserData.notagreed1 == true">
               <div class="margin-bottom-10">
                 <el-input
                   type="textarea"
@@ -395,7 +396,7 @@
         <template v-if="activeMenu == 2">
           <div class="text-right padding-lr-10">
             <el-button size="small" @click="handleCancel">取 消</el-button>
-            <el-button size="small" type="primary" @click="handleOk($event, detailData, -1)">撤 销</el-button>
+            <el-button v-if="detailData.allowRevoke == true" size="small" type="primary" @click="handleOk($event, detailData, -1)">撤 销</el-button>
           </div>
         </template>
         <template v-if="activeMenu == 4">
@@ -443,6 +444,7 @@
         serverDetailData: {},
         show: false,
         index: 0,
+        detailApplyAuditUserData: {},
       }
     },
     mounted() {
@@ -486,8 +488,18 @@
         this.$axios.get(common.server_form_audit_query, {params: params}).then(res=>{
           if (res.data.code == 200){
             if (res.data.data){
-              console.log(res.data.data.handleList);
+              //console.log(res.data.data.handleList);
               this.detailApplyAuditList = res.data.data.handleList;
+              let orderIndex = res.data.data.orderIndex;
+              for (let i = 0; i < res.data.data.handleList.length; i++){
+                if (res.data.data.handleList[i].orderIndex == orderIndex){
+                  this.detailApplyAuditUserData = {
+                    agreen1: res.data.data.handleList[i].agreed1,
+                    notagreed1: res.data.data.handleList[i].notagreed1
+                  };
+                }
+              }
+              console.log(this.detailApplyAuditUserData);
             }
           }
         });
@@ -533,7 +545,7 @@
         if (item.applyContent  && item.applyContent != "[]"){
           this.detailApplyContentData = JSON.parse(item.applyContent);
         }
-        console.log(this.detailApplyContentData);
+        console.log(item);
         this.initAuditDetailList(item._id);
         this.dialogServerDetail = true;
       },

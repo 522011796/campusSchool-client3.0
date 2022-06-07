@@ -56,15 +56,17 @@
       <div class="padding-tb-10 padding-lr-10 border-bottom-1">
         <template v-if="active == 1">
           <div class="text-right padding-lr-10">
-<!--            <el-button size="mini" @click="handleCancel">取 消</el-button>-->
-            <el-button size="mini" type="success" @click="handleOk($event, detailData, 1)">同 意</el-button>
+            <el-button v-if="detailApplyAuditUserData.agreen1 == true" size="mini" type="success" @click="handleOk($event, detailData, 1)">同 意</el-button>
+            <el-button v-else size="mini" @click="handleCancel">取 消</el-button>
             <!--            <el-button size="mini" type="primary" @click="handleOk($event, detailData, 6)">转 交</el-button>-->
 <!--            <el-button size="mini" type="primary" @click="handleOk($event, detailData, -1)">撤 销</el-button>-->
             <el-popover
-              placement="top"
+              :tabindex="99999"
+              placement="bottom"
               width="200"
               @hide="cancelPop"
-              v-model="visibleNo">
+              v-model="visibleNo"
+              v-if="detailApplyAuditUserData.notagreed1 == true">
               <div class="margin-bottom-10">
                 <el-input
                   type="textarea"
@@ -83,8 +85,8 @@
         </template>
         <template v-if="active == 2">
           <div class="text-right padding-lr-10">
-<!--            <el-button size="mini" @click="handleCancel">取 消</el-button>-->
-            <el-button size="mini" type="primary" @click="handleOk($event, detailData, -1)">撤 销</el-button>
+            <el-button v-if="detailData.allowRevoke == true" size="mini" type="primary" @click="handleOk($event, detailData, -1)">撤 销</el-button>
+            <el-button v-else size="mini" @click="handleCancel">取 消</el-button>
           </div>
         </template>
         <template v-if="active == 3">
@@ -288,7 +290,8 @@
         detailApplyContentData: [],
         detailApplyAuditList: [],
         textarea: '',
-        visibleNo: false
+        visibleNo: false,
+        detailApplyAuditUserData: {},
       }
     },
     mounted() {
@@ -362,6 +365,15 @@
           if (res.data.code == 200){
             if (res.data.data){
               this.detailApplyAuditList = res.data.data.handleList;
+              let orderIndex = res.data.data.orderIndex;
+              for (let i = 0; i < res.data.data.handleList.length; i++){
+                if (res.data.data.handleList[i].orderIndex == orderIndex){
+                  this.detailApplyAuditUserData = {
+                    agreen1: res.data.data.handleList[i].agreed1,
+                    notagreed1: res.data.data.handleList[i].notagreed1
+                  };
+                }
+              }
             }
           }
         });
