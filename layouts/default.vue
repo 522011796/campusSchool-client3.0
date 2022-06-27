@@ -99,8 +99,11 @@
             <span class="moon-top-middle-menu-item margin-right-20">
 
             </span>
-            <span class="moon-top-middle-menu-item-text" @click="menuClick">
-              <label class="item moon-top-middle-menu-item-text-active font-bold">{{$t("一站式服务大厅")}}</label>
+            <span class="moon-top-middle-menu-item-text" @click="menuClick($event, 'index')">
+              <label class="item font-bold" :class="activeMenu == 'index' ? 'moon-top-middle-menu-item-text-active' : ''">{{$t("办事大厅")}}</label>
+            </span>
+            <span v-if="loginUserType == 5" class="moon-top-middle-menu-item-text" @click="menuClick($event, 'student')">
+              <label class="item font-bold" :class="activeMenu == 'student' ? 'moon-top-middle-menu-item-text-active' : ''">{{$t("智慧迎新")}}</label>
             </span>
           </div>
 
@@ -184,6 +187,7 @@
         menuTabList: [],
         inputValue: '',
         searchServerBlock: true,
+        activeMenu: 'index',
         form: {
           name: '',
           logo: '',
@@ -228,6 +232,7 @@
       this.showContent = false;
     },
     created() {
+      this.activeMenu = this.$route.query.menu ? this.$route.query.menu : 'index';
       this.hh();
       this.init();
     },
@@ -334,13 +339,23 @@
           }
         });
       },
-      menuClick(){
-        this.$router.push({
-          path: '/',
-          query: {
-
-          }
-        });
+      menuClick($event, type){
+        this.activeMenu = type;
+        if (type == 'index'){
+          this.$router.push({
+            path: '/',
+            query: {
+              menu: 'index'
+            }
+          });
+        }else if (type == 'student'){
+          this.$router.push({
+            path: '/student',
+            query: {
+              menu: 'student'
+            }
+          });
+        }
       },
       querySearch(queryString, cb) {
         let params = {
@@ -368,6 +383,13 @@
           if (res.data.code == 200){
             this.$router.push("/login");
           }
+        });
+      }
+    },
+    watch: {
+      '$route': function (to, from) {//监听路由变化,为了浏览器点击后退和前进也能切换菜单选中
+        this.$nextTick(() => {
+          this.activeMenu = this.$route.query.menu;
         });
       }
     }
@@ -405,7 +427,7 @@
   height: 50px;
   line-height: 50px;
   top: 10px;
-  width: 140px;
+  width: 100px;
   display: inline-block;
 }
 .moon-top-middle-menu-item-text-active:after {
@@ -413,8 +435,8 @@
   display: inline-block;
   position: absolute;
   bottom: 0px;
-  left: calc(50% - 65px);
-  width: 105px;
+  left: calc(0%);
+  width: 65px;
   height: 3px;
   background: #E6A23C;
 }

@@ -28,7 +28,7 @@
               <el-row v-for="(item, index) in noticeDataList" :key="index">
                 <el-col :span="16">
                   <div class="moon-content-text-ellipsis-class">
-                  <span>
+                  <span>block-item-title
                     <i class="fa fa-volume-up"></i>
                     <label>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</label>
                   </span>
@@ -125,6 +125,10 @@
                   <span class="font-bold block-item-header-tab" :class="activeTab === 2 ? 'color-grand': 'color-sub-grand'" @click="tabClick(2)">
                     <i class="fa fa-flag"></i>
                     {{$t("单位办事")}}
+                  </span>
+                  <span class="font-bold block-item-header-tab" :class="activeTab === 3 ? 'color-grand': 'color-sub-grand'" @click="tabClick(3)">
+                    <i class="fa fa-mortar-board"></i>
+                    {{$t("智慧迎新")}}
                   </span>
                 </el-col>
                 <el-col :span="4" class="text-right" style="position: relative">

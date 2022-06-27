@@ -19,6 +19,7 @@ export default {
       globalAppShow: '',
       isAndroid: false,
       isIos: false,
+      sessionData: '',
       //公共属性
       total: global.total,
       page: global.page,
@@ -522,7 +523,8 @@ export default {
           this.organizeName = res.data.data.LOGIN_RETURN_INFO.organize ? res.data.data.LOGIN_RETURN_INFO.organize.departmentName : '';
           this.headImage = res.data.data.headImage;
           this.loginUserId = res.data.data.LOGIN_RETURN_INFO.userInfo ? res.data.data.LOGIN_RETURN_INFO.userInfo.userId : res.data.data.userId;
-          this.loginUserPhone = res.data.data.LOGIN_RETURN_INFO.phone
+          this.loginUserPhone = res.data.data.LOGIN_RETURN_INFO.phone;
+          this.sessionData = res.data.data;
         }
       });
     },

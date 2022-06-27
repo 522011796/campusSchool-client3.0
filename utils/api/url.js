@@ -573,6 +573,17 @@ export const common = {
   server_form_audit_query: '/proxy/school/applet/form/apply/query',//服务审批详细列表
   server_form_audit_handle: '/proxy/school/applet/form/apply/handle',//服务审批操作
 
+  server_enroll_app_student_info: '/proxy/school/enroll-app/student/info',//学生/老师--获取学生信息/缴费信息
+  server_enroll_app_process_current: '/proxy/school/enroll-app/process/current',//环节列表
+  server_enroll_app_student_update: '/proxy/school/enroll-app/student/update',//环节添加学生信息
+  enroll_link_arrive_trans_type: '/proxy/school/link-setting/arrive/trans-type/list', //接站交通工具
+  enroll_link_arrive_station_list: '/proxy/school/enroll-app/arrive/station', //接站站点
+  server_enroll_app_arrive_add: '/proxy/school/enroll-app/arrive/add',//环节添加学生接站
+  server_enroll_app_arrive_checkin: '/proxy/school/enroll-app/student/checkin',//环节添加学生报道
+  server_enroll_app_arrive_get: '/proxy/school/enroll-app/arrive/get',//环节到站信息
+  server_enroll_app_form_data_get: '/proxy/school/enroll-app/form/data/get',//环节表单信息
+  server_enroll_app_student_checkin_get: '/proxy/school/enroll-app/student/checkin/get',//环节表单信息
+
   login_check: '/proxy/user/loginCheck',//登录状态
 
 };

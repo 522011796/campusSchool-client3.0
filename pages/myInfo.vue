@@ -409,6 +409,134 @@
       </div>
     </drawer-layout-right>
 
+    <drawer-layout-right tabindex="0" :show-close="true" @changeDrawer="closeDialog" :visible="drawerPayVisible" size="680px">
+      <div slot="title">
+        <div class="header-block padding-lr-10">
+          <span class="tab-class font-bold">
+            <i class="fa fa-file"></i>
+            {{$t('报道单')}}
+          </span>
+        </div>
+      </div>
+      <div slot="content" class="color-muted">
+        <div>
+          <div class="padding-tb-10 padding-lr-10">
+            <span class="title-block-tag"></span>
+            <span class="title-block-text">{{$t("基本信息")}}</span>
+          </div>
+          <table class="custom-table">
+            <tr>
+              <td style="width: 20%" rowspan="2">
+                <el-image style="width: 80px; height: 80px;margin-top: 5px" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"></el-image>
+              </td>
+              <td style="width: 20%">{{$t("姓名")}}</td>
+              <td style="width: 10%">1</td>
+              <td style="width: 10%">{{$t("性别")}}</td>
+              <td style="width: 10%">1</td>
+              <td style="width: 20%">{{$t("录取号")}}</td>
+              <td style="width: 10%">1</td>
+            </tr>
+            <tr>
+              <td>{{$t("学院")}}</td>
+              <td>1</td>
+              <td>{{$t("专业")}}</td>
+              <td>1</td>
+              <td>1</td>
+              <td>{{$t("班级")}}</td>
+            </tr>
+            <tr>
+              <td>{{$t("宿舍信息")}}</td>
+              <td colspan="6">1</td>
+            </tr>
+          </table>
+        </div>
+        <div class="margin-top-20">
+          <div class="padding-tb-10 padding-lr-10">
+            <span class="title-block-tag"></span>
+            <span class="title-block-text">{{$t("缴费信息")}}</span>
+          </div>
+          <el-table
+            border
+            ref="refTable"
+            :data="tableSignData"
+            header-cell-class-name="custom-table-cell-bg"
+            size="medium"
+            style="width: 100%">
+            <el-table-column align="center" :label="$t('费用名称')">
+              <template slot-scope="scope">
+                <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                  <div class="text-center">{{scope.row.name}}</div>
+                  <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                    {{scope.row.name}}
+                  </span>
+                </el-popover>
+              </template>
+            </el-table-column>
+            <el-table-column align="center" :label="$t('缓缴')">
+              <template slot-scope="scope">
+                <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                  <div class="text-center">{{scope.row.name}}</div>
+                  <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                    {{scope.row.name}}
+                  </span>
+                </el-popover>
+              </template>
+            </el-table-column>
+            <el-table-column align="center" :label="$t('贷缴')">
+              <template slot-scope="scope">
+                <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                  <div class="text-center">{{scope.row.name}}</div>
+                  <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                    {{scope.row.name}}
+                  </span>
+                </el-popover>
+              </template>
+            </el-table-column>
+            <el-table-column align="center" :label="$t('减免')">
+              <template slot-scope="scope">
+                <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                  <div class="text-center">{{scope.row.name}}</div>
+                  <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                    {{scope.row.name}}
+                  </span>
+                </el-popover>
+              </template>
+            </el-table-column>
+            <el-table-column align="center" :label="$t('实缴')">
+              <template slot-scope="scope">
+                <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                  <div class="text-center">{{scope.row.name}}</div>
+                  <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                    {{scope.row.name}}
+                  </span>
+                </el-popover>
+              </template>
+            </el-table-column>
+            <el-table-column align="center" :label="$t('已缴')">
+              <template slot-scope="scope">
+                <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                  <div class="text-center">{{scope.row.name}}</div>
+                  <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                    {{scope.row.name}}
+                  </span>
+                </el-popover>
+              </template>
+            </el-table-column>
+            <el-table-column align="center" :label="$t('未缴金额')">
+              <template slot-scope="scope">
+                <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                  <div class="text-center">{{scope.row.name}}</div>
+                  <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                    {{scope.row.name}}
+                  </span>
+                </el-popover>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </div>
+    </drawer-layout-right>
+
     <!--服务-->
     <my-server-dialog :visible="dialogServer" width-style="850px" :data="serverDetailData" @close="closeDialog" @detailClick="detailClick"></my-server-dialog>
   </div>
@@ -430,11 +558,13 @@
         auditStatus: 1,
         dialogServer: false,
         dialogServerDetail: false,
+        drawerPayVisible: false,
         testArea: '',
         collectionList: [],
         noticeList: [],
         auditList: [],
         tableData: [],
+        tableSignData: [],
         detailData: '',
         detailApplyContentData: [],
         detailApplyAuditList: [],
@@ -520,6 +650,7 @@
         this.detailApplyAuditList = [];
         this.dialogServer = false;
         this.dialogServerDetail = false;
+        this.drawerPayVisible = false;
       },
       cancelDialog(){
         this.dialogServer = false;
@@ -545,7 +676,6 @@
         if (item.applyContent  && item.applyContent != "[]"){
           this.detailApplyContentData = JSON.parse(item.applyContent);
         }
-        console.log(item);
         this.initAuditDetailList(item._id);
         this.dialogServerDetail = true;
       },

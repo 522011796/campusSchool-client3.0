@@ -341,8 +341,17 @@ a{
 .width-350{
   width: 350px;
 }
+.width-415{
+  width: 415px;
+}
+.width-470{
+  width: 470px;
+}
 .border-bottom-1{
   border-bottom: 1px solid #EBEEF5;
+}
+.border-bottom-dashed-1{
+  border-bottom: 1px dashed #EBEEF5;
 }
 .line-height{
   background: #EBEEF5;
