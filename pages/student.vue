@@ -550,6 +550,231 @@
       </div>
     </dialog-normal>
 
+    <!--宿舍-->
+    <dialog-normal top="10vh" width-style="750px" :visible="dialogDorm" :show-footer="false" :title="$t('线上选寝')" custom-dialog-class="custom-normal-0-dialog animated fadeInDownBig" @close="closeDrawDialog" @right-close="cancelDialog">
+      <div slot="title">
+        <div class="head-block">
+          <el-row>
+            <el-col :span="6">
+              <div>
+                <span class="fa fa-file"></span>
+                <span class="font-bold">{{$t('线上选寝')}}</span>
+              </div>
+            </el-col>
+            <el-col :span="18">
+              <div class="text-right">
+                <el-button size="mini" type="danger" plain @click="cancelDialog">{{$t('取消')}}</el-button>
+                <el-button size="mini" type="warning" plain @click="billManage">{{$t('订单')}}</el-button>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+      </div>
+      <div>
+        <div class="info-dorm-block">
+          <div>
+            <div class="pull-left info-block-left">
+              <div class="info-block-header text-center">
+                <span>{{$t("全部宿舍")}}</span>
+              </div>
+              <div :style="{height: 450-45+'px', overflowY: 'auto'}">
+                <el-menu
+                  :default-active="defaultMenuActive"
+                  background-color="#fefefe"
+                  text-color="#909399"
+                  active-text-color="#ffd04b"
+                  class="el-menu-vertical-demo custon-nav-menu">
+                  <template v-for="(item, index) in dataDept">
+                    <el-submenu v-if="item.child_list.length > 0" :index="index+''">
+                      <div style="width: 100%" slot="title" @click="selMenu($event, item, index)">
+                        <span>{{ item.department_name }}</span>
+                      </div>
+                      <el-menu-item-group v-if="item.child_list.length > 0">
+                        <el-menu-item v-for="(itemChild, indexChild) in item.child_list" :key="indexChild" :index="index+'-'+indexChild" @click="selMenu($event, itemChild, index+'-'+indexChild)">{{ itemChild.department_name }}</el-menu-item>
+                      </el-menu-item-group>
+                    </el-submenu>
+                    <el-menu-item v-else :index="index+''" @click="selMenu($event, item, index)">{{ item.department_name }}</el-menu-item>
+                  </template>
+                </el-menu>
+              </div>
+            </div>
+            <div class="info-block-right">
+              <div class="info-block-header layout-inline text-left padding-lr-10">
+                <el-dropdown class="layout-item" size="mini" trigger="click">
+                  <span class="el-dropdown-link color-white font-size-12">
+                    {{ $t("房型") }}<i class="el-icon-arrow-down el-icon--right"></i>
+                  </span>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item v-for="(item, index) in filterRoomType" :key="index" @click.native="handleChangeSearch($event, item, 1)">{{ item.label }}</el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+                <el-dropdown class="layout-item margin-left-10" size="mini" trigger="click">
+                  <span class="el-dropdown-link color-white font-size-12">
+                    {{ $t("朝向") }}<i class="el-icon-arrow-down el-icon--right"></i>
+                  </span>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item v-for="(item, index) in filterRoomArrow" :key="index" @click.native="handleChangeSearch($event, item, 1)">{{ item.label }}</el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+                <el-dropdown class="layout-item margin-left-10" size="mini" trigger="click">
+                  <span class="el-dropdown-link color-white font-size-12">
+                    {{ $t("价位") }}<i class="el-icon-arrow-down el-icon--right"></i>
+                  </span>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item v-for="(item, index) in filterRoomPrice" :key="index" @click.native="handleChangeSearch($event, item, 1)">{{ item.label }}</el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+                <el-dropdown class="layout-item margin-left-10" size="mini" trigger="click">
+                  <span class="el-dropdown-link color-white font-size-12">
+                    {{ $t("状态") }}<i class="el-icon-arrow-down el-icon--right"></i>
+                  </span>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item v-for="(item, index) in filterRoomStatus" :key="index" @click.native="handleChangeSearch($event, item, 1)">{{ item.label }}</el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+              </div>
+              <div :style="{height: 450-65+'px', overflowY: 'auto'}" class="padding-lr-10 padding-tb-10">
+                <div>
+                  <el-row>
+                    <el-col :span="6" v-for="(item, index) in dormList" :key="index" class="text-center margin-bottom-20 room-item-block" @click.native="selRoomItem($event, item)">
+                      <div>
+                        <img src="~static/img/dorm_icon.png" style="height: 40px;width: 40px">
+                      </div>
+                      <div class="margin-top-5 font-size-12 moon-content-text-ellipsis-class">
+                        <el-tooltip class="item" effect="dark" content="101xxxxxxcvvxcv" placement="bottom">
+                          <span>101xxxxxxcvvxcv</span>
+                        </el-tooltip>
+                      </div>
+                    </el-col>
+                  </el-row>
+                </div>
+              </div>
+            </div>
+            <div class="moon-clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </dialog-normal>
+
+    <drawer-layout-right tabindex="0" @changeDrawer="closeDrawDialog" :visible="drawerRoom" size="550px" :title="$t('床位选择')" @right-close="cancelDrawDialog">
+      <div slot="content">
+        <div>
+          <el-carousel height="240px">
+            <el-carousel-item v-for="(item, index) in 4" :key="index">
+              {{index}}
+            </el-carousel-item>
+          </el-carousel>
+        </div>
+        <div class="padding-tb-10">
+          <div class="">
+            <el-row>
+              <el-col :span="12">
+                <span class="tag-class"></span>
+                <span class="tag-text-class font-bold">{{roomTypeText}}</span>
+              </el-col>
+              <el-col :span="12" class="text-right">
+                <span class="tag-class"></span>
+                <span class="tag-text-class font-size-12">{{$t("已选")}}</span>
+
+                <span class="tag-danger-class margin-left-10"></span>
+                <span class="tag-text-class font-size-12">{{$t("未选")}}</span>
+              </el-col>
+            </el-row>
+          </div>
+          <div class="padding-lr-10 padding-tb-10">
+            <el-row :gutter="8">
+              <el-col :span="6" v-for="(item, index) in 8" :key="index" class="margin-bottom-10" @click.native="selBedNo($event, index)">
+                <div class="bed-item-block" :class="activeBedNo === index ? 'bed-item-block-active' : ''">
+                  {{index+1}}{{$t("号床")}}
+                </div>
+              </el-col>
+            </el-row>
+          </div>
+
+          <div class="padding-lr-10 padding-tb-10">
+            <div>
+              <span class="tag-class"></span>
+              <span class="tag-text-class font-bold">{{$t("简介")}}</span>
+            </div>
+            <div class="margin-top-10 font-size-12">
+              <el-row>
+                <el-col :span="12">
+                  <span>{{$t("容纳人数")}}:</span>
+                  <span>{{peopleNum}}</span>
+                </el-col>
+                <el-col :span="12">
+                  <span>{{$t("价格")}}:</span>
+                  <span>{{price}}/{{$t("年")}}</span>
+                </el-col>
+              </el-row>
+              <el-row class="margin-top-5">
+                <el-col :span="12">
+                  <span>{{$t("面积")}}:</span>
+                  <span>{{area}}</span>
+                </el-col>
+                <el-col :span="12">
+                  <span>{{$t("朝向")}}:</span>
+                  <span>{{arrow}}</span>
+                </el-col>
+              </el-row>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div slot="footer">
+        <div class="text-right padding-lr-10">
+          <el-button size="small" @click="cancelDrawDialog">{{$t("取消")}}</el-button>
+          <el-button size="small" type="primary" :loading="btnLoading" @click="okDrawDialog">{{$t("保存")}}</el-button>
+        </div>
+      </div>
+    </drawer-layout-right>
+
+    <drawer-layout-right tabindex="0" :hide-footer="true" @changeDrawer="closeDrawDialog" :visible="drawerBill" size="550px" :title="$t('我的订单')" @right-close="cancelDrawDialog">
+      <div slot="content">
+        <div class="padding-tb-10 padding-lr-10">
+          <el-card :body-style="{padding: '10px',background: '#EBEEF5'}" class="margin-bottom-20" v-for="(item, index) in 5" :key="index">
+            <div class="font-size-12">
+              <el-row class="font-size-14">
+                <el-col :span="12">
+                  <span class="fa fa-history"></span>
+                  <span>xxxxxxx</span>
+                </el-col>
+                <el-col :span="12" class="text-right">
+                  <label class="color-warning">{{$t("未支付")}}</label>
+                </el-col>
+              </el-row>
+              <el-row class="margin-top-5">
+                <el-col :span="12">
+                  <span>{{$t("姓名")}}</span>
+                  <span>xxxxxxx</span>
+                </el-col>
+                <el-col :span="12" class="text-right">
+                  <label class="color-warning font-size-16">¥100</label>
+                </el-col>
+              </el-row>
+              <el-row class="margin-top-5">
+                <el-col :span="24">
+                  <span>{{$t("学号/录取号")}}</span>
+                  <span>xxxxxxx</span>
+                </el-col>
+              </el-row>
+              <el-row class="margin-top-5">
+                <el-col :span="24">
+                  <span>{{$t("已选寝室")}}</span>
+                  <span>xxxxxxx</span>
+                </el-col>
+              </el-row>
+              <el-row class="margin-top-5">
+                <el-col :span="24" class="text-right">
+                  <el-button size="mini" type="success" @click="setBillStatus($event, item)">{{$t("立即撤销")}}</el-button>
+                </el-col>
+              </el-row>
+            </div>
+          </el-card>
+        </div>
+      </div>
+    </drawer-layout-right>
+
     <my-normal-dialog :visible.sync="visibleConfim" :loading="dialogLoading" title="提示" :detail="subTitle" :content="messageTips" @ok-click="handleOkChange" @cancel-click="handleCancelChange" @close="closeDialog"></my-normal-dialog>
 
   </div>
@@ -571,6 +796,7 @@
     components: {DrawerLayoutRight, MyServerDialog, MyElTree, DialogNormal},
     data(){
       return {
+        defaultMenuActive: '',
         noticeList: [],
         serverDataList: [],
         sex: 1,
@@ -590,10 +816,31 @@
         btnLoading: false,
         visibleConfim: false,
         dialogLoading: false,
+        drawerRoom: false,
+        drawerBill: false,
         uploadFile: common.upload_file,
         uploadResult: {},
         uploadProcess: '',
         detailData: {},
+        commSearchBuild: '',
+        commSearchFloor: '',
+        commSearchRoom: '',
+        dormList: [],
+        filterRoomType: [],
+        filterRoomArrow: [],
+        filterRoomPrice: [],
+        filterRoomStatus: [{label: this.$t("已满"),value: 1},{label: this.$t("未满"),value: 0}],
+        searchRoomType: '',
+        searchRoomArrow: '',
+        searchRoomPrice: '',
+        searchRoomStatus: '',
+        roomTypeText: 'xxxxxx',
+        peopleNum: 0,
+        arrow: '',
+        price: 0,
+        area: 0,
+        roomDetailData: {},
+        activeBedNo: '',
         filterStatus: [{
           label: this.$t("是"),
           value: true,
@@ -612,6 +859,7 @@
         shouldAmount: 0,
         totalAmount: 0,
         itemUserList: [],
+        billList: [],
         form: {
           id: '',
           phone: '',
@@ -649,6 +897,7 @@
 
     },
     created() {
+      this.getDeptInfo(2);
       this.init();
       this.initTransType();
     },
@@ -764,6 +1013,56 @@
           }
         });
       },
+      initDormInfo(){
+        // let params = {
+        //   page: this.page,
+        //   num: this.num,
+        //   buildingId: this.commSearchBuild,
+        //   floor: this.commSearchFloor,
+        //   type: this.searchRoomType,
+        //   arrow: this.searchRoomArrow,
+        //   price: this.searchRoomPrice,
+        //   status: this.searchRoomStatus,
+        // };
+        // this.$axios.get(common.enroll_link_pay_item_user_list, {params: params}).then(res => {
+        //   if (res.data.data){
+        //     this.dormList = res.data.data.list;
+        //     this.total = res.data.data.totalCount;
+        //     this.num = res.data.data.num;
+        //     this.page = res.data.data.currentPage;
+        //   }
+        // });
+        for (let i = 0; i < 30; i++){
+          this.dormList.push(i);
+        }
+      },
+      initRoomInfo(){
+        this.filterRoomType = [];
+        this.filterRoomArrow = [];
+        this.filterRoomPrice = [];
+      },
+      initBill(){
+        let params = {
+          page: this.page,
+          num: this.num,
+        };
+        this.$axios.get(common.enroll_link_pay_item_user_list, {params: params}).then(res => {
+          if (res.data.data){
+            this.billList = res.data.data.list;
+          }
+        });
+      },
+      selMenu(event, item, index){
+        this.defaultMenuActive = index + '';
+        this.initDormInfo();
+      },
+      selRoomItem(event, item){
+        this.drawerRoom = true;
+      },
+      billManage(){
+        this.initBill();
+        this.drawerBill = true;
+      },
       serverClick($event, item){
         this.detailData = item;
         if (item.link_sub_type == 4){
@@ -778,6 +1077,10 @@
         }else if (item.link_sub_type == 3){
           this.initStudentInfo();
           this.dialogPay = true;
+        }else if (item.link_sub_type == 2){
+          this.initDormInfo();
+          this.initRoomInfo();
+          this.dialogDorm = true;
         }
       },
       handleTypeChange(event, type){
@@ -789,6 +1092,18 @@
           this.formStation.vehicle = event;
         }else if (type == 4){
           this.formStation.address = event;
+        }
+      },
+      handleChangeSearch(event, item, type){
+        console.log(111);
+        if (type == 1){
+          this.searchRoomType = item;
+        }else if (type == 2){
+          this.searchRoomArrow = item;
+        }else if (type == 3){
+          this.searchRoomPrice = item;
+        }else if (type == 4){
+          this.searchRoomStatus = item;
         }
       },
       uploadFileSuccess(res, file){
@@ -830,6 +1145,10 @@
         if (this.$refs['formStation']){
           this.$refs['formStation'].resetFields();
         }
+        this.searchRoomType = '';
+        this.searchRoomArrow = '';
+        this.searchRoomPrice = '';
+        this.searchRoomStatus = '';
         this.dialogLoading = false;
         this.visibleConfim = false;
       },
@@ -838,6 +1157,36 @@
         this.dialogInfo = false;
         this.dialogSign = false;
         this.dialogPay = false;
+        this.dialogDorm = false;
+      },
+      closeDrawDialog(){
+        this.activeBedNo = '';
+        this.billList = [];
+        this.drawerRoom = false;
+        this.drawerBill = false;
+      },
+      cancelDrawDialog(){
+        this.drawerRoom = false;
+      },
+      okDrawDialog(){
+        this.btnLoading = true;
+        let url = common.server_enroll_app_student_update;
+        let params = {
+
+        };
+        params = this.$qs.stringify(params);
+        this.$axios.post(url, params).then(res => {
+          if (res.data.code == 200){
+            this.initDormInfo();
+            this.drawerRoom = false;
+            MessageSuccess(res.data.desc);
+            this.dialogInfo = false;
+            this.btnLoading = false;
+          }else {
+            MessageError(res.data.desc);
+            this.btnLoading = false;
+          }
+        });
       },
       okDialog(){
         this.$refs['form'].validate((valid) => {
@@ -927,6 +1276,41 @@
           this.visibleConfim = false;
           this.dialogLoading = false;
         });
+      },
+      nodeClick(data){
+        this.commSearchBuild = "";
+        this.commSearchFloor = "";
+        this.commSearchRoom = "";
+        if (data.length == 1){
+          this.commSearchBuild = data[0];
+        }else if (data.length == 2){
+          this.commSearchBuild = data[0];
+          this.commSearchFloor = data[1];
+        }else if (data.length == 3){
+          this.commSearchBuild = data[0];
+          this.commSearchFloor = data[1];
+          this.commSearchRoom = data[2];
+        }
+      },
+      selBedNo(event, index){
+        console.log(index);
+        this.activeBedNo = index;
+      },
+      setBillStatus(event, item){
+        let url = "";
+        let params = {
+
+        }
+        url = common.server_enroll_app_arrive_checkin;
+        params = this.$qs.stringify(params);
+        this.$axios.post(url, params).then(res => {
+          if (res.data.code == 200){
+            this.initBill();
+            MessageSuccess(res.data.desc);
+          }else {
+            MessageError(res.data.desc);
+          }
+        });
       }
     }
   }
@@ -1003,10 +1387,20 @@
   width: 90%;
   margin: 20px auto 0px auto;
 }
+.info-dorm-block{
+  width: 100%;
+  height: 450px;
+}
 .tag-class{
   width: 10px;
   height: 13px;
   background: #67C23A;
+  display: inline-block;
+}
+.tag-danger-class{
+  width: 10px;
+  height: 13px;
+  background: #F56C6C;
   display: inline-block;
 }
 .tag-text-class{
@@ -1027,5 +1421,66 @@
   top: 2px;
   left: 3px;
   font-weight: normal;
+}
+.info-block-left{
+  width: 200px;
+  height: 450px;
+  border-right: 1px solid #F2F6FC;
+}
+.info-block-right{
+  margin-left: 200px;
+  height: 100%;
+}
+.info-block-header{
+  height: 45px;
+  line-height: 45px;
+  font-size: 12px;
+  color: #FFFFFF;
+  background: #909399;
+}
+.header-block{
+  height: 40px;
+  line-height: 40px;
+}
+.el-carousel__item h3 {
+  color: #475669;
+  opacity: 0.75;
+  line-height: 200px;
+  margin: 0;
+}
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+.el-carousel__item:nth-child(2n+1) {
+  background-color: #d3dce6;
+}
+.bed-item-block{
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 5px;
+  border: 1px solid #E4E7ED;
+}
+.room-item-block{
+  padding: 10px;
+  border-radius: 5px;
+  cursor: default;
+}
+.room-item-block:hover{
+  background: #f5f5f5;
+}
+.bed-item-block{
+  cursor: default;
+}
+.bed-item-block:hover{
+  background: #F2F6FC;
+}
+.bed-item-block-active,.bed-item-block-active:hover{
+  background: #E6A23C;
+  color: #FFFFFF;
+}
+.bed-item-block-selected,.bed-item-block-selected:hover{
+  background: #67C23A;
+  color: #FFFFFF;
 }
 </style>

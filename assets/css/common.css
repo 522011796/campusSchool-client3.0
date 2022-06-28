@@ -724,31 +724,31 @@ ul{
   bottom: 0;
   z-index: -1;
 }
-.custom-normal-dialog .el-dialog__header{
+.custom-normal-0-dialog .el-dialog__header, .custom-normal-dialog .el-dialog__header{
   padding: 0px;
 }
-.custom-normal-dialog .dialog-normal-title{
+.custom-normal-0-dialog .dialog-normal-title, .custom-normal-dialog .dialog-normal-title{
   border-bottom: 1px solid #EBEEF5;
 }
-.custom-normal-dialog .dialog-normal-header{
+.custom-normal-0-dialog .dialog-normal-header, .custom-normal-dialog .dialog-normal-header{
   padding: 15px 15px;
 }
-.custom-normal-dialog .dialog-normal-close{
+.custom-normal-0-dialog .dialog-normal-close, .custom-normal-dialog .dialog-normal-close{
   padding: 12px 15px;
 }
 .custom-normal-dialog .el-dialog__footer{
   padding: 0px 0px;
   text-align: right;
 }
-.custom-normal-dialog .dialog-normal-footer{
+.custom-normal-0-dialog .dialog-normal-footer, .custom-normal-dialog .dialog-normal-footer{
   padding: 12px 10px;
   border-top: 1px solid #EBEEF5;
 }
-.custom-normal-dialog .dialog-normal-header .title{
+.custom-normal-0-dialog .dialog-normal-header .title, .custom-normal-dialog .dialog-normal-header .title{
   font-size: 15px;
   font-weight: bold;
 }
-.custom-normal-dialog .dialog-normal-header .subTitle{
+.custom-normal-0-dialog .dialog-normal-header .subTitle, .custom-normal-dialog .dialog-normal-header .subTitle{
   font-size: 13px;
   color: #999999;
 }
@@ -757,6 +757,9 @@ ul{
 }
 .custom-normal-dialog .dialog-normal-body{
 
+}
+.custom-normal-0-dialog .el-dialog__body{
+  padding: 0px 0px;
 }
 .custom-head-black-class .el-dialog {
   position: relative;

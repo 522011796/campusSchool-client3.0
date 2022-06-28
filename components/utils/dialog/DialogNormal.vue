@@ -2,7 +2,7 @@
   <div>
     <el-dialog
       :top="top"
-      custom-class="custom-normal-dialog animated fadeInDownBig"
+      :custom-class="customDialogClass"
       :visible.sync="visible"
       :width="widthStyle"
       :show-close="false"
@@ -73,6 +73,14 @@ export default {
     showFooter: {
       default: true,
       type: Boolean
+    },
+    dialogBodyClass: {
+      type: String,
+      default: 'dialog-normal-body'
+    },
+    customDialogClass: {
+      type: String,
+      default: 'custom-normal-dialog animated fadeInDownBig'
     }
   },
   data(){
