@@ -50,7 +50,7 @@ export default function({ $axios, redirect }) {
         return res;
       } else if (res.data.code === 403) {
         hideLoading();
-        redirect('/noPermission');
+        //redirect('/noPermission');
         return res;
       } else if (res.data.code === 404) {
         hideLoading();

@@ -584,6 +584,17 @@ export const common = {
   server_enroll_app_form_data_get: '/proxy/school/enroll-app/form/data/get',//环节表单信息
   server_enroll_app_student_checkin_get: '/proxy/school/enroll-app/student/checkin/get',//环节表单信息
 
+  server_enroll_app_dorm_list: '/proxy/school/dormitory/menu/list',//宿舍列表信息
+  server_enroll_app_dorm_info: '/proxy/school/dormitory/chose/info',//宿舍房间详细信息
+  server_enroll_app_dorm_room: '/proxy/school/enroll/room/selectable-room-page',//宿舍列表信息
+  server_enroll_app_dorm_chose: '/proxy/school/student/enroll/room/chose',//下单床位
+  server_enroll_app_dorm_bill_page: '/proxy/school/dormitory/order/page',//订单分页
+  server_enroll_app_dorm_bill_revoke: '/proxy/school/student/enroll/room/revoke',//订单撤销
+
+  server_enroll_app_student_form_add: '/proxy/school/enroll-app/form/data/add',//迎新表单提交
+  server_enroll_app_student_form_get: '/proxy/school/enroll-app/form/data/get',//迎新表单查询
+  server_enroll_app_student_link_info: '/proxy/school/process/link/info',//迎新表单详细
+
   login_check: '/proxy/user/loginCheck',//登录状态
 
 };
