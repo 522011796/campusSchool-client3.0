@@ -460,6 +460,7 @@
             </el-col>
             <el-col :span="18">
               <div class="text-right">
+                <el-button size="mini" plain type="success" @click="payManage($event, 1)">{{$t("去支付")}}</el-button>
                 <i class="fa fa-close font-size-14" @click="cancelDialog"></i>
               </div>
             </el-col>
@@ -811,6 +812,23 @@
       </div>
     </drawer-layout-right>
 
+    <dialog-normal top="10vh" width-style="300px" :visible="dialogPayDrCode" :title="$t('支付')" @close="closeSubDialog" @right-close="cancelSubDialog">
+      <div class="text-center">
+        <el-image style="width: 240px; height: 240px;" :src="paidQrcode"></el-image>
+      </div>
+      <div class="margin-top-5 color-success text-center font-size-14">
+        <div>{{$t("金额")}} ¥{{totalAmount}}</div>
+      </div>
+      <div class="margin-top-5 color-danger font-size-12">
+        <div>{{$t("1、请使用微信扫描该二维码进行支付操作")}}</div>
+        <div>{{$t("2、操作完成后请点击以下操作按钮进行确认")}}</div>
+      </div>
+      <div slot="footer">
+        <el-button size="small" type="success" :loading="btnLoading" @click="okPayDialog($event, 1)">{{$t("已完成支付")}}</el-button>
+        <el-button size="small" type="danger" :loading="btnLoading" @click="okPayDialog($event, 2)">{{$t("未完成支付")}}</el-button>
+      </div>
+    </dialog-normal>
+
     <my-normal-dialog :visible.sync="visibleConfim" :loading="dialogLoading" title="提示" :detail="subTitle" :content="messageTips" @ok-click="handleOkChange" @cancel-click="handleCancelChange" @close="closeDialog"></my-normal-dialog>
 
   </div>
@@ -847,6 +865,7 @@
         dialogInfo: false,
         dialogSign: false,
         dialogDorm: false,
+        dialogPayDrCode: false,
         dialogPay: false,
         dialogStation: false,
         dialogForm: false,
@@ -877,6 +896,8 @@
         arrow: '',
         price: 0,
         area: 0,
+        drCode: '',
+        paidQrcode: '',
         roomDetailData: {},
         activeBedNo: '',
         formCreateRuleData: [],
@@ -1063,6 +1084,7 @@
             this.shouldAmount = res.data.data.shouldAmount;
             this.paidAmount = res.data.data.paidAmount;
             this.itemUserList = res.data.data.itemUserList;
+            this.paidQrcode = res.data.data.enrollPayCode;
           }
         });
       },
@@ -1280,8 +1302,16 @@
         this.searchRoomArrow = '';
         this.searchRoomPrice = '';
         this.searchRoomStatus = '';
+        this.drCode = '';
+        this.paidQrcode = '';
+        this.btnLoading = false;
         this.dialogLoading = false;
         this.visibleConfim = false;
+      },
+      closeSubDialog(){
+        this.btnLoading = false;
+        this.drCode = '';
+        this.paidQrcode = '';
       },
       cancelDialog(){
         this.dialogStation = false;
@@ -1289,6 +1319,10 @@
         this.dialogSign = false;
         this.dialogPay = false;
         this.dialogDorm = false;
+        this.dialogPayDrCode = false;
+      },
+      cancelSubDialog(){
+        this.dialogPayDrCode = false;
       },
       closeDrawDialog(){
         this.activeBedNo = '';
@@ -1545,6 +1579,25 @@
           });
           return obj;
         }
+      },
+      payManage(event, data){
+        this.drCode = '';
+        this.dialogPayDrCode = true;
+      },
+      okPayDialog(event, type){
+        let params = {};
+        params = this.$qs.stringify(params);
+        this.btnLoading = true;
+        this.$axios.post(common.aaa, params, {loading: false}).then(res => {
+          if (res.data.code == 200){
+            this.initDormInfo();
+            this.dialogPayDrCode = false;
+            MessageSuccess(res.data.desc);
+          }else {
+            MessageError(res.data.desc);
+            this.btnLoading = false;
+          }
+        });
       }
     }
   }

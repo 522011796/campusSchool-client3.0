@@ -126,10 +126,6 @@
                     <i class="fa fa-flag"></i>
                     {{$t("单位办事")}}
                   </span>
-                  <span class="font-bold block-item-header-tab" :class="activeTab === 3 ? 'color-grand': 'color-sub-grand'" @click="tabClick(3)">
-                    <i class="fa fa-mortar-board"></i>
-                    {{$t("智慧迎新")}}
-                  </span>
                 </el-col>
                 <el-col :span="4" class="text-right" style="position: relative">
                   <span class="margin-right-20">
