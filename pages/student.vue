@@ -511,8 +511,10 @@
                       <span class="font-bold color-grand" v-else>&nbsp;</span>
                     </el-col>
                     <el-col :span="12" class="text-right">
-                      <el-tag v-if="item.status == true" size="small" type="success">{{$t("已支付")}}</el-tag>
-                      <el-tag v-if="item.status == false" size="small" type="danger">{{$t("未支付")}}</el-tag>
+                      <el-tag v-if="item.status == 1" size="small" type="success">{{$t("未缴清")}}</el-tag>
+                      <el-tag v-if="item.status == 2" size="small" type="danger">{{$t("部分缴清")}}</el-tag>
+                      <el-tag v-if="item.status == 3" size="small" type="danger">{{$t("已缴清")}}</el-tag>
+                      <el-tag v-if="item.status == 4" size="small" type="danger">{{$t("待核实")}}</el-tag>
                     </el-col>
                   </el-row>
                 </div>
@@ -812,9 +814,9 @@
       </div>
     </drawer-layout-right>
 
-    <dialog-normal top="10vh" width-style="300px" :visible="dialogPayDrCode" :title="$t('支付')" @close="closeSubDialog" @right-close="cancelSubDialog">
+    <dialog-normal top="10vh" width-style="350px" :visible="dialogPayDrCode" :title="$t('支付')" @close="closeSubDialog" @right-close="cancelSubDialog">
       <div class="text-center">
-        <el-image style="width: 240px; height: 240px;" :src="paidQrcode"></el-image>
+        <el-image style="width: 240px; height: 240px;" :src="qrCode"></el-image>
       </div>
       <div class="margin-top-5 color-success text-center font-size-14">
         <div>{{$t("金额")}} ¥{{totalAmount}}</div>
@@ -822,10 +824,11 @@
       <div class="margin-top-5 color-danger font-size-12">
         <div>{{$t("1、请使用微信扫描该二维码进行支付操作")}}</div>
         <div>{{$t("2、操作完成后请点击以下操作按钮进行确认")}}</div>
+        <div>{{$t("3、如果已经确认支付，请等待管理员确认，无需重复支付")}}</div>
       </div>
       <div slot="footer">
         <el-button size="small" type="success" :loading="btnLoading" @click="okPayDialog($event, 1)">{{$t("已完成支付")}}</el-button>
-        <el-button size="small" type="danger" :loading="btnLoading" @click="okPayDialog($event, 2)">{{$t("未完成支付")}}</el-button>
+        <el-button size="small" type="danger" :loading="btnLoading" @click="cancelSubDialog($event, 2)">{{$t("未完成支付")}}</el-button>
       </div>
     </dialog-normal>
 
@@ -896,7 +899,6 @@
         arrow: '',
         price: 0,
         area: 0,
-        drCode: '',
         paidQrcode: '',
         roomDetailData: {},
         activeBedNo: '',
@@ -905,6 +907,7 @@
         formCreateTitleData: '',
         fromCreateBtnText: '',
         fApi: {},
+        drCode: '',
         filterStatus: [{
           label: this.$t("是"),
           value: true,
@@ -924,6 +927,7 @@
         totalAmount: 0,
         itemUserList: [],
         billList: [],
+        qrCode: '',
         form: {
           id: '',
           phone: '',
@@ -1158,6 +1162,14 @@
         this.$axios.get(common.server_enroll_app_dorm_bill_page, {params: params}).then(res => {
           if (res.data.data){
             this.billList = res.data.data.list;
+          }
+        });
+      },
+      getPayInfo(){
+        let params = {};
+        this.$axios.get(common.enroll_pay_link_get, {params: params}).then(res => {
+          if (res.data.data){
+            this.qrCode = res.data.data.enrollPayCode;
           }
         });
       },
@@ -1582,15 +1594,17 @@
       },
       payManage(event, data){
         this.drCode = '';
+        this.getPayInfo();
         this.dialogPayDrCode = true;
       },
       okPayDialog(event, type){
         let params = {};
         params = this.$qs.stringify(params);
         this.btnLoading = true;
-        this.$axios.post(common.aaa, params, {loading: false}).then(res => {
+        this.$axios.post(common.enroll_pay_item_pay, params, {loading: false}).then(res => {
           if (res.data.code == 200){
-            this.initDormInfo();
+            this.initStudentInfo();
+            this.initStudentEnroll();
             this.dialogPayDrCode = false;
             MessageSuccess(res.data.desc);
           }else {
