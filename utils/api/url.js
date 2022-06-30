@@ -595,6 +595,7 @@ export const common = {
   server_enroll_app_student_form_get: '/proxy/school/enroll-app/form/data/get',//迎新表单查询
   server_enroll_app_student_link_info: '/proxy/school/process/link/info',//迎新表单详细
   enroll_pay_item_pay: '/proxy/school/enroll-app/item/pay', //完成支付
+  enroll_current_time: '/proxy/school/enroll/current-time', //报道信息
 
   enroll_pay_link_get: '/proxy/school/enroll/payment/pay-url/get', //支付二维码查询
 

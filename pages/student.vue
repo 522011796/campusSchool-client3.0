@@ -16,8 +16,8 @@
               <el-col :span="18">
                 <div class="color-muted font-bold font-size-12 text-right">
                 <span>
-                  <label class="color-success">{{currentEnrollYear}}</label>
-                  <label class="color-warning">{{currentEnrollTime}}</label>
+                  <label class="color-success">{{$t("年度")}}:{{currentEnrollYear}}</label>
+                  <label class="color-warning">{{$t("迎新倒计时")}}:{{currentEnrollTime}}</label>
                 </span>
                 </div>
               </el-col>
@@ -908,6 +908,7 @@
         fromCreateBtnText: '',
         fApi: {},
         drCode: '',
+        timer: null,
         filterStatus: [{
           label: this.$t("是"),
           value: true,
@@ -975,6 +976,7 @@
 
     },
     created() {
+      this.getCureentEnrollInfo();
       this.getDeptInfo(2);
       this.init();
       this.initTransType();
@@ -1015,6 +1017,15 @@
         this.majorName = (this.sessionData != '' && this.sessionData.LOGIN_RETURN_INFO && this.sessionData.LOGIN_RETURN_INFO.classes) ? this.sessionData.LOGIN_RETURN_INFO.classes.majorName : '';
         this.sex = (this.sessionData != '' && this.sessionData.LOGIN_RETURN_INFO && this.sessionData.LOGIN_RETURN_INFO.sex) ? this.sessionData.LOGIN_RETURN_INFO.sex : '';
         this.initStudentEnroll();
+      },
+      getCureentEnrollInfo(){
+        let params = {};
+        this.$axios.get(common.enroll_current_time, {params: params}).then(res => {
+          if (res.data.data){
+            this.currentEnrollYear = res.data.data.enrollName;
+            this.setTimeLoop(res.data.data.endTime)
+          }
+        });
       },
       initStudentEnroll(){
         let params = {
@@ -1143,7 +1154,6 @@
         };
         this.$axios.get(common.server_enroll_app_dorm_room, {params: params}).then(res => {
           if (res.data.data){
-            console.log(res.data.data.list);
             this.dormList = res.data.data.list;
           }
         });
@@ -1172,6 +1182,26 @@
             this.qrCode = res.data.data.enrollPayCode;
           }
         });
+      },
+      setTimeLoop(data){
+        let time =this.$moment(data).diff(this.$moment())
+        if(time <= 0){
+          clearInterval(this.timer);
+          return
+        }
+        let t = time / 1000;
+        let d = Math.floor(t / (24 * 3600));  //剩余天数，如果需要可以自行补上
+        let h = Math.floor((t - 24 * 3600 * d) / 3600) + d*24;  //不需要天数，把天数转换成小时
+        let _h = Math.floor((t - 24 * 3600 * d) / 3600)  //保留天数后得小时
+        let m = Math.floor((t - 24 * 3600 * d - _h * 3600) / 60);
+        let s = Math.floor((t - 24 * 3600 * d - _h * 3600 - m * 60));
+
+        let hh = String(h).length == 1? '0'+String(h):String(h)
+        let mm = String(m).length == 1? '0'+String(m):String(m)
+        let ss = String(s).length == 1? '0'+String(s):String(s)
+
+
+        this.currentEnrollTime = d + "天" + _h + "小时" + mm + "分";
       },
       selMenu(event, item, index){
         //this.defaultMenuActive = index + '';
