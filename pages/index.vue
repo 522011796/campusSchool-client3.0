@@ -345,7 +345,6 @@
                   },
                   onSuccess(res, file){
                     file.url = res.data.url || ''
-                    console.log(res)
                   }
                 }
               }
@@ -364,7 +363,6 @@
         this.departmentPath = item.department_path;
         this.appletType = this.activeTab;
         this.defaultMenuActive = index + '';
-        console.log(this.defaultMenuActive);
         this.initServer();
       },
       selType(type){
