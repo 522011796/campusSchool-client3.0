@@ -24,10 +24,10 @@
             </el-row>
           </div>
           <div class="margin-top-10 padding-lr-10 font-size-12 color-white">
-            <div class="block-item-item">
+            <div class="block-item-item custom-avatar">
               <el-row>
                 <el-col :span="8">
-                  <el-avatar shape="square" :size="90" class="margin-top-40" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"></el-avatar>
+                  <el-avatar shape="square" :size="90" class="margin-top-40" fit="fill" :src="headLogo"></el-avatar>
                 </el-col>
                 <el-col :span="16">
                   <div>
@@ -414,7 +414,7 @@
             </el-col>
             <el-col :span="18">
               <div class="text-right">
-                <span class="color-warning font-size-12 font-bold" v-if="!formSign.checkType">({{$t("请将其他环节信息设置后再查看该数据")}})</span>
+                <span class="color-warning font-size-12 font-bold" v-if="!formSign.checkType"></span>
                 <i class="fa fa-close font-size-14" @click="cancelDialog"></i>
               </div>
             </el-col>
@@ -863,6 +863,7 @@
         majorName: '',
         className: '',
         stuNo: '',
+        headLogo: '',
         subTitle: '',
         messageTips: '',
         dialogInfo: false,
@@ -1016,6 +1017,7 @@
         this.stuNo = (this.sessionData != '' && this.sessionData.LOGIN_RETURN_INFO && this.sessionData.LOGIN_RETURN_INFO.student) ? this.sessionData.LOGIN_RETURN_INFO.student.studentId : '';
         this.majorName = (this.sessionData != '' && this.sessionData.LOGIN_RETURN_INFO && this.sessionData.LOGIN_RETURN_INFO.classes) ? this.sessionData.LOGIN_RETURN_INFO.classes.majorName : '';
         this.sex = (this.sessionData != '' && this.sessionData.LOGIN_RETURN_INFO && this.sessionData.LOGIN_RETURN_INFO.sex) ? this.sessionData.LOGIN_RETURN_INFO.sex : '';
+        this.headLogo = (this.sessionData != '' && this.sessionData.LOGIN_RETURN_INFO && this.sessionData.LOGIN_RETURN_INFO.studentPhoto) ? this.sessionData.LOGIN_RETURN_INFO.studentPhoto : '';
         this.initStudentEnroll();
       },
       getCureentEnrollInfo(){
@@ -1203,6 +1205,30 @@
 
         this.currentEnrollTime = d + "天" + _h + "小时" + mm + "分";
       },
+      studentDetailInfo(userId) {
+        let params = {
+
+        };
+        this.$axios.get(common.enroll_student_detail, {params: params}).then(res => {
+          if (res.data.data) {
+            //this.detailData = res.data.data;
+            console.log(res.data.data);
+            this.form = {
+              id: '',
+              phone: res.data.data.phone,
+              qq: res.data.data.qq,
+              email: res.data.data.email,
+              wechat: res.data.data.wechat,
+              fatherName: res.data.data.father_name,
+              fatherPhone: res.data.data.father_phone,
+              matherName: res.data.data.mather_name,
+              matherPhone: res.data.data.mather_phone,
+              address: res.data.data.native_place,
+              headImg: res.data.data.photo_simple
+            };
+          }
+        });
+      },
       selMenu(event, item, index){
         //this.defaultMenuActive = index + '';
         this.commSearchBuild = "";
@@ -1239,6 +1265,7 @@
       serverClick($event, item){
         this.detailData = item;
         if (item.link_sub_type == 4){
+          this.studentDetailInfo();
           this.dialogInfo = true;
         }else if (item.link_sub_type == 0){
           this.initStationType();
@@ -1813,5 +1840,11 @@
 .bed-item-block-selected,.bed-item-block-selected:hover{
   background: #F56C6C;
   color: #FFFFFF;
+}
+.block-icon-class{
+  height: 15px;
+  width: 15px;
+  position: relative;
+  top: 3px
 }
 </style>
