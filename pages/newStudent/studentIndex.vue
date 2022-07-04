@@ -84,7 +84,7 @@
                 </div>
               </van-col>
               <van-col span="8">
-                <div class="text-center color-muted">
+                <div class="text-center color-muted" @click="drCodeManage">
                   <div>
                     <van-icon name="qr" size="90"/>
                   </div>
@@ -106,18 +106,18 @@
               </div>
               <div slot="text" class="moon-content-text-ellipsis-class margin-top-10" style="width: 60px">{{ $t("流程引导") }}</div>
             </van-grid-item>
-            <van-grid-item v-for="(item, index) in serverAppList" :key="index" v-if="index < 5" icon="photo-o" @click="serverBlock($event, item)">
+            <van-grid-item v-for="(item, index) in serverAppList" :key="index" v-if="index < 6" icon="photo-o" @click="serverBlock($event, item)">
               <div slot="icon" class="text-center">
                 <van-image width="30" height="30" :src="item.link_logo"/>
               </div>
               <div slot="text" class="moon-content-text-ellipsis-class margin-top-10 text-center" style="width: 60px">{{ item.link_name }}</div>
             </van-grid-item>
-            <van-grid-item :text="$t('报道单')"  @click="serverBlock($event, 'order')">
-              <div slot="icon">
-                <van-icon size="30" name="user-circle-o" />
-              </div>
-              <div slot="text" class="moon-content-text-ellipsis-class margin-top-10" style="width: 60px">{{ $t("报道单") }}</div>
-            </van-grid-item>
+<!--            <van-grid-item :text="$t('报道单')"  @click="serverBlock($event, 'order')">-->
+<!--              <div slot="icon">-->
+<!--                <van-icon size="30" name="user-circle-o" />-->
+<!--              </div>-->
+<!--              <div slot="text" class="moon-content-text-ellipsis-class margin-top-10" style="width: 60px">{{ $t("报道单") }}</div>-->
+<!--            </van-grid-item>-->
             <van-grid-item :text="$t('全部环节')"  @click="serverBlock($event, 'all')">
               <div slot="icon">
                 <van-icon size="30" name="apps-o" />
@@ -198,6 +198,41 @@
         </div>
       </div>
     </div>
+
+    <van-dialog v-model="showDr" :showConfirmButton="false" :close-on-click-overlay="true">
+      <div class="padding-lr-10 padding-tb-10 text-center">
+        <van-image
+          width="100%"
+          height="100%"
+          :src="g_QrCode"
+        />
+      </div>
+    </van-dialog>
+
+    <van-dialog v-model="showSign" :showConfirmButton="false" :close-on-click-overlay="true">
+      <div class="padding-lr-10 padding-tb-10">
+        <div>
+          <el-form label-width="100px">
+            <el-form-item :label="$t('核验人员')" prop="phone">
+              <label>{{formSign.checkUserName}}</label>
+            </el-form-item>
+            <el-form-item :label="$t('报道类型')" prop="phone">
+              <label v-if="formSign.checkType == 0">{{$t("人工")}}</label>
+              <label v-if="formSign.checkType == 1">{{$t("扫码")}}</label>
+              <label v-if="formSign.checkType == 2">{{$t("人脸")}}</label>
+              <label v-if="formSign.checkType == 3">{{$t("自动")}}</label>
+            </el-form-item>
+            <el-form-item :label="$t('是否准时')" prop="phone">
+              <label v-if="formSign.onTime">{{$t("是")}}</label>
+              <label v-if="!formSign.onTime">{{$t("否")}}</label>
+            </el-form-item>
+            <el-form-item :label="$t('报道时间')" prop="phone">
+              <label>{{$moment(formSign.checkTime).format("YYYY-MM-DD HH:mm")}}</label>
+            </el-form-item>
+          </el-form>
+        </div>
+      </div>
+    </van-dialog>
   </div>
 </template>
 
@@ -224,6 +259,15 @@
         className: '',
         stuNo: '',
         headLogo: '',
+        showDr: false,
+        showSign: false,
+        formSign: {
+          id: '',
+          onTime: '',
+          checkTime: '',
+          checkType: '',
+          checkUserName: ''
+        }
       }
     },
     mounted() {
@@ -338,6 +382,20 @@
               appType: this.globalAppShow
             }
           });
+        }else if (item.link_sub_type == 3){
+          this.$router.push({
+            path: '/newStudent/studentBill',
+            query: {
+              id: item.id,
+              activeType: this.active,
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow
+            }
+          });
+        }else if (item.link_sub_type == 1){
+          this.initSign();
+          this.showSign = true;
         }
       },
       activeTabMenu(name){
@@ -360,6 +418,26 @@
           this.active = name;
           this.initAppServer();
         }
+      },
+      drCodeManage(){
+        this.getUserQrcode(this.loginUserId);
+        this.showDr = true;
+      },
+      initSign(){
+        let params = {
+          userId: this.loginUserId,
+        };
+        this.$axios.get(common.server_enroll_app_student_checkin_get, {params: params}).then(res => {
+          if (res.data.data){
+            this.formSign = {
+              id: '',
+              onTime: res.data.data.on_time,
+              checkTime: res.data.data.check_time,
+              checkType: res.data.data.check_type,
+              checkUserName: res.data.data.check_real_name,
+            };
+          }
+        });
       },
       returnIndex(){
         this.returnGlobalMain(1);
