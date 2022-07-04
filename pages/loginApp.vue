@@ -144,7 +144,7 @@
       </div>
     </div>
 
-    <dialog-normal tabindex="0" :visible="modalVisible" width-style="450px" :title="$t('账户设置')" @close="closeDialog" @right-close="cancelDialog">
+    <dialog-normal tabindex="0" :visible="modalVisible" width-style="95%" :title="$t('账户设置')" @close="closeDialog" @right-close="cancelDialog">
       <span tabindex="1"></span>
       <div class="margin-top-10">
         <div class="padding-lr-30">
@@ -154,12 +154,12 @@
           <div class="color-grand margin-top-10 font-size-18" style="font-weight: bold">{{$t("绑定手机")}}</div>
           <div class="margin-top-10 color-muted">{{$t("绑定后的手机号可以用于账号登录以及找回密码！")}}</div>
         </div>
-        <el-form class="margin-top-20" :model="formAuth" :rules="rules" ref="formAuth" label-width="90px">
-          <el-form-item :label="$t('手机号')" prop="phone">
-            <el-input v-model="formAuth.phone" class="width-260"></el-input>
+        <el-form class="margin-top-20 text-center" :model="formAuth" :rules="rules" ref="formAuth" label-width="0px">
+          <el-form-item prop="phone">
+            <el-input v-model="formAuth.phone" :placeholder="$t('手机号')" style="width: 95%"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('验证码')" prop="code">
-            <el-input v-model="formAuth.code" class="width-260">
+          <el-form-item prop="code">
+            <el-input v-model="formAuth.code" style="width: 95%">
               <template slot="append">
                 <timeout-button :action="updatePhoneMms" :data="{newPhone: this.formAuth.phone, userId: this.formAuth.userId}" :auth-before="authBefore">
                   <template>{{$t("获取验证码")}}</template>
@@ -201,6 +201,7 @@
         dialogLoading: false,
         modalVisible: false,
         showContent: false,
+        testVisible: true,
         updatePhoneMms: common.send_active_account,
         form: {
           username: '',
