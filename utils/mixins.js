@@ -20,6 +20,8 @@ export default {
       isAndroid: false,
       isIos: false,
       sessionData: '',
+      g_QrCode: '',
+      g_BarCode: '',
       //公共属性
       total: global.total,
       page: global.page,
@@ -723,6 +725,26 @@ export default {
           }
           this.currentWeekList = currentWeekData;
           this.currentSetWeekNum = res.data.data.teachSetting.weekNum;
+        }
+      });
+    },
+    async getUserQrcode(value){
+      let params = {
+        userId: value
+      };
+      await this.$axios.get(common.enroll_student_qrcode, {params: params}).then(res => {
+        if (res.data.data){
+          this.g_QrCode = res.data.data.qrcodeImageBase64;
+        }
+      });
+    },
+    async getUserBarcode(value){
+      let params = {
+        userId: value
+      };
+      await this.$axios.get(common.enroll_student_barcode, {params: params}).then(res => {
+        if (res.data.data){
+          this.g_BarCode = res.data.data.barcodeImageBase64;
         }
       });
     },

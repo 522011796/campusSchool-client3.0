@@ -600,6 +600,10 @@ export const common = {
   enroll_student_detail: '/proxy/school/enroll/checkin/student-detail', //学生详细信息
 
   enroll_pay_link_get: '/proxy/school/enroll/payment/pay-url/get', //支付二维码查询
+  enroll_checkin_pay_list_by_user: '/proxy/school/enroll/checkin/payment-list-by-user', //报道数据已报道
+  enroll_student_barcode: '/proxy/school/enroll-student/barcode', //条形码
+  enroll_student_qrcode: '/proxy/school/enroll-student/qrcode', //二维码
+  enroll_checkin_student_detail: '/proxy/school/enroll/checkin/student-detail', //报道数据学生详细
 
   login_check: '/proxy/user/loginCheck',//登录状态
 
