@@ -112,6 +112,12 @@
               </div>
               <div slot="text" class="moon-content-text-ellipsis-class margin-top-10 text-center" style="width: 60px">{{ item.link_name }}</div>
             </van-grid-item>
+            <van-grid-item :text="$t('报道单')"  @click="serverBlock($event, 'order')">
+              <div slot="icon">
+                <van-icon size="30" name="apps-o" />
+              </div>
+              <div slot="text" class="moon-content-text-ellipsis-class margin-top-10" style="width: 60px">{{ $t("全部环节") }}</div>
+            </van-grid-item>
             <van-grid-item :text="$t('全部环节')"  @click="serverBlock($event, 'all')">
               <div slot="icon">
                 <van-icon size="30" name="apps-o" />
@@ -299,6 +305,28 @@
       serverBlock(event, item){
         if (item == 'all'){
 
+        }else if (item == 'order'){
+          this.$router.push({
+            path: '/newStudent/studentOrder',
+            query: {
+              id: item.id,
+              activeType: this.active,
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow
+            }
+          });
+        }else if (item.link_sub_type == 0){
+          this.$router.push({
+            path: '/newStudent/studentStation',
+            query: {
+              id: item.id,
+              activeType: this.active,
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow
+            }
+          });
         }else if (item.link_sub_type == 4){
           this.$router.push({
             path: '/newStudent/studentInfo',
