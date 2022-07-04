@@ -577,7 +577,7 @@
         <div class="info-dorm-block">
           <div>
             <div class="pull-left info-block-left">
-              <div class="info-block-header text-center">
+              <div class="info-block-header text-center" @click="selMenuAll">
                 <span>{{$t("全部宿舍")}}</span>
               </div>
               <div :style="{height: 450-45+'px', overflowY: 'auto'}">
@@ -1228,6 +1228,15 @@
             };
           }
         });
+      },
+      selMenuAll(){
+        //this.defaultMenuActive = index + '';
+        this.commSearchBuild = "";
+        this.commSearchFloor = "";
+        this.commSearchRoom = "";
+        this.commSearchBuild = "";
+        this.commSearchFloor = "";
+        this.initDormInfo();
       },
       selMenu(event, item, index){
         //this.defaultMenuActive = index + '';

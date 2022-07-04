@@ -1,4 +1,5 @@
 import {showLoading, hideLoading} from '../utils/loading';
+import {browerType} from "~/utils/utils";
 export default function({ $axios, redirect }) {
   // request interceptor
   let jsonData = {
@@ -46,7 +47,12 @@ export default function({ $axios, redirect }) {
         return res;
       } else if (res.data.code === 401) {
         hideLoading();
-        redirect('/login');
+        let browerTempType = browerType();
+        if (browerTempType == 2){
+          redirect('/loginApp');
+        }else {
+          redirect('/login');
+        }
         return res;
       } else if (res.data.code === 403) {
         hideLoading();

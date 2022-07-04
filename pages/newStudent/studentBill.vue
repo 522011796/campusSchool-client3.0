@@ -274,8 +274,9 @@
         this.dialogPayDrCode = true;
       },
       returnIndex(){
+        let url = this.$route.query.subPage ? this.$route.query.subPage : '/newStudent/studentIndex'
         this.$router.push({
-          path: '/newStudent/studentIndex',
+          path: url,
           query: {
             activeType: this.$route.query.activeType,
             userType: this.loginUserAppType,

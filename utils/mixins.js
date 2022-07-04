@@ -462,6 +462,7 @@ export default {
         this.divHeight8.height = window.innerHeight * 0.85 - 60 + 'px';
         this.divHeight9.height = window.innerHeight - itemHeight - 70 + 'px';
         this.divHeight10.height = window.innerHeight - itemHeight + 'px';
+        this.divHeight10.height1 = window.innerHeight - itemHeight;
         this.divHeight11.height = window.innerHeight - itemHeight - 180 + 'px';
         this.tableHeight.height = (window.innerHeight - 60) * 0.86 - 30;
         this.drawHeight.height = window.innerHeight - 80 + 'px';

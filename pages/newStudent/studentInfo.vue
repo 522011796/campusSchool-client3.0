@@ -193,6 +193,7 @@
   import mixinsBridge from "~/utils/mixinsBridge";
   import MySex from "~/components/MySex";
   import {MessageError, MessageSuccess, MessageWarning} from "~/utils/utils";
+  import {Toast} from "vant";
   export default {
     name: 'studentInfo',
     components: {MySex},
@@ -301,8 +302,9 @@
         }
       },
       returnIndex(){
+        let url = this.$route.query.subPage ? this.$route.query.subPage : '/newStudent/studentIndex'
         this.$router.push({
-          path: '/newStudent/studentIndex',
+          path: url,
           query: {
             activeType: this.$route.query.activeType,
             userType: this.loginUserAppType,
@@ -346,7 +348,7 @@
           this.btnLoading = true;
           let url = common.server_enroll_app_student_update;
           if (this.form.headImg == ""){
-            MessageWarning(this.$t("请设置照片！"));
+            Toast(this.$t("请设置照片！"));
             return;
           }
           let params = {
@@ -364,10 +366,10 @@
           params = this.$qs.stringify(params);
           this.$axios.post(url, params).then(res => {
             if (res.data.code == 200){
-              MessageSuccess(res.data.desc);
+              Toast(res.data.desc);
               this.btnLoading = false;
             }else {
-              MessageError(res.data.desc);
+              Toast(res.data.desc);
               this.btnLoading = false;
             }
           });

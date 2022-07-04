@@ -36,10 +36,11 @@
               </van-col>
               <van-col span="8">
                 <div class="color-muted font-bold font-size-12 text-right">
-                  <van-tag type="danger">
+                  <van-tag v-if="completedStatus != ''" type="danger">
                     {{ $t("所有环节") }}
                     :
-                    <label>{{ $t("已完成") }}</label>
+                    <label v-if="completedStatus == true">{{ $t("已完成") }}</label>
+                    <label v-if="completedStatus == false">{{ $t("未完成") }}</label>
                   </van-tag>
                 </div>
               </van-col>
@@ -261,6 +262,8 @@
         headLogo: '',
         showDr: false,
         showSign: false,
+        completedStatus: '',
+        detailData: '',
         formSign: {
           id: '',
           onTime: '',
@@ -299,13 +302,25 @@
       },
       async initAppServer(){
         await this.getSessionInfo();
-        this.collegeName = (this.sessionData != '' && this.sessionData.LOGIN_RETURN_INFO && this.sessionData.LOGIN_RETURN_INFO.classes) ? this.sessionData.LOGIN_RETURN_INFO.classes.collegeName : '';
-        this.className = (this.sessionData != '' && this.sessionData.LOGIN_RETURN_INFO && this.sessionData.LOGIN_RETURN_INFO.classes) ? this.sessionData.LOGIN_RETURN_INFO.classes.className : '';
-        this.stuNo = (this.sessionData != '' && this.sessionData.LOGIN_RETURN_INFO && this.sessionData.LOGIN_RETURN_INFO.student) ? this.sessionData.LOGIN_RETURN_INFO.student.studentId : '';
-        this.majorName = (this.sessionData != '' && this.sessionData.LOGIN_RETURN_INFO && this.sessionData.LOGIN_RETURN_INFO.classes) ? this.sessionData.LOGIN_RETURN_INFO.classes.majorName : '';
-        this.sex = (this.sessionData != '' && this.sessionData.LOGIN_RETURN_INFO && this.sessionData.LOGIN_RETURN_INFO.sex) ? this.sessionData.LOGIN_RETURN_INFO.sex : '';
-        this.headLogo = (this.sessionData != '' && this.sessionData.LOGIN_RETURN_INFO && this.sessionData.LOGIN_RETURN_INFO.studentPhoto) ? this.sessionData.LOGIN_RETURN_INFO.studentPhoto : '';
+        this.initInfo();
         this.initStudentEnroll();
+      },
+      initInfo(){
+        let params = {
+          userId: this.loginUserId
+        };
+        this.$axios.get(common.enroll_checkin_student_detail, {params: params}).then(res => {
+          if (res.data.data){
+            this.detailData = res.data.data;
+            this.collegeName = res.data.data.college_name;
+            this.className = res.data.data.class_name;
+            this.stuNo = res.data.data.student_id;
+            this.majorName = res.data.data.major_name;
+            this.sex = res.data.data.sex;
+            this.headLogo = res.data.data.photo_simple;
+            this.completedStatus = res.data.data.completed_link_status;
+          }
+        });
       },
       initStudentEnroll(){
         let params = {
@@ -348,7 +363,16 @@
       },
       serverBlock(event, item){
         if (item == 'all'){
-
+          this.$router.push({
+            path: '/newStudent/studentAllSever',
+            query: {
+              id: item.id,
+              activeType: this.active,
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow
+            }
+          });
         }else if (item == 'order'){
           this.$router.push({
             path: '/newStudent/studentOrder',
@@ -391,6 +415,29 @@
               userType: this.loginUserAppType,
               navH: this.navHeight,
               appType: this.globalAppShow
+            }
+          });
+        }else if (item.link_sub_type == 2){
+          this.$router.push({
+            path: '/newStudent/studentDorm',
+            query: {
+              id: item.id,
+              activeType: this.active,
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow
+            }
+          });
+        }else if (item.link_sub_type == 9){
+          this.$router.push({
+            path: '/newStudent/studentForm',
+            query: {
+              id: item.id,
+              activeType: this.active,
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow,
+              linkId: item.id
             }
           });
         }else if (item.link_sub_type == 1){
