@@ -25,8 +25,8 @@
       <div class="padding-lr-10 top-block">
         <div>
           <div class="bg-student-info-block" style="position: relative">
-            <img src="~static/img/bg-student-info.png" style="height: 180px; width: 100%;position: absolute;left: 0; z-index: 1000;border-radius: 5px; background: #fefefe">
-            <div class="padding-lr-5 padding-top-5" style="position: absolute;top:0px;z-index: 9999;width: 100%;">
+            <img src="~static/img/bg-student-info.png" style="height: 180px; width: 100%;position: absolute;left: 0; z-index: 500;border-radius: 5px; background: #fefefe">
+            <div class="padding-lr-5 padding-top-5" style="position: absolute;top:0px;z-index: 600;width: 100%;">
               <van-row>
                 <van-col span="16">
                   <div class="color-muted font-bold font-size-12 text-left">
@@ -48,15 +48,15 @@
                 </van-col>
               </van-row>
               <van-row class="margin-top-20">
-                <van-col span="8">
+                <van-col span="6">
                   <div>
-                    <van-image width="100" height="120" :src="headLogo" />
+                    <van-image width="80" height="120" :src="headLogo" />
                   </div>
                 </van-col>
-                <van-col span="8">
+                <van-col span="10">
                   <div>
                     <el-tooltip class="item" effect="dark" :content="realName" placement="top">
-                      <span class="font-size-20 color-sub-title moon-content-text-ellipsis-class name-display-line font-bold">{{ realName }}</span>
+                      <span class="font-size-18 color-sub-title moon-content-text-ellipsis-class name-display-line font-bold">{{ realName }}</span>
                     </el-tooltip>
                     <span class="color-grand margin-left-5 font-bold" v-if="sex == 1">
                     <van-tag type="success" size="mini">
@@ -69,7 +69,7 @@
                     </van-tag>
                   </span>
                   </div>
-                  <div class="margin-top-10">
+                  <div class="margin-top-10 font-size-12">
                     <span class="color-sub-title font-bold">{{$t("学号")}}</span>
                     <span class="color-muted moon-content-text-ellipsis-class text-display-line">
                     <el-tooltip class="item" effect="dark" :content="stuNo" placement="top-start">
@@ -77,7 +77,7 @@
                     </el-tooltip>
                   </span>
                   </div>
-                  <div class="margin-top-5">
+                  <div class="margin-top-5 font-size-12">
                     <span class="color-sub-title font-bold">{{$t("学院")}}</span>
                     <span class="color-muted moon-content-text-ellipsis-class text-display-line">
                     <el-tooltip class="item" effect="dark" :content="collegeName" placement="top-start">
@@ -108,25 +108,25 @@
               <div slot="icon">
                 <van-icon size="30" name="label-o" />
               </div>
-              <div slot="text" class="moon-content-text-ellipsis-class margin-top-10" style="width: 60px">{{ $t("流程引导") }}</div>
+              <div slot="text" class="moon-content-text-ellipsis-class margin-top-10 text-center font-size-12" style="width: 60px">{{ $t("流程引导") }}</div>
             </van-grid-item>
-            <van-grid-item v-for="(item, index) in serverAppList" :key="index" v-if="index < 6" icon="photo-o" @click="serverBlock($event, item)">
+            <van-grid-item v-for="(item, index) in serverAppList" :key="index" v-if="index < 5" icon="photo-o" @click="serverBlock($event, item)">
               <div slot="icon" class="text-center">
                 <van-image width="30" height="30" :src="item.link_logo"/>
               </div>
-              <div slot="text" class="moon-content-text-ellipsis-class margin-top-10 text-center" style="width: 60px">{{ item.link_name }}</div>
+              <div slot="text" class="moon-content-text-ellipsis-class margin-top-10 text-center font-size-12" style="width: 60px">{{ item.link_name }}</div>
             </van-grid-item>
-<!--            <van-grid-item :text="$t('报道单')"  @click="serverBlock($event, 'order')">-->
-<!--              <div slot="icon">-->
-<!--                <van-icon size="30" name="user-circle-o" />-->
-<!--              </div>-->
-<!--              <div slot="text" class="moon-content-text-ellipsis-class margin-top-10" style="width: 60px">{{ $t("报道单") }}</div>-->
-<!--            </van-grid-item>-->
+            <van-grid-item :text="$t('报道单')"  @click="serverBlock($event, 'order')">
+              <div slot="icon">
+                <van-icon size="30" name="user-circle-o" />
+              </div>
+              <div slot="text" class="moon-content-text-ellipsis-class margin-top-10 text-center font-size-12" style="width: 60px">{{ $t("报道单") }}</div>
+            </van-grid-item>
             <van-grid-item :text="$t('全部环节')"  @click="serverBlock($event, 'all')">
               <div slot="icon">
                 <van-icon size="30" name="apps-o" />
               </div>
-              <div slot="text" class="moon-content-text-ellipsis-class margin-top-10" style="width: 60px">{{ $t("全部环节") }}</div>
+              <div slot="text" class="moon-content-text-ellipsis-class margin-top-10 text-center font-size-12" style="width: 60px">{{ $t("全部环节") }}</div>
             </van-grid-item>
           </van-grid>
         </div>

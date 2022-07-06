@@ -25,13 +25,13 @@
             <div slot="icon" class="text-center">
               <van-image width="30" height="30" :src="item.link_logo"/>
             </div>
-            <div slot="text" class="moon-content-text-ellipsis-class margin-top-10 text-center" style="width: 60px">{{ item.link_name }}</div>
+            <div slot="text" class="moon-content-text-ellipsis-class margin-top-10 text-center font-size-12" style="width: 60px">{{ item.link_name }}</div>
           </van-grid-item>
           <van-grid-item :text="$t('报道单')"  @click="serverBlock($event, 'order')">
             <div slot="icon">
               <van-icon size="30" name="user-circle-o" />
             </div>
-            <div slot="text" class="moon-content-text-ellipsis-class margin-top-10" style="width: 60px">{{ $t("报道单") }}</div>
+            <div slot="text" class="moon-content-text-ellipsis-class margin-top-10 text-center font-size-12" style="width: 60px">{{ $t("报道单") }}</div>
           </van-grid-item>
         </van-grid>
       </div>
