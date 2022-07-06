@@ -50,7 +50,7 @@
               <van-row class="margin-top-20">
                 <van-col span="6">
                   <div>
-                    <van-image width="80" height="120" :src="headLogo" />
+                    <van-image width="90" height="120" :src="headLogo" />
                   </div>
                 </van-col>
                 <van-col span="10">
@@ -251,6 +251,7 @@
     mixins: [mixins,mixinsBridge],
     data(){
       return {
+        test: '',
         sex: '',
         active: 6,
         serverAppList: [],
@@ -284,14 +285,17 @@
       if (this.$route.query.sessionId){
         this.initAppConfig();
       }
-      this.getCureentEnrollInfo();
-      this.initAppServer();
+      setTimeout(()=>{
+        this.getCureentEnrollInfo();
+        this.initAppServer();
+      },1000);
     },
     methods: {
       layoutInit(){
 
       },
       async initAppConfig(){
+        this.test = "1111111111";
         await this.autoLoginApp();
         //await this.getSessionInfo();
       },
@@ -495,7 +499,7 @@
               onTime: res.data.data.on_time,
               checkTime: res.data.data.check_time,
               checkType: res.data.data.check_type,
-              checkUserName: res.data.data.check_real_name,
+              checkUserName: res.data.data.check_user_name,
             };
           }
         });

@@ -127,7 +127,7 @@
               onTime: res.data.data.on_time,
               checkTime: res.data.data.check_time,
               checkType: res.data.data.check_type,
-              checkUserName: res.data.data.check_real_name,
+              checkUserName: res.data.data.check_user_name,
             };
           }
         });
