@@ -427,4 +427,7 @@
   background: #EBEEF5;
   padding: 10px;
 }
+.top-block{
+  background-image: linear-gradient(to top, #FFFFFF,#4BC66B);
+}
 </style>

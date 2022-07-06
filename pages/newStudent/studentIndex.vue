@@ -22,79 +22,82 @@
       </van-col>
     </div>
     <div class="content-block">
-      <div class="padding-lr-10">
-        <div class="bg-student-info-block">
-          <div class="padding-lr-5 padding-top-5">
-            <van-row>
-              <van-col span="16">
-                <div class="color-muted font-bold font-size-12 text-left">
+      <div class="padding-lr-10 top-block">
+        <div>
+          <div class="bg-student-info-block" style="position: relative">
+            <img src="~static/img/bg-student-info.png" style="height: 180px; width: 100%;position: absolute;left: 0; z-index: 1000;border-radius: 5px; background: #fefefe">
+            <div class="padding-lr-5 padding-top-5" style="position: absolute;top:0px;z-index: 9999;width: 100%;">
+              <van-row>
+                <van-col span="16">
+                  <div class="color-muted font-bold font-size-12 text-left">
                   <span>
-                    <label class="color-success">{{currentEnrollYear}}</label>
-                    <label class="color-warning">{{$t("迎新倒计时")}}:{{currentEnrollTime}}</label>
+                    <label class="color-sub-grand">{{currentEnrollYear}}</label>
+                    <label class="color-danger">{{$t("迎新倒计时")}}:{{currentEnrollTime}}</label>
                   </span>
-                </div>
-              </van-col>
-              <van-col span="8">
-                <div class="color-muted font-bold font-size-12 text-right">
-                  <van-tag v-if="completedStatus != ''" type="danger">
-                    {{ $t("所有环节") }}
-                    :
-                    <label v-if="completedStatus == true">{{ $t("已完成") }}</label>
-                    <label v-if="completedStatus == false">{{ $t("未完成") }}</label>
-                  </van-tag>
-                </div>
-              </van-col>
-            </van-row>
-            <van-row class="margin-top-20">
-              <van-col span="8">
-                <div>
-                  <van-image width="100" height="120" :src="headLogo" />
-                </div>
-              </van-col>
-              <van-col span="8">
-                <div>
-                  <el-tooltip class="item" effect="dark" :content="realName" placement="top">
-                    <span class="font-size-20 color-sub-title moon-content-text-ellipsis-class name-display-line font-bold">{{ realName }}</span>
-                  </el-tooltip>
-                  <span class="color-grand margin-left-5 font-bold" v-if="sex == 1">
+                  </div>
+                </van-col>
+                <van-col span="8">
+                  <div class="color-muted font-bold font-size-12 text-right">
+                    <van-tag v-if="completedStatus != ''" type="danger">
+                      {{ $t("所有环节") }}
+                      :
+                      <label v-if="completedStatus == true">{{ $t("已完成") }}</label>
+                      <label v-if="completedStatus == false">{{ $t("未完成") }}</label>
+                    </van-tag>
+                  </div>
+                </van-col>
+              </van-row>
+              <van-row class="margin-top-20">
+                <van-col span="8">
+                  <div>
+                    <van-image width="100" height="120" :src="headLogo" />
+                  </div>
+                </van-col>
+                <van-col span="8">
+                  <div>
+                    <el-tooltip class="item" effect="dark" :content="realName" placement="top">
+                      <span class="font-size-20 color-sub-title moon-content-text-ellipsis-class name-display-line font-bold">{{ realName }}</span>
+                    </el-tooltip>
+                    <span class="color-grand margin-left-5 font-bold" v-if="sex == 1">
                     <van-tag type="success" size="mini">
                       <label class="fa fa-mars"></label>
                     </van-tag>
                   </span>
-                  <span class="color-grand margin-left-5 font-bold" v-if="sex == 2">
+                    <span class="color-grand margin-left-5 font-bold" v-if="sex == 2">
                     <van-tag type="success" size="mini">
                       <label class="fa fa-venus"></label>
                     </van-tag>
                   </span>
-                </div>
-                <div class="margin-top-10">
-                  <span class="color-sub-title font-bold">{{$t("学号")}}</span>
-                  <span class="color-muted moon-content-text-ellipsis-class text-display-line">
+                  </div>
+                  <div class="margin-top-10">
+                    <span class="color-sub-title font-bold">{{$t("学号")}}</span>
+                    <span class="color-muted moon-content-text-ellipsis-class text-display-line">
                     <el-tooltip class="item" effect="dark" :content="stuNo" placement="top-start">
                       <span>{{ stuNo }}</span>
                     </el-tooltip>
                   </span>
-                </div>
-                <div class="margin-top-5">
-                  <span class="color-sub-title font-bold">{{$t("学院")}}</span>
-                  <span class="color-muted moon-content-text-ellipsis-class text-display-line">
+                  </div>
+                  <div class="margin-top-5">
+                    <span class="color-sub-title font-bold">{{$t("学院")}}</span>
+                    <span class="color-muted moon-content-text-ellipsis-class text-display-line">
                     <el-tooltip class="item" effect="dark" :content="collegeName" placement="top-start">
                       <span>{{ collegeName }}</span>
                     </el-tooltip>
                   </span>
-                </div>
-              </van-col>
-              <van-col span="8">
-                <div class="text-center color-muted" @click="drCodeManage">
-                  <div>
-                    <van-icon name="qr" size="90"/>
                   </div>
-                  <div class="font-size-12 margin-top-5">
-                    <span>{{$t("我的二维码")}}</span>
+                </van-col>
+                <van-col span="8">
+                  <div class="text-center color-muted" @click="drCodeManage">
+                    <div>
+                      <van-icon name="qr" size="90"/>
+                    </div>
+                    <div class="font-size-12 margin-top-5">
+                      <span>{{$t("我的二维码")}}</span>
+                    </div>
                   </div>
-                </div>
-              </van-col>
-            </van-row>
+                </van-col>
+              </van-row>
+            </div>
           </div>
         </div>
       </div>
@@ -384,6 +387,17 @@
               appType: this.globalAppShow
             }
           });
+        }else if (item == 'flow'){
+          this.$router.push({
+            path: '/newStudent/studentGuide',
+            query: {
+              id: item.id,
+              activeType: this.active,
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow
+            }
+          });
         }else if (item.link_sub_type == 0){
           this.$router.push({
             path: '/newStudent/studentStation',
@@ -519,10 +533,9 @@
   line-height: 45px;
 }
 .bg-student-info-block{
-  background: url(/img/bg-student-info.png) no-repeat;
+  /*background: url(/img/bg-student-info.png) no-repeat;*/
   height: 180px;
   width: 100%;
-  border: 1px dashed #dddddd;
 }
 .text-display-line{
   width: 80px;
@@ -535,5 +548,9 @@
   display: inline-block;
   position: relative;
   top: 6px;
+}
+.top-block{
+  background-image: linear-gradient(to top, #FFFFFF,#4BC66B);
+  position: relative;
 }
 </style>
