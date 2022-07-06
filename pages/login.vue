@@ -228,8 +228,8 @@
     components: {DialogNormal,TimeoutButton},
     data(){
       return {
-        userType: '2',
-        userSubType: '1',
+        userType: '1',
+        userSubType: '2',
         userAccountType : '0',
         dialogLoading: false,
         modalVisible: false,

@@ -10,16 +10,28 @@ export default {
           { required: true, message: this.$t("请输入信息"), trigger: 'blur' },
           { validator: rules.FormValidate.Form().validatePhone, trigger: 'blur' }
         ],
+        qq: [
+          { required: true, message: this.$t("请输入信息"), trigger: 'blur' }
+        ],
+        wechat: [
+          { required: true, message: this.$t("请输入信息"), trigger: 'blur' }
+        ],
+        fatherName: [
+          { required: true, message: this.$t("请输入信息"), trigger: 'blur' }
+        ],
         fatherPhone: [
-          { required: false, message: this.$t("请输入信息"), trigger: 'blur' },
+          { required: true, message: this.$t("请输入信息"), trigger: 'blur' },
           { validator: rules.FormValidate.Form().validatePhone, trigger: 'blur' }
         ],
+        matherName: [
+          { required: true, message: this.$t("请输入信息"), trigger: 'blur' }
+        ],
         matherPhone: [
-          { required: false, message: this.$t("请输入信息"), trigger: 'blur' },
+          { required: true, message: this.$t("请输入信息"), trigger: 'blur' },
           { validator: rules.FormValidate.Form().validatePhone, trigger: 'blur' }
         ],
         email: [
-          { required: false, message: this.$t("请输入信息"), trigger: 'blur' },
+          { required: true, message: this.$t("请输入信息"), trigger: 'blur' },
           { validator: rules.FormValidate.Form().validateEmail, trigger: 'blur' }
         ]
       }

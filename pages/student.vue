@@ -238,7 +238,7 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                  <el-form-item :label="$t('QQ')">
+                  <el-form-item :label="$t('QQ')" prop="qq">
                     <el-input v-model="form.qq" size="small" class="width-150"></el-input>
                   </el-form-item>
                 </el-col>
@@ -250,14 +250,14 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                  <el-form-item :label="$t('微信号')">
+                  <el-form-item :label="$t('微信号')" prop="wechat">
                     <el-input v-model="form.wechat" size="small" class="width-150"></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
                 <el-col :span="12">
-                  <el-form-item :label="$t('父亲姓名')">
+                  <el-form-item :label="$t('父亲姓名')" prop="fatherName">
                     <el-input v-model="form.fatherName" size="small" class="width-150"></el-input>
                   </el-form-item>
                 </el-col>
@@ -268,7 +268,7 @@
                 </el-col>
               </el-row><el-row>
               <el-col :span="12">
-                <el-form-item :label="$t('母亲姓名')">
+                <el-form-item :label="$t('母亲姓名')" prop="matherName">
                   <el-input v-model="form.matherName" size="small" class="width-150"></el-input>
                 </el-form-item>
               </el-col>
@@ -279,7 +279,7 @@
               </el-col>
             </el-row><el-row>
               <el-col :span="24">
-                <el-form-item :label="$t('详细地址')">
+                <el-form-item :label="$t('详细地址')" prop="address">
                   <el-input v-model="form.address" size="small" class="width-415"></el-input>
                 </el-form-item>
               </el-col>
@@ -1462,10 +1462,10 @@
           if (valid) {
             this.btnLoading = true;
             let url = common.server_enroll_app_student_update;
-            if (this.form.headImg == ""){
-              MessageWarning(this.$t("请设置照片！"));
-              return;
-            }
+            // if (this.form.headImg == ""){
+            //   MessageWarning(this.$t("请设置照片！"));
+            //   return;
+            // }
             let params = {
               url: this.form.headImg,
               phone: this.form.phone,

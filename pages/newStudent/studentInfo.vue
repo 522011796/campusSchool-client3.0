@@ -126,6 +126,7 @@
               :label="$t('微信号')"
               :placeholder="$t('请输入信息')"
               autocomplete="off"
+              :rules="[{ required: true, message: $t('请输入信息') }]"
             />
             <van-field
               v-model="form.qq"
@@ -133,6 +134,7 @@
               :label="$t('qq')"
               :placeholder="$t('请输入信息')"
               autocomplete="off"
+              :rules="[{ required: true, message: $t('请输入信息') }]"
             />
             <van-field
               v-model="form.email"
@@ -148,13 +150,14 @@
               :label="$t('父亲姓名')"
               :placeholder="$t('请输入信息')"
               autocomplete="off"
+              :rules="[{ required: true, message: $t('请输入信息') }]"
             />
             <van-field
               v-model="form.fatherPhone"
               :name="$t('父亲电话')"
               :label="$t('父亲电话')"
               :placeholder="$t('请输入信息')"
-              :rules="telRules2"
+              :rules="telRules"
               autocomplete="off"
             />
             <van-field
@@ -163,13 +166,14 @@
               :label="$t('母亲姓名')"
               :placeholder="$t('请输入信息')"
               autocomplete="off"
+              :rules="[{ required: true, message: $t('请输入信息') }]"
             />
             <van-field
               v-model="form.matherPhone"
               :name="$t('母亲电话')"
               :label="$t('母亲电话')"
               :placeholder="$t('请输入信息')"
-              :rules="telRules2"
+              :rules="telRules"
               autocomplete="off"
             />
             <van-field
@@ -178,6 +182,7 @@
               :label="$t('家庭地址')"
               :placeholder="$t('请输入信息')"
               autocomplete="off"
+              :rules="[{ required: true, message: $t('请输入信息') }]"
             />
           </van-form>
         </div>
@@ -241,6 +246,10 @@
           trigger: 'onBlur'
         }],
         emailRules: [{
+          required: true,
+          message: '请填写正确的邮箱',
+          trigger: 'onBlur'
+        }, {
           // 自定义校验规则
           validator: value => {
             if (value != ''){
@@ -315,7 +324,6 @@
       },
       validatorEmail(val) {
         if (val != ''){
-          console.log(val);
           return this.emailReg.test(val);
         }
       },
@@ -347,10 +355,10 @@
         this.$refs.form.validate().then(() => {
           this.btnLoading = true;
           let url = common.server_enroll_app_student_update;
-          if (this.form.headImg == ""){
-            Toast(this.$t("请设置照片！"));
-            return;
-          }
+          // if (this.form.headImg == ""){
+          //   Toast(this.$t("请设置照片！"));
+          //   return;
+          // }
           let params = {
             url: this.form.headImg,
             phone: this.form.phone,

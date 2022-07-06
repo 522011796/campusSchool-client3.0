@@ -251,7 +251,6 @@
     mixins: [mixins,mixinsBridge],
     data(){
       return {
-        test: '',
         sex: '',
         active: 6,
         serverAppList: [],
@@ -295,7 +294,6 @@
 
       },
       async initAppConfig(){
-        this.test = "1111111111";
         await this.autoLoginApp();
         //await this.getSessionInfo();
       },
