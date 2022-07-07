@@ -184,10 +184,82 @@
               autocomplete="off"
               :rules="[{ required: true, message: $t('请输入信息') }]"
             />
+            <van-field v-model="form.graduationLabel"
+                       :name="$t('毕业类型')"
+                       :label="$t('毕业类型')"
+                       readonly
+                       clickable
+                       :placeholder="$t('请选择')"
+                       @click="showGraduationPicker = true"
+                       :rules="[{ required: true, message: '请选择信息' }]">
+            </van-field>
+            <van-field v-model="form.politicsLabel"
+                       :name="$t('政治面貌')"
+                       :label="$t('政治面貌')"
+                       readonly
+                       clickable
+                       :placeholder="$t('请选择')"
+                       @click="showPoliticsPicker = true"
+                       :rules="[{ required: true, message: '请选择信息' }]">
+            </van-field>
+            <van-field v-model="form.retireLabel"
+                       :name="$t('退役士兵')"
+                       :label="$t('退役士兵')"
+                       readonly
+                       clickable
+                       :placeholder="$t('请选择')"
+                       @click="showRetirePicker = true"
+                       :rules="[{ required: true, message: '请选择信息' }]">
+            </van-field>
+            <van-field v-model="form.hardLabel"
+                       :name="$t('困难类型')"
+                       :label="$t('困难类型')"
+                       readonly
+                       clickable
+                       :placeholder="$t('请选择')"
+                       @click="showHardPicker = true"
+                       :rules="[{ required: true, message: '请选择信息' }]">
+            </van-field>
           </van-form>
         </div>
       </div>
     </div>
+
+    <van-popup v-model="showGraduationPicker" position="bottom">
+      <van-picker
+        title="毕业类型"
+        :columns="filterGraduationType"
+        @cancel="onShowPickerCancel"
+        @change="onGraduationChange"
+      />
+    </van-popup>
+
+    <van-popup v-model="showPoliticsPicker" position="bottom">
+      <van-picker
+        title="政治面貌"
+        :columns="filterPoliticsType"
+        @cancel="onShowPickerCancel"
+        @change="onPoliticsChange"
+      />
+    </van-popup>
+
+    <van-popup v-model="showRetirePicker" position="bottom">
+      <van-picker
+        title="退役士兵"
+        :columns="filterRetireType"
+        @cancel="onShowPickerCancel"
+        @change="onRetireChange"
+      />
+    </van-popup>
+
+    <van-popup v-model="showHardPicker" position="bottom">
+      <van-picker
+        title="困难类型"
+        :columns="filterHardType"
+        @cancel="onShowPickerCancel"
+        @change="onHardChange"
+      />
+    </van-popup>
   </div>
 </template>
 
@@ -221,6 +293,10 @@
         uploadFile: common.upload_file,
         uploadResult: {},
         uploadProcess: '',
+        showGraduationPicker: false,
+        showPoliticsPicker: false,
+        showRetirePicker: false,
+        showHardPicker: false,
         emailReg: /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/,
         phoneReg: /^[1][3,4,5,6,7,8,9][0-9]{9}$/,
         telRules: [{
@@ -271,7 +347,15 @@
           matherName: '',
           matherPhone: '',
           address: '',
-          headImg: ''
+          headImg: '',
+          graduation: '',
+          graduationLabel: '',
+          politics: '',
+          politicsLabel: '',
+          retire: '',
+          retireLabel: '',
+          hard: '',
+          hardLabel: '',
         }
       }
     },
@@ -329,12 +413,19 @@
       },
       studentDetailInfo(userId) {
         let params = {
-
+          userId: userId
         };
+        console.log(params);
         this.$axios.get(common.enroll_student_detail, {params: params}).then(res => {
           if (res.data.data) {
             //this.detailData = res.data.data;
             console.log(res.data.data);
+            let retireLabel = '';
+            if (res.data.data.soldier === 1){
+              retireLabel = this.$t("是");
+            }else if (res.data.data.soldier === 0){
+              retireLabel = this.$t("否");
+            }
             this.form = {
               id: '',
               phone: res.data.data.phone,
@@ -346,7 +437,15 @@
               matherName: res.data.data.mather_name,
               matherPhone: res.data.data.mather_phone,
               address: res.data.data.native_place,
-              headImg: res.data.data.photo_simple
+              headImg: res.data.data.photo_simple,
+              graduation: res.data.data.graduation_type,
+              graduationLabel: res.data.data.graduation_type,
+              politics: res.data.data.political_type,
+              politicsLabel: res.data.data.political_type,
+              retire: res.data.data.soldier,
+              retireLabel: retireLabel,
+              hard: res.data.data.difficulty_type,
+              hardLabel: res.data.data.difficulty_type,
             };
           }
         });
@@ -370,6 +469,10 @@
             matherPhone: this.form.matherPhone,
             matherName: this.form.matherName,
             nativePlace: this.form.address,
+            graduationType: this.form.graduation,
+            politicalType: this.form.politics,
+            soldier: this.form.retire,
+            difficultyType: this.form.hard
           };
           params = this.$qs.stringify(params);
           this.$axios.post(url, params).then(res => {
@@ -382,6 +485,32 @@
             }
           });
         })
+      },
+      onShowPickerCancel(){
+        this.showGraduationPicker = false;
+        this.showRetirePicker = false;
+        this.showPoliticsPicker = false;
+        this.showHardPicker = false;
+      },
+      onGraduationChange(picker, value, index){
+        this.form.graduationLabel = value.label;
+        this.form.graduation = value.value;
+        this.showGraduationPicker = false;
+      },
+      onPoliticsChange(picker, value, index){
+        this.form.politicsLabel = value.label;
+        this.form.politics = value.value;
+        this.showPoliticsPicker = false;
+      },
+      onRetireChange(picker, value, index){
+        this.form.retireLabel = value.label;
+        this.form.retire = value.value;
+        this.showRetirePicker = false;
+      },
+      onHardChange(picker, value, index){
+        this.form.hardLabel = value.label;
+        this.form.hard = value.value;
+        this.showHardPicker = false;
       }
     }
   }

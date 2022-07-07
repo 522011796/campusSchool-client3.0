@@ -33,6 +33,18 @@ export default {
         email: [
           { required: true, message: this.$t("请输入信息"), trigger: 'blur' },
           { validator: rules.FormValidate.Form().validateEmail, trigger: 'blur' }
+        ],
+        graduation: [
+          { required: true, message: this.$t("请选择信息"), trigger: 'change' }
+        ],
+        politics: [
+          { required: true, message: this.$t("请选择信息"), trigger: 'change' }
+        ],
+        retire: [
+          { required: true, message: this.$t("请选择信息"), trigger: 'change' }
+        ],
+        hard: [
+          { required: true, message: this.$t("请选择信息"), trigger: 'change' }
         ]
       }
     }

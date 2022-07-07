@@ -343,6 +343,32 @@ const filterAppManageType = [
   { text: '单位办事', value: '2' ,label: '单位办事'}
 ];
 
+const filterGraduationType = [
+  { text: "初中毕业", value: '初中' ,label: '初中毕业'},
+  { text: '高中毕业', value: '高中' ,label: '高中毕业'}
+];
+
+const filterPoliticsType = [
+  { text: "群众", value: '群众' ,label: '群众'},
+  { text: '团员', value: '团员' ,label: '团员'},
+  { text: '党员', value: '党员' ,label: '党员'}
+];
+
+const filterRetireType = [
+  { text: "是", value: true ,label: '是'},
+  { text: '否', value: false ,label: '否'}
+];
+
+const filterHardType = [
+  { text: "无", value: "无" ,label: '无'},
+  { text: '低保', value: '低保' ,label: '低保'},
+  { text: '孤儿', value: '孤儿' ,label: '孤儿'},
+  { text: '烈士子女', value: '烈士子女' ,label: '烈士子女'},
+  { text: '低收入', value: '低收入' ,label: '低收入'},
+  { text: '建档立卡', value: '建档立卡' ,label: '建档立卡'},
+  { text: '其他', value: '其他' ,label: '其他'}
+];
+
 export default {
   total,
   page,
@@ -421,5 +447,9 @@ export default {
   filterTimeStatusOptions,
   filterUserAccountActiveStatusOptions,
   filterAppManageStatus,
-  filterAppManageType
+  filterAppManageType,
+  filterGraduationType,
+  filterPoliticsType,
+  filterRetireType,
+  filterHardType
 }

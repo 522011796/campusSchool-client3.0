@@ -110,18 +110,18 @@
               </div>
               <div slot="text" class="moon-content-text-ellipsis-class margin-top-10 text-center font-size-12" style="width: 60px">{{ $t("流程引导") }}</div>
             </van-grid-item>
-            <van-grid-item v-for="(item, index) in serverAppList" :key="index" v-if="index < 5" icon="photo-o" @click="serverBlock($event, item)">
+            <van-grid-item v-for="(item, index) in serverAppList" :key="index" v-if="index < 6" icon="photo-o" @click="serverBlock($event, item)">
               <div slot="icon" class="text-center">
                 <van-image width="30" height="30" :src="item.link_logo"/>
               </div>
               <div slot="text" class="moon-content-text-ellipsis-class margin-top-10 text-center font-size-12" style="width: 60px">{{ item.link_name }}</div>
             </van-grid-item>
-            <van-grid-item :text="$t('报道单')"  @click="serverBlock($event, 'order')">
-              <div slot="icon">
-                <van-icon size="30" name="user-circle-o" />
-              </div>
-              <div slot="text" class="moon-content-text-ellipsis-class margin-top-10 text-center font-size-12" style="width: 60px">{{ $t("报道单") }}</div>
-            </van-grid-item>
+<!--            <van-grid-item :text="$t('报道单')"  @click="serverBlock($event, 'order')">-->
+<!--              <div slot="icon">-->
+<!--                <van-icon size="30" name="user-circle-o" />-->
+<!--              </div>-->
+<!--              <div slot="text" class="moon-content-text-ellipsis-class margin-top-10 text-center font-size-12" style="width: 60px">{{ $t("报道单") }}</div>-->
+<!--            </van-grid-item>-->
             <van-grid-item :text="$t('全部环节')"  @click="serverBlock($event, 'all')">
               <div slot="icon">
                 <van-icon size="30" name="apps-o" />
@@ -454,6 +454,17 @@
               navH: this.navHeight,
               appType: this.globalAppShow,
               linkId: item.id
+            }
+          });
+        }else if (item == 5){
+          this.$router.push({
+            path: '/newStudent/studentOrder',
+            query: {
+              id: item.id,
+              activeType: this.active,
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow
             }
           });
         }else if (item.link_sub_type == 1){

@@ -102,7 +102,7 @@
             <span class="moon-top-middle-menu-item-text" @click="menuClick($event, 'index')">
               <label class="item font-bold" :class="activeMenu == 'index' ? 'moon-top-middle-menu-item-text-active' : ''">{{$t("办事大厅")}}</label>
             </span>
-            <span v-if="loginUserType == 5" class="moon-top-middle-menu-item-text" @click="menuClick($event, 'student')">
+            <span v-if="loginUserType == '' || loginUserType == 5" class="moon-top-middle-menu-item-text" @click="menuClick($event, 'student')">
               <label class="item font-bold" :class="activeMenu == 'student' ? 'moon-top-middle-menu-item-text-active' : ''">{{$t("智慧迎新")}}</label>
             </span>
           </div>

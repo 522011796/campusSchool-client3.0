@@ -266,24 +266,50 @@
                     <el-input v-model="form.fatherPhone" size="small" class="width-150"></el-input>
                   </el-form-item>
                 </el-col>
-              </el-row><el-row>
-              <el-col :span="12">
-                <el-form-item :label="$t('母亲姓名')" prop="matherName">
-                  <el-input v-model="form.matherName" size="small" class="width-150"></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item :label="$t('母亲电话')" prop="matherPhone">
-                  <el-input v-model="form.matherPhone" size="small" class="width-150"></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row><el-row>
-              <el-col :span="24">
-                <el-form-item :label="$t('详细地址')" prop="address">
-                  <el-input v-model="form.address" size="small" class="width-415"></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item :label="$t('母亲姓名')" prop="matherName">
+                    <el-input v-model="form.matherName" size="small" class="width-150"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item :label="$t('母亲电话')" prop="matherPhone">
+                    <el-input v-model="form.matherPhone" size="small" class="width-150"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item :label="$t('毕业类型')" prop="graduation">
+                    <my-select size="small" :disabled="form.id != '' && oprType == 'detail'" :sel-value="form.graduation" :options="filterGraduationType" width-style="150" @change="handleSelectChange($event, 1)"></my-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item :label="$t('政治面貌')" prop="politics">
+                    <my-select size="small" :disabled="form.id != '' && oprType == 'detail'" :sel-value="form.politics" :options="filterPoliticsType" width-style="150" @change="handleSelectChange($event, 2)"></my-select>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item :label="$t('退役士兵')" prop="retire">
+                    <my-select size="small" :disabled="form.id != '' && oprType == 'detail'" :sel-value="form.retire" :options="filterRetireType" width-style="150" @change="handleSelectChange($event, 3)"></my-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item :label="$t('困难类型')" prop="hard">
+                    <my-select size="small" :disabled="form.id != '' && oprType == 'detail'" :sel-value="form.hard" :options="filterHardType" width-style="150" @change="handleSelectChange($event, 4)"></my-select>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="24">
+                  <el-form-item :label="$t('详细地址')" prop="address">
+                    <el-input v-model="form.address" size="small" class="width-415"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
             </el-form>
           </div>
         </div>
@@ -577,32 +603,48 @@
         <div class="info-dorm-block">
           <div>
             <div class="pull-left info-block-left">
-              <div class="info-block-header text-center" @click="selMenuAll">
-                <span>{{$t("全部宿舍")}}</span>
-              </div>
-              <div :style="{height: 450-45+'px', overflowY: 'auto'}">
-                <el-menu
-                  :default-active="defaultMenuActive"
-                  background-color="#fefefe"
-                  text-color="#909399"
-                  active-text-color="#ffd04b"
-                  class="el-menu-vertical-demo custon-nav-menu">
-                  <template v-for="(item, index) in dormTreeList">
-                    <el-submenu v-if="item.floorList.length > 0" :index="index+''">
-                      <div style="width: 100%" slot="title" @click="selMenu($event, item, index)">
-                        <span>{{ item.building_name }}</span>
-                      </div>
-                      <el-menu-item-group v-if="item.floorList.length > 0">
-                        <el-menu-item v-for="(itemChild, indexChild) in item.floorList" :key="indexChild" :index="index+'-'+indexChild" @click="selMenu($event, itemChild, index+'-'+indexChild)">{{ itemChild.name }}</el-menu-item>
-                      </el-menu-item-group>
-                    </el-submenu>
-                    <el-menu-item v-else :index="index+''" @click="selMenu($event, item, index)">{{ item.building_name }}</el-menu-item>
-                  </template>
-                </el-menu>
-              </div>
+              <template v-if="dormSelType == 1">
+                <div class="info-block-header text-center" @click="selMenuAll">
+                  <span>{{$t("全部宿舍")}}</span>
+                </div>
+                <div :style="{height: 450-45+'px', overflowY: 'auto'}">
+                  <el-menu
+                    :default-active="defaultMenuActive"
+                    background-color="#fefefe"
+                    text-color="#909399"
+                    active-text-color="#ffd04b"
+                    class="el-menu-vertical-demo custon-nav-menu">
+                    <template v-for="(item, index) in dormTreeList">
+                      <el-submenu v-if="item.floorList.length > 0" :index="index+''">
+                        <div style="width: 100%" slot="title" @click="selMenu($event, item, index)">
+                          <span>{{ item.building_name }}</span>
+                        </div>
+                        <el-menu-item-group v-if="item.floorList.length > 0">
+                          <el-menu-item v-for="(itemChild, indexChild) in item.floorList" :key="indexChild" :index="index+'-'+indexChild" @click="selMenu($event, itemChild, index+'-'+indexChild)">{{ itemChild.name }}</el-menu-item>
+                        </el-menu-item-group>
+                      </el-submenu>
+                      <el-menu-item v-else :index="index+''" @click="selMenu($event, item, index)">{{ item.building_name }}</el-menu-item>
+                    </template>
+                  </el-menu>
+                </div>
+              </template>
+              <template v-if="dormSelType == 2">
+                <div :style="{height: 450+'px', overflowY: 'auto'}">
+                  <el-menu
+                    :default-active="defaultMenuActive"
+                    background-color="#fefefe"
+                    text-color="#909399"
+                    active-text-color="#ffd04b"
+                    class="el-menu-vertical-demo custon-nav-menu">
+                    <template v-for="(item, index) in dormPackageTreeList">
+                      <el-menu-item :index="index+''" @click="selMenu($event, item, index)">{{ item.label }}</el-menu-item>
+                    </template>
+                  </el-menu>
+                </div>
+              </template>
             </div>
             <div class="info-block-right">
-              <div class="info-block-header layout-inline text-left padding-lr-10">
+              <div v-if="dormSelType == 1" class="info-block-header layout-inline text-left padding-lr-10">
                 <el-dropdown class="layout-item" size="mini" trigger="click">
                   <span class="el-dropdown-link color-white font-size-12">
                     {{ $t("房型") }}<i class="el-icon-arrow-down el-icon--right"></i>
@@ -669,59 +711,76 @@
           </el-carousel>
         </div>
         <div class="padding-tb-10">
-          <div class="">
-            <el-row>
-              <el-col :span="12">
-                <span class="tag-class"></span>
-                <span class="tag-text-class font-bold">{{roomTypeText}}</span>
-              </el-col>
-              <el-col :span="12" class="text-right">
-                <span class="tag-class"></span>
-                <span class="tag-text-class font-size-12">{{$t("已选")}}</span>
-
-                <span class="tag-danger-class margin-left-10"></span>
-                <span class="tag-text-class font-size-12">{{$t("未选")}}</span>
-              </el-col>
-            </el-row>
-          </div>
-          <div class="padding-lr-10 padding-tb-10">
-            <el-row :gutter="8">
-              <el-col :span="6" v-for="(item, index) in formDorm.beds" :key="index" class="margin-bottom-10" @click.native="!item.studentId ? selBedNo($event, item, index) : ''">
-                <div class="bed-item-block" :class="[activeBedNo === index ? 'bed-item-block-active' : '',item.studentId ? 'bed-item-block-selected' : '']">
-                  {{item.bedNo}}{{$t("号床")}}
-                </div>
-              </el-col>
-            </el-row>
-          </div>
-
-          <div class="padding-lr-10 padding-tb-10">
-            <div>
-              <span class="tag-class"></span>
-              <span class="tag-text-class font-bold">{{$t("简介")}}</span>
-            </div>
-            <div class="margin-top-10 font-size-12">
+          <template v-if="dormSelType == 1">
+            <div class="">
               <el-row>
                 <el-col :span="12">
-                  <span>{{$t("容纳人数")}}:</span>
-                  <span>{{formDorm.peopleNum}}</span>
+                  <span class="tag-class"></span>
+                  <span class="tag-text-class font-bold">{{roomTypeText}}</span>
                 </el-col>
-                <el-col :span="12">
-                  <span>{{$t("价格")}}:</span>
-                  <span>{{formDorm.roomPrice}}/{{$t("年")}}</span>
-                </el-col>
-              </el-row>
-              <el-row class="margin-top-5">
-                <el-col :span="12">
-                  <span>{{$t("面积")}}:</span>
-                  <span>{{formDorm.roomArea}}</span>
-                </el-col>
-                <el-col :span="12">
-                  <span>{{$t("朝向")}}:</span>
-                  <span>{{formDorm.roomArrow}}</span>
+                <el-col :span="12" class="text-right">
+                  <span class="tag-class"></span>
+                  <span class="tag-text-class font-size-12">{{$t("已选")}}</span>
+
+                  <span class="tag-danger-class margin-left-10"></span>
+                  <span class="tag-text-class font-size-12">{{$t("未选")}}</span>
                 </el-col>
               </el-row>
             </div>
-          </div>
+            <div class="padding-lr-10 padding-tb-10">
+              <el-row :gutter="8">
+                <el-col :span="6" v-for="(item, index) in formDorm.beds" :key="index" class="margin-bottom-10" @click.native="!item.studentId ? selBedNo($event, item, index) : ''">
+                  <div class="bed-item-block" :class="[activeBedNo === index ? 'bed-item-block-active' : '',item.studentId ? 'bed-item-block-selected' : '']">
+                    {{item.bedNo}}{{$t("号床")}}
+                  </div>
+                </el-col>
+              </el-row>
+            </div>
+
+            <div class="padding-lr-10 padding-tb-10">
+              <div>
+                <span class="tag-class"></span>
+                <span class="tag-text-class font-bold">{{$t("简介")}}</span>
+              </div>
+              <div class="margin-top-10 font-size-12">
+                <el-row>
+                  <el-col :span="12">
+                    <span>{{$t("容纳人数")}}:</span>
+                    <span>{{formDorm.peopleNum}}</span>
+                  </el-col>
+                  <el-col :span="12">
+                    <span>{{$t("价格")}}:</span>
+                    <span>{{formDorm.roomPrice}}/{{$t("年")}}</span>
+                  </el-col>
+                </el-row>
+                <el-row class="margin-top-5">
+                  <el-col :span="12">
+                    <span>{{$t("面积")}}:</span>
+                    <span>{{formDorm.roomArea}}</span>
+                  </el-col>
+                  <el-col :span="12">
+                    <span>{{$t("朝向")}}:</span>
+                    <span>{{formDorm.roomArrow}}</span>
+                  </el-col>
+                </el-row>
+              </div>
+            </div>
+          </template>
+          <template v-if="dormSelType == 2">
+            <div class="padding-lr-10 padding-tb-10">
+              <div>
+                <el-row>
+                  <el-col :span="12">
+                    <span class="tag-class"></span>
+                    <span class="tag-text-class font-bold">{{$t("价格")}}</span>
+                  </el-col>
+                  <el-col :span="12" class="text-right">
+                    <span></span>
+                  </el-col>
+                </el-row>
+              </div>
+            </div>
+          </template>
         </div>
       </div>
       <div slot="footer">
@@ -887,6 +946,7 @@
         commSearchRoom: '',
         dormList: [],
         dormTreeList: [],
+        dormPackageTreeList: [{label: this.$t("校内宿舍"), value: 1},{label: this.$t("校外公寓"), value: 2}],
         filterRoomType: [],
         filterRoomArrow: [],
         filterRoomPrice: [],
@@ -895,6 +955,7 @@
         searchRoomArrow: '',
         searchRoomPrice: '',
         searchRoomStatus: '',
+        commSearchPackage: '',
         roomTypeText: 'xxxxxx',
         peopleNum: 0,
         arrow: '',
@@ -910,6 +971,7 @@
         fApi: {},
         drCode: '',
         timer: null,
+        dormSelType: '',
         filterStatus: [{
           label: this.$t("是"),
           value: true,
@@ -941,7 +1003,11 @@
           matherName: '',
           matherPhone: '',
           address: '',
-          headImg: ''
+          headImg: '',
+          graduation: '',
+          politics: '',
+          retire: '',
+          hard: '',
         },
         formStation: {
           id: '',
@@ -1143,18 +1209,29 @@
         });
       },
       initDormInfo(){
-        let params = {
-          page: 1,
-          num: 9999,
-          userId: this.loginUserId,
-          buildId: this.commSearchBuild,
-          floorNum: this.commSearchFloor,
-          peopleNum: this.searchRoomType,
-          roomOrient: this.searchRoomArrow,
-          roomPrice: this.searchRoomPrice,
-          choseStatus: this.searchRoomStatus
-        };
-        this.$axios.get(common.server_enroll_app_dorm_room, {params: params}).then(res => {
+        let url = '';
+        let params = {};
+        if (this.dormSelType == 1){
+          params = {
+            page: 1,
+            num: 9999,
+            userId: this.loginUserId,
+            buildId: this.commSearchBuild,
+            floorNum: this.commSearchFloor,
+            peopleNum: this.searchRoomType,
+            roomOrient: this.searchRoomArrow,
+            roomPrice: this.searchRoomPrice,
+            choseStatus: this.searchRoomStatus
+          };
+        }else if (this.dormSelType == 2){
+          params = {
+            page: 1,
+            num: 9999,
+            userId: this.loginUserId,
+            package: this.commSearchPackage
+          };
+        }
+        this.$axios.get(this.dormSelType == 1 ? common.server_enroll_app_dorm_room : common.server_enroll_app_dorm_room, {params: params}).then(res => {
           if (res.data.data){
             this.dormList = res.data.data.list;
           }
@@ -1207,7 +1284,7 @@
       },
       studentDetailInfo(userId) {
         let params = {
-
+          userId: this.loginUserId
         };
         this.$axios.get(common.enroll_student_detail, {params: params}).then(res => {
           if (res.data.data) {
@@ -1224,7 +1301,11 @@
               matherName: res.data.data.mather_name,
               matherPhone: res.data.data.mather_phone,
               address: res.data.data.native_place,
-              headImg: res.data.data.photo_simple
+              headImg: res.data.data.photo_simple,
+              graduation: res.data.data.graduation_type ? res.data.data.graduation_type : '',
+              politics: res.data.data.political_type ? res.data.data.political_type : '',
+              retire: res.data.data.soldier ? res.data.data.soldier : '',
+              hard: res.data.data.difficulty_type ? res.data.data.difficulty_type : '',
             };
           }
         });
@@ -1240,11 +1321,16 @@
       },
       selMenu(event, item, index){
         //this.defaultMenuActive = index + '';
-        this.commSearchBuild = "";
-        this.commSearchFloor = "";
-        this.commSearchRoom = "";
-        this.commSearchBuild = item.id;
-        this.commSearchFloor = item.floor;
+        if(this.dormSelType == 1){
+          this.commSearchBuild = "";
+          this.commSearchFloor = "";
+          this.commSearchRoom = "";
+          this.commSearchBuild = item.id;
+          this.commSearchFloor = item.floor;
+        }else if(this.dormSelType == 2){
+          this.commSearchPackage = item.value;
+        }
+
         this.initDormInfo();
       },
       selRoomItem(event, item){
@@ -1273,7 +1359,9 @@
       },
       serverClick($event, item){
         this.detailData = item;
-        if (item.link_sub_type == 4){
+        if(item.link_sub_type == 5){
+          window.open('/signOrder', '_blank');
+        }else if (item.link_sub_type == 4){
           this.studentDetailInfo();
           this.dialogInfo = true;
         }else if (item.link_sub_type == 0){
@@ -1289,6 +1377,7 @@
         }else if (item.link_sub_type == 2){
           this.initDormTree();
           this.initDormInfo();
+          this.dormSelType = 1;
           this.dialogDorm = true;
         }else if (item.link_sub_type == 9){
           let rules = '';
@@ -1325,7 +1414,6 @@
         }
       },
       handleChangeSearch(event, item, type){
-        console.log(111);
         if (type == 1){
           this.searchRoomType = item.value;
         }else if (type == 2){
@@ -1336,6 +1424,17 @@
           this.searchRoomStatus = item.value;
         }
         this.initDormInfo();
+      },
+      handleSelectChange(event, type){
+        if (type == 1){
+          this.form.graduation = event;
+        }else if (type == 2){
+          this.form.politics = event;
+        }else if (type == 3){
+          this.form.retire = event;
+        }else if (type == 4){
+          this.form.hard = event;
+        }
       },
       uploadFileSuccess(res, file){
         if (res.code == 200){
@@ -1356,7 +1455,11 @@
           matherName: '',
           matherPhone: '',
           address: '',
-          headImg: ''
+          headImg: '',
+          graduation: '',
+          politics: '',
+          retire: '',
+          hard: '',
         };
         this.formStation = {
           id: '',
@@ -1477,6 +1580,10 @@
               matherPhone: this.form.matherPhone,
               matherName: this.form.matherName,
               nativePlace: this.form.address,
+              graduationType: this.form.graduation,
+              politicalType: this.form.politics,
+              soldier: this.form.retire,
+              difficultyType: this.form.hard
             };
             params = this.$qs.stringify(params);
             this.$axios.post(url, params).then(res => {

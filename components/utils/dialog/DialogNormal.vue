@@ -6,7 +6,7 @@
       :visible.sync="visible"
       :width="widthStyle"
       :show-close="false"
-      :modal="false"
+      :modal="true"
       :modal-append-to-body="false"
       :before-close="handleBeforeClose"
       @close="closeDialog">
