@@ -603,7 +603,7 @@
         <div class="info-dorm-block">
           <div>
             <div class="pull-left info-block-left">
-              <template v-if="dormSelType == 1">
+              <template v-if="dormSelType == 0">
                 <div class="info-block-header text-center" @click="selMenuAll">
                   <span>{{$t("全部宿舍")}}</span>
                 </div>
@@ -628,7 +628,10 @@
                   </el-menu>
                 </div>
               </template>
-              <template v-if="dormSelType == 2">
+              <template v-if="dormSelType == 1">
+                <div class="info-block-header text-center" @click="selMenuAll">
+                  <span>{{$t("全部套餐")}}</span>
+                </div>
                 <div :style="{height: 450+'px', overflowY: 'auto'}">
                   <el-menu
                     :default-active="defaultMenuActive"
@@ -637,14 +640,14 @@
                     active-text-color="#ffd04b"
                     class="el-menu-vertical-demo custon-nav-menu">
                     <template v-for="(item, index) in dormPackageTreeList">
-                      <el-menu-item :index="index+''" @click="selMenu($event, item, index)">{{ item.label }}</el-menu-item>
+                      <el-menu-item :index="index+''" @click="selMenu($event, item, index)" style="text-align: center">{{ item.label }}</el-menu-item>
                     </template>
                   </el-menu>
                 </div>
               </template>
             </div>
             <div class="info-block-right">
-              <div v-if="dormSelType == 1" class="info-block-header layout-inline text-left padding-lr-10">
+              <div v-if="dormSelType == 0" class="info-block-header layout-inline text-left padding-lr-10">
                 <el-dropdown class="layout-item" size="mini" trigger="click">
                   <span class="el-dropdown-link color-white font-size-12">
                     {{ $t("房型") }}<i class="el-icon-arrow-down el-icon--right"></i>
@@ -685,9 +688,14 @@
                       <div>
                         <img src="~static/img/dorm_icon.png" style="height: 40px;width: 40px">
                       </div>
-                      <div class="margin-top-5 font-size-12 moon-content-text-ellipsis-class">
+                      <div v-if="dormSelType == 0" class="margin-top-5 font-size-12 moon-content-text-ellipsis-class">
                         <el-tooltip class="item" effect="dark" :content="item.dormitory_no" placement="bottom">
                           <span>{{ item.dormitory_no }}</span>
+                        </el-tooltip>
+                      </div>
+                      <div v-if="dormSelType == 1" class="margin-top-5 font-size-12 moon-content-text-ellipsis-class">
+                        <el-tooltip class="item" effect="dark" :content="item.pacName" placement="bottom">
+                          <span>{{ item.pacName }}</span>
                         </el-tooltip>
                       </div>
                     </el-col>
@@ -711,7 +719,7 @@
           </el-carousel>
         </div>
         <div class="padding-tb-10">
-          <template v-if="dormSelType == 1">
+          <template v-if="dormSelType == 0">
             <div class="">
               <el-row>
                 <el-col :span="12">
@@ -766,7 +774,7 @@
               </div>
             </div>
           </template>
-          <template v-if="dormSelType == 2">
+          <template v-if="dormSelType == 1">
             <div class="padding-lr-10 padding-tb-10">
               <div>
                 <el-row>
@@ -775,7 +783,7 @@
                     <span class="tag-text-class font-bold">{{$t("价格")}}</span>
                   </el-col>
                   <el-col :span="12" class="text-right">
-                    <span></span>
+                    <span class="color-success font-bold">{{formDorm.roomPrice}}</span>
                   </el-col>
                 </el-row>
               </div>
@@ -801,38 +809,50 @@
                   <span class="fa fa-history"></span>
                   <span>{{ $moment(item.add_time).format("YYYY-MM-DD HH:mm:ss") }}</span>
                 </el-col>
-                <el-col :span="12" class="text-right">
+                <el-col v-if="dormSelType == 0" :span="12" class="text-right">
                   <label class="color-warning" v-if="item.status == 1">{{$t("未支付")}}</label>
                   <label class="color-warning" v-if="item.status == 2">{{$t("已支付")}}</label>
                   <label class="color-warning" v-if="item.status == 3">{{$t("支付失败")}}</label>
                   <label class="color-warning" v-if="item.status == 4">{{$t("支付中")}}</label>
                   <label class="color-warning" v-if="item.status == 7">{{$t("订单关闭")}}</label>
                 </el-col>
+                <el-col v-if="dormSelType == 1" :span="12" class="text-right">
+                  <label class="color-warning" v-if="item.order_status == true">{{$t("成功")}}</label>
+                  <label class="color-warning" v-if="item.order_status == false">{{$t("撤销")}}</label>
+                </el-col>
               </el-row>
               <el-row class="margin-top-5">
                 <el-col :span="12">
                   <span>{{$t("姓名")}}</span>
-                  <span>{{ item.real_name }}</span>
+                  <span class="color-success">{{ item.real_name }}</span>
                 </el-col>
-                <el-col :span="12" class="text-right">
+                <el-col v-if="dormSelType == 0" :span="12" class="text-right">
                   <label class="color-warning font-size-16">¥{{item.room_price}}</label>
                 </el-col>
-              </el-row>
-              <el-row class="margin-top-5">
-                <el-col :span="24">
-                  <span>{{$t("学号/录取号")}}</span>
-                  <span>{{ item.student_id }} / {{ item.enroll_no }}</span>
+                <el-col v-if="dormSelType == 1" :span="12" class="text-right">
+                  <label class="color-warning font-size-16">¥{{item.pac_price}}</label>
                 </el-col>
               </el-row>
               <el-row class="margin-top-5">
                 <el-col :span="24">
+                  <span>{{$t("学号")}}</span>
+                  <span class="color-success">{{ item.student_id }}</span>
+                </el-col>
+              </el-row>
+              <el-row class="margin-top-5">
+                <el-col v-if="dormSelType == 0" :span="24">
                   <span>{{$t("已选寝室")}}</span>
-                  <span>{{ item.build_name }}-{{ item.dormitory_no }}-{{item.bed_no}}{{$t("号床")}}</span>
+                  <span class="color-success">{{ item.build_name }}-{{ item.dormitory_no }}-{{item.bed_no}}{{$t("号床")}}</span>
+                </el-col>
+                <el-col v-if="dormSelType == 1" :span="24">
+                  <span>{{$t("已选套餐")}}</span>
+                  <span class="color-success">{{ item.pac_name }}</span>
                 </el-col>
               </el-row>
               <el-row class="margin-top-5">
                 <el-col :span="24" class="text-right">
-                  <el-button size="mini" type="success"  v-if="(!detailData.status || detailData.check_repeat == true) && item.status == 1" @click="setBillStatus($event, item)">{{$t("立即撤销")}}</el-button>
+                  <el-button size="mini" type="success"  v-if="dormSelType == 0 && (!detailData.status || detailData.check_repeat == true) && item.status == 1" @click="setBillStatus($event, item)">{{$t("立即撤销")}}</el-button>
+                  <el-button size="mini" type="success"  v-if="dormSelType == 1 && (!detailData.status || detailData.check_repeat == true) && item.order_status == 1" @click="setBillStatus($event, item)">{{$t("立即撤销")}}</el-button>
                 </el-col>
               </el-row>
             </div>
@@ -946,7 +966,7 @@
         commSearchRoom: '',
         dormList: [],
         dormTreeList: [],
-        dormPackageTreeList: [{label: this.$t("校内宿舍"), value: 1},{label: this.$t("校外公寓"), value: 2}],
+        dormPackageTreeList: [],
         filterRoomType: [],
         filterRoomArrow: [],
         filterRoomPrice: [],
@@ -956,6 +976,7 @@
         searchRoomPrice: '',
         searchRoomStatus: '',
         commSearchPackage: '',
+        ruleId: {},
         roomTypeText: 'xxxxxx',
         peopleNum: 0,
         arrow: '',
@@ -1211,7 +1232,7 @@
       initDormInfo(){
         let url = '';
         let params = {};
-        if (this.dormSelType == 1){
+        if (this.dormSelType == 0){
           params = {
             page: 1,
             num: 9999,
@@ -1223,19 +1244,30 @@
             roomPrice: this.searchRoomPrice,
             choseStatus: this.searchRoomStatus
           };
-        }else if (this.dormSelType == 2){
+        }else if (this.dormSelType == 1){
           params = {
             page: 1,
             num: 9999,
-            userId: this.loginUserId,
-            package: this.commSearchPackage
+            ruleId: this.ruleId,
+            pacRegion: this.commSearchPackage
           };
         }
-        this.$axios.get(this.dormSelType == 1 ? common.server_enroll_app_dorm_room : common.server_enroll_app_dorm_room, {params: params}).then(res => {
-          if (res.data.data){
-            this.dormList = res.data.data.list;
-          }
-        });
+
+        if (this.dormSelType == 0){
+          url = common.server_enroll_app_dorm_room;
+          this.$axios.get(url, {params: params}).then(res => {
+            if (res.data.data){
+              this.dormList = res.data.data.list;
+            }
+          });
+        }else if (this.dormSelType == 1){
+          url = common.enroll_rule_package_list;
+          this.$axios.get(url, {params: params}).then(res => {
+            if (res.data.data){
+              this.dormList = res.data.data;
+            }
+          });
+        }
       },
       initRoomInfo(){
         this.filterRoomType = [];
@@ -1248,7 +1280,13 @@
           page: 1,
           num: 9999,
         };
-        this.$axios.get(common.server_enroll_app_dorm_bill_page, {params: params}).then(res => {
+        let url = '';
+        if (this.dormSelType == 0){
+          url = common.server_enroll_app_dorm_bill_page;
+        }else if (this.dormSelType == 1){
+          url = common.enroll_rule_package_order_list;
+        }
+        this.$axios.get(url, {params: params}).then(res => {
           if (res.data.data){
             this.billList = res.data.data.list;
           }
@@ -1317,17 +1355,18 @@
         this.commSearchRoom = "";
         this.commSearchBuild = "";
         this.commSearchFloor = "";
+        this.commSearchPackage = "";
         this.initDormInfo();
       },
       selMenu(event, item, index){
         //this.defaultMenuActive = index + '';
-        if(this.dormSelType == 1){
+        if(this.dormSelType == 0){
           this.commSearchBuild = "";
           this.commSearchFloor = "";
           this.commSearchRoom = "";
           this.commSearchBuild = item.id;
           this.commSearchFloor = item.floor;
-        }else if(this.dormSelType == 2){
+        }else if(this.dormSelType == 1){
           this.commSearchPackage = item.value;
         }
 
@@ -1336,20 +1375,26 @@
       selRoomItem(event, item){
         this.formDorm.id = item.id;
 
-        let params = {
-          id: item.id
-        };
-        this.$axios.get(common.server_enroll_app_dorm_info, {params: params, loading: false}).then((res) => {
-          if (res.data.data){
-            let photos = res.data.data.room_photos ? res.data.data.room_photos.split("|") : [];
-            this.formDorm.imgs = photos
-            this.formDorm.beds = res.data.data.beds;
-            this.formDorm.roomPrice = res.data.data.room_price;
-            this.formDorm.roomArrow = res.data.data.room_orient;
-            this.formDorm.peopleNum = res.data.data.people_num;
-            this.formDorm.roomArea = res.data.data.area;
-          }
-        });
+        if (this.dormSelType == 0){
+          let params = {
+            id: item.id
+          };
+          this.$axios.get(common.server_enroll_app_dorm_info, {params: params, loading: false}).then((res) => {
+            if (res.data.data){
+              let photos = res.data.data.room_photos ? res.data.data.room_photos.split("|") : [];
+              this.formDorm.imgs = photos
+              this.formDorm.beds = res.data.data.beds;
+              this.formDorm.roomPrice = res.data.data.room_price;
+              this.formDorm.roomArrow = res.data.data.room_orient;
+              this.formDorm.peopleNum = res.data.data.people_num;
+              this.formDorm.roomArea = res.data.data.area;
+            }
+          });
+        }else if (this.dormSelType == 1){
+          let photos = item.pacLogo ? item.pacLogo.split(",") : [];
+          this.formDorm.imgs = photos
+          this.formDorm.roomPrice = item.pacPrice;
+        }
 
         this.drawerRoom = true;
       },
@@ -1375,9 +1420,20 @@
           this.initStudentInfo();
           this.dialogPay = true;
         }else if (item.link_sub_type == 2){
+          this.dormSelType = item.ruleTypeInfo.rule_type;
+          this.ruleId = item.ruleTypeInfo.rule_id;
+          let dormPackageTreeList = [];
+          for (let i = 0; i < item.ruleTypeInfo.pacRegions.length; i++){
+            dormPackageTreeList.push({
+              label: item.ruleTypeInfo.pacRegions[i].pac_region,
+              value: item.ruleTypeInfo.pacRegions[i].pac_region,
+              text: item.ruleTypeInfo.pacRegions[i].pac_region
+            });
+          }
+          this.dormPackageTreeList = dormPackageTreeList;
+          console.log(this.dormSelType);
           this.initDormTree();
           this.initDormInfo();
-          this.dormSelType = 1;
           this.dialogDorm = true;
         }else if (item.link_sub_type == 9){
           let rules = '';
@@ -1541,11 +1597,22 @@
       okDrawDialog(){
         this.btnLoading = true;
         let url = common.server_enroll_app_dorm_chose;
-        let params = {
-          userId: this.loginUserId,
-          roomId: this.formDorm.id,
-          bedId: this.formDorm.bedId
-        };
+        let params = {};
+        if (this.dormSelType == 0){
+          url = common.server_enroll_app_dorm_chose;
+          params = {
+            userId: this.loginUserId,
+            roomId: this.formDorm.id,
+            bedId: this.formDorm.bedId
+          }
+        }else if (this.dormSelType == 1){
+          url = common.enroll_rule_package_order_chose;
+          params = {
+            linkId: this.detailData.id,
+            packageId: this.formDorm.id
+          }
+        }
+
         params = this.$qs.stringify(params);
         this.$axios.post(url, params).then(res => {
           if (res.data.code == 200){
@@ -1674,11 +1741,21 @@
       },
       setBillStatus(event, item){
         let url = "";
-        let params = {
-          id: item.id,
-          userId: this.loginUserId
+        let params = {}
+        if (this.dormSelType == 0){
+          url = common.server_enroll_app_dorm_bill_revoke;
+          params = {
+            id: item.id,
+            userId: this.loginUserId
+          }
+        }else if (this.dormSelType == 1){
+          url = common.enroll_rule_package_order_revoke;
+          params = {
+            id: item.id
+          }
+          console.log(item.id);
         }
-        url = common.server_enroll_app_dorm_bill_revoke;
+
         params = this.$qs.stringify(params);
         this.$axios.post(url, params).then(res => {
           if (res.data.code == 200){

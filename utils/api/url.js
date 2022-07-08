@@ -605,6 +605,11 @@ export const common = {
   enroll_student_qrcode: '/proxy/school/enroll-student/qrcode', //二维码
   enroll_checkin_student_detail: '/proxy/school/enroll/checkin/student-detail', //报道数据学生详细
 
+  enroll_rule_package_list: '/proxy/school/link-setting/rule-package/list', //宿舍套餐列表
+  enroll_rule_package_order_list: '/proxy/school/enroll/room-package/order/page', //宿舍套餐订单列表
+  enroll_rule_package_order_chose: '/proxy/school/enroll/room-package/order/chose', //宿舍套餐选择
+  enroll_rule_package_order_revoke: '/proxy/school/enroll/room-package/order/revoke', //宿舍套餐撤销
+
   login_check: '/proxy/user/loginCheck',//登录状态
 
 };
