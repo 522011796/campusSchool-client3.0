@@ -459,7 +459,7 @@
               linkId: item.id
             }
           });
-        }else if (item == 5){
+        }else if (item.link_sub_type == 5){
           this.$router.push({
             path: '/newStudent/studentOrder',
             query: {
