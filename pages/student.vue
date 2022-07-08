@@ -115,11 +115,16 @@
             </el-row>
           </div>
           <div class="margin-top-10 padding-lr-10 font-size-12 color-white">
-            <div class="block-item-item">
-              <div v-if="noticeList.length == 0" class="text-center">
+            <div v-if="noticeList.length == 0" class="text-center">
+              <div class="margin-top-40">
+                <img src="~static/img/empty.png" style="width: 100px;height: 60px">
+              </div>
+              <div class="margin-top-10">
                 <span class="color-muted">{{$t("暂无数据")}}</span>
               </div>
-              <el-row v-if="noticeList.length > 0" v-for="(item, index) in noticeList" :key="index" class="border-bottom-1">
+            </div>
+            <div class="block-item-item border-bottom-1" v-if="noticeList.length > 0" v-for="(item, index) in noticeList" :key="index">
+              <el-row>
                 <el-col :span="16">
                   <div class="moon-content-text-ellipsis-class">
                     <img src="" class="block-icon1-class">
@@ -141,7 +146,15 @@
             <span>{{$t("办事环节")}}</span>
           </div>
           <div class="padding-lr-10 padding-tb-10" :style="{height: divHeight.height1 - 80 + 'px', 'overflow-y': 'auto'}">
-            <el-row :gutter="16">
+            <div v-if="serverDataList.length == 0" class="text-center">
+              <div style="margin-top: 100px">
+                <img src="~static/img/empty.png" style="width: 100px;height: 60px">
+              </div>
+              <div class="margin-top-10">
+                <span class="color-muted">{{$t("暂无数据")}}</span>
+              </div>
+            </div>
+            <el-row v-else :gutter="16">
               <el-col :span="6" v-for="(item, index) in serverDataList" :key="index" @click.native="serverClick($event, item)" class="margin-bottom-20">
                 <el-card shadow="always" :body-style="{padding: '12px',background: '#EBEEF5'}" style="position: relative">
                   <div class="moon-content-text-ellipsis-class">
@@ -1344,7 +1357,7 @@
               matherName: res.data.data.mather_name,
               matherPhone: res.data.data.mather_phone,
               address: res.data.data.native_place,
-              headImg: res.data.data.photo_simple,
+              headImg: res.data.data.photo,
               graduation: res.data.data.graduation_type ? res.data.data.graduation_type : '',
               politics: res.data.data.political_type ? res.data.data.political_type : '',
               retire: res.data.data.soldier ? res.data.data.soldier : '',

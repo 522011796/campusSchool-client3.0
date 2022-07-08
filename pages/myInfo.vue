@@ -15,11 +15,16 @@
           </el-row>
         </div>
         <div class="margin-top-10 padding-lr-10 font-size-12 color-white" :style="{height: divHeight.height1 * 0.43 - 60 + 'px', 'overflow-y': 'auto'}">
-          <div class="block-item-item color-sub-title">
-            <div v-if="collectionList.length == 0" class="text-center">
+          <div v-if="collectionList.length == 0" class="text-center">
+            <div class="margin-top-30">
+              <img src="~static/img/empty.png" style="width: 100px;height: 60px">
+            </div>
+            <div class="margin-top-10">
               <span class="color-muted">{{$t("暂无数据")}}</span>
             </div>
-            <el-row v-if="collectionList.length > 0" v-for="(item, index) in collectionList" :key="index" class="border-bottom-1">
+          </div>
+          <div class="block-item-item color-sub-title border-bottom-1" v-if="collectionList.length > 0" v-for="(item, index) in collectionList" :key="index">
+            <el-row>
               <el-col :span="16">
                 <div class="moon-content-text-ellipsis-class">
                   <img src="" class="block-icon1-class">
@@ -55,11 +60,16 @@
           </el-row>
         </div>
         <div class="margin-top-10 padding-lr-10 font-size-12 color-white" :style="{height: divHeight.height1 * 0.43 - 70 + 'px', 'overflow-y': 'auto'}">
-          <div class="block-item-item color-sub-title">
-            <div v-if="noticeList.length == 0" class="text-center">
-                <span class="color-muted">{{$t("暂无数据")}}</span>
+          <div v-if="noticeList.length == 0" class="text-center">
+            <div class="margin-top-30">
+              <img src="~static/img/empty.png" style="width: 100px;height: 60px">
             </div>
-            <el-row v-if="noticeList.length > 0" v-for="(item, index) in noticeList" :key="index">
+            <div class="margin-top-10">
+              <span class="color-muted">{{$t("暂无数据")}}</span>
+            </div>
+          </div>
+          <div class="block-item-item color-sub-title" v-if="noticeList.length > 0" v-for="(item, index) in noticeList" :key="index">
+            <el-row>
               <el-col :span="16">
                 <div class="moon-content-text-ellipsis-class">
                   <span>

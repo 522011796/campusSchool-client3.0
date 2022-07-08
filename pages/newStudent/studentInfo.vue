@@ -437,7 +437,7 @@
               matherName: res.data.data.mather_name,
               matherPhone: res.data.data.mather_phone,
               address: res.data.data.native_place,
-              headImg: res.data.data.photo_simple,
+              headImg: res.data.data.photo,
               graduation: res.data.data.graduation_type,
               graduationLabel: res.data.data.graduation_type,
               politics: res.data.data.political_type,

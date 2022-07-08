@@ -23,9 +23,17 @@
               </el-col>
             </el-row>
           </div>
-          <div class="margin-top-10 padding-lr-10 font-size-12 color-white">
-            <div class="block-item-item">
-              <el-row v-for="(item, index) in noticeDataList" :key="index">
+          <div class="margin-top-10 padding-lr-10 font-size-12 color-white" :style="{height: divHeight.height1 * 0.4 - 10 + 'px','overflowY': 'auto'}">
+            <div v-if="noticeDataList.length == 0" class="text-center">
+              <div class="margin-top-30">
+                <img src="~static/img/empty.png" style="width: 100px;height: 60px">
+              </div>
+              <div class="margin-top-10">
+                <span class="color-muted margin-top-10">{{$t("暂无数据")}}</span>
+              </div>
+            </div>
+            <div v-else class="block-item-item" v-for="(item, index) in noticeDataList" :key="index">
+              <el-row>
                 <el-col :span="16">
                   <div class="moon-content-text-ellipsis-class">
                   <span>block-item-title
@@ -56,7 +64,15 @@
             </el-row>
           </div>
           <div class="padding-lr-10 padding-tb-10 font-size-12 color-white" :style="{height: divHeight.height1 * 0.4 - 60 + 'px','overflowY': 'auto'}">
-            <el-row :gutter="16">
+            <div v-if="recommends.length == 0" class="text-center">
+              <div class="margin-top-30">
+                <img src="~static/img/empty.png" style="width: 100px;height: 60px">
+              </div>
+              <div class="margin-top-10">
+                <span class="color-muted margin-top-10">{{$t("暂无数据")}}</span>
+              </div>
+            </div>
+            <el-row v-else :gutter="16">
               <el-col :span="8" v-for="(item, index) in recommends" :key="index" class="margin-bottom-20" @click.native="serverClick($event, item)">
                 <el-card shadow="always" :body-style="{padding: '12px',background: '#EBEEF5'}">
                   <div class="moon-content-text-ellipsis-class">
@@ -145,7 +161,15 @@
               </el-row>
             </div>
             <div class="padding-lr-10 padding-tb-10" :style="{height: divHeight.height1 - 80 + 'px', 'overflow-y': 'auto'}">
-              <el-row :gutter="16">
+              <div v-if="serverDataList.length == 0" class="text-center">
+                <div style="margin-top: 100px">
+                  <img src="~static/img/empty.png" style="width: 100px;height: 60px">
+                </div>
+                <div class="margin-top-10">
+                  <span class="color-muted margin-top-10">{{$t("暂无数据")}}</span>
+                </div>
+              </div>
+              <el-row v-else :gutter="16">
                 <el-col :span="6" v-for="(item, index) in serverDataList" :key="index" @click.native="serverClick($event, item)" class="margin-bottom-20">
                   <el-card shadow="always" :body-style="{padding: '12px',background: '#EBEEF5'}">
                     <div class="moon-content-text-ellipsis-class">
