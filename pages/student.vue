@@ -709,7 +709,7 @@
       </div>
     </dialog-normal>
 
-    <drawer-layout-right tabindex="0" @changeDrawer="closeDrawDialog" :visible="drawerRoom" size="550px" :title="$t('床位选择')" @right-close="cancelDrawDialog">
+    <drawer-layout-right tabindex="0" @changeDrawer="closeDrawDialog" :visible="drawerRoom" size="550px" :title="dormSelTitle" @right-close="cancelDrawDialog">
       <div slot="content">
         <div>
           <el-carousel height="240px">
@@ -834,10 +834,14 @@
                 </el-col>
               </el-row>
               <el-row class="margin-top-5">
-                <el-col :span="24">
+                <template v-if="dormSelType == 0">
+                  <span>{{$t("学号/录取号")}}</span>
+                  <span class="color-success">{{ item.student_id }} / {{ item.enroll_no }}</span>
+                </template>
+                <template v-if="dormSelType == 1">
                   <span>{{$t("学号")}}</span>
                   <span class="color-success">{{ item.student_id }}</span>
-                </el-col>
+                </template>
               </el-row>
               <el-row class="margin-top-5">
                 <el-col v-if="dormSelType == 0" :span="24">
@@ -993,6 +997,7 @@
         drCode: '',
         timer: null,
         dormSelType: '',
+        dormSelTitle: this.$t("床位选择"),
         filterStatus: [{
           label: this.$t("是"),
           value: true,
@@ -1379,6 +1384,7 @@
           let params = {
             id: item.id
           };
+          this.dormSelTitle = this.$t("床位选择");
           this.$axios.get(common.server_enroll_app_dorm_info, {params: params, loading: false}).then((res) => {
             if (res.data.data){
               let photos = res.data.data.room_photos ? res.data.data.room_photos.split("|") : [];
@@ -1391,6 +1397,7 @@
             }
           });
         }else if (this.dormSelType == 1){
+          this.dormSelTitle = this.$t("套餐选择");
           let photos = item.pacLogo ? item.pacLogo.split(",") : [];
           this.formDorm.imgs = photos
           this.formDorm.roomPrice = item.pacPrice;
@@ -1420,18 +1427,19 @@
           this.initStudentInfo();
           this.dialogPay = true;
         }else if (item.link_sub_type == 2){
-          this.dormSelType = item.ruleTypeInfo.rule_type;
-          this.ruleId = item.ruleTypeInfo.rule_id;
-          let dormPackageTreeList = [];
-          for (let i = 0; i < item.ruleTypeInfo.pacRegions.length; i++){
-            dormPackageTreeList.push({
-              label: item.ruleTypeInfo.pacRegions[i].pac_region,
-              value: item.ruleTypeInfo.pacRegions[i].pac_region,
-              text: item.ruleTypeInfo.pacRegions[i].pac_region
-            });
+          if (this.dormSelType == 1){
+            this.dormSelType = item.ruleTypeInfo.rule_type;
+            this.ruleId = item.ruleTypeInfo.rule_id;
+            let dormPackageTreeList = [];
+            for (let i = 0; i < item.ruleTypeInfo.pacRegions.length; i++){
+              dormPackageTreeList.push({
+                label: item.ruleTypeInfo.pacRegions[i].pac_region,
+                value: item.ruleTypeInfo.pacRegions[i].pac_region,
+                text: item.ruleTypeInfo.pacRegions[i].pac_region
+              });
+            }
+            this.dormPackageTreeList = dormPackageTreeList;
           }
-          this.dormPackageTreeList = dormPackageTreeList;
-          console.log(this.dormSelType);
           this.initDormTree();
           this.initDormInfo();
           this.dialogDorm = true;
