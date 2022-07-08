@@ -156,18 +156,25 @@
             </div>
             <el-row v-else :gutter="16">
               <el-col :span="6" v-for="(item, index) in serverDataList" :key="index" @click.native="serverClick($event, item)" class="margin-bottom-20">
-                <el-card shadow="always" :body-style="{padding: '12px',background: '#EBEEF5'}" style="position: relative">
+                <el-card shadow="always" :body-style="{padding: '18px',background: '#EBEEF5'}" style="position: relative">
+                  <div v-if="item.link_type == 0" class="bg-danger" style="position: absolute; right: 0px; bottom: 0px;border-bottom-right-radius: 5px;border-top-left-radius: 5px;padding:1px 10px;color:#ffffff;">
+                    <span class="font-size-12">{{$t("线下")}}</span>
+                  </div>
+                  <div v-if="item.link_type == 1" class="bg-warning" style="position: absolute; right: 0px; bottom: 0px;border-bottom-right-radius: 5px;border-top-left-radius: 5px;padding:1px 10px;color:#ffffff;">
+                    <span class="font-size-12">{{$t("线上")}}</span>
+                  </div>
                   <div class="moon-content-text-ellipsis-class">
                     <span class="server-tag-block" :class="item.status ? 'bg-success' : 'bg-muted'" style="padding-top: 15px">
                       <i v-if="item.status" class="fa fa-check-circle font-size-12 icon"></i>
-                      {{index+1}}
+                      <i v-if="!item.status" class="fa fa-times-circle font-size-12 icon"></i>
+                      <span class="text">{{index+1}}</span>
                     </span>
                     <el-image class="block-icon-class margin-left-10" :src="item.link_logo">
                       <div slot="error" class="block-icon-class">
                         <i class="el-icon-picture-outline font-size-15"></i>
                       </div>
                     </el-image>
-                    <span>
+                    <span style="position: relative; top: -6px">
                       {{ item.link_name }}
                     </span>
                   </div>
@@ -1990,8 +1997,14 @@
 }
 .server-tag-block .icon{
   position: absolute;
-  top: 2px;
+  top: 17px;
   left: 3px;
+  font-weight: normal;
+}
+.server-tag-block .text{
+  position: relative;
+  top: 18px;
+  left: 0px;
   font-weight: normal;
 }
 .info-block-left{
@@ -2056,8 +2069,8 @@
   color: #FFFFFF;
 }
 .block-icon-class{
-  height: 15px;
-  width: 15px;
+  height: 30px;
+  width: 30px;
   position: relative;
   top: 3px
 }
