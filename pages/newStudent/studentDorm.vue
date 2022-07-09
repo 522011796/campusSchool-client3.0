@@ -186,7 +186,7 @@
                     <span class="tag-text-class font-bold">{{$t("价格")}}</span>
                   </el-col>
                   <el-col :span="12" class="text-right">
-                    <span class="color-success font-bold">{{formDorm.roomPrice}}</span>
+                    <span class="color-success font-bold">{{formDorm.roomPrice}}/年</span>
                   </el-col>
                 </el-row>
               </div>
