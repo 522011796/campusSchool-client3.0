@@ -604,6 +604,7 @@ export const common = {
   enroll_student_barcode: '/proxy/school/enroll-student/barcode', //条形码
   enroll_student_qrcode: '/proxy/school/enroll-student/qrcode', //二维码
   enroll_checkin_student_detail: '/proxy/school/enroll/checkin/student-detail', //报道数据学生详细
+  enroll_checkin_student_print: '/proxy/school/enroll-app/student/checkin/print', //报道数据打印
 
   enroll_rule_package_list: '/proxy/school/link-setting/rule-package/list', //宿舍套餐列表
   enroll_rule_package_order_list: '/proxy/school/enroll/room-package/order/page', //宿舍套餐订单列表

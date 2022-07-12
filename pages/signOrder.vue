@@ -125,7 +125,18 @@
       </el-table>
     </div>
     <div class="margin-top-20">
-      <el-image style="width: 80px; height: 80px" :src="g_QrCode"></el-image>
+      <el-row>
+        <el-col :span="12">
+          <el-image style="width: 80px; height: 80px" :src="g_QrCode"></el-image>
+        </el-col>
+        <el-col :span="12">
+          <div class="text-right">
+            <el-button type="default" size="small" @click="okOrder" class="margin-top-20">
+              {{$t("已完成打印")}}
+            </el-button>
+          </div>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
@@ -133,6 +144,7 @@
 <script>
   import {common} from "../utils/api/url";
   import mixins from "~/utils/mixins";
+  import {MessageError} from "~/utils/utils";
 
   export default {
     layout: 'defaultFullScreen',
@@ -180,6 +192,19 @@
         this.initPay(item);
         this.getUserQrcode(this.loginUserId);
         this.getUserBarcode(this.loginUserId);
+      },
+      okOrder(){
+        let params = {
+          userId: this.loginUserId
+        };
+        params = this.$qs.stringify(params);
+        this.$axios.post(common.enroll_checkin_student_print, params).then(res => {
+          if (res.data.data){
+            MessageSuccess(res.data.desc);
+          }else {
+            MessageError(res.data.desc);
+          }
+        });
       }
     }
   }

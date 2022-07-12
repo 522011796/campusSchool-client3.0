@@ -367,6 +367,7 @@
         this.currentEnrollTime = d + "天" + _h + "小时" + mm + "分";
       },
       serverBlock(event, item){
+        console.log(item);
         if (item == 'all'){
           this.$router.push({
             path: '/newStudent/studentAllSever',

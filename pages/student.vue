@@ -1432,7 +1432,7 @@
       serverClick($event, item){
         this.detailData = item;
         if(item.link_sub_type == 5){
-          window.open('/signOrder', '_blank');
+          window.open('/signOrder?checkId=' + item.id, '_blank');
         }else if (item.link_sub_type == 4){
           this.studentDetailInfo();
           this.dialogInfo = true;

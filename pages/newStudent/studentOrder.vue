@@ -155,8 +155,19 @@
         </div>
       </div>
 
-      <div class="margin-top-10">
-        <el-image style="width: 80px; height: 80px" :src="g_QrCode"></el-image>
+      <div class="margin-top-10 padding-lr-10">
+        <el-row>
+          <el-col :span="12">
+            <el-image style="width: 80px; height: 80px" :src="g_QrCode"></el-image>
+          </el-col>
+          <el-col :span="12">
+            <div class="text-right">
+              <el-button type="default" size="small" @click="okOrder" class="margin-top-30">
+                {{$t("已完成打印")}}
+              </el-button>
+            </div>
+          </el-col>
+        </el-row>
       </div>
     </div>
   </div>
@@ -259,6 +270,19 @@
             userType: this.loginUserAppType,
             navH: this.navHeight,
             appType: this.globalAppShow
+          }
+        });
+      },
+      okOrder(){
+        let params = {
+          userId: this.loginUserId
+        };
+        params = this.$qs.stringify(params);
+        this.$axios.post(common.enroll_checkin_student_print, params).then(res => {
+          if (res.data.data){
+            MessageSuccess(res.data.desc);
+          }else {
+            MessageError(res.data.desc);
           }
         });
       }
