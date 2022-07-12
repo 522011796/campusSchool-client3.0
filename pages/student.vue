@@ -54,7 +54,8 @@
                           <span class="color-sub-title font-bold">{{$t("学号")}}</span>
                           <span class="color-muted moon-content-text-ellipsis-class text-display-line">
                             <el-tooltip effect="dark" :content="stuNo" placement="top-start">
-                              <span>{{ stuNo }}</span>
+                              <span v-if="stuNo">{{ stuNo }}</span>
+                              <span v-else>&nbsp;</span>
                             </el-tooltip>
                           </span>
                         </el-col>
@@ -62,7 +63,8 @@
                           <span class="color-sub-title font-bold">{{$t("班级")}}</span>
                           <span class="color-muted moon-content-text-ellipsis-class text-display-line">
                             <el-tooltip class="item" effect="dark" :content="className" placement="top-start">
-                              <span>{{ className }}</span>
+                              <span v-if="className">{{ className }}</span>
+                              <span v-else>&nbsp;</span>
                             </el-tooltip>
                           </span>
                         </el-col>
@@ -875,8 +877,8 @@
               </el-row>
               <el-row class="margin-top-5">
                 <el-col :span="24" class="text-right">
-                  <el-button size="mini" type="success"  v-if="dormSelType == 0 && (!detailData.status || detailData.check_repeat == true) && item.status == 1" @click="setBillStatus($event, item)">{{$t("立即撤销")}}</el-button>
-                  <el-button size="mini" type="success"  v-if="dormSelType == 1 && (!detailData.status || detailData.check_repeat == true) && item.order_status == 1" @click="setBillStatus($event, item)">{{$t("立即撤销")}}</el-button>
+                  <el-button size="mini" type="success"  v-if="dormSelType == 0 && (!detailData.status || detailData.check_cancel == true) && item.status == 1" @click="setBillStatus($event, item)">{{$t("立即撤销")}}</el-button>
+                  <el-button size="mini" type="success"  v-if="dormSelType == 1 && (!detailData.status || detailData.check_cancel == true) && item.order_status == 1" @click="setBillStatus($event, item)">{{$t("立即撤销")}}</el-button>
                 </el-col>
               </el-row>
             </div>
