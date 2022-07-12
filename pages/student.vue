@@ -1389,7 +1389,11 @@
           this.commSearchBuild = "";
           this.commSearchFloor = "";
           this.commSearchRoom = "";
-          this.commSearchBuild = item.id;
+          if (item.storey){
+            this.commSearchBuild = item.id;
+          }else {
+            this.commSearchBuild = item.buildingId;
+          }
           this.commSearchFloor = item.floor;
         }else if(this.dormSelType == 1){
           this.commSearchPackage = item.value;
@@ -1447,8 +1451,8 @@
           this.initStudentInfo();
           this.dialogPay = true;
         }else if (item.link_sub_type == 2){
+          this.dormSelType = item.ruleTypeInfo.rule_type;
           if (this.dormSelType == 1){
-            this.dormSelType = item.ruleTypeInfo.rule_type;
             this.ruleId = item.ruleTypeInfo.rule_id;
             let dormPackageTreeList = [];
             for (let i = 0; i < item.ruleTypeInfo.pacRegions.length; i++){
