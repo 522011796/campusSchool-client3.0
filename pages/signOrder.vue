@@ -36,7 +36,17 @@
         </tr>
         <tr>
           <td class="font-size-12 font-bold">{{$t("宿舍信息")}}</td>
-          <td colspan="6" v-if="detailData.build_name" class="color-muted font-size-12">{{detailData.build_name}}{{$t("楼")}}{{detailData.floor_num}}{{$t("层")}}{{detailData.dormitory_no}}</td>
+          <td colspan="6" class="color-muted font-size-12">
+            <span v-if="detailData.build_name">
+              {{detailData.build_name}}{{detailData.floor_num}}{{$t("层")}}{{detailData.dormitory_no}}
+            </span>
+            <span v-if="detailData.pac_name && !detailData.build_name">
+              {{detailData.pac_name}}
+              <label class="font-size-12 color-muted">
+                (¥{{detailData.pac_price}} -- {{detailData.pac_region}})
+              </label>
+            </span>
+          </td>
         </tr>
       </table>
     </div>

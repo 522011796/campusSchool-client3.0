@@ -331,7 +331,7 @@
             this.$axios.post(common.set_active_account, params, {loading: false}).then(res => {
               if (res.data.code == 200){
                 this.modalVisible = false;
-                this.userType = 2;
+                this.userType = 1;
                 this.userSubType = 1;
                 this.form.username = "";
                 this.form.password = "";
