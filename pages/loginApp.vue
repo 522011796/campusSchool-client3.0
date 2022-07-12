@@ -196,7 +196,7 @@
     data(){
       return {
         userType: '1',
-        userSubType: '1',
+        userSubType: '2',
         userAccountType : '0',
         dialogLoading: false,
         modalVisible: false,
