@@ -488,7 +488,11 @@
           this.commSearchBuild = "";
           this.commSearchFloor = "";
           this.commSearchRoom = "";
-          this.commSearchBuild = item.id;
+          if (item.storey){
+            this.commSearchBuild = item.id;
+          }else {
+            this.commSearchBuild = item.buildingId;
+          }
           this.commSearchFloor = item.floor;
           this.initDormInfo();
         }else if(this.dormSelType == 1){
