@@ -1651,6 +1651,7 @@
         this.$axios.post(url, params).then(res => {
           if (res.data.code == 200){
             this.initDormInfo();
+            this.initStudentEnroll();
             this.drawerRoom = false;
             MessageSuccess(res.data.desc);
             this.dialogInfo = false;
