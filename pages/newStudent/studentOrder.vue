@@ -59,7 +59,15 @@
               <tr>
                 <td style="width: 15%">{{$t("宿舍")}}</td>
                 <td colspan="3" class="text-left" style="width: 65%">
-                  <span v-if="detailData.build_name">{{detailData.build_name}}{{$t("楼")}}{{detailData.floor_num}}{{$t("层")}}{{detailData.dormitory_no}}</span>
+                  <span v-if="detailData.build_name">
+                    {{detailData.build_name}}{{detailData.floor_num}}{{$t("层")}}{{detailData.dormitory_no}}
+                  </span>
+                  <span v-if="detailData.pac_name && !detailData.build_name">
+                    {{detailData.pac_name}}
+                    <label class="font-size-12 color-muted">
+                      (¥{{detailData.pac_price}} -- {{detailData.pac_region}})
+                    </label>
+                  </span>
                 </td>
               </tr>
             </tbody>

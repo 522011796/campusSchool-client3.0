@@ -22,10 +22,15 @@
       <div class="margin-top-20 padding-lr-10">
         <div>
           <van-row>
-            <van-col span="24">
+            <van-col span="12">
               <div class="text-left">
                 <span class="app-title-border-tag"></span>
                 <span class="font-bold" style="position: relative;top: -8px">{{$t("基本信息")}}</span>
+              </div>
+            </van-col>
+            <van-col span="12">
+              <div class="text-right">
+                <van-button size="small" type="primary" @click="okPayDialog($event)" style="position: relative; top: -5px;">{{$t("已完成缴费")}}</van-button>
               </div>
             </van-col>
           </van-row>
@@ -272,6 +277,18 @@
         this.drCode = '';
         this.getPayInfo();
         this.dialogPayDrCode = true;
+      },
+      okPayDialog(event){
+        let params = {};
+        params = this.$qs.stringify(params);
+        this.$axios.post(common.enroll_pay_item_pay, params, {loading: false}).then(res => {
+          if (res.data.code == 200){
+            this.getPayInfo();
+            MessageSuccess(res.data.desc);
+          }else {
+            MessageError(res.data.desc);
+          }
+        });
       },
       returnIndex(){
         let url = this.$route.query.subPage ? this.$route.query.subPage : '/newStudent/studentIndex'
