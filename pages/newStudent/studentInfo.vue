@@ -193,6 +193,13 @@
                        @click="showGraduationPicker = true"
                        :rules="[{ required: true, message: '请选择信息' }]">
             </van-field>
+            <van-field v-model="form.graduationSchool"
+                       :name="$t('毕业学校')"
+                       :label="$t('毕业学校')"
+                       :placeholder="$t('请输入信息')"
+                       autocomplete="off"
+                       :rules="[{ required: true, message: '请输入信息' }]">
+            </van-field>
             <van-field v-model="form.politicsLabel"
                        :name="$t('政治面貌')"
                        :label="$t('政治面貌')"
@@ -322,7 +329,7 @@
           trigger: 'onBlur'
         }],
         emailRules: [{
-          required: true,
+          required: false,
           message: '请填写正确的邮箱',
           trigger: 'onBlur'
         }, {
@@ -356,6 +363,7 @@
           retireLabel: '',
           hard: '',
           hardLabel: '',
+          graduationSchool: ''
         }
       }
     },
@@ -419,11 +427,10 @@
         this.$axios.get(common.enroll_student_detail, {params: params}).then(res => {
           if (res.data.data) {
             //this.detailData = res.data.data;
-            console.log(res.data.data);
             let retireLabel = '';
-            if (res.data.data.soldier === 1){
+            if (res.data.data.soldier == true){
               retireLabel = this.$t("是");
-            }else if (res.data.data.soldier === 0){
+            }else if (res.data.data.soldier == false){
               retireLabel = this.$t("否");
             }
             this.form = {
@@ -446,6 +453,7 @@
               retireLabel: retireLabel,
               hard: res.data.data.difficulty_type,
               hardLabel: res.data.data.difficulty_type,
+              graduationSchool: res.data.data.high_school ? res.data.data.high_school : '',
             };
           }
         });
@@ -472,7 +480,8 @@
             graduationType: this.form.graduation,
             politicalType: this.form.politics,
             soldier: this.form.retire,
-            difficultyType: this.form.hard
+            difficultyType: this.form.hard,
+            highSchool: this.form.graduationSchool,
           };
           params = this.$qs.stringify(params);
           this.$axios.post(url, params).then(res => {

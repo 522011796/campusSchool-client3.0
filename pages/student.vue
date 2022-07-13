@@ -308,8 +308,8 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                  <el-form-item :label="$t('政治面貌')" prop="politics">
-                    <my-select size="small" :disabled="form.id != '' && oprType == 'detail'" :sel-value="form.politics" :options="filterPoliticsType" width-style="150" @change="handleSelectChange($event, 2)"></my-select>
+                  <el-form-item :label="$t('毕业学校')" prop="graduationSchool">
+                    <el-input :disabled="form.id != '' && oprType == 'detail'" v-model="form.graduationSchool" size="small" class="width-150"></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -322,6 +322,13 @@
                 <el-col :span="12">
                   <el-form-item :label="$t('困难类型')" prop="hard">
                     <my-select size="small" :disabled="form.id != '' && oprType == 'detail'" :sel-value="form.hard" :options="filterHardType" width-style="150" @change="handleSelectChange($event, 4)"></my-select>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item :label="$t('政治面貌')" prop="politics">
+                    <my-select size="small" :disabled="form.id != '' && oprType == 'detail'" :sel-value="form.politics" :options="filterPoliticsType" width-style="150" @change="handleSelectChange($event, 2)"></my-select>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -717,7 +724,14 @@
                       </div>
                       <div v-if="dormSelType == 1" class="margin-top-5 font-size-12 moon-content-text-ellipsis-class">
                         <el-tooltip class="item" effect="dark" :content="item.pacName" placement="bottom">
-                          <span>{{ item.pacName }}</span>
+                          <div class="text-center">
+                            <div>
+                              <span>{{ item.pacName }}</span>
+                            </div>
+                            <div class="color-success">
+                              (<span class="font-size-12 color-danger">{{ item.pacNum-item.pacNumChose }}</span>/<span class="font-size-12 color-success">{{ item.pacNum }}</span>)
+                            </div>
+                          </div>
                         </el-tooltip>
                       </div>
                     </el-col>
@@ -1056,6 +1070,7 @@
           politics: '',
           retire: '',
           hard: '',
+          graduationSchool: ''
         },
         formStation: {
           id: '',
@@ -1371,6 +1386,7 @@
               politics: res.data.data.political_type ? res.data.data.political_type : '',
               retire: res.data.data.soldier ? res.data.data.soldier : '',
               hard: res.data.data.difficulty_type ? res.data.data.difficulty_type : '',
+              graduationSchool: res.data.data.high_school ? res.data.data.high_school : '',
             };
           }
         });
@@ -1550,6 +1566,7 @@
           politics: '',
           retire: '',
           hard: '',
+          graduationSchool: ''
         };
         this.formStation = {
           id: '',
@@ -1685,7 +1702,8 @@
               graduationType: this.form.graduation,
               politicalType: this.form.politics,
               soldier: this.form.retire,
-              difficultyType: this.form.hard
+              difficultyType: this.form.hard,
+              highSchool: this.form.graduationSchool,
             };
             params = this.$qs.stringify(params);
             this.$axios.post(url, params).then(res => {

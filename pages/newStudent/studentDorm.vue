@@ -87,7 +87,14 @@
                 </div>
                 <div v-if="dormSelType == 1" class="margin-top-5 font-size-12 moon-content-text-ellipsis-class">
                   <el-tooltip class="item" effect="dark" :content="item.pacName" placement="bottom">
-                    <span>{{ item.pacName }}</span>
+                    <div class="text-center">
+                      <div>
+                        <span>{{ item.pacName }}</span>
+                      </div>
+                      <div class="color-success">
+                        (<span class="font-size-12 color-danger">{{ item.pacNum-item.pacNumChose }}</span>/<span class="font-size-12 color-success">{{ item.pacNum }}</span>)
+                      </div>
+                    </div>
                   </el-tooltip>
                 </div>
               </el-col>

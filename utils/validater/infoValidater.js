@@ -31,7 +31,7 @@ export default {
           { validator: rules.FormValidate.Form().validatePhone, trigger: 'blur' }
         ],
         email: [
-          { required: true, message: this.$t("请输入信息"), trigger: 'blur' },
+          { required: false, message: this.$t("请输入信息"), trigger: 'blur' },
           { validator: rules.FormValidate.Form().validateEmail, trigger: 'blur' }
         ],
         graduation: [
@@ -45,6 +45,9 @@ export default {
         ],
         hard: [
           { required: true, message: this.$t("请选择信息"), trigger: 'change' }
+        ],
+        graduationSchool: [
+          { required: true, message: this.$t("请输入信息"), trigger: 'change' }
         ]
       }
     }
