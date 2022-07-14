@@ -345,7 +345,10 @@ const filterAppManageType = [
 
 const filterGraduationType = [
   { text: "初中毕业", value: '初中' ,label: '初中毕业'},
-  { text: '高中毕业', value: '高中' ,label: '高中毕业'}
+  { text: '高中毕业', value: '高中' ,label: '高中毕业'},
+  { text: '职高毕业', value: '职高' ,label: '职高毕业'},
+  { text: '技校毕业', value: '技校' ,label: '技校毕业'},
+  { text: '中专毕业', value: '中专' ,label: '中专毕业'}
 ];
 
 const filterPoliticsType = [

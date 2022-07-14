@@ -579,7 +579,7 @@ export const common = {
   enroll_link_arrive_trans_type: '/proxy/school/link-setting/arrive/trans-type/list', //接站交通工具
   enroll_link_arrive_station_list: '/proxy/school/enroll-app/arrive/station', //接站站点
   server_enroll_app_arrive_add: '/proxy/school/enroll-app/arrive/add',//环节添加学生接站
-  server_enroll_app_arrive_checkin: '/proxy/school/enroll-app/student/checkin',//环节添加学生报道
+  server_enroll_app_arrive_checkin: '/proxy/school/enroll-app/student/checkin',//环节添加学生报到
   server_enroll_app_arrive_get: '/proxy/school/enroll-app/arrive/get',//环节到站信息
   server_enroll_app_form_data_get: '/proxy/school/enroll-app/form/data/get',//环节表单信息
   server_enroll_app_student_checkin_get: '/proxy/school/enroll-app/student/checkin/get',//环节表单信息
@@ -595,16 +595,16 @@ export const common = {
   server_enroll_app_student_form_get: '/proxy/school/enroll-app/form/data/get',//迎新表单查询
   server_enroll_app_student_link_info: '/proxy/school/process/link/info',//迎新表单详细
   enroll_pay_item_pay: '/proxy/school/enroll-app/item/pay', //完成支付
-  enroll_current_time: '/proxy/school/enroll/current-time', //报道信息
+  enroll_current_time: '/proxy/school/enroll/current-time', //报到信息
 
   enroll_student_detail: '/proxy/school/enroll/checkin/student-detail', //学生详细信息
 
   enroll_pay_link_get: '/proxy/school/enroll/payment/pay-url/get', //支付二维码查询
-  enroll_checkin_pay_list_by_user: '/proxy/school/enroll/checkin/payment-list-by-user', //报道数据已报道
+  enroll_checkin_pay_list_by_user: '/proxy/school/enroll/checkin/payment-list-by-user', //报到数据已报到
   enroll_student_barcode: '/proxy/school/enroll-student/barcode', //条形码
   enroll_student_qrcode: '/proxy/school/enroll-student/qrcode', //二维码
-  enroll_checkin_student_detail: '/proxy/school/enroll/checkin/student-detail', //报道数据学生详细
-  enroll_checkin_student_print: '/proxy/school/enroll-app/student/checkin/print', //报道数据打印
+  enroll_checkin_student_detail: '/proxy/school/enroll/checkin/student-detail', //报到数据学生详细
+  enroll_checkin_student_print: '/proxy/school/enroll-app/student/checkin/print', //报到数据打印
 
   enroll_rule_package_list: '/proxy/school/link-setting/rule-package/list', //宿舍套餐列表
   enroll_rule_package_order_list: '/proxy/school/enroll/room-package/order/page', //宿舍套餐订单列表

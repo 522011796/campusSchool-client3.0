@@ -11,7 +11,7 @@
       </van-col>
       <van-col span="18">
         <div class="text-center color-white font-size-16 font-bold">
-          <span>{{$t('报道单')}}</span>
+          <span>{{$t('报到单')}}</span>
         </div>
       </van-col>
       <van-col span="3">
@@ -287,7 +287,9 @@
         };
         params = this.$qs.stringify(params);
         this.$axios.post(common.enroll_checkin_student_print, params).then(res => {
-          if (res.data.data){
+          if (res.data.code == 200){
+            let url = this.$route.query.subPage ? this.$route.query.subPage : '/newStudent/studentIndex'
+            this.returnGIndex(url);
             MessageSuccess(res.data.desc);
           }else {
             MessageError(res.data.desc);

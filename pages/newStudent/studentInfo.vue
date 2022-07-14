@@ -144,38 +144,53 @@
               :rules="emailRules"
               autocomplete="off"
             />
-            <van-field
-              v-model="form.fatherName"
-              :name="$t('父亲姓名')"
-              :label="$t('父亲姓名')"
-              :placeholder="$t('请输入信息')"
-              autocomplete="off"
-              :rules="[{ required: true, message: $t('请输入信息') }]"
-            />
-            <van-field
-              v-model="form.fatherPhone"
-              :name="$t('父亲电话')"
-              :label="$t('父亲电话')"
-              :placeholder="$t('请输入信息')"
-              :rules="telRules"
-              autocomplete="off"
-            />
-            <van-field
-              v-model="form.matherName"
-              :name="$t('母亲姓名')"
-              :label="$t('母亲姓名')"
-              :placeholder="$t('请输入信息')"
-              autocomplete="off"
-              :rules="[{ required: true, message: $t('请输入信息') }]"
-            />
-            <van-field
-              v-model="form.matherPhone"
-              :name="$t('母亲电话')"
-              :label="$t('母亲电话')"
-              :placeholder="$t('请输入信息')"
-              :rules="telRules"
-              autocomplete="off"
-            />
+            <van-field name="checkboxGroup"
+                       label="联系方式"
+                       :rules="[{ required: true, message: '请选择信息' }]">
+              <template #input>
+                <van-checkbox-group v-model="connType" direction="horizontal" @change="handleChangeConnType">
+                  <van-checkbox name="1">{{ $t("父亲") }}</van-checkbox>
+                  <van-checkbox name="2">{{ $t("母亲") }}</van-checkbox>
+                </van-checkbox-group>
+              </template>
+            </van-field>
+            <template v-if="connType.indexOf('1') != -1">
+              <van-field
+                v-model="form.fatherName"
+                :name="$t('父亲姓名')"
+                :label="$t('父亲姓名')"
+                :placeholder="$t('请输入信息')"
+                autocomplete="off"
+                :rules="[{ required: true, message: $t('请输入信息') }]"
+              />
+              <van-field
+                v-model="form.fatherPhone"
+                :name="$t('父亲电话')"
+                :label="$t('父亲电话')"
+                :placeholder="$t('请输入信息')"
+                :rules="telRules"
+                autocomplete="off"
+              />
+            </template>
+
+            <template v-if="connType.indexOf('2') != -1">
+              <van-field
+                v-model="form.matherName"
+                :name="$t('母亲姓名')"
+                :label="$t('母亲姓名')"
+                :placeholder="$t('请输入信息')"
+                autocomplete="off"
+                :rules="[{ required: true, message: $t('请输入信息') }]"
+              />
+              <van-field
+                v-model="form.matherPhone"
+                :name="$t('母亲电话')"
+                :label="$t('母亲电话')"
+                :placeholder="$t('请输入信息')"
+                :rules="telRules"
+                autocomplete="off"
+              />
+            </template>
             <van-field
               v-model="form.address"
               :name="$t('家庭地址')"
@@ -234,37 +249,41 @@
 
     <van-popup v-model="showGraduationPicker" position="bottom">
       <van-picker
+        show-toolbar
         title="毕业类型"
         :columns="filterGraduationType"
         @cancel="onShowPickerCancel"
-        @change="onGraduationChange"
+        @confirm="onGraduationChange"
       />
     </van-popup>
 
     <van-popup v-model="showPoliticsPicker" position="bottom">
       <van-picker
+        show-toolbar
         title="政治面貌"
         :columns="filterPoliticsType"
         @cancel="onShowPickerCancel"
-        @change="onPoliticsChange"
+        @confirm="onPoliticsChange"
       />
     </van-popup>
 
     <van-popup v-model="showRetirePicker" position="bottom">
       <van-picker
+        show-toolbar
         title="退役士兵"
         :columns="filterRetireType"
         @cancel="onShowPickerCancel"
-        @change="onRetireChange"
+        @confirm="onRetireChange"
       />
     </van-popup>
 
     <van-popup v-model="showHardPicker" position="bottom">
       <van-picker
+        show-toolbar
         title="困难类型"
         :columns="filterHardType"
         @cancel="onShowPickerCancel"
-        @change="onHardChange"
+        @confirm="onHardChange"
       />
     </van-popup>
   </div>
@@ -343,6 +362,7 @@
           trigger: 'onBlur'
         }],
         detailData: '',
+        connType: [],
         form: {
           id: '',
           phone: '',
@@ -363,7 +383,8 @@
           retireLabel: '',
           hard: '',
           hardLabel: '',
-          graduationSchool: ''
+          graduationSchool: '',
+          connType: []
         }
       }
     },
@@ -454,7 +475,18 @@
               hard: res.data.data.difficulty_type,
               hardLabel: res.data.data.difficulty_type,
               graduationSchool: res.data.data.high_school ? res.data.data.high_school : '',
+              connType: []
             };
+            if (res.data.data.father_name && !res.data.data.mather_name){
+              this.form.connType = ['1'];
+              this.connType = ['1'];
+            }else if (!res.data.data.father_name && res.data.data.mather_name){
+              this.form.connType = ['2'];
+              this.connType = ['2'];
+            }else if (res.data.data.father_name && res.data.data.mather_name){
+              this.form.connType = ['1','2'];
+              this.connType = ['1','2'];
+            }
           }
         });
       },
@@ -487,6 +519,8 @@
           this.$axios.post(url, params).then(res => {
             if (res.data.code == 200){
               Toast(res.data.desc);
+              let url = this.$route.query.subPage ? this.$route.query.subPage : '/newStudent/studentIndex'
+              this.returnGIndex(url);
               this.btnLoading = false;
             }else {
               Toast(res.data.desc);
@@ -501,25 +535,30 @@
         this.showPoliticsPicker = false;
         this.showHardPicker = false;
       },
-      onGraduationChange(picker, value, index){
+      onGraduationChange(value, index){
         this.form.graduationLabel = value.label;
         this.form.graduation = value.value;
         this.showGraduationPicker = false;
       },
-      onPoliticsChange(picker, value, index){
+      onPoliticsChange(value, index){
         this.form.politicsLabel = value.label;
         this.form.politics = value.value;
         this.showPoliticsPicker = false;
       },
-      onRetireChange(picker, value, index){
+      onRetireChange(value, index){
         this.form.retireLabel = value.label;
         this.form.retire = value.value;
         this.showRetirePicker = false;
       },
-      onHardChange(picker, value, index){
+      onHardChange(value, index){
         this.form.hardLabel = value.label;
         this.form.hard = value.value;
         this.showHardPicker = false;
+      },
+      handleChangeConnType(data){
+        console.log(data);
+        this.connType = data;
+        this.$set(this.form, 'connType', data);
       }
     }
   }

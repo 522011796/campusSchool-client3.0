@@ -146,6 +146,8 @@
           this.$axios.post(url, params, {loading: false}).then(res => {
             if (res.data.code == 200){
               this.dialogForm = false;
+              let url = this.$route.query.subPage ? this.$route.query.subPage : '/newStudent/studentIndex'
+              this.returnGIndex(url);
               Toast(res.data.desc);
             }else {
               Toast(res.data.desc);

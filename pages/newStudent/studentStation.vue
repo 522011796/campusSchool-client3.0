@@ -153,19 +153,21 @@
 
     <van-popup v-model="showTranTypePicker" position="bottom">
       <van-picker
+        show-toolbar
         title="交通工具"
         :columns="filtersVehicleType"
         @cancel="onVehicleCancel"
-        @change="onVehicleChange"
+        @confirm="onVehicleChange"
       />
     </van-popup>
 
     <van-popup v-model="showTranStationPicker" position="bottom">
       <van-picker
+        show-toolbar
         title="接站地址"
         :columns="filtersStationType"
         @cancel="onStationCancel"
-        @change="onStationChange"
+        @confirm="onStationChange"
       />
     </van-popup>
   </div>
@@ -306,7 +308,7 @@
       onVehicleCancel(){
         this.showTranTypePicker = false;
       },
-      onVehicleChange(picker, value, index){
+      onVehicleChange(value, index){
         this.form.vehicleLabel = value.label;
         this.form.vehicle = value.value;
         this.showTranTypePicker = false;
@@ -314,7 +316,7 @@
       onStationCancel(){
         this.showTranStationPicker = false;
       },
-      onStationChange(picker, value, index){
+      onStationChange(value, index){
         this.form.addressLabel = value.label;
         this.form.address = value.value;
         this.showTranStationPicker = false;
@@ -408,6 +410,8 @@
           this.$axios.post(url, params).then(res => {
             if (res.data.code == 200){
               Toast(res.data.desc);
+              let url = this.$route.query.subPage ? this.$route.query.subPage : '/newStudent/studentIndex'
+              this.returnGIndex(url);
               this.btnLoading = false;
             }else {
               Toast(res.data.desc);

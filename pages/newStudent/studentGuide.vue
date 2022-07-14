@@ -54,7 +54,7 @@
             <el-form-item :label="$t('核验人员')" prop="phone">
               <label>{{formSign.checkUserName}}</label>
             </el-form-item>
-            <el-form-item :label="$t('报道类型')" prop="phone">
+            <el-form-item :label="$t('报到类型')" prop="phone">
               <label v-if="formSign.checkType == 0">{{$t("人工")}}</label>
               <label v-if="formSign.checkType == 1">{{$t("扫码")}}</label>
               <label v-if="formSign.checkType == 2">{{$t("人脸")}}</label>
@@ -64,7 +64,7 @@
               <label v-if="formSign.onTime">{{$t("是")}}</label>
               <label v-if="!formSign.onTime">{{$t("否")}}</label>
             </el-form-item>
-            <el-form-item :label="$t('报道时间')" prop="phone">
+            <el-form-item :label="$t('报到时间')" prop="phone">
               <label>{{$moment(formSign.checkTime).format("YYYY-MM-DD HH:mm")}}</label>
             </el-form-item>
           </el-form>
@@ -195,6 +195,18 @@
         }else if (item.link_sub_type == 4){
           this.$router.push({
             path: '/newStudent/studentInfo',
+            query: {
+              id: item.id,
+              activeType: this.active,
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow,
+              subPage: '/newStudent/studentGuide'
+            }
+          });
+        }else if (item.link_sub_type == 5){
+          this.$router.push({
+            path: '/newStudent/studentOrder',
             query: {
               id: item.id,
               activeType: this.active,

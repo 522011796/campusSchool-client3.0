@@ -228,6 +228,17 @@ export default {
       this.navHeight = this.$route.query.navH;
       this.globalAppShow = this.$route.query.appType;
     },
+    returnGIndex(url){
+      this.$router.push({
+        path: url,
+        query: {
+          activeType: this.$route.query.activeType,
+          userType: this.loginUserAppType,
+          navH: this.navHeight,
+          appType: this.globalAppShow
+        }
+      });
+    },
     async autoLoginCheckApp(){
       let params = {};
       params = this.$qs.stringify(params);

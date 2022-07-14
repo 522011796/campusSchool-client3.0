@@ -284,6 +284,7 @@
         this.$axios.post(common.enroll_pay_item_pay, params, {loading: false}).then(res => {
           if (res.data.code == 200){
             this.getPayInfo();
+            this.returnGIndex();
             MessageSuccess(res.data.desc);
           }else {
             MessageError(res.data.desc);

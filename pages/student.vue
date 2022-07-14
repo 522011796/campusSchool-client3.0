@@ -278,29 +278,43 @@
                 </el-col>
               </el-row>
               <el-row>
-                <el-col :span="12">
-                  <el-form-item :label="$t('父亲姓名')" prop="fatherName">
-                    <el-input v-model="form.fatherName" size="small" class="width-150"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                  <el-form-item :label="$t('父亲电话')" prop="fatherPhone">
-                    <el-input v-model="form.fatherPhone" size="small" class="width-150"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="12">
-                  <el-form-item :label="$t('母亲姓名')" prop="matherName">
-                    <el-input v-model="form.matherName" size="small" class="width-150"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                  <el-form-item :label="$t('母亲电话')" prop="matherPhone">
-                    <el-input v-model="form.matherPhone" size="small" class="width-150"></el-input>
+                <el-col :span="24">
+                  <el-form-item :label="$t('联系方式')" prop="connType">
+                    <el-checkbox-group v-model="connType" @change="handleChangeConnType">
+                      <el-checkbox label="1">{{$t('父亲')}}</el-checkbox>
+                      <el-checkbox label="2">{{$t('母亲')}}</el-checkbox>
+                    </el-checkbox-group>
                   </el-form-item>
                 </el-col>
               </el-row>
+              <template v-if="connType.indexOf('1') != -1">
+                <el-row>
+                  <el-col :span="12">
+                    <el-form-item :label="$t('父亲姓名')" prop="fatherName">
+                      <el-input v-model="form.fatherName" size="small" class="width-150"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item :label="$t('父亲电话')" prop="fatherPhone">
+                      <el-input v-model="form.fatherPhone" size="small" class="width-150"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+              </template>
+              <template v-if="connType.indexOf('2') != -1">
+                <el-row>
+                  <el-col :span="12">
+                    <el-form-item :label="$t('母亲姓名')" prop="matherName">
+                      <el-input v-model="form.matherName" size="small" class="width-150"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item :label="$t('母亲电话')" prop="matherPhone">
+                      <el-input v-model="form.matherPhone" size="small" class="width-150"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+              </template>
               <el-row>
                 <el-col :span="12">
                   <el-form-item :label="$t('毕业类型')" prop="graduation">
@@ -367,7 +381,7 @@
             <el-col :span="18">
               <div class="text-right">
                 <span class="color-warning font-size-12 font-bold">
-                  ({{$t("如果已进行信息填写，无需重复提交，请前往报道！")}})
+                  ({{$t("如果已进行信息填写，无需重复提交，请前往报到！")}})
                 </span>
                 <el-tag size="small" v-if="detailData.status" plain type="success">{{$t('已完成')}}</el-tag>
                 <el-tag size="small" v-if="!detailData.status" plain type="info">{{$t('待完成')}}</el-tag>
@@ -457,14 +471,14 @@
     </dialog-normal>
 
     <!--信息-->
-    <dialog-normal top="10vh" width-style="450px" :visible="dialogSign" :show-footer="false" :title="$t('报道信息')" @close="closeDialog" @right-close="cancelDialog">
+    <dialog-normal top="10vh" width-style="450px" :visible="dialogSign" :show-footer="false" :title="$t('报到信息')" @close="closeDialog" @right-close="cancelDialog">
       <div slot="title">
         <div class="head-block">
           <el-row>
             <el-col :span="6">
               <div>
                 <span class="fa fa-file"></span>
-                <span class="font-bold">{{$t('报道信息')}}</span>
+                <span class="font-bold">{{$t('报到信息')}}</span>
               </div>
             </el-col>
             <el-col :span="18">
@@ -483,7 +497,7 @@
               <el-form-item :label="$t('核验人员')" prop="phone">
                 <label>{{formSign.checkUserName}}</label>
               </el-form-item>
-              <el-form-item :label="$t('报道类型')" prop="phone">
+              <el-form-item :label="$t('报到类型')" prop="phone">
                 <label v-if="formSign.checkType == 0">{{$t("人工")}}</label>
                 <label v-if="formSign.checkType == 1">{{$t("扫码")}}</label>
                 <label v-if="formSign.checkType == 2">{{$t("人脸")}}</label>
@@ -493,7 +507,7 @@
                 <label v-if="formSign.onTime">{{$t("是")}}</label>
                 <label v-if="!formSign.onTime">{{$t("否")}}</label>
               </el-form-item>
-              <el-form-item :label="$t('报道时间')" prop="phone">
+              <el-form-item :label="$t('报到时间')" prop="phone">
                 <label>{{$moment(formSign.checkTime).format("YYYY-MM-DD HH:mm")}}</label>
               </el-form-item>
             </el-form>
@@ -1034,6 +1048,7 @@
         timer: null,
         dormSelType: '',
         dormSelTitle: this.$t("床位选择"),
+        connType: [],
         filterStatus: [{
           label: this.$t("是"),
           value: true,
@@ -1070,7 +1085,8 @@
           politics: '',
           retire: '',
           hard: '',
-          graduationSchool: ''
+          graduationSchool: '',
+          connType: []
         },
         formStation: {
           id: '',
@@ -1369,7 +1385,7 @@
         this.$axios.get(common.enroll_student_detail, {params: params}).then(res => {
           if (res.data.data) {
             //this.detailData = res.data.data;
-            console.log(res.data.data);
+            let connType = [];
             this.form = {
               id: '',
               phone: res.data.data.phone,
@@ -1384,10 +1400,21 @@
               headImg: res.data.data.photo,
               graduation: res.data.data.graduation_type ? res.data.data.graduation_type : '',
               politics: res.data.data.political_type ? res.data.data.political_type : '',
-              retire: res.data.data.soldier ? res.data.data.soldier : '',
+              retire: res.data.data.soldier,
               hard: res.data.data.difficulty_type ? res.data.data.difficulty_type : '',
               graduationSchool: res.data.data.high_school ? res.data.data.high_school : '',
+              connType: []
             };
+            if (res.data.data.father_name && !res.data.data.mather_name){
+              this.form.connType = ['1'];
+              this.connType = ['1'];
+            }else if (!res.data.data.father_name && res.data.data.mather_name){
+              this.form.connType = ['2'];
+              this.connType = ['2'];
+            }else if (res.data.data.father_name && res.data.data.mather_name){
+              this.form.connType = ['1','2'];
+              this.connType = ['1','2'];
+            }
           }
         });
       },
@@ -1542,6 +1569,11 @@
           this.form.hard = event;
         }
       },
+      handleChangeConnType(data){
+        console.log(data);
+        this.connType = data;
+        this.$set(this.form, 'connType', data);
+      },
       uploadFileSuccess(res, file){
         if (res.code == 200){
           this.form.headImg = res.data.url;
@@ -1566,7 +1598,8 @@
           politics: '',
           retire: '',
           hard: '',
-          graduationSchool: ''
+          graduationSchool: '',
+          connType: []
         };
         this.formStation = {
           id: '',
@@ -1592,6 +1625,7 @@
         this.searchRoomStatus = '';
         this.drCode = '';
         this.paidQrcode = '';
+        this.connType = [];
         this.btnLoading = false;
         this.dialogLoading = false;
         this.visibleConfim = false;
