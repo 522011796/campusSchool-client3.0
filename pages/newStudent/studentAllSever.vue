@@ -202,6 +202,9 @@
               userType: this.loginUserAppType,
               navH: this.navHeight,
               appType: this.globalAppShow,
+              dormSelType: item.ruleTypeInfo.rule_type,
+              ruleId: item.ruleTypeInfo.rule_id,
+              pacRegions: JSON.stringify(item.ruleTypeInfo.pacRegions),
               subPage: '/newStudent/studentAllSever'
             }
           });
