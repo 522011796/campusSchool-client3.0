@@ -15,7 +15,7 @@
         </div>
       </van-col>
       <van-col span="4">
-        <van-button size="small" type="warning" plain native-type="button" @click="payManage($event, 1)">{{$t("去支付")}}</van-button>
+        <van-button size="small" type="warning" plain native-type="button" @click="payManage($event, 1)" v-if="billBtnShow == true">{{$t("去支付")}}</van-button>
       </van-col>
     </div>
     <div class="content-block" :style="divHeight10">
@@ -30,7 +30,7 @@
             </van-col>
             <van-col span="12">
               <div class="text-right">
-                <van-button size="small" type="primary" @click="okPayDialog($event)" style="position: relative; top: -5px;">{{$t("已完成缴费")}}</van-button>
+                <van-button size="small" type="primary" @click="okPayDialog($event)" style="position: relative; top: -5px;" v-if="billBtnShow == true">{{$t("已完成缴费")}}</van-button>
               </div>
             </van-col>
           </van-row>
@@ -200,7 +200,8 @@
         billList: [],
         showDetail: false,
         billDetail: '',
-        drCode: ''
+        drCode: '',
+        billBtnShow: false,
       }
     },
     mounted() {
@@ -245,6 +246,7 @@
             this.paidAmount = res.data.data.paidAmount;
             this.itemUserList = res.data.data.itemUserList;
             this.paidQrcode = res.data.data.enrollPayCode;
+            this.billBtnShow = res.data.data.payAllow;
           }
         });
       },
