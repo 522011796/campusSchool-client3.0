@@ -15,7 +15,7 @@
         </div>
       </van-col>
       <van-col span="4">
-        <van-button size="small" type="warning" plain native-type="button" @click="payManage($event, 1)" v-if="billBtnShow == true">{{$t("去支付")}}</van-button>
+        <van-button size="small" type="warning" plain native-type="button" @click="payManage($event, 1)">{{$t("去支付")}}</van-button>
       </van-col>
     </div>
     <div class="content-block" :style="divHeight10">
@@ -30,7 +30,7 @@
             </van-col>
             <van-col span="12">
               <div class="text-right">
-                <van-button size="small" type="primary" @click="okPayDialog($event)" style="position: relative; top: -5px;" v-if="billBtnShow == true">{{$t("已完成缴费")}}</van-button>
+                <van-button size="small" type="primary" @click="okPayDialog($event)" style="position: relative; top: -5px;">{{$t("已完成缴费")}}</van-button>
               </div>
             </van-col>
           </van-row>
@@ -166,6 +166,7 @@
   import mixinsBridge from "~/utils/mixinsBridge";
   import MySex from "~/components/MySex";
   import {MessageError, MessageSuccess, MessageWarning} from "~/utils/utils";
+  import {Toast} from "vant";
   export default {
     name: 'studentInfo',
     components: {MySex},
@@ -276,11 +277,19 @@
         this.showDetail = true;
       },
       payManage(event, data){
+        if(this.billBtnShow == false){
+          Toast(this.$t("未到缴费时间！"));
+          return;
+        }
         this.drCode = '';
         this.getPayInfo();
         this.dialogPayDrCode = true;
       },
       okPayDialog(event){
+        if(this.billBtnShow == false){
+          Toast(this.$t("未到缴费时间！"));
+          return;
+        }
         let params = {};
         params = this.$qs.stringify(params);
         this.$axios.post(common.enroll_pay_item_pay, params, {loading: false}).then(res => {

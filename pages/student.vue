@@ -529,7 +529,7 @@
             </el-col>
             <el-col :span="18">
               <div class="text-right">
-                <el-button size="mini" plain type="success" @click="payManage($event, 1)" v-if="billBtnShow == true">{{$t("去支付")}}</el-button>
+                <el-button size="mini" plain type="success" @click="payManage($event, 1)">{{$t("去支付")}}</el-button>
                 <i class="fa fa-close font-size-14" @click="cancelDialog"></i>
               </div>
             </el-col>
@@ -960,7 +960,7 @@
         <div>{{$t("3、如果已经确认支付，请等待管理员确认，无需重复支付")}}</div>
       </div>
       <div slot="footer">
-        <el-button size="small" type="success" :loading="btnLoading" @click="okPayDialog($event, 1)" v-if="billBtnShow == true">{{$t("已完成支付")}}</el-button>
+        <el-button size="small" type="success" :loading="btnLoading" @click="okPayDialog($event, 1)">{{$t("已完成支付")}}</el-button>
         <el-button size="small" type="danger" :loading="btnLoading" @click="cancelSubDialog($event, 2)">{{$t("未完成支付")}}</el-button>
       </div>
     </dialog-normal>
@@ -1932,11 +1932,19 @@
         }
       },
       payManage(event, data){
+        if(this.billBtnShow == false){
+          MessageWarning(this.$t("未到缴费时间！"));
+          return;
+        }
         this.drCode = '';
         this.getPayInfo();
         this.dialogPayDrCode = true;
       },
       okPayDialog(event, type){
+        if(this.billBtnShow == false){
+          MessageWarning(this.$t("未到缴费时间！"));
+          return;
+        }
         let params = {};
         params = this.$qs.stringify(params);
         this.btnLoading = true;
