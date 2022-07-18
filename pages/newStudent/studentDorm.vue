@@ -121,11 +121,16 @@
         </div>
         <div :style="dormHeight">
           <div>
-            <el-carousel height="200px">
-              <el-carousel-item v-for="(item, index) in formDorm.imgs" :key="index">
+<!--            <el-carousel height="200px">-->
+<!--              <el-carousel-item v-for="(item, index) in formDorm.imgs" :key="index">-->
+<!--                <img :src="item" style="height: 100%;width: 100%">-->
+<!--              </el-carousel-item>-->
+<!--            </el-carousel>-->
+            <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" style="height: 200px">
+              <van-swipe-item v-for="(item, index) in formDorm.imgs" :key="index">
                 <img :src="item" style="height: 100%;width: 100%">
-              </el-carousel-item>
-            </el-carousel>
+              </van-swipe-item>
+            </van-swipe>
           </div>
           <template v-if="dormSelType == 0">
             <div class="padding-lr-10 padding-tb-10">
@@ -193,7 +198,7 @@
                     <span class="tag-text-class font-bold">{{$t("价格")}}</span>
                   </el-col>
                   <el-col :span="12" class="text-right">
-                    <span class="color-success font-bold">{{formDorm.roomPrice}}/年</span>
+                    <span class="color-success font-bold">{{formDorm.roomPrice}}元/年</span>
                   </el-col>
                 </el-row>
               </div>
