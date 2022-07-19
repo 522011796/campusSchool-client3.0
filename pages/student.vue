@@ -1450,7 +1450,6 @@
       },
       selRoomItem(event, item){
         this.formDorm.id = item.id;
-        console.log(item)
         if (this.dormSelType == 0){
           let params = {
             id: item.id
