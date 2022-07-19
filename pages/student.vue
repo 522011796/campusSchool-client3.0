@@ -1450,12 +1450,12 @@
       },
       selRoomItem(event, item){
         this.formDorm.id = item.id;
-
+        console.log(item)
         if (this.dormSelType == 0){
           let params = {
             id: item.id
           };
-          this.dormSelTitle = this.$t("床位选择");
+          this.dormSelTitle = this.$t("床位选择") + "("+item.dormitory_no+")";
           this.$axios.get(common.server_enroll_app_dorm_info, {params: params, loading: false}).then((res) => {
             if (res.data.data){
               let photos = res.data.data.room_photos ? res.data.data.room_photos.split("|") : [];
@@ -1468,7 +1468,7 @@
             }
           });
         }else if (this.dormSelType == 1){
-          this.dormSelTitle = this.$t("套餐选择");
+          this.dormSelTitle = this.$t("套餐选择") + "("+item.pacName+")";
           let photos = item.pacLogo ? item.pacLogo.split(",") : [];
           this.formDorm.imgs = photos
           this.formDorm.roomPrice = item.pacPrice;
