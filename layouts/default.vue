@@ -250,7 +250,9 @@
       this.activeMenu = this.$route.query.menu ? this.$route.query.menu : 'index';
       this.hh();
       this.init();
-      this.queryStudentTimeInfo();
+      if (this.$route.query.menu == 'student'){
+        this.queryStudentTimeInfo();
+      }
     },
     methods: {
       hh(){

@@ -268,7 +268,11 @@
         this.$axios.get(common.enroll_pay_link_get, {params: params}).then(res => {
           if (res.data.data){
             this.qrCode = res.data.data.enrollPayUrl;
-            window.location.href = res.data.data.enrollPayUrl;
+            if(res.data.data.enrollPayUrl){
+              window.location.href = res.data.data.enrollPayUrl;
+            }else {
+              Toast(this.$t("请稍后再试！"));
+            }
           }
         });
       },
