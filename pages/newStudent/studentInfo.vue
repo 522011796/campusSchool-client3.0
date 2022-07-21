@@ -215,6 +215,15 @@
                        autocomplete="off"
                        :rules="[{ required: true, message: '请输入信息' }]">
             </van-field>
+            <van-field v-model="form.adProvinceLabel"
+                       :name="$t('所在省份')"
+                       :label="$t('所在省份')"
+                       readonly
+                       clickable
+                       :placeholder="$t('请选择')"
+                       @click="showAdProvince = true"
+                       :rules="[{ required: true, message: '请选择信息' }]">
+            </van-field>
             <van-field v-model="form.politicsLabel"
                        :name="$t('政治面貌')"
                        :label="$t('政治面貌')"
@@ -286,6 +295,16 @@
         @confirm="onHardChange"
       />
     </van-popup>
+
+    <van-popup v-model="showAdProvince" position="bottom">
+      <van-picker
+        show-toolbar
+        title="所在省市"
+        :columns="filterAdProvince"
+        @cancel="onShowPickerCancel"
+        @confirm="onAdProvince"
+      />
+    </van-popup>
   </div>
 </template>
 
@@ -295,7 +314,7 @@
   import mixins from "~/utils/mixins";
   import mixinsBridge from "~/utils/mixinsBridge";
   import MySex from "~/components/MySex";
-  import {MessageError, MessageSuccess, MessageWarning} from "~/utils/utils";
+  import {MessageError, MessageSuccess, MessageWarning, provinceArrayInfo} from "~/utils/utils";
   import {Toast} from "vant";
   export default {
     name: 'studentInfo',
@@ -309,6 +328,7 @@
         serverAppList: [],
         noticeAppList: [],
         askAppList: [],
+        filterAdProvince: [],
         currentEnrollYear: '',
         currentEnrollTime: '',
         collegeName: '',
@@ -323,6 +343,7 @@
         showPoliticsPicker: false,
         showRetirePicker: false,
         showHardPicker: false,
+        showAdProvince: false,
         emailReg: /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/,
         phoneReg: /^[1][3,4,5,6,7,8,9][0-9]{9}$/,
         telRules: [{
@@ -384,7 +405,9 @@
           hard: '',
           hardLabel: '',
           graduationSchool: '',
-          connType: []
+          connType: [],
+          adProvince: [],
+          adProvinceLabel: ''
         }
       }
     },
@@ -406,6 +429,7 @@
         this.majorName = (this.sessionData != '' && this.sessionData.LOGIN_RETURN_INFO && this.sessionData.LOGIN_RETURN_INFO.classes) ? this.sessionData.LOGIN_RETURN_INFO.classes.majorName : '';
         this.sex = (this.sessionData != '' && this.sessionData.LOGIN_RETURN_INFO && this.sessionData.LOGIN_RETURN_INFO.sex) ? this.sessionData.LOGIN_RETURN_INFO.sex : '';
 
+        this.provinceInfoText();
         this.studentDetailInfo(this.loginUserId);
       },
       initInfo(){
@@ -475,8 +499,15 @@
               hard: res.data.data.difficulty_type,
               hardLabel: res.data.data.difficulty_type,
               graduationSchool: res.data.data.high_school ? res.data.data.high_school : '',
-              connType: []
+              connType: [],
+              adProvince: [res.data.data.enroll_province,res.data.data.enroll_city],
+              adCity: res.data.data.enroll_city+'',
+              adProvinceLabel: res.data.data.enroll_province+","+res.data.data.enroll_city
             };
+            if (!res.data.data.enroll_province || !res.data.data.enroll_city){
+              this.form.adProvince = [];
+              this.form.adProvinceLabel = "";
+            }
             if (res.data.data.father_name && !res.data.data.mather_name){
               this.form.connType = ['1'];
               this.connType = ['1'];
@@ -514,6 +545,8 @@
             soldier: this.form.retire,
             difficultyType: this.form.hard,
             highSchool: this.form.graduationSchool,
+            enrollProvince: this.form.adProvince.length > 0 ? this.form.adProvince[0] : '',
+            enrollCity: this.form.adProvince.length > 0 ? this.form.adProvince[1] : '',
           };
           params = this.$qs.stringify(params);
           this.$axios.post(url, params).then(res => {
@@ -529,11 +562,36 @@
           });
         })
       },
+      provinceInfoText(){
+        let arr = provinceArrayInfo();
+        let province = [];
+        for (let i = 0; i < arr.length; i++){
+          province.push({
+            label: arr[i].label,
+            value: arr[i].label,
+            text: arr[i].label
+          });
+          if (arr[i]['children']){
+            province[i]['children'] = [];
+            for (let j = 0; j < arr[i].children.length; j++){
+              province[i]['children'].push({
+                label: arr[i].children[j],
+                value: arr[i].children[j],
+                text: arr[i].children[j]
+              });
+            }
+          }
+        }
+        //return province;
+        console.log(province);
+        this.filterAdProvince = province;
+      },
       onShowPickerCancel(){
         this.showGraduationPicker = false;
         this.showRetirePicker = false;
         this.showPoliticsPicker = false;
         this.showHardPicker = false;
+        this.showAdProvince = false;
       },
       onGraduationChange(value, index){
         this.form.graduationLabel = value.label;
@@ -554,6 +612,11 @@
         this.form.hardLabel = value.label;
         this.form.hard = value.value;
         this.showHardPicker = false;
+      },
+      onAdProvince(value, index){
+        this.form.adProvince = value;
+        this.form.adProvinceLabel = value.join()
+        this.showAdProvince = false;
       },
       handleChangeConnType(data){
         console.log(data);

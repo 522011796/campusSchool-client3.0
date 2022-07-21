@@ -51,6 +51,9 @@ export default {
         ],
         connType: [
           { required: true, type: 'array', min: 1, message: this.$t("请选择信息"), trigger: 'change' }
+        ],
+        adProvince: [
+          { required: true, type: 'array', min: 2, message: this.$t("请选择信息"), trigger: 'change' }
         ]
       }
     }

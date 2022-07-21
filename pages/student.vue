@@ -345,6 +345,11 @@
                     <my-select size="small" :disabled="form.id != '' && oprType == 'detail'" :sel-value="form.politics" :options="filterPoliticsType" width-style="150" @change="handleSelectChange($event, 2)"></my-select>
                   </el-form-item>
                 </el-col>
+                <el-col :span="12">
+                  <el-form-item :label="$t('所在省市')" prop="adProvince">
+                    <el-cascader ref="selectorProvince" size="small" :disabled="form.id != '' && oprType == 'detail'" v-model="form.adProvince" :options="provinceInfoText()" @change="handleSelectChange($event, 9)" style="width: 150px"></el-cascader>
+                  </el-form-item>
+                </el-col>
               </el-row>
               <el-row>
                 <el-col :span="24">
@@ -977,7 +982,7 @@
   import MyElTree from "~/components/tree/MyElTree";
   import MyServerDialog from "~/components/dialog/MyServerDialog";
   import DrawerLayoutRight from "~/components/utils/dialog/DrawerLayoutRight";
-  import {MessageError, MessageSuccess, MessageWarning} from "~/utils/utils";
+  import {MessageError, MessageSuccess, MessageWarning, provinceArrayInfo} from "~/utils/utils";
   import infoValidater from "~/utils/validater/infoValidater";
   import stationValidater from "~/utils/validater/stationValidater";
   export default {
@@ -1087,7 +1092,8 @@
           retire: '',
           hard: '',
           graduationSchool: '',
-          connType: []
+          connType: [],
+          adProvince: []
         },
         formStation: {
           id: '',
@@ -1405,8 +1411,13 @@
               retire: res.data.data.soldier,
               hard: res.data.data.difficulty_type ? res.data.data.difficulty_type : '',
               graduationSchool: res.data.data.high_school ? res.data.data.high_school : '',
-              connType: []
+              connType: [],
+              adProvince: [res.data.data.enroll_province,res.data.data.enroll_city],
+              adCity: res.data.data.enroll_city+'',
             };
+            if (!res.data.data.enroll_province || !res.data.data.enroll_city){
+              this.form.adProvince = [];
+            }
             if (res.data.data.father_name && !res.data.data.mather_name){
               this.form.connType = ['1'];
               this.connType = ['1'];
@@ -1568,6 +1579,8 @@
           this.form.retire = event;
         }else if (type == 4){
           this.form.hard = event;
+        }else if (type == 9){
+          this.form.adProvince = event;
         }
       },
       handleChangeConnType(data){
@@ -1600,7 +1613,8 @@
           retire: '',
           hard: '',
           graduationSchool: '',
-          connType: []
+          connType: [],
+          adProvince: []
         };
         this.formStation = {
           id: '',
@@ -1620,6 +1634,8 @@
         if (this.$refs['formStation']){
           this.$refs['formStation'].resetFields();
         }
+
+        this.resetCasadeSelector('selectorProvince');
         this.searchRoomType = '';
         this.searchRoomArrow = '';
         this.searchRoomPrice = '';
@@ -1723,6 +1739,7 @@
             //   MessageWarning(this.$t("请设置照片！"));
             //   return;
             // }
+            console.log(this.form.adProvince);
             let params = {
               url: this.form.headImg,
               phone: this.form.phone,
@@ -1739,6 +1756,8 @@
               soldier: this.form.retire,
               difficultyType: this.form.hard,
               highSchool: this.form.graduationSchool,
+              enrollProvince: this.form.adProvince.length > 0 ? this.form.adProvince[0] : '',
+              enrollCity: this.form.adProvince.length > 0 ? this.form.adProvince[1] : '',
             };
             params = this.$qs.stringify(params);
             this.$axios.post(url, params).then(res => {
@@ -1938,6 +1957,26 @@
         this.drCode = '';
         this.getPayInfo();
         this.dialogPayDrCode = true;
+      },
+      provinceInfoText(){
+        let arr = provinceArrayInfo();
+        let province = [];
+        for (let i = 0; i < arr.length; i++){
+          province.push({
+            label: arr[i].label,
+            value: arr[i].label
+          });
+          if (arr[i]['children']){
+            province[i]['children'] = [];
+            for (let j = 0; j < arr[i].children.length; j++){
+              province[i]['children'].push({
+                label: arr[i].children[j],
+                value: arr[i].children[j]
+              });
+            }
+          }
+        }
+        return province;
       },
       okPayDialog(event, type){
         if(this.billBtnShow == false){
