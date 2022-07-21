@@ -161,6 +161,18 @@
         </div>
       </template>
     </div>
+
+    <dialog-normal top="10vh" width-style="550px" :visible="!dialogTime" :title="$t('提示')">
+      <div style="height: 100px;" class="text-center">
+        <div class="fa fa-info-circle margin-top-20 color-warning" style="font-size: 30px"></div>
+        <div class="margin-top-10">
+          {{enrollMsg}}
+        </div>
+      </div>
+      <div slot="footer">
+        <el-button size="small" @click="closeTimeDialog">{{$t("关闭")}}</el-button>
+      </div>
+    </dialog-normal>
   </div>
 </template>
 
@@ -183,11 +195,14 @@
         dialogCustomLoading: false,
         modalPhoneCustomVisible: false,
         modalPwdCustomVisible: false,
+        dialogTime: true,
         activeTabName: 'all',
         menuTabList: [],
         inputValue: '',
         searchServerBlock: true,
         activeMenu: 'index',
+        enrollAllow: false,
+        enrollMsg: '',
         form: {
           name: '',
           logo: '',
@@ -235,6 +250,7 @@
       this.activeMenu = this.$route.query.menu ? this.$route.query.menu : 'index';
       this.hh();
       this.init();
+      this.queryStudentTimeInfo();
     },
     methods: {
       hh(){
@@ -340,8 +356,8 @@
         });
       },
       menuClick($event, type){
-        this.activeMenu = type;
         if (type == 'index'){
+          this.activeMenu = type;
           this.$router.push({
             path: '/',
             query: {
@@ -349,13 +365,27 @@
             }
           });
         }else if (type == 'student'){
-          this.$router.push({
-            path: '/student',
-            query: {
-              menu: 'student'
-            }
-          });
+          this.queryStudentTimeInfo(type);
         }
+      },
+      queryStudentTimeInfo(type){
+        let params = {};
+        this.$axios.get(common.enroll_student_current_time, {loading: false}).then(res => {
+          if (res.data.data){
+            this.dialogTime = res.data.data.enrollAllow;
+            this.enrollMsg = res.data.data.enrollMsg;
+
+            if (res.data.data.enrollAllow == true){
+              this.activeMenu = type;
+              this.$router.push({
+                path: '/student',
+                query: {
+                  menu: 'student'
+                }
+              });
+            }
+          }
+        });
       },
       querySearch(queryString, cb) {
         let params = {
@@ -382,6 +412,22 @@
         this.$axios.post(common.logout_url).then(res => {
           if (res.data.code == 200){
             this.$router.push("/login");
+          }
+        });
+      },
+      closeDialog(){
+        this.dialogTime = false;
+      },
+      cancelDialog(){
+        this.dialogTime = false;
+      },
+      closeTimeDialog(){
+        this.dialogTime = true;
+        this.activeMenu = 'index';
+        this.$router.push({
+          path: '/',
+          query: {
+            menu: 'index'
           }
         });
       }

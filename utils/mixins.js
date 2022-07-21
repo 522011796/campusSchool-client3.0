@@ -8,11 +8,15 @@ import {
   setDeptChildren,
   MessageSuccess, MessageError
 } from "~/utils/utils";
+import {Dialog} from "vant";
 
 export default {
   data (){
     return {
       testLogin: '',
+      GdialogTime: true,
+      GenrollAllow: false,
+      GenrollMsg: '',
       value: '',
       testDefault: '',
       navHeight: 0,
@@ -762,6 +766,28 @@ export default {
       await this.$axios.get(common.enroll_student_barcode, {params: params}).then(res => {
         if (res.data.data){
           this.g_BarCode = res.data.data.barcodeImageBase64;
+        }
+      });
+    },
+    async queryStudentTimeInfo(){
+      let params = {};
+      await this.$axios.get(common.enroll_student_current_time, {loading: false}).then(res => {
+        if (res.data.data){
+          this.GdialogTime = res.data.data.enrollAllow;
+          this.GenrollMsg = res.data.data.enrollMsg;
+
+          if (res.data.data.enrollAllow == false){
+            Dialog.confirm({
+              title: '',
+              message: res.data.data.enrollMsg,
+              showCancelButton: false,
+              showConfirmButton: this.globalAppShow && this.globalAppShow != '' ? true : false,
+              confirmButtonText: '关闭'
+            }).then(() => {
+              // on confirm
+              this.returnGlobalMain(1);
+            });
+          }
         }
       });
     },

@@ -295,6 +295,7 @@
       },
       async initAppConfig(){
         await this.autoLoginApp();
+        await this.queryStudentTimeInfo();
         //await this.getSessionInfo();
       },
       initAppRecommend(){
