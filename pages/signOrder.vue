@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <div class="text-center font-size-16 font-bold margin-top-30">
-      <span>{{this.campusName}}</span>
+      <span v-if="$route.query.title && $route.query.title != ''">{{$route.query.title}}</span>
+      <span v-else>{{$t("报到单")}}</span>
     </div>
     <div class="margin-top-20">
       <div class="padding-tb-10 padding-lr-10">

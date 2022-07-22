@@ -462,6 +462,10 @@
             }
           });
         }else if (item.link_sub_type == 5){
+          let otherTitle = '';
+          if (item.other_setting && item.other_setting != ''){
+            otherTitle = JSON.parse(item.other_setting).checkinSheetName;
+          }
           this.$router.push({
             path: '/newStudent/studentOrder',
             query: {
@@ -469,7 +473,8 @@
               activeType: this.active,
               userType: this.loginUserAppType,
               navH: this.navHeight,
-              appType: this.globalAppShow
+              appType: this.globalAppShow,
+              title: otherTitle
             }
           });
         }else if (item.link_sub_type == 1){

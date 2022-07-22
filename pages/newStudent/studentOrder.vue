@@ -11,7 +11,8 @@
       </van-col>
       <van-col span="18">
         <div class="text-center color-white font-size-16 font-bold">
-          <span>{{$t('报到单')}}</span>
+          <span v-if="$route.query.title && $route.query.title != ''">{{$route.query.title}}</span>
+          <span v-else>{{$t("报到单")}}</span>
         </div>
       </van-col>
       <van-col span="3">
