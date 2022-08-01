@@ -1,46 +1,104 @@
 <template>
   <div class="container">
-    <div :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' " :style="{height: navHeight+'px'}"></div>
-    <div class="header-title-block" :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' ">
-      <van-col span="2">
-        <div class="text-left padding-lr-10 color-white" v-if="globalAppShow && globalAppShow != ''">
-            <span class="font-bold font-size-14" @click="returnIndex">
-              <i class="fa fa-chevron-left"></i>
-            </span>
+<!--    <div :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' " :style="{height: navHeight+'px'}"></div>-->
+<!--    <div class="header-title-block" :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' ">-->
+<!--      <van-col span="2">-->
+<!--        <div class="text-left padding-lr-10 color-white" v-if="globalAppShow && globalAppShow != ''">-->
+<!--            <span class="font-bold font-size-14" @click="returnIndex">-->
+<!--              <i class="fa fa-chevron-left"></i>-->
+<!--            </span>-->
+<!--        </div>-->
+<!--        <div v-else>-->
+<!--          &nbsp;-->
+<!--        </div>-->
+<!--      </van-col>-->
+<!--      <van-col span="20">-->
+<!--        <van-tabs v-model="active" @click="activeTabMenu" type="card" class="padding-top-10" color="#1EA084" title-active-color="#ffffff" title-inactive-color="#ffffff" background="#949494">-->
+<!--          <van-tab name="6">-->
+<!--            <img src="~static/img/student_user_icon.png" style="height: 50px;width: 50px">-->
+<!--            <span slot="title" class="font-size-12">{{$t('推荐服务')}}</span>-->
+<!--          </van-tab>-->
+<!--          <van-tab name="0">-->
+<!--            <span slot="title" class="font-size-12">{{$t('学生办事')}}</span>-->
+<!--          </van-tab>-->
+<!--          <van-tab name="1">-->
+<!--            <span slot="title" class="font-size-12">{{$t('老师办事')}}</span>-->
+<!--          </van-tab>-->
+<!--          <van-tab name="2">-->
+<!--            <span slot="title" class="font-size-12">{{$t('单位办事')}}</span>-->
+<!--          </van-tab>-->
+<!--          <van-tab name="5">-->
+<!--          <span slot="title" class="font-size-12">-->
+<!--            <i class="fa fa-send"></i>-->
+<!--            {{$t('待办')}}-->
+<!--          </span>-->
+<!--          </van-tab>-->
+<!--        </van-tabs>-->
+<!--      </van-col>-->
+<!--      <van-col span="2">-->
+<!--        &nbsp;-->
+<!--      </van-col>-->
+<!--    </div>-->
+    <div style="position: relative">
+      <img src="~static/img/banner_school_app.png" style="height: 170px;width: 100%">
+      <div class="padding-lr-10" style="position: relative; top: -45px;">
+        <div class="header-tab-block">
+          <van-row>
+            <van-col :span="6" class="text-center" style="height: 65px;" @click="activeTabMenu(0)">
+              <div class="margin-top-10">
+                <img src="~static/img/student_user_icon.png" style="height: 45px;width: 45px">
+              </div>
+              <div class="font-size-12">
+                {{$t('学生办事')}}
+              </div>
+            </van-col>
+            <van-col :span="6" class="text-center" @click="activeTabMenu(1)">
+              <div class="margin-top-10">
+                <img src="~static/img/teacher_user_icon.png" style="height: 45px;width: 45px">
+              </div>
+              <div class="font-size-12">
+                {{$t('老师办事')}}
+              </div>
+            </van-col>
+            <van-col :span="6" class="text-center" @click="activeTabMenu(2)">
+              <div class="margin-top-10">
+                <img src="~static/img/dept_user_icon.png" style="height: 45px;width: 45px">
+              </div>
+              <div class="font-size-12">
+                {{$t('单位办事')}}
+              </div>
+            </van-col>
+            <van-col :span="6" class="text-center" @click="activeTabMenu(5)">
+              <div class="margin-top-10">
+                <img src="~static/img/dept_user_icon.png" style="height: 45px;width: 45px">
+              </div>
+              <div class="font-size-12">
+                {{$t('我的待办')}}
+              </div>
+            </van-col>
+          </van-row>
         </div>
-        <div v-else>
-          &nbsp;
-        </div>
-      </van-col>
-      <van-col span="20">
-        <van-tabs v-model="active" @click="activeTabMenu" type="card" class="padding-top-10" color="#1EA084" title-active-color="#ffffff" title-inactive-color="#ffffff" background="#949494">
-          <van-tab name="6">
-            <span slot="title" class="font-size-12">{{$t('推荐服务')}}</span>
-          </van-tab>
-          <van-tab name="0">
-            <span slot="title" class="font-size-12">{{$t('学生办事')}}</span>
-          </van-tab>
-          <van-tab name="1">
-            <span slot="title" class="font-size-12">{{$t('老师办事')}}</span>
-          </van-tab>
-          <van-tab name="2">
-            <span slot="title" class="font-size-12">{{$t('单位办事')}}</span>
-          </van-tab>
-          <van-tab name="5">
-          <span slot="title" class="font-size-12">
-            <i class="fa fa-send"></i>
-            {{$t('待办')}}
-          </span>
-          </van-tab>
-        </van-tabs>
-      </van-col>
-      <van-col span="2">
-        &nbsp;
-      </van-col>
+      </div>
     </div>
     <div class="content-block" :style="divHeight3">
-      <div class="margin-top-30">
-        <van-grid :gutter="10">
+      <div class="margin-top-10 padding-lr-10">
+        <div>
+          <van-row>
+            <van-col span="12">
+              <div class="text-left">
+                <span class="app-title-border-tag"></span>
+                <span class="font-bold" style="position: relative;top: -10px">{{$t("推荐服务")}}</span>
+              </div>
+            </van-col>
+            <van-col span="12">
+              <div class="text-right">
+<!--                <i class="fa fa-list font-size-14" style="position: relative;top: 5px"></i>-->
+                &nbsp;
+              </div>
+            </van-col>
+          </van-row>
+        </div>
+        <van-grid :gutter="5">
           <van-grid-item v-for="(item, index) in serverAppList" :key="index" icon="photo-o" @click="serverBlock($event, item)">
             <div slot="icon" class="text-center">
               <van-image width="30" height="30" :src="item.form_logo"/>
@@ -162,14 +220,25 @@
             }
           });
         }else {
+          // this.$router.push({
+          //   path: '/app/appServer',
+          //   query: {
+          //     id: item.id,
+          //     activeType: this.active,
+          //     userType: this.loginUserAppType,
+          //     navH: this.navHeight,
+          //     appType: this.globalAppShow
+          //   }
+          // });
           this.$router.push({
-            path: '/app/appServer',
+            path: '/app/appServerForm',
             query: {
               id: item.id,
               activeType: this.active,
               userType: this.loginUserAppType,
               navH: this.navHeight,
-              appType: this.globalAppShow
+              appType: this.globalAppShow,
+              page: '/app/appIndex'
             }
           });
         }
@@ -177,7 +246,7 @@
       activeTabMenu(name){
         this.noticeAppList = [];
         this.serverAppList = [];
-        if (name == 5){
+        if (name == 5) {
           this.$router.push({
             path: '/app/appMyNotice',
             query: {
@@ -187,12 +256,23 @@
               appType: this.globalAppShow
             }
           });
-        }else if (name == 6){
-          this.active = name;
-          this.initAppRecommend();
+        // }else if (name == 6){
+        //   this.active = name;
+        //   this.initAppRecommend();
+        // }else {
+        //   this.active = name;
+        //   this.initAppServer();
         }else {
           this.active = name;
-          this.initAppServer();
+          this.$router.push({
+            path: '/app/appAllServer',
+            query: {
+              activeType: this.active,
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow
+            }
+          });
         }
       },
       returnIndex(){
@@ -216,6 +296,8 @@
   border-top-right-radius: 15px;
   background: #FFFFFF;
   width: 100%;
+  position: relative;
+  top: -35px;
 }
 .app-title-border-tag{
   width: 5px;
@@ -226,5 +308,11 @@
 .notice-list-item{
   height: 45px;
   line-height: 45px;
+}
+.header-tab-block{
+  background: #ffffff;
+  border-radius: 5px;
+  height: 80px;
+  box-shadow: 0px 0px 4px #bbbbbb;
 }
 </style>

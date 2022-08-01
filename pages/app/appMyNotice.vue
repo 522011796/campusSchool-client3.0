@@ -2,44 +2,56 @@
   <div class="container">
     <div :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' " :style="{height: navHeight+'px'}"></div>
     <div class="header-title-block color-white" :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' ">
-      <van-row>
-        <van-col span="4">
+      <van-row class="padding-top-20">
+        <van-col span="8">
           <div class="text-left padding-lr-10">
             <span class="font-bold font-size-14" @click="returnIndex">
               <i class="fa fa-chevron-left"></i>
             </span>
           </div>
         </van-col>
-        <van-col span="16">
-          <van-tabs type="card" @click="activeTabMenu" class="padding-top-10" color="#1EA084" title-active-color="#ffffff" title-inactive-color="#ffffff" background="#949494">
-            <van-tab name="1" :title="$t('我待办')"></van-tab>
-            <van-tab name="2" :title="$t('我提交')"></van-tab>
-            <van-tab name="3" :title="$t('抄送我')"></van-tab>
-            <van-tab name="4" :title="$t('已完成')"></van-tab>
-          </van-tabs>
+        <van-col span="8" class="text-center">
+          <div class="font-bold">{{$t("我的待办")}}</div>
+          <div class="font-size-12">
+            <span>{{this.dateTime}}</span>
+          </div>
         </van-col>
-        <van-col span="4">
-          &nbsp;
+        <van-col span="8" class="text-right" style="padding-right: 15px">
+          <span v-if="this.dateTime" @click="clearSearch" class="margin-right-5">{{$t("清除")}}</span>
+          <span>
+            <i class="fa fa-calendar" @click="calendarManage"></i>
+          </span>
         </van-col>
       </van-row>
     </div>
 
-    <div style="margin-top:1px;" class="margin-left-10 margin-right-10">
-      <div class="content-block padding-lr-10 padding-tb-10" :style="divHeight10">
+    <form action="/">
+      <van-row>
+        <van-col :span="16">
+          <van-search v-model="serchName" placeholder="姓名或者服务名称" @input="onSearch" @clear="onClear"/>
+        </van-col>
+        <van-col :span="8" class="text-right">
+          <el-select class="margin-right-10" style="margin-top: 11px" v-model="value" size="small" placeholder="请选择" @change="dropdownItem">
+            <el-option label="全部" value=""></el-option>
+            <el-option label="待审核" value="0"></el-option>
+            <el-option label="通过" value="3"></el-option>
+            <el-option label="未通过" value="4"></el-option>
+          </el-select>
+        </van-col>
+      </van-row>
+    </form>
+    <div>
+      <van-tabs @click="activeTabMenu" color="#007CBB" title-active-color="#007CBB" title-inactive-color="#4B4B4B" background="#f5f5f5">
+        <van-tab name="1" :title="$t('我待办')"></van-tab>
+        <van-tab name="2" :title="$t('我提交')"></van-tab>
+        <van-tab name="3" :title="$t('抄送我')"></van-tab>
+        <van-tab name="4" :title="$t('已完成')"></van-tab>
+      </van-tabs>
+    </div>
+    <div style="margin-top:5px;">
+      <div class="content-block padding-tb-10" :style="divHeight12">
         <van-empty v-if="tableData.length == 0" description="暂无数据" />
         <div v-else class="content-block-item padding-lr-10 padding-tb-10" style="position: relative" v-for="(item, index) in tableData" @click="dataDetail($event, item)">
-          <div class="content-block-item-tag bg-danger" v-if="item.status === -1">
-            <label class="color-white">{{$t("撤销")}}</label>
-          </div>
-          <div class="content-block-item-tag bg-warning" v-if="item.status === 0">
-            <label class="color-white">{{$t("待审核")}}</label>
-          </div>
-          <div class="content-block-item-tag bg-success" v-if="item.status === 3">
-            <label class="color-white">{{$t("通过")}}</label>
-          </div>
-          <div class="content-block-item-tag bg-danger" v-if="item.status === 4">
-            <label class="color-white">{{$t("未通过")}}</label>
-          </div>
           <div>
             [<span class="color-warning">{{ item.applyUserName }}</span>]
             <span>{{$t("提交的")}}</span>
@@ -48,12 +60,22 @@
           <div class="color-muted margin-top-5">
             <span class="font-size-12">{{ $moment(item.applyTime).format("YYYY-MM-DD HH:mm") }}</span>
           </div>
+          <div class="margin-top-5 font-size-12">
+            <span class="color-muted">{{$t("审核状态")}}</span>
+            <span>
+              <label v-if="item.status === -1" class="color-danger">{{$t("撤销")}}</label>
+              <label v-if="item.status === 0" class="color-warning">{{$t("待审核")}}</label>
+              <label v-if="item.status === 3" class="color-success">{{$t("通过")}}</label>
+              <label v-if="item.status === 4" class="color-danger">{{$t("未通过")}}</label>
+            </span>
+          </div>
+          <span class="fa fa-angle-right" style="position: absolute; right: 10px; top: 30px; font-size: 25px; color: #C0C4CC"></span>
         </div>
       </div>
     </div>
 
-    <van-popup @close="cancelPop" v-model="popUpVisible" round position="bottom" :style="{ height: '85%' }">
-      <div class="padding-tb-10 padding-lr-10 border-bottom-1">
+    <van-popup @close="cancelPop" v-model="popUpVisible" round position="bottom" :style="{ height: '85%' }" style="background: #efefef">
+      <div class="padding-tb-10 padding-lr-10 border-bottom-1 bg-white">
         <template v-if="active == 1">
           <div class="text-right padding-lr-10">
             <el-button v-if="detailApplyAuditUserData.agreen1 == true" size="mini" type="success" @click="handleOk($event, detailData, 1)">同 意</el-button>
@@ -107,31 +129,31 @@
         </template>
       </div>
       <div :style="divHeight8">
-        <div class="padding-lr-10">
-          <div class="color-muted margin-top-20 font-size-12">
-          <span>
-            <label class="title-block-tag"></label>
-            <label class="title-block-text color-warning">{{$t("基础信息")}}</label>
-          </span>
+        <div class="padding-lr-0 bg-white">
+          <div class="color-muted margin-top-0 font-size-12 padding-lr-10 padding-tb-10">
+            <span>
+              <label class="title-block-tag"></label>
+              <label class="title-block-text color-warning">{{$t("基础信息")}}</label>
+            </span>
           </div>
-          <div class="detail-block-title padding-lr-10 padding-tb-10 font-size-12">
+          <div class="detail-block-title padding-lr-10 padding-tb-5 font-size-12">
             <el-row>
               <el-col :span="12">
-                <span>{{$t("申请人")}}:</span>
+                <span class="color-muted">{{$t("申请人")}}:</span>
                 <span>{{ detailData.applyUserName }}</span>
               </el-col>
               <el-col :span="12">
-                <span>{{$t("学号/工号")}}:</span>
+                <span class="color-muted">{{$t("学号/工号")}}:</span>
                 <span>{{ detailData.userNo }}</span>
               </el-col>
             </el-row>
             <el-row class="margin-top-5">
               <el-col :span="12">
-                <span>{{$t("服务名称")}}:</span>
+                <span class="color-muted">{{$t("服务名称")}}:</span>
                 <span>{{ detailData.formName }}</span>
               </el-col>
               <el-col :span="12">
-                <span>{{$t("班级/部门")}}:</span>
+                <span class="color-muted">{{$t("班级/部门")}}:</span>
                 <span>
                 <label v-if="detailData.userType == 5">{{ detailData.className }}</label>
                 <label v-if="detailData.userType == 4">{{ detailData.departmentName }}</label>
@@ -140,13 +162,13 @@
             </el-row>
             <el-row class="margin-top-5">
               <el-col :span="12">
-                <span>{{$t("申请日期")}}:</span>
+                <span class="color-muted">{{$t("申请日期")}}:</span>
                 <span>{{ $moment(detailData.applyTime).format("YYYY-MM-DD HH:mm") }}</span>
               </el-col>
             </el-row>
           </div>
         </div>
-        <div class="margin-top-10 padding-lr-10">
+        <div class="margin-top-10 padding-lr-10 bg-white padding-tb-10">
           <div class="color-muted margin-top-5 font-size-12">
               <span>
                 <label class="title-block-tag"></label>
@@ -162,34 +184,54 @@
 <!--                  </span>-->
 <!--              </el-tooltip>-->
 <!--            </div>-->
-            <template v-for="(item, index) in detailApplyContentData">
-              <div v-if="item.type != 'fc-editor' && item.type != 'upload'" class="block-item-row padding-lr-10 font-bold">
-                <span class="color-muted moon-content-text-ellipsis-class" style="position: relative;top: 0px;max-width: 28%;display: inline-block">{{item.title}}: </span>
-                <el-tooltip class="item" effect="dark" :content="item.value" placement="top">
-                    <span class="moon-content-text-ellipsis-class" style="max-width: 240px;display: inline-block">
-                      {{ item.value }}
+            <table class="custom-table">
+              <tr v-for="(item, index) in detailApplyContentData" :key="index">
+                <template  v-if="item.type != 'fc-editor' && item.type != 'upload'">
+                  <td style="width: 30%;text-align: right;padding-right: 15px">
+                    <span class="color-muted moon-content-text-ellipsis-class">
+                      <label class="font-size-12">{{item.title}}</label>
                     </span>
-                </el-tooltip>
-              </div>
-              <div v-else-if="item.type != 'fc-editor' && item.type == 'upload'" class="padding-lr-10 font-bold">
-                <span v-if="!item.value || item.value.length <= 0" class="color-muted moon-content-text-ellipsis-class" style="position: relative;top: 10px;max-width: 28%;display: inline-block">{{item.title}}: </span>
-                <span v-else class="color-muted" style="position: relative;top: -13px">{{item.title}}: </span>
-                <span v-if="!item.value || item.value.length <= 0">
-                    <div style="height: 20px;line-height: 20px"></div>
-                  </span>
-                <span v-else class="custom-avatar" style="display: inline-block;margin-right: 5px;" v-for="(itemImg, indexImg) in item.value" :key="indexImg" @click="readFile(itemImg)">
-                    <el-avatar shape="square" size="small" :src="itemImg" fit="fill"></el-avatar>
-                </span>
-              </div>
-              <div v-else class="padding-lr-10">
-                <span class="color-muted font-bold moon-content-text-ellipsis-class" style="position: relative;top: -150px;max-width: 28%;display: inline-block">{{item.title}}: </span>
-                <div v-if="item.type == 'fc-editor'"  v-html="item.value" style="width: 70%;height: 150px;overflow-y:auto;display: inline-block;border: 1px solid #dddddd;border-radius: 5px;padding: 10px">
-                </div>
-              </div>
-            </template>
+                  </td>
+                  <td style="text-align: left;padding-left: 15px">
+                    <el-tooltip class="item" effect="dark" :content="item.value" placement="top">
+                    <span class="moon-content-text-ellipsis-class">
+                      <label class="font-size-12">{{ item.value }}</label>
+                    </span>
+                    </el-tooltip>
+                  </td>
+                </template>
+
+                <template v-else-if="item.type != 'fc-editor' && item.type == 'upload'">
+                  <td style="width: 30%;text-align: right;padding-right: 15px">
+                    <span v-if="!item.value || item.value.length <= 0" class="color-muted moon-content-text-ellipsis-class">
+                      {{item.title}}
+                    </span>
+                    <span v-else class="color-muted" style="position: relative;">{{item.title}}: </span>
+                  </td>
+                  <td style="text-align: left;padding-left: 15px">
+                    <span v-if="!item.value || item.value.length <= 0">
+                      <div style="height: 20px;line-height: 20px"></div>
+                    </span>
+                    <span v-else class="custom-avatar" style="display: inline-block;margin-right: 5px;position: relative; top: 5px" v-for="(itemImg, indexImg) in item.value" :key="indexImg" @click="readFile(itemImg)">
+                      <el-avatar shape="square" size="small" :src="itemImg" fit="fill"></el-avatar>
+                    </span>
+                  </td>
+                </template>
+
+                <template v-else>
+                  <td style="width: 30%;text-align: right;padding-right: 15px">
+                    <span class="color-muted font-bold moon-content-text-ellipsis-class" style="position: relative;top: -50px;">{{item.title}}: </span>
+                  </td>
+                  <td style="text-align: left;padding-left: 15px">
+                    <div v-if="item.type == 'fc-editor'"  v-html="item.value" style="width: 90%;height: 150px;overflow-y:auto;display: inline-block;border: 1px solid #dddddd;border-radius: 5px;padding: 0px 10px">
+                    </div>
+                  </td>
+                </template>
+              </tr>
+            </table>
           </div>
         </div>
-        <div class="margin-top-10 padding-lr-10">
+        <div class="margin-top-10 padding-lr-10 bg-white padding-tb-10">
           <div class="color-muted margin-top-5 font-size-12">
               <span>
                 <label class="title-block-tag"></label>
@@ -267,6 +309,8 @@
         </div>
       </div>
     </van-popup>
+
+    <van-calendar v-model="showCalendar" type="range" @confirm="onConfirm" />
   </div>
 </template>
 
@@ -292,6 +336,11 @@
         textarea: '',
         visibleNo: false,
         detailApplyAuditUserData: {},
+        serchName: '',
+        startTime: '',
+        endTime: '',
+        showCalendar: false,
+        dateTime: ''
       }
     },
     mounted() {
@@ -310,6 +359,10 @@
         let params = {
           page: this.page,
           num: this.num,
+          status: this.type,
+          beginTime: this.startTime,
+          endTime: this.endTime,
+          searchKey: this.searchKey,
           queryApplyListType: this.active
         };
         await this.getSessionInfo();
@@ -408,6 +461,40 @@
           images: [file],
           closeable: false,
         });
+      },
+      onSearch(value){
+        this.searchKey = value;
+        this.init();
+      },
+      dropdownItem(event){
+        this.type = event;
+        this.init();
+      },
+      onClear(){
+
+      },
+      clearSearch(){
+        this.startTime = "";
+        this.endTime = "";
+        this.dateTime = "";
+        this.init();
+      },
+      calendarManage(){
+        this.showCalendar = true;
+      },
+      formatDate(date) {
+        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+      },
+      formatDate2(date) {
+        return `${date.getMonth() + 1}/${date.getDate()}`;
+      },
+      onConfirm(date){
+        const [start, end] = date;
+        this.dateTime = `${this.formatDate2(start)} - ${this.formatDate2(end)}`;
+        this.startTime = `${this.formatDate(start)}`;
+        this.endTime = `${this.formatDate(end)}`;
+        this.init();
+        this.showCalendar = false;
       }
     }
   }
@@ -419,7 +506,7 @@
 }
 .header-title-block{
   height: 60px;
-  line-height: 60px;
+  /*line-height: 60px;*/
   width: 100%;
 }
 .content-block{
@@ -430,7 +517,7 @@
   background: #FFFFFF;
 }
 .content-block-item{
-  background: rgb(225, 243, 216);
+  background: #f5f5f5;
   border-radius: 5px;
   margin-bottom: 10px;
 }
@@ -449,7 +536,7 @@
 }
 .detail-block-title{
   border-radius: 5px;
-  background: #f6f6f6;
+  background: #ffffff;
 }
 .content-block-item-tag{
   border-top-right-radius: 5px;

@@ -287,6 +287,9 @@ a{
 .padding-top-10{
   padding-top: 15px;
 }
+.padding-top-20{
+  padding-top: 20px;
+}
 .padding-tb-5{
   padding-top: 5px;
   padding-bottom: 5px;
@@ -1082,6 +1085,20 @@ ul{
   height: 40px;
   font-size: 40px;
   color: #fff;
+}
+.custom-el-menu .el-submenu__icon-arrow{
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  margin-top: -7px;
+  transition: transform .3s;
+  font-size: 12px;
+}
+.custom-el-menu .el-submenu .el-menu-item {
+  height: 50px;
+  line-height: 50px;
+  padding: 0 45px;
+  min-width: 0px;
 }
 /***自定义radio组件颜色***/
 /*.el-radio__input.is-checked + .el-radio__label {

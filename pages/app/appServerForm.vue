@@ -34,9 +34,48 @@
       </van-row>
     </div>
 
-    <div style="margin-top:1px;" class="margin-left-10 margin-right-10">
-      <div class="content-block padding-lr-10 padding-tb-10" :style="divHeight7">
-        <form-create v-if="formCreateRuleData != ''" v-model="fApi" :rule="formCreateRuleData" :option="formCreateOptionData"/>
+    <div style="margin-top:1px;">
+      <div class="content-block padding-tb-10" :style="divHeight7" style="background: #f5f5f5">
+        <div class="color-muted font-size-12 bg-white padding-lr-10 padding-tb-10">
+          <span>
+            <label class="title-block-tag"></label>
+            <label class="title-block-text color-warning">{{$t("服务简介")}}</label>
+          </span>
+        </div>
+        <div class="bg-white padding-lr-10" style="padding-bottom: 10px">
+          <div>
+            <template v-if="serverDetail.des && serverDetail.des != ''">
+              <div @click="showCollapse = !showCollapse" v-if="showCollapse == false">
+                <span>{{serverDetailTitle}}</span>
+                <span>
+                <i class="fa fa-angle-down"></i>
+              </span>
+              </div>
+              <el-collapse-transition>
+                <div v-show="showCollapse" @click="showCollapse = false"  v-if="showCollapse == true">
+                  {{ serverDetail.des }}
+                  <span>
+                  <i class="fa fa-angle-up"></i>
+                </span>
+                </div>
+              </el-collapse-transition>
+            </template>
+            <template v-else>
+              <van-empty description="暂无数据" image-size="50" style="padding: 0px !important;"/>
+            </template>
+          </div>
+        </div>
+        <div class="margin-top-10 bg-white">
+          <div class="color-muted font-size-12 bg-white padding-lr-10 padding-tb-10">
+            <span>
+              <label class="title-block-tag"></label>
+              <label class="title-block-text color-warning">{{$t("表单内容")}}</label>
+            </span>
+          </div>
+          <div class="margin-right-10 margin-left-10">
+            <form-create v-if="formCreateRuleData != ''" v-model="fApi" :rule="formCreateRuleData" :option="formCreateOptionData"/>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -55,6 +94,7 @@
     data(){
       return {
         rateValue: 0,
+        serverDetailTitle: '',
         serverDetail: '',
         fApi: {},
         formCreateRuleData: [],
@@ -62,9 +102,11 @@
         btnLoading: false,
         customUserStatus: false,
         fromCreateBtnShow: true,
+        showCollapse: false,
         fromCreateBtnText: '',
         auditUsers: [],
-        auditSelUser: []
+        auditSelUser: [],
+        activeName: '',
       }
     },
     mounted() {
@@ -89,6 +131,7 @@
           if (res.data.code == 200){
             let auditUser = [];
             this.serverDetail = res.data.data;
+            this.serverDetailTitle = res.data.data.des ? res.data.data.des.substr(0, 50) + "..." : '';
             let processList = res.data.data.processList;
             this.customUserStatus = false;
             this.fromCreateBtnShow = res.data.data.submitButton;
@@ -176,8 +219,9 @@
         });
       },
       returnBlock(){
+        let page = this.$route.query.page ? this.$route.query.page : '/app/appIndex';
         this.$router.push({
-          path: '/app/appServer',
+          path: page,
           query: {
             id: this.$route.query.id,
             activeType: this.$route.query.activeType,
@@ -226,5 +270,18 @@
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   background: #FFFFFF;
+}
+.title-block-tag{
+  display: inline-block;
+  height: 20px;
+  width: 3px;
+  background: #E6A23C;
+  font-weight: bold;
+  border-radius: 3px;
+}
+.title-block-text{
+  font-weight: bold;
+  position: relative;
+  top: -5px;
 }
 </style>

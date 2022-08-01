@@ -88,10 +88,11 @@
         });
       },
       returnIndex(){
+        let page = this.$route.query.page ? this.$route.query.page : '/app/appIndex';
         this.$router.push({
-          path: '/app/appIndex',
+          path: page,
           query: {
-            activeType: this.$route.query.activeType,
+            activeType: this.$route.query.page ? this.$route.query.activeType : 6,
             userType: this.loginUserAppType,
             navH: this.navHeight,
             appType: this.globalAppShow
