@@ -176,11 +176,14 @@
       if (this.$route.query.sessionId){
         this.initAppConfig();
       }
-      if (this.active == 6){
-        this.initAppRecommend();
-      }else {
-        this.initAppServer();
-      }
+
+      setTimeout(()=>{
+        if (this.active == 6){
+          this.initAppRecommend();
+        }else {
+          this.initAppServer();
+        }
+      },1000);
     },
     methods: {
       layoutInit(){
