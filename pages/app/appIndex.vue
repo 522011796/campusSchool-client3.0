@@ -40,48 +40,55 @@
 <!--      </van-col>-->
 <!--    </div>-->
     <div style="position: relative">
-      <img src="~static/img/banner_school_app.png" style="height: 170px;width: 100%">
-      <div class="padding-lr-10" style="position: relative; top: -45px;">
-        <div class="header-tab-block">
-          <van-row>
-            <van-col :span="6" class="text-center" style="height: 65px;" @click="activeTabMenu(0)">
-              <div class="margin-top-10">
-                <img src="~static/img/student_user_icon.png" style="height: 45px;width: 45px">
-              </div>
-              <div class="font-size-12">
-                {{$t('学生办事')}}
-              </div>
-            </van-col>
-            <van-col :span="6" class="text-center" @click="activeTabMenu(1)">
-              <div class="margin-top-10">
-                <img src="~static/img/teacher_user_icon.png" style="height: 45px;width: 45px">
-              </div>
-              <div class="font-size-12">
-                {{$t('老师办事')}}
-              </div>
-            </van-col>
-            <van-col :span="6" class="text-center" @click="activeTabMenu(2)">
-              <div class="margin-top-10">
-                <img src="~static/img/dept_user_icon.png" style="height: 45px;width: 45px">
-              </div>
-              <div class="font-size-12">
-                {{$t('单位办事')}}
-              </div>
-            </van-col>
-            <van-col :span="6" class="text-center" @click="activeTabMenu(5)">
-              <div class="margin-top-10">
-                <img src="~static/img/dept_user_icon.png" style="height: 45px;width: 45px">
-              </div>
-              <div class="font-size-12">
-                {{$t('我的待办')}}
-              </div>
-            </van-col>
-          </van-row>
+      <div style="position: relative;height: 180px">
+        <img src="~static/img/banner_school_app.png" style="width: 100%; position: absolute" :style="{height: (parseInt(170) + parseInt(navHeight)) + 'px'}">
+        <div class="text-left padding-lr-10 color-white" v-if="globalAppShow && globalAppShow != ''" style="position: relative; left: 5px" :style="{top: (parseInt(10) + parseInt(navHeight)) + 'px'}">
+          <span class="font-bold font-size-20" @click="returnIndex">
+            <i class="fa fa-chevron-left"></i>
+          </span>
+        </div>
+        <div class="padding-lr-10" style="position: relative; top: 105px;z-index: 99">
+          <div class="header-tab-block">
+            <van-row>
+              <van-col :span="6" class="text-center" style="height: 65px;" @click="activeTabMenu(0)">
+                <div class="margin-top-10">
+                  <img src="~static/img/student_user_icon.png" style="height: 45px;width: 45px">
+                </div>
+                <div class="font-size-12">
+                  {{$t('学生办事')}}
+                </div>
+              </van-col>
+              <van-col :span="6" class="text-center" @click="activeTabMenu(1)">
+                <div class="margin-top-10">
+                  <img src="~static/img/teacher_user_icon.png" style="height: 45px;width: 45px">
+                </div>
+                <div class="font-size-12">
+                  {{$t('老师办事')}}
+                </div>
+              </van-col>
+              <van-col :span="6" class="text-center" @click="activeTabMenu(2)">
+                <div class="margin-top-10">
+                  <img src="~static/img/dept_user_icon.png" style="height: 45px;width: 45px">
+                </div>
+                <div class="font-size-12">
+                  {{$t('单位办事')}}
+                </div>
+              </van-col>
+              <van-col :span="6" class="text-center" @click="activeTabMenu(5)">
+                <div class="margin-top-10">
+                  <img src="~static/img/dept_user_icon.png" style="height: 45px;width: 45px">
+                </div>
+                <div class="font-size-12">
+                  {{$t('我的待办')}}
+                </div>
+              </van-col>
+            </van-row>
+          </div>
         </div>
       </div>
     </div>
     <div class="content-block" :style="divHeight3">
-      <div class="margin-top-10 padding-lr-10">
+      <div class="margin-top-60 padding-lr-10">
         <div>
           <van-row>
             <van-col span="12">
@@ -175,15 +182,13 @@
       this.active = this.$route.query.activeType ? this.$route.query.activeType : 6;
       if (this.$route.query.sessionId){
         this.initAppConfig();
-      }
-
-      setTimeout(()=>{
+      }else{
         if (this.active == 6){
           this.initAppRecommend();
         }else {
           this.initAppServer();
         }
-      },1000);
+      }
     },
     methods: {
       layoutInit(){
@@ -192,6 +197,13 @@
       async initAppConfig(){
         await this.autoLoginApp();
         //await this.getSessionInfo();
+        setTimeout(()=>{
+          if (this.active == 6){
+            this.initAppRecommend();
+          }else {
+            this.initAppServer();
+          }
+        },1000);
       },
       initAppRecommend(){
         let params = {};
@@ -300,7 +312,7 @@
   background: #FFFFFF;
   width: 100%;
   position: relative;
-  top: -35px;
+  top: -15px;
 }
 .app-title-border-tag{
   width: 5px;

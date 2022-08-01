@@ -21,11 +21,22 @@
 
     },
     created() {
-      this.init();
+      if (this.$route.query.sessionId){
+        this.initAppConfig();
+      }else{
+        this.init();
+      }
     },
     methods: {
       async init(){
-        await this.queryStudentTimeInfo();
+        this.queryStudentTimeInfo()
+      },
+      async initAppConfig(){
+        await this.autoLoginApp();
+        //await this.getSessionInfo();
+        setTimeout(()=>{
+          this.queryStudentTimeInfo();
+        },1000);
       }
     },
     watch: {
