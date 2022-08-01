@@ -31,7 +31,7 @@ export default {
   methods: {
     getUrl(){
       this.loginUserAppType = this.$route.query.userType;
-      this.navHeight = this.$route.query.navH;
+      this.navHeight = this.$route.query.navH ? this.$route.query.navH : 0;
       this.globalAppShow = this.$route.query.appType;
     },
     returnGlobalMain(value){

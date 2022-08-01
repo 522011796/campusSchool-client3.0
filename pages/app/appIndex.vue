@@ -41,13 +41,14 @@
 <!--    </div>-->
     <div style="position: relative">
       <div style="position: relative;height: 180px">
-        <img src="~static/img/banner_school_app.png" style="width: 100%; position: absolute" :style="{height: (parseInt(170) + parseInt(navHeight)) + 'px'}">
-        <div class="text-left padding-lr-10 color-white" v-if="globalAppShow && globalAppShow != ''" style="position: relative; left: 5px" :style="{top: (parseInt(10) + parseInt(navHeight)) + 'px'}">
+<!--        v-if="globalAppShow && globalAppShow != ''"-->
+        <img src="~static/img/banner_school_app.png" style="width: 100%; position: absolute" :style="{height: (180 + parseInt(navHeight)) + 'px'}">
+        <div class="padding-lr-10 color-white" style="position: absolute; left: 5px" :style="{top: topHeight + 'px'}">
           <span class="font-bold font-size-20" @click="returnIndex">
             <i class="fa fa-chevron-left"></i>
           </span>
         </div>
-        <div class="padding-lr-10" style="position: relative; top: 105px;z-index: 99">
+        <div class="padding-lr-10" style="position: relative;top:120px; z-index: 99">
           <div class="header-tab-block">
             <van-row>
               <van-col :span="6" class="text-center" style="height: 65px;" @click="activeTabMenu(0)">
@@ -171,6 +172,7 @@
     data(){
       return {
         active: 6,
+        topHeight: 0,
         serverAppList: [],
         noticeAppList: []
       }
@@ -180,6 +182,7 @@
     },
     created() {
       this.active = this.$route.query.activeType ? this.$route.query.activeType : 6;
+      this.topHeight = this.navHeight > 0 ? (parseInt(0) + parseInt(this.navHeight)) : 10;
       if (this.$route.query.sessionId){
         this.initAppConfig();
       }else{
