@@ -741,7 +741,7 @@
         this.initAuditList();
       },
       printManage(event, item){
-        window.open('/formPrint?serverId=' + item._id + "&title=" + item.formName, '_blank');
+        window.open('/formPrint?serverId=' + item._id + "&title=" + item.formName + "&time=" + this.$moment().format("YYYY-MM-DD HH:mm:ss"), '_blank');
       },
       cancelPop(){
         this.textarea = '';

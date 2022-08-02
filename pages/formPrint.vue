@@ -131,6 +131,10 @@
         </tr>
       </table>
     </div>
+    <div class="text-right padding-tb-10">
+      <span>{{$t("打印时间")}}</span>
+      <span class="margin-left-5">{{$route.query.time}}</span>
+    </div>
     <div class="margin-top-20">
 
     </div>
