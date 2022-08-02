@@ -210,7 +210,8 @@
                 width="100"
                 :label="$t('操作')">
                 <template slot-scope="scope">
-                  <a href="javascript:;" class="color-grand" @click="detailClick($event, scope.row)">{{$t("详情")}}</a>
+                  <a href="javascript:;" class="color-success" @click="detailClick($event, scope.row)">{{$t("详情")}}</a>
+                  <a href="javascript:;" class="color-grand margin-left-5" @click="printManage($event, scope.row)">{{$t("打印")}}</a>
                 </template>
               </el-table-column>
             </el-table>
@@ -738,6 +739,9 @@
         this.activeMenu = type;
         this.page = 1;
         this.initAuditList();
+      },
+      printManage(event, item){
+        window.open('/formPrint?serverId=' + item._id + "&title=" + item.formName, '_blank');
       },
       cancelPop(){
         this.textarea = '';

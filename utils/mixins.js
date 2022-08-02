@@ -211,6 +211,12 @@ export default {
         'overflow-y': 'auto',
         'overflow-x': 'hidden'
       },
+      divHeight13: {
+        'height': '',
+        'height1': '',
+        'overflow-y': 'auto',
+        'overflow-x': 'hidden'
+      },
       tableHeight: {
         'height': '',
       },
@@ -491,6 +497,7 @@ export default {
         this.divHeight10.height1 = window.innerHeight - itemHeight;
         this.divHeight11.height = window.innerHeight - itemHeight - 180 + 'px';
         this.divHeight12.height = window.innerHeight - itemHeight - 20 + 'px';
+        this.divHeight13.height = window.innerHeight + 'px';
         this.tableHeight.height = (window.innerHeight - 60) * 0.86 - 30;
         this.drawHeight.height = window.innerHeight - 80 + 'px';
         this.drawHeight2.height = window.innerHeight - 15 + 'px';
