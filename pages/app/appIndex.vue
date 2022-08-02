@@ -41,9 +41,8 @@
 <!--    </div>-->
     <div style="position: relative">
       <div style="position: relative;height: 180px">
-<!--        v-if="globalAppShow && globalAppShow != ''"-->
         <img src="~static/img/banner_school_app.png" style="width: 100%; position: absolute" :style="{height: (180 + parseInt(navHeight)) + 'px'}">
-        <div class="padding-lr-10 color-white" style="position: absolute; left: 5px" :style="{top: topHeight + 'px'}">
+        <div v-if="globalAppShow && globalAppShow != ''" class="padding-lr-10 color-white" style="position: absolute; left: 5px" :style="{top: topHeight + 'px'}">
           <span class="font-bold font-size-20" @click="returnIndex">
             <i class="fa fa-chevron-left"></i>
           </span>
