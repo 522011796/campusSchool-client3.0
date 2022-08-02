@@ -48,14 +48,14 @@
               <div @click="showCollapse = !showCollapse" v-if="showCollapse == false">
                 <span>{{serverDetailTitle}}</span>
                 <span>
-                <i class="fa fa-angle-down"></i>
+                <i class="fa fa-angle-down pull-right"></i>
               </span>
               </div>
               <el-collapse-transition>
                 <div v-show="showCollapse" @click="showCollapse = false"  v-if="showCollapse == true">
                   {{ serverDetail.des }}
                   <span>
-                  <i class="fa fa-angle-up"></i>
+                  <i class="fa fa-angle-up pull-right"></i>
                 </span>
                 </div>
               </el-collapse-transition>
