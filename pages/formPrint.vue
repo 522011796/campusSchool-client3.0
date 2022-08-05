@@ -1,65 +1,65 @@
 <template>
   <div class="container" :style="divHeight13">
-    <div class="text-center font-size-16 font-bold margin-top-30">
+    <div class="text-center font-size-16 font-bold margin-top-30 color-black">
       <span v-if="$route.query.title && $route.query.title != ''">{{$route.query.title}}</span>
       <span v-else>{{$t("打印表单")}}</span>
     </div>
     <div class="margin-top-20">
       <div class="padding-tb-10 padding-lr-10">
         <span class="title-block-tag"></span>
-        <span class="title-block-text">{{$t("基本信息")}}</span>
+        <span class="title-block-text color-black">{{$t("基本信息")}}</span>
       </div>
-      <table class="custom-table">
+      <table class="custom-table-black">
         <tr>
           <td style="width: 10%" class="font-size-12 font-bold">{{$t("姓名")}}</td>
-          <td style="width: 20%" class="color-muted font-size-12">{{detailData.applyUserName}}</td>
+          <td style="width: 20%" class="color-black font-size-12">{{detailData.applyUserName}}</td>
           <td style="width: 10%" class="font-size-12 font-bold">{{$t("性别")}}</td>
-          <td style="width: 15%" class="color-muted font-size-12">
+          <td style="width: 15%" class="color-black font-size-12">
             <my-sex tag="text" :sex="detailData.sex"></my-sex>
           </td>
           <td style="width: 10%" class="font-size-12 font-bold">{{$t("工号/学号")}}</td>
-          <td style="width: 15%" class="color-muted font-size-12">
+          <td style="width: 15%" class="color-black font-size-12">
             <span v-if="detailData.userType == 5">{{detailData.userNo}}</span>
             <span v-if="detailData.userType == 4">{{ detailData.userNo }}</span>
           </td>
         </tr>
         <tr>
           <td class="font-size-12 font-bold">{{$t("班级/部门")}}</td>
-          <td class="color-muted font-size-12">
+          <td class="color-black font-size-12">
             <span v-if="detailData.userType == 5">{{detailData.className}}</span>
             <span v-if="detailData.userType == 4">{{ detailData.departmentName }}</span>
           </td>
           <td class="font-size-12 font-bold">{{$t("申请日期")}}</td>
-          <td class="color-muted font-size-12">
+          <td class="color-black font-size-12">
             {{$moment(detailData.applyTime).format("YYYY-MM-DD HH:mm:ss")}}
           </td>
           <td class="font-size-12 font-bold">{{$t("审批状态")}}</td>
-          <td class="color-muted font-size-12">
-            <label v-if="detailData.status === -1" class="color-warning">{{$t("撤销")}}</label>
-            <label v-if="detailData.status === 0" class="color-warning">{{$t("待审核")}}</label>
-            <label v-if="detailData.status === 3" class="color-success">{{$t("通过")}}</label>
-            <label v-if="detailData.status === 4" class="color-danger">{{$t("未通过")}}</label>
+          <td class="color-black font-size-12">
+            <label v-if="detailData.status === -1">{{$t("撤销")}}</label>
+            <label v-if="detailData.status === 0">{{$t("待审核")}}</label>
+            <label v-if="detailData.status === 3">{{$t("通过")}}</label>
+            <label v-if="detailData.status === 4">{{$t("未通过")}}</label>
           </td>
         </tr>
         <tr>
           <td class="font-size-12 font-bold">{{$t("编号")}}</td>
-          <td class="color-muted font-size-12">{{detailData.formId}}</td>
+          <td class="color-black font-size-12">{{detailData.formId}}</td>
           <td class="font-size-12 font-bold">{{$t("表单名称")}}</td>
-          <td class="color-muted font-size-12" colspan="3">{{detailData.formName}}</td>
+          <td class="color-black font-size-12" colspan="3">{{detailData.formName}}</td>
         </tr>
       </table>
     </div>
     <div class="margin-top-20">
       <div class="padding-tb-10 padding-lr-10">
         <span class="title-block-tag"></span>
-        <span class="title-block-text">{{$t("表单内容")}}</span>
+        <span class="title-block-text color-black">{{$t("表单内容")}}</span>
       </div>
-      <table class="custom-table">
+      <table class="custom-table-black">
         <tr v-for="(item, index) in detailApplyContentData" :key="index">
           <template  v-if="item.type != 'fc-editor' && item.type != 'upload'">
             <td style="width: 20%;text-align: right;padding-right: 15px">
-              <span class="color-muted">
-                <label class="font-size-12">{{item.title}}</label>
+              <span class="color-black">
+                <label class="font-size-12 font-bold">{{item.title}}</label>
               </span>
             </td>
             <td style="text-align: left;padding-left: 15px">
@@ -72,16 +72,16 @@
           </template>
           <template v-else-if="item.type != 'fc-editor' && item.type == 'upload'">
             <td style="width: 20%;text-align: right;padding-right: 15px">
-              <span v-if="!item.value || item.value.length <= 0" class="color-muted moon-content-text-ellipsis-class">
+              <span v-if="!item.value || item.value.length <= 0" class="moon-content-text-ellipsis-class font-bold">
                 {{item.title}}
               </span>
-              <span v-else class="color-muted" style="position: relative;">{{item.title}}: </span>
+              <span v-else class="color-black font-bold" style="position: relative;">{{item.title}}: </span>
             </td>
             <td style="text-align: left;padding-left: 15px">
               <span v-if="!item.value || item.value.length <= 0">
                 <div style="height: 20px;line-height: 20px"></div>
               </span>
-              <span v-else class="custom-avatar" style="display: inline-block;margin-right: 5px;position: relative; top: 5px" v-for="(itemImg, indexImg) in item.value" :key="indexImg" @click="readFile(itemImg)">
+              <span v-else class="custom-avatar" style="display: inline-block;margin-right: 5px;position: relative; top: 5px" v-for="(itemImg, indexImg) in item.value" :key="indexImg">
                 <el-avatar shape="square" size="small" :src="itemImg" fit="fill"></el-avatar>
               </span>
             </td>
@@ -89,7 +89,7 @@
 
           <template v-else>
             <td style="width: 20%;text-align: right;padding-right: 15px">
-              <span class="color-muted font-bold moon-content-text-ellipsis-class" style="position: relative;top: -50px;">{{item.title}}: </span>
+              <span class="color-black font-bold moon-content-text-ellipsis-class" style="position: relative;top: -50px;">{{item.title}}: </span>
             </td>
             <td style="text-align: left;padding-left: 15px">
               <div v-if="item.type == 'fc-editor'"  v-html="item.value" style="width: 95%;min-height: 150px;overflow-y:auto;display: inline-block;border: 1px solid #dddddd;border-radius: 5px;padding: 0px 10px">
@@ -102,36 +102,36 @@
     <div class="margin-top-20">
       <div class="padding-tb-10 padding-lr-10">
         <span class="title-block-tag"></span>
-        <span class="title-block-text">{{$t("审核信息")}}</span>
+        <span class="title-block-text color-black">{{$t("审核信息")}}</span>
       </div>
-      <table class="custom-table">
+      <table class="custom-table-black">
         <tr v-for="(itemUser, indexUser) in detailApplyAuditList" :key="indexUser">
           <td style="width: 20%" class="font-size-12 font-bold">{{$t("审核人")}}</td>
-          <td style="width: 20%" class="color-muted font-size-12">
+          <td style="width: 20%" class="color-black font-size-12">
             {{ itemUser.userName }}
           </td>
           <td style="width: 15%" class="font-size-12 font-bold">{{$t("审核状态")}}</td>
-          <td style="width: 15%" class="color-muted font-size-12">
-            <label v-if="itemUser.status === -1" class="color-warning">{{$t("撤销")}}</label>
-            <label v-if="itemUser.status === 0" class="color-warning">{{$t("待审核")}}</label>
-            <label v-if="itemUser.status === 3" class="color-success">{{$t("通过")}}</label>
-            <label v-if="itemUser.status === 4" class="color-danger">{{$t("未通过")}}</label>
-            <label v-if="itemUser.status === 1" class="color-warning">{{$t("已通过")}}</label>
-            <label v-if="itemUser.status === 2" class="color-warning">{{$t("已驳回")}}</label>
-            <label v-if="itemUser.status === 5" class="color-warning">{{$t("无需审批")}}</label>
-            <label v-if="itemUser.status === 8" class="color-warning">{{$t("审批中")}}</label>
+          <td style="width: 15%" class="color-black font-size-12">
+            <label v-if="itemUser.status === -1">{{$t("撤销")}}</label>
+            <label v-if="itemUser.status === 0">{{$t("待审核")}}</label>
+            <label v-if="itemUser.status === 3">{{$t("通过")}}</label>
+            <label v-if="itemUser.status === 4">{{$t("未通过")}}</label>
+            <label v-if="itemUser.status === 1">{{$t("已通过")}}</label>
+            <label v-if="itemUser.status === 2">{{$t("已驳回")}}</label>
+            <label v-if="itemUser.status === 5">{{$t("无需审批")}}</label>
+            <label v-if="itemUser.status === 8">{{$t("审批中")}}</label>
           </td>
           <td style="width: 10%" class="font-size-12 font-bold">{{$t("审核时间")}}</td>
-          <td style="width: 20%" class="color-muted font-size-12">
+          <td style="width: 20%" class="color-black font-size-12">
             <label v-if="itemUser.handleTime">
               {{$moment(itemUser.handleTime).format("YYYY-MM-DD HH:mm:ss")}}
             </label>
-            <label v-else class="color-muted">--</label>
+            <label v-else class="color-black">--</label>
           </td>
         </tr>
       </table>
     </div>
-    <div class="text-right padding-tb-10">
+    <div class="text-right padding-tb-10 color-black">
       <span>{{$t("打印时间")}}</span>
       <span class="margin-left-5">{{$route.query.time}}</span>
     </div>

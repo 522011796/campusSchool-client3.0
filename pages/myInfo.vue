@@ -323,8 +323,13 @@
                     <span v-if="!item.value || item.value.length <= 0">
                       <div style="height: 20px;line-height: 20px"></div>
                     </span>
-                      <span v-else class="custom-avatar" style="display: inline-block;margin-right: 5px;position: relative; top: 5px" v-for="(itemImg, indexImg) in item.value" :key="indexImg" @click="readFile(itemImg)">
-                      <el-avatar shape="square" size="small" :src="itemImg" fit="fill"></el-avatar>
+                    <span v-else class="custom-avatar" style="display: inline-block;margin-right: 5px;position: relative; top: 5px" v-for="(itemImg, indexImg) in item.value" :key="indexImg">
+<!--                      <el-avatar shape="square" size="small" :src="itemImg" fit="fill"></el-avatar>-->
+                      <el-image
+                        style="width: 30px; height: 30px"
+                        :src="itemImg"
+                        :preview-src-list="item.value">
+                      </el-image>
                     </span>
                     </td>
                   </template>
@@ -374,7 +379,12 @@
                           <label v-if="itemUser.status === 3" class="color-success">{{$t("通过")}}</label>
                           <label v-if="itemUser.status === 4" class="color-danger">{{$t("未通过")}}</label>
                           <label v-if="itemUser.status === 1" class="color-warning">{{$t("已通过")}}</label>
-                          <label v-if="itemUser.status === 2" class="color-warning">{{$t("已驳回")}}</label>
+                          <label v-if="itemUser.status === 2" class="color-warning">
+                            {{$t("已驳回")}}
+                            <el-tooltip v-if="itemUser.des" class="item" effect="dark" :content="itemUser.des" placement="top">
+                              <i class="fa fa-warning color-warning"></i>
+                            </el-tooltip>
+                          </label>
                           <label v-if="itemUser.status === 5" class="color-warning">{{$t("无需审批")}}</label>
                           <label v-if="itemUser.status === 8" class="color-warning">{{$t("审批中")}}</label>
                         </span>
@@ -603,6 +613,7 @@
   import {common} from "../utils/api/url";
   import DialogNormal from "~/components/utils/dialog/DialogNormal";
   import {MessageError, MessageSuccess} from "~/utils/utils";
+  import {ImagePreview} from "vant";
   export default {
     name: 'index',
     mixins: [mixins],
@@ -742,6 +753,12 @@
       },
       printManage(event, item){
         window.open('/formPrint?serverId=' + item._id + "&title=" + item.formName + "&time=" + this.$moment().format("YYYY-MM-DD HH:mm:ss"), '_blank');
+      },
+      readFile(file){//预览
+        ImagePreview({
+          images: [file],
+          closeable: false,
+        });
       },
       cancelPop(){
         this.textarea = '';

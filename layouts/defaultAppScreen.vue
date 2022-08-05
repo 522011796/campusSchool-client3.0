@@ -14,13 +14,16 @@
     mixins: [mixins],
     data(){
       return {
-
+        hrefUrl: ''
       }
     },
     mounted () {
 
     },
     created() {
+      if (process.browser){
+        this.hrefUrl = window.location.href;
+      }
       if (this.$route.query.sessionId){
         this.initAppConfig();
       }else{
@@ -29,13 +32,17 @@
     },
     methods: {
       async init(){
-        this.queryStudentTimeInfo()
+        if (this.hrefUrl.indexOf("/newStudent/") > -1){
+          this.queryStudentTimeInfo()
+        }
       },
       async initAppConfig(){
         await this.autoLoginApp();
         //await this.getSessionInfo();
         setTimeout(()=>{
-          this.queryStudentTimeInfo();
+          if (this.hrefUrl.indexOf("/newStudent/") > -1){
+            this.queryStudentTimeInfo();
+          }
         },1000);
       }
     },
