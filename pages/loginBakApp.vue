@@ -18,45 +18,6 @@
           </div>
           <div class="line-height"></div>
           <div class="margin-top-30">
-            <div class="animated fadeInLeft" v-show="userType == ''">
-              <div v-if="userSubType == 1">
-                <div>
-                  <div>
-                    <span class="login-title-label">{{$t("用户名/手机号")}}</span>
-                  </div>
-                  <div class="margin-top-5">
-                    <el-input v-model="form.username" @keyup.enter.native="login"></el-input>
-                  </div>
-                </div>
-                <div class="margin-top-20">
-                  <div>
-                    <span class="login-title-label">{{$t("密码")}}</span>
-                  </div>
-                  <div class="margin-top-5">
-                    <el-input :show-password="true" v-model="form.password" @keyup.enter.native="login"></el-input>
-                  </div>
-                </div>
-              </div>
-
-              <div v-if="userSubType == 2">
-                <div>
-                  <div>
-                    <span class="login-title-label">{{$t("身份证号码")}}</span>
-                  </div>
-                  <div class="margin-top-5">
-                    <el-input v-model="form.username"></el-input>
-                  </div>
-                </div>
-                <div class="margin-top-20">
-                  <div>
-                    <span class="login-title-label">{{$t("密码")}}</span>
-                  </div>
-                  <div class="margin-top-5">
-                    <el-input :show-password="true" v-model="form.password" @keyup.enter.native="login"></el-input>
-                  </div>
-                </div>
-              </div>
-            </div>
             <div class="animated fadeInLeft" v-show="userType == 1">
               <div v-if="userSubType == 1">
                 <div>
@@ -171,7 +132,7 @@
                 </el-button>
               </div>
             </div>
-            <div class="login-bottom-other-block margin-top-40" v-if="userType == 2 || userType == 1 || userType == ''">
+            <div class="login-bottom-other-block margin-top-40" v-if="userType == 2 || userType == 1">
               <div class="line-height"></div>
               <div class="text-center login-bottom-other margin-top-10">
                 <label class="color-muted" @click="changeSubType(1)"><i class="fa fa-user-circle-o"></i> {{$t("账号/手机号")}}</label>
@@ -234,10 +195,9 @@
     components: {DialogNormal,TimeoutButton},
     data(){
       return {
-        userType: '',
+        userType: '1',
         userSubType: '2',
         userAccountType : '0',
-        pageType: '',
         dialogLoading: false,
         modalVisible: false,
         showContent: false,
@@ -270,11 +230,6 @@
       this.showContent = false;
     },
     created() {
-      this.pageType = this.$route.query.type;
-      if (process.browser) {
-        let pageType = localStorage.getItem("pageType");
-        localStorage.setItem("pageType", pageType != 'undefined' ? pageType : this.pageType);
-      }
       this.hh();
     },
     methods: {
@@ -308,7 +263,7 @@
           return;
         }
         let params = {
-          clientType: 3,
+          clientType: 4,
           accountType: 0,
           account: this.form.username,
           password: getmd5(this.form.password),
@@ -319,22 +274,17 @@
         }else if (this.userSubType == 2){
           params['accountType'] = 3;
         }
-        // if (this.userType == 1){
-        //   userType = 5;
-        // }if (this.userType == 2){
-        //   userType = 4;
-        // }
-        // params['userType'] = userType;
+        if (this.userType == 1){
+          userType = 5;
+        }if (this.userType == 2){
+          userType = 4;
+        }
+        params['userType'] = userType;
         params = this.$qs.stringify(params);
         this.dialogLoading = true;
         this.$axios.post(common.login_url, params, {loading: false}).then(res => {
           if (res.data.code == 200){
-            let pageType = localStorage.getItem("pageType");
-            if (pageType == 'server'){
-              this.$router.push("/app/appIndex");
-            }else {
-              this.$router.push("/newStudent/studentIndex");
-            }
+            this.$router.push("/newStudent/studentIndex");
             localStorage.removeItem("menuTabList");
             Toast(res.data.desc);
           }else if (res.data.code == 2032){
@@ -381,7 +331,7 @@
             this.$axios.post(common.set_active_account, params, {loading: false}).then(res => {
               if (res.data.code == 200){
                 this.modalVisible = false;
-                this.userType = '';
+                this.userType = 1;
                 this.userSubType = 1;
                 this.form.username = "";
                 this.form.password = "";
