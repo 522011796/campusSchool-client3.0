@@ -173,7 +173,8 @@
         active: 6,
         topHeight: 0,
         serverAppList: [],
-        noticeAppList: []
+        noticeAppList: [],
+        pageType: '',
       }
     },
     mounted() {
@@ -182,9 +183,16 @@
     created() {
       this.active = this.$route.query.activeType ? this.$route.query.activeType : 6;
       this.topHeight = this.navHeight > 0 ? (parseInt(0) + parseInt(this.navHeight)) : 10;
+
       if (this.$route.query.sessionId){
         this.initAppConfig();
       }else{
+        this.pageType = this.$route.query.type ? this.$route.query.type : 'server';
+        if (process.browser) {
+          let pageType = localStorage.getItem("pageType");
+          localStorage.setItem("pageType", !this.pageType ? pageType : this.pageType);
+        }
+
         if (this.active == 6){
           this.initAppRecommend();
         }else {

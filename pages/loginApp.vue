@@ -270,12 +270,10 @@
       this.showContent = false;
     },
     created() {
-      this.pageType = this.$route.query.type;
       if (process.browser) {
         let pageType = localStorage.getItem("pageType");
-        localStorage.setItem("pageType", !this.pageType ? pageType : this.pageType);
         this.userSubType = "2";
-        if (localStorage.getItem("pageType") == 'server'){
+        if (pageType == 'server'){
           this.userSubType = "1";
         }
       }

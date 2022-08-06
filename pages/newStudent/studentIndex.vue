@@ -283,6 +283,11 @@
       this.active = this.$route.query.activeType ? this.$route.query.activeType : 6;
       if (this.$route.query.sessionId){
         this.initAppConfig();
+      }else {
+        this.pageType = this.$route.query.type ? this.$route.query.type : "student";
+        if (process.browser) {
+          localStorage.setItem("pageType", !this.pageType ? pageType : this.pageType);
+        }
       }
       setTimeout(()=>{
         this.getCureentEnrollInfo();
