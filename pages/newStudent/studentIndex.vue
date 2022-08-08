@@ -382,7 +382,8 @@
               activeType: this.active,
               userType: this.loginUserAppType,
               navH: this.navHeight,
-              appType: this.globalAppShow
+              appType: this.globalAppShow,
+              sessionId: this.$route.query.sessionId
             }
           });
         }else if (item == 'order'){
@@ -393,7 +394,8 @@
               activeType: this.active,
               userType: this.loginUserAppType,
               navH: this.navHeight,
-              appType: this.globalAppShow
+              appType: this.globalAppShow,
+              sessionId: this.$route.query.sessionId
             }
           });
         }else if (item == 'flow'){
@@ -404,7 +406,8 @@
               activeType: this.active,
               userType: this.loginUserAppType,
               navH: this.navHeight,
-              appType: this.globalAppShow
+              appType: this.globalAppShow,
+              sessionId: this.$route.query.sessionId
             }
           });
         }else if (item.link_sub_type == 0){
@@ -415,7 +418,8 @@
               activeType: this.active,
               userType: this.loginUserAppType,
               navH: this.navHeight,
-              appType: this.globalAppShow
+              appType: this.globalAppShow,
+              sessionId: this.$route.query.sessionId
             }
           });
         }else if (item.link_sub_type == 4){
@@ -426,7 +430,8 @@
               activeType: this.active,
               userType: this.loginUserAppType,
               navH: this.navHeight,
-              appType: this.globalAppShow
+              appType: this.globalAppShow,
+              sessionId: this.$route.query.sessionId
             }
           });
         }else if (item.link_sub_type == 3){
@@ -437,7 +442,8 @@
               activeType: this.active,
               userType: this.loginUserAppType,
               navH: this.navHeight,
-              appType: this.globalAppShow
+              appType: this.globalAppShow,
+              sessionId: this.$route.query.sessionId
             }
           });
         }else if (item.link_sub_type == 2){
@@ -451,7 +457,8 @@
               appType: this.globalAppShow,
               dormSelType: item.ruleTypeInfo.rule_type,
               ruleId: item.ruleTypeInfo.rule_id,
-              pacRegions: JSON.stringify(item.ruleTypeInfo.pacRegions)
+              pacRegions: JSON.stringify(item.ruleTypeInfo.pacRegions),
+              sessionId: this.$route.query.sessionId
             }
           });
         }else if (item.link_sub_type == 9){
@@ -463,7 +470,8 @@
               userType: this.loginUserAppType,
               navH: this.navHeight,
               appType: this.globalAppShow,
-              linkId: item.id
+              linkId: item.id,
+              sessionId: this.$route.query.sessionId
             }
           });
         }else if (item.link_sub_type == 5){
@@ -479,7 +487,8 @@
               userType: this.loginUserAppType,
               navH: this.navHeight,
               appType: this.globalAppShow,
-              title: otherTitle
+              title: otherTitle,
+              sessionId: this.$route.query.sessionId
             }
           });
         }else if (item.link_sub_type == 1){
@@ -497,7 +506,8 @@
               id: parseInt(name),
               userType: this.loginUserAppType,
               navH: this.navHeight,
-              appType: this.globalAppShow
+              appType: this.globalAppShow,
+              sessionId: this.$route.query.sessionId
             }
           });
         }else if (name == 6){

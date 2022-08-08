@@ -241,7 +241,8 @@
               activeType: this.active,
               userType: this.loginUserAppType,
               navH: this.navHeight,
-              appType: this.globalAppShow
+              appType: this.globalAppShow,
+              sessionId: this.$route.query.sessionId
             }
           });
         }else {
@@ -263,6 +264,7 @@
               userType: this.loginUserAppType,
               navH: this.navHeight,
               appType: this.globalAppShow,
+            sessionId: this.$route.query.sessionId,
               page: '/app/appIndex'
             }
           });
@@ -278,7 +280,8 @@
               id: parseInt(name),
               userType: this.loginUserAppType,
               navH: this.navHeight,
-              appType: this.globalAppShow
+              appType: this.globalAppShow,
+              sessionId: this.$route.query.sessionId
             }
           });
         // }else if (name == 6){
@@ -295,7 +298,8 @@
               activeType: this.active,
               userType: this.loginUserAppType,
               navH: this.navHeight,
-              appType: this.globalAppShow
+              appType: this.globalAppShow,
+              sessionId: this.$route.query.sessionId
             }
           });
         }

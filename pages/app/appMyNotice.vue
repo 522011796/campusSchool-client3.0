@@ -402,7 +402,8 @@
           query: {
             userType: this.loginUserAppType,
             navH: this.navHeight,
-            appType: this.globalAppShow
+            appType: this.globalAppShow,
+            sessionId: this.$route.query.sessionId
           }
         });
       },
