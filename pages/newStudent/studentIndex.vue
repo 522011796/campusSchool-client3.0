@@ -286,7 +286,7 @@
       }else {
         this.pageType = this.$route.query.type ? this.$route.query.type : "student";
         if (process.browser) {
-          localStorage.setItem("pageType", !this.pageType ? pageType : this.pageType);
+          localStorage.setItem("pageType", this.pageType);
         }
       }
       setTimeout(()=>{
