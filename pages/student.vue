@@ -960,7 +960,7 @@
         <div>{{$t("金额")}} ¥{{totalAmount}}</div>
       </div>
       <div class="margin-top-5 color-danger font-size-12">
-        <div>{{$t("1、请使用微信扫描该二维码进行支付操作")}}</div>
+        <div>{{$t("1、请使用微信/支付宝扫描该二维码进行支付操作")}}</div>
         <div>{{$t("2、操作完成后请点击以下操作按钮进行确认")}}</div>
         <div>{{$t("3、如果已经确认支付，请等待管理员确认，无需重复支付")}}</div>
       </div>
