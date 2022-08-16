@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" :style="divHeight13">
     <div class="text-center font-size-16 font-bold margin-top-30">
       <span v-if="$route.query.title && $route.query.title != ''">{{$route.query.title}}</span>
       <span v-else>{{$t("报到单")}}</span>
@@ -135,6 +135,17 @@
         </el-table-column>
       </el-table>
     </div>
+    <div class="margin-top-20" v-if="detailData['5'] && detailData['5'].checkinSheetTips != null && detailData['5'].checkinSheetTips != ''">
+      <div class="padding-tb-10 padding-lr-10">
+        <span class="title-block-tag"></span>
+        <span class="title-block-text">{{$t("报道须知")}}</span>
+      </div>
+      <div class="padding-tb-10 padding-lr-10" style="border: 1px solid #dddddd;min-height: 45px;">
+        <span v-if="detailData['5']">
+          <pre style="white-space: pre-wrap;word-wrap: break-word;">{{detailData['5'].checkinSheetTips}}</pre>
+        </span>
+      </div>
+    </div>
     <div class="margin-top-20">
       <el-row>
         <el-col :span="12">
@@ -195,7 +206,7 @@
         let params = {
           userId: this.loginUserId
         };
-        this.$axios.get(common.enroll_checkin_student_detail, {params: params}).then(res => {
+        this.$axios.get(common.enroll_checkin_student_detail2, {params: params}).then(res => {
           if (res.data.data){
             this.detailData = res.data.data;
           }
