@@ -138,7 +138,7 @@
     <div class="margin-top-20" v-if="detailData['5'] && detailData['5'].checkinSheetTips != null && detailData['5'].checkinSheetTips != ''">
       <div class="padding-tb-10 padding-lr-10">
         <span class="title-block-tag"></span>
-        <span class="title-block-text">{{$t("报道须知")}}</span>
+        <span class="title-block-text">{{$t("报到须知")}}</span>
       </div>
       <div class="padding-tb-10 padding-lr-10" style="border: 1px solid #dddddd;min-height: 45px;">
         <span v-if="detailData['5']">

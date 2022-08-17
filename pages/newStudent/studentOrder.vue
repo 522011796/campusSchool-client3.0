@@ -170,7 +170,7 @@
             <van-col span="24">
               <div class="text-left">
                 <span class="app-title-border-tag"></span>
-                <span class="font-bold" style="position: relative;top: -8px">{{$t("报道须知")}}</span>
+                <span class="font-bold" style="position: relative;top: -8px">{{$t("报到须知")}}</span>
               </div>
             </van-col>
           </van-row>
