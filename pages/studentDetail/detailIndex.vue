@@ -30,245 +30,274 @@
       </van-row>
     </div>
     <div style="margin-top:0px;">
-      <div ref="container" class="content-block" :style="divHeight10">
-        <div class="margin-top-20 padding-lr-10">
-<!--          <div>-->
-<!--            <van-row>-->
-<!--              <van-col span="24">-->
-<!--                <div class="text-left">-->
-<!--                  <span class="app-title-border-tag"></span>-->
-<!--                  <span class="font-bold" style="position: relative;top: -8px">{{$t("基本信息")}}</span>-->
-<!--                </div>-->
-<!--              </van-col>-->
-<!--            </van-row>-->
-<!--          </div>-->
-          <div class="text-center">
-            <van-image
-              round
-              width="100px"
-              height="100px"
-              src="https://img01.yzcdn.cn/vant/cat.jpeg"
-            />
-            <div class="margin-top-5">
-              <van-button plain hairline type="primary" size="small" :loading="signLoading" @click="signConfirm">{{$t("已报到确认")}}</van-button>
-              <van-button plain hairline type="warning" size="small" :loading="payLoading" @click="payConfirm(event, 3)">{{$t("已缴费确认")}}</van-button>
-<!--              <van-button plain hairline type="danger" size="small" :loading="payLoading" @click="payConfirm(event, 1)">{{$t("撤销缴费")}}</van-button>-->
+      <div ref="container" class="content-block">
+        <div style="border:1px solid #dddddd;border-radius: 5px;box-shadow: 0px 0px 3px 3px #dddddd;margin: 10px;padding:0px 0px 10px 0px;" :style="divHeight14">
+          <div class="margin-top-20 padding-lr-10">
+            <div class="text-center">
+              <van-image
+                round
+                width="100px"
+                height="100px"
+                :src="detailData.photo_simple"
+              />
             </div>
-          </div>
-          <div class="margin-top-20">
-            <table class="custom-table">
-              <tbody>
-              <tr>
-                <td style="width: 15%">{{$t("姓名")}}</td>
-                <td style="width: 35%">{{detailData.real_name}}</td>
-                <td style="width: 15%">{{$t("性别")}}</td>
-                <td style="width: 35%"><my-sex :sex="detailData.sex" tag="text"></my-sex></td>
-              </tr>
-              <tr>
-                <td style="width: 15%">{{$t("录取号")}}</td>
-                <td style="width: 35%">{{detailData.student_id}}</td>
-                <td style="width: 15%">{{$t("班级")}}</td>
-                <td style="width: 35%">{{detailData.class_name}}</td>
-              </tr>
-              <tr>
-                <td style="width: 15%">{{$t("学院")}}</td>
-                <td style="width: 35%">{{detailData.college_name}}</td>
-                <td style="width: 15%">{{$t("专业")}}</td>
-                <td style="width: 35%">{{detailData.major_name}}</td>
-              </tr>
-              <tr>
-                <td style="width: 15%">{{$t("宿舍")}}</td>
-                <td colspan="3" class="text-left" style="width: 65%">
+            <div class="margin-top-20">
+              <table class="custom-table">
+                <tbody>
+                <tr>
+                  <td style="width: 15%">{{$t("姓名")}}</td>
+                  <td style="width: 35%">
+                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                      <div class="text-center">{{detailData.real_name}}</div>
+                      <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class" style="width: 110px">
+                        {{detailData.real_name}}
+                      </div>
+                    </el-popover>
+                  </td>
+                  <td style="width: 15%">{{$t("性别")}}</td>
+                  <td style="width: 35%" class=" text-center"><my-sex :sex="detailData.sex" tag="text"></my-sex></td>
+                </tr>
+                <tr>
+                  <td style="width: 15%">{{$t("录取号")}}</td>
+                  <td style="width: 35%">
+                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                      <div class="text-center">{{detailData.student_id}}</div>
+                      <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class" style="width: 110px">
+                        {{detailData.student_id}}
+                      </div>
+                    </el-popover>
+                  </td>
+                  <td style="width: 15%">{{$t("班级")}}</td>
+                  <td style="width: 35%">
+                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                      <div class="text-center">{{detailData.class_name}}</div>
+                      <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class" style="width: 110px">
+                        {{detailData.class_name}}
+                      </div>
+                    </el-popover>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 15%">{{$t("学院")}}</td>
+                  <td style="width: 35%">
+                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                      <div class="text-center">{{detailData.college_name}}</div>
+                      <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class" style="width: 110px">
+                        {{detailData.college_name}}
+                      </div>
+                    </el-popover>
+                  </td>
+                  <td style="width: 15%">{{$t("专业")}}</td>
+                  <td style="width: 35%">
+                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                      <div class="text-center">{{detailData.major_name}}</div>
+                      <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class" style="width: 110px">
+                        {{detailData.major_name}}
+                      </div>
+                    </el-popover>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 15%">{{$t("宿舍")}}</td>
+                  <td colspan="3" class="text-left" style="width: 65%">
                   <span v-if="detailData.build_name">
                     {{detailData.build_name}}{{detailData.floor_num}}{{$t("层")}}{{detailData.dormitory_no}}
                   </span>
-                  <span v-if="detailData.pac_name && !detailData.build_name">
+                    <span v-if="detailData.pac_name && !detailData.build_name">
                     {{detailData.pac_name}}
                     <label class="font-size-12 color-muted">
                       (¥{{detailData.pac_price}} -- {{detailData.pac_region}})
                     </label>
                   </span>
-                </td>
-              </tr>
-              </tbody>
-            </table>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
 
-        <div class="margin-top-30 padding-lr-10">
-          <div>
-            <van-row>
-              <van-col span="12">
-                <div class="text-left">
-                  <span class="app-title-border-tag"></span>
-                  <span class="font-bold" style="position: relative;top: -8px">{{$t("缴费信息")}}</span>
-                </div>
-              </van-col>
-              <van-col span="12">
-                <div class="text-right">
-                  <span class="app-title-border-tag"></span>
-                  <span class="font-bold" style="position: relative;top: -8px">
+          <div class="margin-top-30 padding-lr-10">
+            <div>
+              <van-row>
+                <van-col span="12">
+                  <div class="text-left">
+                    <span class="app-title-border-tag"></span>
+                    <span class="font-bold" style="position: relative;top: -8px">{{$t("缴费信息")}}</span>
+                  </div>
+                </van-col>
+                <van-col span="12">
+                  <div class="text-right">
+                    <span class="app-title-border-tag"></span>
+                    <span class="font-bold" style="position: relative;top: -8px">
                     <el-tag v-if="detailData.payment_status == 1" size="small" type="danger">{{$t("未缴清")}}</el-tag>
                     <el-tag v-if="detailData.payment_status == 2" size="small" type="warning">{{$t("部分缴清")}}</el-tag>
                     <el-tag v-if="detailData.payment_status == 3" size="small" type="success">{{$t("已缴清")}}</el-tag>
                     <el-tag v-if="detailData.payment_status == 4" size="small" type="warning">{{$t("待核实")}}</el-tag>
                   </span>
-                </div>
-              </van-col>
-            </van-row>
-          </div>
-          <div>
-            <el-table
-              border
-              ref="refTable"
-              :data="tablePayData"
-              header-cell-class-name="custom-table-cell-bg"
-              size="medium"
-              style="width: 100%">
-              <el-table-column align="center" :label="$t('费用名称')">
-                <template slot-scope="scope">
-                  <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                    <div class="text-center">{{scope.row.item_name}}</div>
-                    <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                  </div>
+                </van-col>
+              </van-row>
+            </div>
+            <div>
+              <el-table
+                border
+                ref="refTable"
+                :data="tablePayData"
+                header-cell-class-name="custom-table-cell-bg"
+                size="medium"
+                style="width: 100%">
+                <el-table-column align="center" :label="$t('费用名称')">
+                  <template slot-scope="scope">
+                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                      <div class="text-center">{{scope.row.item_name}}</div>
+                      <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
                         {{scope.row.item_name}}
                       </span>
-                  </el-popover>
-                </template>
-              </el-table-column>
-              <el-table-column align="center" :label="$t('缓缴')">
-                <template slot-scope="scope">
-                  <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                    <div class="text-center">{{scope.row.delay_amount}}</div>
-                    <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                    </el-popover>
+                  </template>
+                </el-table-column>
+                <el-table-column align="center" :label="$t('缓缴')">
+                  <template slot-scope="scope">
+                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                      <div class="text-center">{{scope.row.delay_amount}}</div>
+                      <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
                         {{scope.row.delay_amount}}
                       </span>
-                  </el-popover>
-                </template>
-              </el-table-column>
-              <el-table-column align="center" :label="$t('贷款')">
-                <template slot-scope="scope">
-                  <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                    <div class="text-center">{{scope.row.loan_amount}}</div>
-                    <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                    </el-popover>
+                  </template>
+                </el-table-column>
+                <el-table-column align="center" :label="$t('贷款')">
+                  <template slot-scope="scope">
+                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                      <div class="text-center">{{scope.row.loan_amount}}</div>
+                      <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
                     {{scope.row.loan_amount}}
                   </span>
-                  </el-popover>
-                </template>
-              </el-table-column>
-              <el-table-column align="center" :label="$t('减免')">
-                <template slot-scope="scope">
-                  <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                    <div class="text-center">{{scope.row.deduction_amount}}</div>
-                    <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                    </el-popover>
+                  </template>
+                </el-table-column>
+                <el-table-column align="center" :label="$t('减免')">
+                  <template slot-scope="scope">
+                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                      <div class="text-center">{{scope.row.deduction_amount}}</div>
+                      <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
                     {{scope.row.deduction_amount}}
                   </span>
-                  </el-popover>
-                </template>
-              </el-table-column>
-              <el-table-column align="center" :label="$t('实缴')">
-                <template slot-scope="scope">
-                  <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                    <div class="text-center">{{scope.row.should_amount}}</div>
-                    <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                    </el-popover>
+                  </template>
+                </el-table-column>
+                <el-table-column align="center" :label="$t('实缴')">
+                  <template slot-scope="scope">
+                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                      <div class="text-center">{{scope.row.should_amount}}</div>
+                      <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
                     {{scope.row.should_amount}}
                   </span>
-                  </el-popover>
-                </template>
-              </el-table-column>
-              <el-table-column align="center" :label="$t('已缴')">
-                <template slot-scope="scope">
-                  <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                    <div class="text-center">{{scope.row.paid_amount}}</div>
-                    <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                    </el-popover>
+                  </template>
+                </el-table-column>
+                <el-table-column align="center" :label="$t('已缴')">
+                  <template slot-scope="scope">
+                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                      <div class="text-center">{{scope.row.paid_amount}}</div>
+                      <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
                         {{scope.row.paid_amount}}
                       </span>
-                  </el-popover>
-                </template>
-              </el-table-column>
-              <el-table-column align="center" :label="$t('待缴金额')">
-                <template slot-scope="scope">
-                  <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                    <div class="text-center">{{scope.row.wait_amount}}</div>
-                    <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                    </el-popover>
+                  </template>
+                </el-table-column>
+                <el-table-column align="center" :label="$t('待缴金额')">
+                  <template slot-scope="scope">
+                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                      <div class="text-center">{{scope.row.wait_amount}}</div>
+                      <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
                         {{scope.row.wait_amount}}
                       </span>
-                  </el-popover>
-                </template>
-              </el-table-column>
-            </el-table>
+                    </el-popover>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
           </div>
-        </div>
 
-        <div class="margin-top-30 padding-lr-10">
-          <div>
-            <van-row>
-              <van-col span="12">
-                <div class="text-left">
-                  <span class="app-title-border-tag"></span>
-                  <span class="font-bold" style="position: relative;top: -8px">{{$t("报到信息")}}</span>
-                </div>
-              </van-col>
-              <van-col span="12">
-                <div class="text-right">
-                  <span class="app-title-border-tag"></span>
-                  <span class="font-bold" style="position: relative;top: -8px">
+          <div class="margin-top-30 padding-lr-10">
+            <div>
+              <van-row>
+                <van-col span="12">
+                  <div class="text-left">
+                    <span class="app-title-border-tag"></span>
+                    <span class="font-bold" style="position: relative;top: -8px">{{$t("报到信息")}}</span>
+                  </div>
+                </van-col>
+                <van-col span="12">
+                  <div class="text-right">
+                    <span class="app-title-border-tag"></span>
+                    <span class="font-bold" style="position: relative;top: -8px">
                     <el-tag v-if="signStatus == false" size="small" type="danger">{{$t("未报到")}}</el-tag>
                     <el-tag v-if="signStatus == true" size="small" type="warning">{{$t("已报到")}}</el-tag>
                   </span>
-                </div>
-              </van-col>
-            </van-row>
-          </div>
-          <div>
-            <el-table
-              border
-              ref="refTable"
-              :data="tableSignData"
-              header-cell-class-name="custom-table-cell-bg"
-              size="medium"
-              style="width: 100%">
-              <el-table-column align="center" :label="$t('报到状态')">
-                <template slot-scope="scope">
-                  <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                    <div class="text-center">{{scope.row.item_name}}</div>
-                    <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                  </div>
+                </van-col>
+              </van-row>
+            </div>
+            <div>
+              <el-table
+                border
+                ref="refTable"
+                :data="tableSignData"
+                header-cell-class-name="custom-table-cell-bg"
+                size="medium"
+                style="width: 100%">
+                <el-table-column align="center" :label="$t('报到状态')">
+                  <template slot-scope="scope">
+                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                      <div class="text-center">{{scope.row.item_name}}</div>
+                      <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
                         {{scope.row.item_name}}
                       </span>
-                  </el-popover>
-                </template>
-              </el-table-column>
-              <el-table-column align="center" :label="$t('报到时间')">
-                <template slot-scope="scope">
-                  <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                    <div class="text-center">{{scope.row.delay_amount}}</div>
-                    <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                    </el-popover>
+                  </template>
+                </el-table-column>
+                <el-table-column align="center" :label="$t('报到时间')">
+                  <template slot-scope="scope">
+                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                      <div class="text-center">{{scope.row.delay_amount}}</div>
+                      <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
                         {{scope.row.delay_amount}}
                       </span>
-                  </el-popover>
-                </template>
-              </el-table-column>
-              <el-table-column align="center" :label="$t('核验方式')">
-                <template slot-scope="scope">
-                  <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                    <div class="text-center">{{scope.row.loan_amount}}</div>
-                    <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                    </el-popover>
+                  </template>
+                </el-table-column>
+                <el-table-column align="center" :label="$t('核验方式')">
+                  <template slot-scope="scope">
+                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                      <div class="text-center">{{scope.row.loan_amount}}</div>
+                      <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
                     {{scope.row.loan_amount}}
                   </span>
-                  </el-popover>
-                </template>
-              </el-table-column>
-              <el-table-column align="center" :label="$t('核验人')">
-                <template slot-scope="scope">
-                  <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                    <div class="text-center">{{scope.row.deduction_amount}}</div>
-                    <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                    </el-popover>
+                  </template>
+                </el-table-column>
+                <el-table-column align="center" :label="$t('核验人')">
+                  <template slot-scope="scope">
+                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                      <div class="text-center">{{scope.row.deduction_amount}}</div>
+                      <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
                     {{scope.row.deduction_amount}}
                   </span>
-                  </el-popover>
-                </template>
-              </el-table-column>
-            </el-table>
+                    </el-popover>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
           </div>
+        </div>
+
+        <div class="margin-top-5 text-center">
+          <van-button v-if="detailData.allowCheckin == true && signStatus == false" plain hairline type="primary" size="small" :loading="signLoading" @click="signConfirm">{{$t("已报到确认")}}</van-button>
+          <van-button v-if="detailData.allowCheckin == true && signStatus == true" plain hairline type="primary" size="small" :loading="signLoading" @click="unSignConfirm">{{$t("撤销报到")}}</van-button>
+          <van-button v-if="detailData.allowPayment == true && detailData.payment_status == 1" plain hairline type="warning" size="small" :loading="payLoading" @click="payConfirm(event, 3)">{{$t("已缴费确认")}}</van-button>
+          <van-button v-if="detailData.allowPayment == true && detailData.payment_status == 3" plain hairline type="danger" size="small" :loading="payLoading" @click="payConfirm(event, 1)">{{$t("撤销缴费")}}</van-button>
         </div>
       </div>
     </div>
@@ -496,7 +525,7 @@
 .content-block{
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
-  background: #f5f5f5;
+  background: #ffffff;
   width: 100%;
   position: relative;
 }
