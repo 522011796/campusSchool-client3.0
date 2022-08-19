@@ -234,7 +234,7 @@
                     <span class="app-title-border-tag"></span>
                     <span class="font-bold" style="position: relative;top: -8px">
                     <el-tag v-if="signStatus == false" size="small" type="danger">{{$t("未报到")}}</el-tag>
-                    <el-tag v-if="signStatus == true" size="small" type="warning">{{$t("已报到")}}</el-tag>
+                    <el-tag v-if="signStatus == true" size="small" type="success">{{$t("已报到")}}</el-tag>
                   </span>
                   </div>
                 </van-col>
@@ -251,9 +251,13 @@
                 <el-table-column align="center" :label="$t('报到状态')">
                   <template slot-scope="scope">
                     <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                      <div class="text-center">{{scope.row.item_name}}</div>
+                      <div class="text-center">
+                        <label class="color-success" v-if="scope.row.check_status">{{$t("已报到")}}</label>
+                        <label class="color-danger" v-if="!scope.row.check_status">{{$t("未报到")}}</label>
+                      </div>
                       <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                        {{scope.row.item_name}}
+                        <label class="color-success" v-if="scope.row.check_status">{{$t("已报到")}}</label>
+                      <label class="color-danger" v-if="!scope.row.check_status">{{$t("未报到")}}</label>
                       </span>
                     </el-popover>
                   </template>
@@ -261,9 +265,9 @@
                 <el-table-column align="center" :label="$t('报到时间')">
                   <template slot-scope="scope">
                     <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                      <div class="text-center">{{scope.row.delay_amount}}</div>
+                      <div class="text-center">{{$moment(scope.row.check_time).format("YYYY-MM-DD hh:mm")}}</div>
                       <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                        {{scope.row.delay_amount}}
+                        {{$moment(scope.row.check_time).format("YYYY-MM-DD hh:mm")}}
                       </span>
                     </el-popover>
                   </template>
@@ -271,20 +275,30 @@
                 <el-table-column align="center" :label="$t('核验方式')">
                   <template slot-scope="scope">
                     <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                      <div class="text-center">{{scope.row.loan_amount}}</div>
+                      <div class="text-center">
+                        <label class="color-success" v-if="scope.row.check_type == 0">{{$t("人工")}}</label>
+                        <label class="color-danger" v-if="scope.row.check_type == 1">{{$t("二维码")}}</label>
+                        <label class="color-danger" v-if="scope.row.check_type == 2">{{$t("人脸识别")}}</label>
+                      </div>
                       <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                    {{scope.row.loan_amount}}
-                  </span>
+                        <label class="color-success" v-if="scope.row.check_type == 0">{{$t("人工")}}</label>
+                        <label class="color-danger" v-if="scope.row.check_type == 1">{{$t("二维码")}}</label>
+                        <label class="color-danger" v-if="scope.row.check_type == 2">{{$t("人脸识别")}}</label>
+                      </span>
                     </el-popover>
                   </template>
                 </el-table-column>
                 <el-table-column align="center" :label="$t('核验人')">
                   <template slot-scope="scope">
                     <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                      <div class="text-center">{{scope.row.deduction_amount}}</div>
+                      <div class="text-center">
+                        <label v-if="scope.row.check_user_name">({{scope.row.check_user_name}})</label>
+                        <label v-else>--</label>
+                      </div>
                       <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                    {{scope.row.deduction_amount}}
-                  </span>
+                        <label v-if="scope.row.check_user_name">({{scope.row.check_user_name}})</label>
+                        <label v-else>--</label>
+                      </span>
                     </el-popover>
                   </template>
                 </el-table-column>
@@ -393,7 +407,7 @@
           if (res.data.data){
             let data = JSON.stringify(res.data.data);
             if (data != "{}"){
-              this.signStatus = false;
+              this.signStatus = true;
               this.tableSignData = [res.data.data];
             }
           }
