@@ -308,10 +308,10 @@
         </div>
 
         <div class="margin-top-5 text-center">
-          <van-button v-if="detailData.allowCheckin == true && signStatus == false" plain hairline type="primary" size="small" :loading="signLoading" @click="signConfirm">{{$t("已报到确认")}}</van-button>
-          <van-button v-if="detailData.allowCheckin == true && signStatus == true" plain hairline type="primary" size="small" :loading="signLoading" @click="unSignConfirm">{{$t("撤销报到")}}</van-button>
-          <van-button v-if="detailData.allowPayment == true && detailData.payment_status == 1" plain hairline type="warning" size="small" :loading="payLoading" @click="payConfirm(event, 3)">{{$t("已缴费确认")}}</van-button>
-          <van-button v-if="detailData.allowPayment == true && detailData.payment_status == 3" plain hairline type="danger" size="small" :loading="payLoading" @click="payConfirm(event, 1)">{{$t("撤销缴费")}}</van-button>
+          <van-button style="width: 120px" v-if="detailData.allowCheckin == true && signStatus == false" plain hairline type="primary" size="small" :loading="signLoading" @click="signConfirm">{{$t("已报到确认")}}</van-button>
+          <van-button style="width: 120px" v-if="detailData.allowCheckin == true && signStatus == true" plain hairline type="primary" size="small" :loading="signLoading" @click="unSignConfirm">{{$t("撤销报到")}}</van-button>
+          <van-button style="width: 120px" v-if="detailData.allowPayment == true && detailData.payment_status == 1" plain hairline type="warning" size="small" :loading="payLoading" @click="payConfirm(event, 3)">{{$t("已缴费确认")}}</van-button>
+          <van-button style="width: 120px" v-if="detailData.allowPayment == true && detailData.payment_status == 3" plain hairline type="danger" size="small" :loading="payLoading" @click="payConfirm(event, 1)">{{$t("撤销缴费")}}</van-button>
         </div>
       </div>
     </div>
@@ -344,6 +344,7 @@
         container: null,
         signLoading: false,
         payLoading: false,
+        checkinId: ''
       }
     },
     mounted() {
@@ -403,11 +404,13 @@
         let params = {
           userId: this.userId
         };
+        this.signStatus = false;
         this.$axios.get(common.server_enroll_app_student_checkin_get, {params: params}).then(res => {
           if (res.data.data){
             let data = JSON.stringify(res.data.data);
             if (data != "{}"){
               this.signStatus = true;
+              this.checkinId = res.data.data.id;
               this.tableSignData = [res.data.data];
             }
           }
@@ -421,9 +424,8 @@
             // on confirm
           let url = '';
           let valObj = {};
-          let params = {
-            val: valObj
-          }
+          let params = '';
+
           if (type == 3){
             url = common.enroll_payment_set_student_payment;
             valObj = {
@@ -432,23 +434,33 @@
               paymentType: 1,
               userId: this.userId
             };
+            this.$axios.post(url, JSON.stringify(valObj), {dataType: 'stringfy', loading: false}).then(res => {
+              if (res.data.code == 200){
+                this.initAppServer();
+                Toast(res.data.desc);
+              }else {
+                Toast(res.data.desc);
+              }
+              this.payLoading = false;
+            });
           }else if (type == 1){
             url = common.enroll_payment_set_student_revoke;
             valObj = {
               userId: this.userId
             };
+            valObj = this.$qs.stringify(valObj);
+            this.$axios.post(url, valObj, {loading: false}).then(res => {
+              if (res.data.code == 200){
+                this.initAppServer();
+                Toast(res.data.desc);
+              }else {
+                Toast(res.data.desc);
+              }
+              this.payLoading = false;
+            });
           }
           this.payLoading = true;
-          //params = this.$qs.stringify(params);
-          this.$axios.post(url, JSON.stringify(valObj), {dataType: 'stringfy', loading: false}).then(res => {
-            if (res.data.code == 200){
-              this.initAppServer();
-              Toast(res.data.desc);
-            }else {
-              Toast(res.data.desc);
-            }
-            this.payLoading = false;
-          });
+
         }).catch(() => {
             // on cancel
           this.payLoading = false;
@@ -488,7 +500,7 @@
         }).then(() => {
           // on confirm
           let params = {
-            checkinId: ''
+            checkinId: this.checkinId
           };
 
           let url = common.enroll_checkin_revoke;
