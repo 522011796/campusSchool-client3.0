@@ -409,7 +409,7 @@
           if (res.data.data){
             let data = JSON.stringify(res.data.data);
             if (data != "{}"){
-              this.signStatus = true;
+              this.signStatus = res.data.data.check_status;
               this.checkinId = res.data.data.id;
               this.tableSignData = [res.data.data];
             }
