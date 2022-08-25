@@ -15,7 +15,8 @@
         </div>
       </van-col>
       <van-col span="4">
-        <van-button size="small" type="warning" plain native-type="button" @click="payManage($event, 1)">{{$t("去支付")}}</van-button>
+        <van-button v-if="!$route.query.sessionId" size="small" type="warning" plain native-type="button" @click="payManage($event, 1)">{{$t("去支付")}}</van-button>
+        <span v-else>&nbsp;</span>
       </van-col>
     </div>
     <div class="content-block" :style="divHeight10">

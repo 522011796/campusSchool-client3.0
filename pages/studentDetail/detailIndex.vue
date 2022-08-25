@@ -103,7 +103,7 @@
                   <span v-if="detailData.build_name">
                     {{detailData.build_name}}{{detailData.floor_num}}{{$t("层")}}{{detailData.dormitory_no}}
                   </span>
-                    <span v-if="detailData.pac_name && !detailData.build_name">
+                  <span v-if="detailData.pac_name && !detailData.build_name">
                     {{detailData.pac_name}}
                     <label class="font-size-12 color-muted">
                       (¥{{detailData.pac_price}} -- {{detailData.pac_region}})
@@ -308,10 +308,10 @@
         </div>
 
         <div class="margin-top-5 text-center">
-          <van-button style="width: 120px" v-if="detailData.allowCheckin == true && signStatus == false" plain hairline type="primary" size="small" :loading="signLoading" @click="signConfirm">{{$t("已报到确认")}}</van-button>
-          <van-button style="width: 120px" v-if="detailData.allowCheckin == true && signStatus == true" plain hairline type="primary" size="small" :loading="signLoading" @click="unSignConfirm">{{$t("撤销报到")}}</van-button>
-          <van-button style="width: 120px" v-if="detailData.allowPayment == true && detailData.payment_status == 1" plain hairline type="warning" size="small" :loading="payLoading" @click="payConfirm(event, 3)">{{$t("已缴费确认")}}</van-button>
-          <van-button style="width: 120px" v-if="detailData.allowPayment == true && detailData.payment_status == 3" plain hairline type="danger" size="small" :loading="payLoading" @click="payConfirm(event, 1)">{{$t("撤销缴费")}}</van-button>
+          <van-button style="width: 150px" v-if="detailData.allowCheckin == true && signStatus == false" hairline type="primary" size="small" :loading="signLoading" @click="signConfirm">{{$t("已报到确认")}}</van-button>
+          <van-button style="width: 150px" v-if="detailData.allowCheckin == true && signStatus == true" hairline type="primary" size="small" :loading="signLoading" @click="unSignConfirm">{{$t("撤销报到")}}</van-button>
+          <van-button style="width: 150px" v-if="detailData.allowPayment == true && detailData.payment_status == 1" hairline type="warning" size="small" :loading="payLoading" @click="payConfirm(event, 3)">{{$t("已缴费确认")}}</van-button>
+          <van-button style="width: 150px" v-if="detailData.allowPayment == true && detailData.payment_status == 3" hairline type="danger" size="small" :loading="payLoading" @click="payConfirm(event, 1)">{{$t("撤销缴费")}}</van-button>
         </div>
       </div>
     </div>
