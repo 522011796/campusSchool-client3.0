@@ -176,8 +176,25 @@
                     "path": "applet"
                   },
                   onSuccess(res, file){
-                    file.url = res.data.url || ''
-                    console.log(res)
+                    let url = "";
+                    if (res.data.url != ""){
+                      // let urlHttps = res.data.url.indexOf("https");
+                      // let urlHttp = res.data.url.indexOf("http");
+                      // if (urlHttps == -1 || urlHttp == -1){
+                      //   url = "http:" + res.data.url
+                      // }else {
+                      //   url = res.data.url
+                      // }
+                      if (res.data.url.indexOf("files") > -1) {
+                        let url1 = res.data.url.split("files")[0];
+                        let url2 = res.data.url.split("files")[1];
+
+                        url = "https://campus.9451.com:28090/files/" + url2;
+                      }
+
+                    }
+                    file.url = url
+                    console.log(url)
                   }
                 }
               }
