@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env BASE_URL=http://mianhuatang.jcivt.com:10201 NODE_ENV=development nuxt",
+    "dev": "cross-env BASE_URL=http://campustest.9451.org:10201 NODE_ENV=development nuxt",
     "build": "nuxt build",
     "start": "cross-env BASE_URL=http://campustest.9451.org:10201 NODE_ENV=production nuxt start",
     "start:wykj": "cross-env BASE_URL=http://wykj.9451.org:10201 NODE_ENV=production nuxt start",

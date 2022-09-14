@@ -36,6 +36,7 @@
             <el-option label="待审核" value="0"></el-option>
             <el-option label="通过" value="3"></el-option>
             <el-option label="未通过" value="4"></el-option>
+            <el-option label="撤销" value="-1"></el-option>
           </el-select>
         </van-col>
       </van-row>
@@ -315,7 +316,7 @@
       </div>
     </van-popup>
 
-    <van-calendar v-model="showCalendar" type="range" @confirm="onConfirm" />
+    <van-calendar v-model="showCalendar" type="range" :min-date="minDate" :max-date="maxDate" @confirm="onConfirm" />
   </div>
 </template>
 
@@ -345,7 +346,9 @@
         startTime: '',
         endTime: '',
         showCalendar: false,
-        dateTime: ''
+        dateTime: '',
+        minDate: new Date(2020, 0, 1),
+        maxDate: new Date(2030, 12, 1),
       }
     },
     mounted() {
