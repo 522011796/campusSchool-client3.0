@@ -46,10 +46,18 @@
           </van-col>
         </van-row>
       </form>
-      <div :style="divHeight9">
-        <div class="pull-left info-block-left">
+      <div :style="divHeight9" style="position: relative">
+        <div class="moon-left-menu-tag" :style="toggleTag">
+          <div class="moon-left-menu-tag-container">
+            <div class="moon-left-menu-tag_indicator" @click="isCollapse == true ? toggleLeftMenu($event) : toggleRightMenu($event)">
+              <i class="fa fa-chevron-left" :class="isCollapse == true ? 'icon-class-left' : 'icon-class-right'"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="moon-left-toogle-menu info-block-left" :style="leftHeight">
           <template>
-            <div class="info-block-header text-center" @click="selMenu($event, '')">
+            <div v-if="isCollapse == true" class="info-block-header text-center" @click="selMenu($event, '')">
               <span>{{$t("全部")}}</span>
             </div>
             <div class="custom-el-menu" :style="{height: divHeight10.height1-90 +'px', overflowY: 'auto'}">
@@ -62,16 +70,16 @@
                 <template v-for="(item, index) in dataDept">
                   <el-submenu v-if="item.child_list.length > 0" :index="index+''">
                     <div style="width: 100%" slot="title" @click="selMenu($event, item, index)">
-                      <span class="moon-content-text-ellipsis-class" style="width: 55px;display: inline-block">{{ item.department_name }}</span>
+                      <span class="moon-content-text-ellipsis-class" style="width: 100%;display: inline-block">{{ item.department_name }}</span>
                     </div>
                     <el-menu-item-group v-if="item.child_list.length > 0">
                       <el-menu-item v-for="(itemChild, indexChild) in item.child_list" :key="indexChild" :index="index+'-'+indexChild" @click="selMenu($event, itemChild, index+'-'+indexChild)">
-                        <span class="moon-content-text-ellipsis-class" style="width: 55px;display: inline-block">{{ itemChild.department_name }}</span>
+                        <span class="moon-content-text-ellipsis-class" style="width: 100%;display: inline-block">{{ itemChild.department_name }}</span>
                       </el-menu-item>
                     </el-menu-item-group>
                   </el-submenu>
                   <el-menu-item v-else :index="index+''" @click="selMenu($event, item, index)">
-                    <span class="moon-content-text-ellipsis-class" style="width: 55px;display: inline-block">{{ item.department_name }}</span>
+                    <span class="moon-content-text-ellipsis-class" style="width: 100%;display: inline-block">{{ item.department_name }}</span>
                   </el-menu-item>
                 </template>
               </el-menu>
@@ -80,7 +88,7 @@
         </div>
         <div class="info-block-right">
           <van-grid :gutter="10">
-            <van-grid-item v-for="(item, index) in serverAppList" :key="index" icon="photo-o" @click="serverBlock($event, item)">
+            <van-grid-item class="margin-bottom-5" v-for="(item, index) in serverAppList" :key="index" icon="photo-o" @click="serverBlock($event, item)">
               <div slot="icon" class="text-center">
                 <van-image width="30" height="30" :src="item.form_logo"/>
               </div>
@@ -111,6 +119,14 @@
         dormTreeList: [],
         departmentPath: '',
         activeTypeText: '类别',
+        isCollapse: false,
+        leftHeight: {
+          'height': '100%',
+          'width': '0%'
+        },
+        toggleTag: {
+          'left': '0'
+        }
       }
     },
     mounted() {
@@ -268,6 +284,16 @@
       },
       onClear(){
 
+      },
+      toggleLeftMenu(event){
+        this.isCollapse = false;
+        this.leftHeight.width = "0%";
+        this.toggleTag['left'] = "0px";
+      },
+      toggleRightMenu(event){
+        this.isCollapse = true;
+        this.leftHeight.width = "50%";
+        this.toggleTag['left'] = "50%";
       }
     }
   }
@@ -299,11 +325,11 @@
   line-height: 45px;
 }
 .info-block-left{
-  width: 100px;
+  width: 50%;
   border-right: 1px solid #F2F6FC;
 }
 .info-block-right{
-  margin-left: 100px;
+  margin-left: 0px;
   height: 100%;
 }
 .info-block-header{
@@ -311,6 +337,80 @@
   line-height: 45px;
   font-size: 14px;
   color: #909399;
+  background: #e9e9e9;
+}
+.moon-left-menu-tag{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  left: 50%;
+  transition: all .2s ease-in-out;
+  z-index: 99;
+}
+.moon-left-menu-tag .moon-left-menu-tag-container {
+  width: 100%;
+  height: 100%;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+}
+.moon-left-menu-tag .moon-left-menu-tag_indicator {
+  margin-top: -44.5px;
+  width: 15px;
+  height: 40px;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: #EBEEF5;
+  border-radius: 0 4px 4px 0;
+  border: 1px solid #e5e5e5;
+  border-left-color: transparent;
+  opacity: 1;
+  /*transition-property: background-color,opacity;*/
+  transition-duration: 200ms;
+  transition-timing-function: ease-in-out;
+  color: #dddddd;
+  padding-right: 2px;
+}
+.moon-left-menu-tag_indicator:hover{
+  background: rgb(160, 207, 255);
+  color: #FFFFFF;
+}
+.moon-left-toogle-menu{
+  border-right: 1px solid #dcdee2;
+  /*overflow-y: auto;*/
+  float: left;
+  box-shadow: 2px 0px 4px #bbbbbb;
+  position: relative;
   background: #f2f2f2;
+  background-image: linear-gradient(to bottom, #f2f2f2 , #f2f2f2);
+  padding: 0px 0px;
+  position: fixed;
+  transition: all .2s ease-in-out;
+  user-select: none;
+  z-index: 99;
+}
+.icon-class-left{
+  color: #dddddd;
+  transform: rotate(0deg);
+}
+.icon-class-right{
+  transform: rotate(180deg);
 }
 </style>
