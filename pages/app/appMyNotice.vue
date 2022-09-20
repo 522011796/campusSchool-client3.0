@@ -52,26 +52,38 @@
     <div style="margin-top:5px;">
       <div class="content-block padding-tb-10" :style="divHeight12">
         <van-empty v-if="tableData.length == 0" description="暂无数据" />
-        <div v-else class="content-block-item padding-lr-10 padding-tb-10" style="position: relative" v-for="(item, index) in tableData" @click="dataDetail($event, item)">
-          <div>
-            [<span class="color-warning">{{ item.applyUserName }}</span>]
-            <span>{{$t("提交的")}}</span>
-            [<span class="color-warning moon-content-text-ellipsis-class" style="max-width: 120px;display: inline-block;position: relative; top: 3px">{{ item.formName }}</span>]
-          </div>
-          <div class="color-muted margin-top-5">
-            <span class="font-size-12">{{ $moment(item.applyTime).format("YYYY-MM-DD HH:mm") }}</span>
-          </div>
-          <div class="margin-top-5 font-size-12">
-            <span class="color-muted">{{$t("审核状态")}}</span>
-            <span>
+        <van-pull-refresh v-else v-model="refreshing" @refresh="onRefresh">
+          <van-list
+            v-model:loading="loading"
+            :finished="finished"
+            @load="onLoad"
+            :offset="0"
+            finished-text="没有更多了"
+          >
+            <van-cell v-for="(item, index) in tableData" :key="index" style="line-height: 15px;padding: 0px 10px">
+              <div class="content-block-item padding-lr-10 padding-tb-10" style="position: relative" @click="dataDetail($event, item)">
+                <div>
+                  [<span class="color-warning">{{ item.applyUserName }}</span>]
+                  <span>{{$t("提交的")}}</span>
+                  [<span class="color-warning moon-content-text-ellipsis-class" style="max-width: 120px;display: inline-block;position: relative; top: 3px">{{ item.formName }}</span>]
+                </div>
+                <div class="color-muted margin-top-5">
+                  <span class="font-size-12">{{ $moment(item.applyTime).format("YYYY-MM-DD HH:mm") }}</span>
+                </div>
+                <div class="margin-top-5 font-size-12">
+                  <span class="color-muted">{{$t("审核状态")}}</span>
+                  <span>
               <label v-if="item.status === -1" class="color-danger">{{$t("撤销")}}</label>
               <label v-if="item.status === 0" class="color-warning">{{$t("待审核")}}</label>
               <label v-if="item.status === 3" class="color-success">{{$t("通过")}}</label>
               <label v-if="item.status === 4" class="color-danger">{{$t("未通过")}}</label>
             </span>
-          </div>
-          <span class="fa fa-angle-right" style="position: absolute; right: 10px; top: 30px; font-size: 25px; color: #C0C4CC"></span>
-        </div>
+                </div>
+                <span class="fa fa-angle-right" style="position: absolute; right: 10px; top: 30px; font-size: 25px; color: #C0C4CC"></span>
+              </div>
+            </van-cell>
+          </van-list>
+        </van-pull-refresh>
       </div>
     </div>
 
@@ -335,7 +347,10 @@
       return {
         active: 1,
         tableData: [],
+        loading: false,
+        finished: false,
         popUpVisible: false,
+        refreshing: false,
         detailData: '',
         detailApplyContentData: [],
         detailApplyAuditList: [],
@@ -349,6 +364,7 @@
         dateTime: '',
         minDate: new Date(2020, 0, 1),
         maxDate: new Date(2030, 12, 1),
+        totalAuthPage: 0,
       }
     },
     mounted() {
@@ -363,10 +379,29 @@
       layoutInit(){
 
       },
+      onLoad() {
+        console.log(1);
+        // 异步更新数据
+        if (this.totalAuthPage == this.page){
+          this.finished = true;
+        }else {
+          this.page = this.page + 1;
+          this.finished = false;
+          this.init();
+        }
+      },
+      onRefresh() {
+        this.loading = false;
+        this.page = 1;
+        this.totalAuthPage = 0;
+        this.finished = false;
+        this.tableData = [];
+        this.init();
+      },
       async init(){
         let params = {
-          page: this.page,
-          num: this.num,
+          page: this.page ? this.page : 1,
+          num: 20,
           status: this.type,
           beginTime: this.startTime,
           endTime: this.endTime,
@@ -374,15 +409,23 @@
           queryApplyListType: this.active
         };
         await this.getSessionInfo();
-        this.$axios.get(common.server_form_audit_page, {params: params}).then(res=>{
+        this.$axios.get(common.server_form_audit_page, {params: params,loading: false}).then(res=>{
           if (res.data.code == 200){
             if (res.data.data){
-              this.tableData = res.data.data.list;
+              this.tableData = this.tableData.concat(res.data.data.list);
               this.total = res.data.data.total;
               this.num = res.data.data.num;
               this.page = res.data.data.page;
+              this.totalAuthPage = res.data.data.pageCount;
+
+              // 数据全部加载完成
+              console.log(this.page, this.totalAuthPage);
+              if (this.page == this.totalAuthPage) {
+                this.finished = true;
+              }
             }
           }
+          this.loading = false;
         });
       },
       serverBlock(event){
@@ -397,6 +440,9 @@
       },
       activeTabMenu(name){
         this.active = name;
+        this.page = 1;
+        this.finished = false;
+        this.tableData = [];
         this.init();
       },
       returnIndex(){
