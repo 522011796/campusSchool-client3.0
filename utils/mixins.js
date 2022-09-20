@@ -559,7 +559,7 @@ export default {
       let params = {
         keys:'campusId,userType,campusType,userId,username,campusName,campusLogo,realName,externalSystemName,externalSystem,termId,externalSystemName,externalSystem'
       };
-      await this.$axios.get(common.session_url, {params: params}).then(res => {
+      await this.$axios.get(common.session_url, {params: params,loading:false}).then(res => {
         if (res.data.data){
           this.campusId = res.data.data.campusId;
           this.campusName = res.data.data.LOGIN_RETURN_INFO.campusName;

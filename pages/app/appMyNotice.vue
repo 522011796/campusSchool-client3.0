@@ -31,7 +31,7 @@
           <van-search v-model="serchName" placeholder="姓名或者服务名称" @input="onSearch" @clear="onClear"/>
         </van-col>
         <van-col v-if="active == 4" :span="8" class="text-right">
-          <el-select class="margin-right-10" style="margin-top: 11px" v-model="value" size="small" placeholder="请选择" @change="dropdownItem">
+          <el-select class="margin-right-10" style="margin-top: 11px" v-model="type" size="small" placeholder="请选择" @change="dropdownItem">
             <el-option label="全部" value=""></el-option>
             <el-option label="通过" value="3"></el-option>
             <el-option label="未通过" value="4"></el-option>
@@ -379,7 +379,6 @@
 
       },
       onLoad() {
-        console.log(1);
         // 异步更新数据
         if (this.totalAuthPage == this.page){
           this.finished = true;
@@ -418,7 +417,6 @@
               this.totalAuthPage = res.data.data.pageCount;
 
               // 数据全部加载完成
-              console.log(this.page, this.totalAuthPage);
               if (this.page == this.totalAuthPage) {
                 this.finished = true;
               }
@@ -442,6 +440,7 @@
         this.page = 1;
         this.finished = false;
         this.tableData = [];
+        this.type = "";
         this.init();
       },
       returnIndex(){
@@ -518,10 +517,19 @@
       },
       onSearch(value){
         this.searchKey = value;
+        this.page = 1;
+        this.totalAuthPage = 0;
+        this.finished = false;
+        this.type = "";
+        this.tableData = [];
         this.init();
       },
       dropdownItem(event){
         this.type = event;
+        this.page = 1;
+        this.totalAuthPage = 0;
+        this.finished = false;
+        this.tableData = [];
         this.init();
       },
       onClear(){
@@ -531,6 +539,10 @@
         this.startTime = "";
         this.endTime = "";
         this.dateTime = "";
+        this.tableData = [];
+        this.page = 1;
+        this.totalAuthPage = 0;
+        this.finished = false;
         this.init();
       },
       calendarManage(){
