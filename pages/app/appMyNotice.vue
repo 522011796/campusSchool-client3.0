@@ -559,6 +559,10 @@
         this.dateTime = `${this.formatDate2(start)} - ${this.formatDate2(end)}`;
         this.startTime = `${this.formatDate(start)}`;
         this.endTime = `${this.formatDate(end)}`;
+        this.page = 1;
+        this.totalAuthPage = 0;
+        this.tableData = [];
+        this.finished = false;
         this.init();
         this.showCalendar = false;
       }
