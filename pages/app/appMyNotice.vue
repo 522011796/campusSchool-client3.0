@@ -27,13 +27,12 @@
 
     <form action="/">
       <van-row>
-        <van-col :span="16">
+        <van-col :span="(active == 1 || active == 2 || active == 3) ? 24 : 16">
           <van-search v-model="serchName" placeholder="姓名或者服务名称" @input="onSearch" @clear="onClear"/>
         </van-col>
-        <van-col :span="8" class="text-right">
+        <van-col v-if="active == 4" :span="8" class="text-right">
           <el-select class="margin-right-10" style="margin-top: 11px" v-model="value" size="small" placeholder="请选择" @change="dropdownItem">
             <el-option label="全部" value=""></el-option>
-            <el-option label="待审核" value="0"></el-option>
             <el-option label="通过" value="3"></el-option>
             <el-option label="未通过" value="4"></el-option>
             <el-option label="撤销" value="-1"></el-option>
