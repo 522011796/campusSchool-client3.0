@@ -411,7 +411,7 @@
       },
       dropdownItem(event){
         this.formValue = event;
-        this.initData(event);
+        this.initFormDetail(event);
       },
       onConfirm(date){
         const [start, end] = date;
