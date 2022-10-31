@@ -115,8 +115,8 @@
     <van-calendar v-model="showCalendar" type="range" :min-date="minDate" :max-date="maxDate" @confirm="onConfirm" />
 
     <van-popup v-model="showBottom" round position="bottom" class="custom-cascader" :style="{ height: '350px' }">
-      <el-cascader-panel v-if="fliterType == 1" :style="{ height: '350px' }" :props="{multiple: true}" :options="dataDept" @change="searchTop"></el-cascader-panel>
-      <el-cascader-panel v-if="fliterType == 2" :style="{ height: '350px' }" :props="{multiple: true}" :options="dataCollege" @change="searchTop"></el-cascader-panel>
+      <el-cascader-panel v-if="fliterType == 1" :style="{ height: '350px' }" :props="{multiple: true}" v-model="searchDept" :options="dataDept" @change="searchTop"></el-cascader-panel>
+      <el-cascader-panel v-if="fliterType == 2" :style="{ height: '350px' }" :props="{multiple: true}" v-model="searchCollege" :options="dataCollege" @change="searchTop"></el-cascader-panel>
     </van-popup>
   </div>
 </template>
@@ -152,6 +152,8 @@
         serchName: '',
         showCalendar: false,
         dateTime: '',
+        searchDept: [],
+        searchCollege: [],
         minDate: new Date(2020, 0, 1),
         maxDate: new Date(2030, 12, 1),
         timeData: [],
@@ -176,27 +178,10 @@
         circleValueText: '',
         barLabel: '',
         barValue: '',
-        barDataLegned: ['类型1','类型2','类型3'],
-        barDataKey: ['字段1','字段2','字段3'],
+        barDataLegned: [],
+        barDataKey: [],
         barData: [
-          {
-            name: '类型1',
-            type: 'bar',
-            barWidth:15,
-            data:[10,10,10]
-          },
-          {
-            name: '类型2',
-            type: 'bar',
-            barWidth:15,
-            data:[10,10,10]
-          },
-          {
-            name: '类型3',
-            type: 'bar',
-            barWidth:15,
-            data:[10,10,10]
-          }
+
         ]
       }
     },
@@ -441,7 +426,14 @@
         this.showBottom = true;
       },
       searchTop(event){
+        this.searchDept = [];
+        this.searchCollege = [];
         this.searchData = event.length > 0 ? JSON.stringify(event) : "";
+        if(this.fliterType == 1){
+          this.searchDept = event;
+        }else if(this.fliterType == 2){
+          this.searchCollege = event;
+        }
         this.initFormDetail(this.formValue);
       }
     }

@@ -29,7 +29,7 @@
         </van-col>
         <van-col span="4" class="text-right;">
           <div class="text-right padding-lr-10">
-            <div style="position: relative; top: 10px;" @click="activeTabMenu(7)">
+            <div style="position: relative; top: 5px;" @click="activeTabMenu(7)">
               <img src="~static/img/static_icon.png" style="width: 30px; height: 30px">
             </div>
           </div>
