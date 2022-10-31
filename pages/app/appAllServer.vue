@@ -10,7 +10,7 @@
             </span>
           </div>
         </van-col>
-        <van-col span="16" class="text-center">
+        <van-col span="16" class="text-center" style="position: relative">
 <!--          <van-tabs v-model="active" @click="activeTabMenu" type="card" class="padding-top-10" color="#1EA084" title-active-color="#ffffff" title-inactive-color="#ffffff" background="#949494">-->
 <!--            <van-tab name="6">-->
 <!--              <span slot="title" class="font-size-12">{{$t('推荐服务')}}</span>-->
@@ -27,8 +27,12 @@
 <!--          </van-tabs>-->
           <span class="color-white font-size-14 font-bold">{{$t('全部服务')}}</span>
         </van-col>
-        <van-col span="4">
-          &nbsp;
+        <van-col span="4" class="text-right;">
+          <div class="text-right padding-lr-10">
+            <div style="position: relative; top: 10px;" @click="activeTabMenu(7)">
+              <img src="~static/img/static_icon.png" style="width: 30px; height: 30px">
+            </div>
+          </div>
         </van-col>
       </van-row>
     </div>
@@ -233,6 +237,19 @@
         }else if (name == 6){
           this.active = name;
           this.initAppRecommend();
+        }else if (name == 7){
+          this.active = name;
+          this.$router.push({
+            path: '/app/appStatic',
+            query: {
+              id: parseInt(name),
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow,
+              sessionId: this.$route.query.sessionId,
+              page: '/app/appAllServer'
+            }
+          });
         }else {
           this.active = name;
           this.initAppServer();

@@ -12,6 +12,7 @@
       :size="size"
       :props="props"
       :placeholder="placeholder"
+      :collapse-tags="collapseTags"
       @change="handleChange"></el-cascader>
   </div>
 </template>
@@ -48,6 +49,10 @@
         type: Boolean
       },
       clearable: {
+        default: false,
+        type: Boolean
+      },
+      collapseTags: {
         default: false,
         type: Boolean
       },

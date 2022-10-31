@@ -636,6 +636,7 @@ export default {
       await this.$axios.get(common.hierarchical_college).then(res => {
         if (res.data.data){
           this.dataCollege = setCollegeChildren(res.data.data.tree, type);
+          console.log(this.dataCollege);
         }
       });
     },

@@ -616,6 +616,10 @@ export const common = {
   enroll_rule_package_order_chose: '/proxy/school/enroll/room-package/order/chose', //宿舍套餐选择
   enroll_rule_package_order_revoke: '/proxy/school/enroll/room-package/order/revoke', //宿舍套餐撤销
 
+  static_appinfo_form_page: '/proxy/school/applet/stat/page', //统计表列表
+  static_appinfo_form_info: '/proxy/school/applet/stat/data/get', //统计表详细
+  static_appinfo_form_detail: '/proxy/school/applet/stat/info', //统计表信息
+
   enroll_student_current_time: '/proxy/school/enroll/current-time',
 
   login_check: '/proxy/user/loginCheck',//登录状态

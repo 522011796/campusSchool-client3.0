@@ -28,7 +28,7 @@
     <form action="/">
       <van-row>
         <van-col :span="(active == 1 || active == 2 || active == 3) ? 24 : 16">
-          <van-search v-model="serchName" placeholder="姓名或者服务名称" @input="onSearch" @clear="onClear"/>
+          <van-search v-model="serchName" placeholder="姓名/编号/服务名称" @input="onSearch" @clear="onClear"/>
         </van-col>
         <van-col v-if="active == 4" :span="8" class="text-right">
           <el-select class="margin-right-10" style="margin-top: 11px" v-model="type" size="small" placeholder="请选择" @change="dropdownItem">
@@ -40,49 +40,94 @@
         </van-col>
       </van-row>
     </form>
-    <div>
-      <van-tabs @click="activeTabMenu" color="#007CBB" title-active-color="#007CBB" title-inactive-color="#4B4B4B" background="#f5f5f5">
-        <van-tab name="1" :title="$t('我待办')"></van-tab>
-        <van-tab name="2" :title="$t('我提交')"></van-tab>
-        <van-tab name="3" :title="$t('抄送我')"></van-tab>
-        <van-tab name="4" :title="$t('已完成')"></van-tab>
-      </van-tabs>
-    </div>
-    <div style="margin-top:5px;">
-      <div class="content-block padding-tb-10" :style="divHeight12">
-        <van-empty v-if="tableData.length == 0" description="暂无数据" />
-        <van-pull-refresh v-else v-model="refreshing" @refresh="onRefresh">
-          <van-list
-            v-model:loading="loading"
-            :finished="finished"
-            @load="onLoad"
-            :offset="0"
-            finished-text="没有更多了"
-          >
-            <van-cell v-for="(item, index) in tableData" :key="index" style="line-height: 15px;padding: 0px 10px">
-              <div class="content-block-item padding-lr-10 padding-tb-10" style="position: relative" @click="dataDetail($event, item)">
-                <div>
-                  [<span class="color-warning">{{ item.applyUserName }}</span>]
-                  <span>{{$t("提交的")}}</span>
-                  [<span class="color-warning moon-content-text-ellipsis-class" style="max-width: 120px;display: inline-block;position: relative; top: 3px">{{ item.formName }}</span>]
-                </div>
-                <div class="color-muted margin-top-5">
-                  <span class="font-size-12">{{ $moment(item.applyTime).format("YYYY-MM-DD HH:mm") }}</span>
-                </div>
-                <div class="margin-top-5 font-size-12">
-                  <span class="color-muted">{{$t("审核状态")}}</span>
-                  <span>
+    <div :style="divHeight12" style="position: relative">
+      <div class="moon-left-menu-tag" :style="toggleTag">
+        <div class="moon-left-menu-tag-container">
+          <div class="moon-left-menu-tag_indicator" @click="isCollapse == true ? toggleLeftMenu($event) : toggleRightMenu($event)">
+            <i class="fa fa-chevron-left" :class="isCollapse == true ? 'icon-class-left' : 'icon-class-right'"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="moon-left-toogle-menu info-block-left" :style="leftHeight">
+        <template>
+          <div v-if="isCollapse == true" class="info-block-header text-center" @click="selMenu($event, '')">
+            <span>{{$t("全部")}}</span>
+          </div>
+          <div class="custom-el-menu" :style="{height: divHeight10.height1-90 +'px', overflowY: 'auto'}">
+            <el-menu
+              :default-active="defaultMenuActive"
+              background-color="#f2f2f2"
+              text-color="#909399"
+              active-text-color="#909399"
+              class="el-menu-vertical-demo custon-nav-menu">
+              <template v-for="(item, index) in dataDept">
+                <el-submenu v-if="item.child_list.length > 0" :index="index+''">
+                  <div style="width: 100%" slot="title" @click="selMenu($event, item, index)">
+                    <span class="moon-content-text-ellipsis-class" style="width: 100%;display: inline-block">{{ item.department_name }}</span>
+                  </div>
+                  <el-menu-item-group v-if="item.child_list.length > 0">
+                    <el-menu-item v-for="(itemChild, indexChild) in item.child_list" :key="indexChild" :index="index+'-'+indexChild" @click="selMenu($event, itemChild, index+'-'+indexChild)">
+                      <span class="moon-content-text-ellipsis-class" style="width: 100%;display: inline-block">{{ itemChild.department_name }}</span>
+                    </el-menu-item>
+                  </el-menu-item-group>
+                </el-submenu>
+                <el-menu-item v-else :index="index+''" @click="selMenu($event, item, index)">
+                  <span class="moon-content-text-ellipsis-class" style="width: 100%;display: inline-block">{{ item.department_name }}</span>
+                </el-menu-item>
+              </template>
+            </el-menu>
+          </div>
+        </template>
+      </div>
+      <div>
+        <van-tabs @click="activeTabMenu" color="#007CBB" title-active-color="#007CBB" title-inactive-color="#4B4B4B" background="#f5f5f5">
+          <van-tab name="1" :title="$t('我待办')"></van-tab>
+          <van-tab name="2" :title="$t('我提交')"></van-tab>
+          <van-tab name="3" :title="$t('抄送我')"></van-tab>
+          <van-tab name="4" :title="$t('已完成')"></van-tab>
+        </van-tabs>
+      </div>
+      <div style="margin-top:5px;position: relative">
+        <div class="content-block padding-tb-10" :style="divHeight12">
+          <van-empty v-if="tableData.length == 0" description="暂无数据" />
+          <van-pull-refresh v-else v-model="refreshing" @refresh="onRefresh">
+            <van-list
+              v-model:loading="loading"
+              :finished="finished"
+              @load="onLoad"
+              :offset="0"
+              finished-text="没有更多了"
+            >
+              <van-cell v-for="(item, index) in tableData" :key="index" style="line-height: 15px;padding: 0px 10px">
+                <div class="content-block-item padding-lr-10 padding-tb-10" style="position: relative" @click="dataDetail($event, item)">
+                  <div class="color-grand">
+                    <span class="fa fa-info-circle"></span>
+                    <span>{{ item._id }}</span>
+                  </div>
+                  <div class="margin-top-5">
+                    [<span class="color-warning">{{ item.applyUserName }}</span>]
+                    <span>{{$t("提交的")}}</span>
+                    [<span class="color-warning moon-content-text-ellipsis-class" style="max-width: 120px;display: inline-block;position: relative; top: 3px">{{ item.formName }}</span>]
+                  </div>
+                  <div class="color-muted margin-top-5">
+                    <span class="font-size-12">{{ $moment(item.applyTime).format("YYYY-MM-DD HH:mm") }}</span>
+                  </div>
+                  <div class="margin-top-5 font-size-12">
+                    <span class="color-muted">{{$t("审核状态")}}</span>
+                    <span>
               <label v-if="item.status === -1" class="color-danger">{{$t("撤销")}}</label>
               <label v-if="item.status === 0" class="color-warning">{{$t("待审核")}}</label>
               <label v-if="item.status === 3" class="color-success">{{$t("通过")}}</label>
               <label v-if="item.status === 4" class="color-danger">{{$t("未通过")}}</label>
             </span>
+                  </div>
+                  <span class="fa fa-angle-right" style="position: absolute; right: 10px; top: 30px; font-size: 25px; color: #C0C4CC"></span>
                 </div>
-                <span class="fa fa-angle-right" style="position: absolute; right: 10px; top: 30px; font-size: 25px; color: #C0C4CC"></span>
-              </div>
-            </van-cell>
-          </van-list>
-        </van-pull-refresh>
+              </van-cell>
+            </van-list>
+          </van-pull-refresh>
+        </div>
       </div>
     </div>
 
@@ -364,6 +409,17 @@
         minDate: new Date(2020, 0, 1),
         maxDate: new Date(2030, 12, 1),
         totalAuthPage: 0,
+        defaultMenuActive: '',
+        isCollapse: false,
+        serverAppList: [],
+        departmentPath: '',
+        leftHeight: {
+          'height': '100%',
+          'width': '0%'
+        },
+        toggleTag: {
+          'left': '0'
+        }
       }
     },
     mounted() {
@@ -372,11 +428,43 @@
       });
     },
     created() {
+      this.active = this.$route.query.activeType ? this.$route.query.activeType : 6;
+      this.getDeptInfo(2);
       this.init();
+      if (this.active == 6){
+        this.initAppRecommend();
+      }else {
+        this.initAppServer();
+      }
     },
     methods: {
       layoutInit(){
 
+      },
+      initAppRecommend(value){
+        let params = {
+          appletId: this.appletId,
+          categoryId: this.categoryId,
+          departmentPath: this.departmentPath,
+          formType: '',
+          searchKey: this.searchKey
+        };
+        this.$axios.get(common.server_list_list3, {params: params}).then(res => {
+          if (res.data.data){
+            this.serverAppList = res.data.data;
+          }
+        });
+      },
+      initAppServer(value){
+        let params = {
+          appletType: this.active,
+          searchKey: value
+        };
+        this.$axios.get(common.server_list_list, {params: params}).then(res => {
+          if (res.data.data){
+            this.serverAppList = res.data.data;
+          }
+        });
       },
       onLoad() {
         // 异步更新数据
@@ -404,7 +492,8 @@
           beginTime: this.startTime,
           endTime: this.endTime,
           searchKey: this.searchKey,
-          queryApplyListType: this.active
+          queryApplyListType: this.active,
+          departmentPath: this.departmentPath
         };
         await this.getSessionInfo();
         this.$axios.get(common.server_form_audit_page, {params: params,loading: false}).then(res=>{
@@ -565,6 +654,21 @@
         this.finished = false;
         this.init();
         this.showCalendar = false;
+      },
+      toggleLeftMenu(event){
+        this.isCollapse = false;
+        this.leftHeight.width = "0%";
+        this.toggleTag['left'] = "0px";
+      },
+      toggleRightMenu(event){
+        this.isCollapse = true;
+        this.leftHeight.width = "50%";
+        this.toggleTag['left'] = "50%";
+      },
+      selMenu(event, item, index){
+        this.departmentPath = item.department_path;
+        this.defaultMenuActive = index + '';
+        this.init();
       }
     }
   }
@@ -615,5 +719,79 @@
   position: absolute;
   right: 0px;
   top: 0px;
+}
+.moon-left-menu-tag{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  left: 50%;
+  transition: all .2s ease-in-out;
+  z-index: 99;
+}
+.moon-left-menu-tag .moon-left-menu-tag-container {
+  width: 100%;
+  height: 100%;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+}
+.moon-left-menu-tag .moon-left-menu-tag_indicator {
+  margin-top: -44.5px;
+  width: 15px;
+  height: 40px;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: #EBEEF5;
+  border-radius: 0 4px 4px 0;
+  border: 1px solid #e5e5e5;
+  border-left-color: transparent;
+  opacity: 1;
+  /*transition-property: background-color,opacity;*/
+  transition-duration: 200ms;
+  transition-timing-function: ease-in-out;
+  color: #dddddd;
+  padding-right: 2px;
+}
+.moon-left-menu-tag_indicator:hover{
+  background: rgb(160, 207, 255);
+  color: #FFFFFF;
+}
+.moon-left-toogle-menu{
+  border-right: 1px solid #dcdee2;
+  /*overflow-y: auto;*/
+  float: left;
+  box-shadow: 2px 0px 4px #bbbbbb;
+  position: relative;
+  background: #f2f2f2;
+  background-image: linear-gradient(to bottom, #f2f2f2 , #f2f2f2);
+  padding: 0px 0px;
+  position: fixed;
+  transition: all .2s ease-in-out;
+  user-select: none;
+  z-index: 99;
+}
+.icon-class-left{
+  color: #dddddd;
+  transform: rotate(0deg);
+}
+.icon-class-right{
+  transform: rotate(180deg);
 }
 </style>

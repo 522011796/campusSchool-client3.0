@@ -1127,6 +1127,13 @@ ul{
   padding: 0 45px;
   min-width: 0px;
 }
+.custom-cascader .el-cascader-panel.is-bordered {
+  border: 0px solid #E4E7ED;
+  border-radius: 4px;
+}
+.custom-cascader .el-cascader-menu__wrap {
+  height: 350px;
+}
 /***自定义radio组件颜色***/
 /*.el-radio__input.is-checked + .el-radio__label {
   color: #fd7624 !important;
