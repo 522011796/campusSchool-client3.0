@@ -47,7 +47,7 @@
             <i class="fa fa-chevron-left"></i>
           </span>
         </div>
-        <div style="position: absolute;right: 30px;" :style="{top: topHeight+5 + 'px'}" @click="activeTabMenu(6)">
+        <div v-if="loginUserAppType != 5 && loginUserType != 5" style="position: absolute;right: 30px;" :style="{top: topHeight+5 + 'px'}" @click="activeTabMenu(6)">
           <img src="~static/img/static_icon.png" style="width: 30px; height: 30px">
         </div>
         <div class="padding-lr-10" style="position: relative;top:120px; z-index: 99">
