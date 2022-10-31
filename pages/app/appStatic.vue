@@ -30,7 +30,10 @@
             <van-col :span="16" class="text-right padding-lr-10">
               <van-button v-if="fliterType == 1" class="layout-item" style="margin-top: 5px" size="small" type="warning" plain native-type="button" @click="selSearch">{{$t('选择部门')}}</van-button>
               <van-button v-if="fliterType == 2" class="layout-item" style="margin-top: 5px" size="small" type="warning" plain native-type="button" @click="selSearch">{{$t('选择院系')}}</van-button>
-              <van-button class="layout-item" style="margin-top: 5px" size="small" type="default" plain native-type="button" @click="selTime">{{dateTime == "" ? $t('选择时间') : dateTime}}</van-button>
+              <van-button class="layout-item" style="margin-top: 5px" size="small" type="default" plain native-type="button" @click="selTime">
+                <span>{{dateTime == "" ? $t('选择时间') : dateTime}}</span>
+              </van-button>
+              <span v-if="dateTime != '' || searchData.length > 0" class="fa fa-times-circle color-muted margin-left-5 font-size-14" style="position: relative; top: 5px" @click="clearTime"></span>
             </van-col>
           </van-row>
         </div>
@@ -115,8 +118,8 @@
     <van-calendar v-model="showCalendar" type="range" :min-date="minDate" :max-date="maxDate" @confirm="onConfirm" />
 
     <van-popup v-model="showBottom" round position="bottom" class="custom-cascader" :style="{ height: '350px' }">
-      <el-cascader-panel v-if="fliterType == 1" :style="{ height: '350px' }" :props="{multiple: true}" v-model="searchDept" :options="dataDept" @change="searchTop"></el-cascader-panel>
-      <el-cascader-panel v-if="fliterType == 2" :style="{ height: '350px' }" :props="{multiple: true}" v-model="searchCollege" :options="dataCollege" @change="searchTop"></el-cascader-panel>
+      <el-cascader-panel v-if="fliterType == 1" ref="SelectorDept" :style="{ height: '350px' }" :props="{multiple: true}" v-model="searchDept" :options="dataDept" @change="searchTop"></el-cascader-panel>
+      <el-cascader-panel v-if="fliterType == 2" ref="SelectorCollege" :style="{ height: '350px' }" :props="{multiple: true}" v-model="searchCollege" :options="dataCollege" @change="searchTop"></el-cascader-panel>
     </van-popup>
   </div>
 </template>
@@ -259,10 +262,10 @@
           params['date1'] = this.startTime;
           params['date2'] = this.endTime;
         }
-        if (this.fliterType == 1){
+        if (this.fliterType == 1 && this.searchData.length > 0){
           params['deptId'] = this.searchData;
-        }else if (this.fliterType == 2){
-          params['collegeId'] = this.searchData;;
+        }else if (this.fliterType == 2 && this.searchData.length > 0){
+          params['collegeId'] = this.searchData;
         }
         this.$axios.get(common.static_appinfo_form_info, {params: params}).then(res => {
             if (res.data.data){
@@ -434,6 +437,17 @@
         }else if(this.fliterType == 2){
           this.searchCollege = event;
         }
+        this.initFormDetail(this.formValue);
+      },
+      clearTime(){
+        this.dateTime = "";
+        this.startTime = "";
+        this.endTime = "";
+        this.searchData = [];
+        this.searchCollege = [];
+        this.searchCollege = [];
+        this.resetCasadeSelector('SelectorCollege');
+        this.resetCasadeSelector('SelectorDept');
         this.initFormDetail(this.formValue);
       }
     }
