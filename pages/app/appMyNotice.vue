@@ -101,10 +101,11 @@
             >
               <van-cell v-for="(item, index) in tableData" :key="index" style="line-height: 15px;padding: 0px 10px">
                 <div class="content-block-item padding-lr-10 padding-tb-10" style="position: relative" @click="dataDetail($event, item)">
-                  <div class="color-grand">
+                  <div class="color-muted">
                     <span class="fa fa-info-circle"></span>
                     <span>{{ item._id }}</span>
                   </div>
+                  <div class="line-height"></div>
                   <div class="margin-top-5">
                     [<span class="color-warning">{{ item.applyUserName }}</span>]
                     <span>{{$t("提交的")}}</span>
@@ -116,13 +117,13 @@
                   <div class="margin-top-5 font-size-12">
                     <span class="color-muted">{{$t("审核状态")}}</span>
                     <span>
-              <label v-if="item.status === -1" class="color-danger">{{$t("撤销")}}</label>
-              <label v-if="item.status === 0" class="color-warning">{{$t("待审核")}}</label>
-              <label v-if="item.status === 3" class="color-success">{{$t("通过")}}</label>
-              <label v-if="item.status === 4" class="color-danger">{{$t("未通过")}}</label>
-            </span>
+                      <label v-if="item.status === -1" class="color-danger">{{$t("撤销")}}</label>
+                      <label v-if="item.status === 0" class="color-warning">{{$t("待审核")}}</label>
+                      <label v-if="item.status === 3" class="color-success">{{$t("通过")}}</label>
+                      <label v-if="item.status === 4" class="color-danger">{{$t("未通过")}}</label>
+                    </span>
                   </div>
-                  <span class="fa fa-angle-right" style="position: absolute; right: 10px; top: 30px; font-size: 25px; color: #C0C4CC"></span>
+                  <span class="fa fa-angle-right" style="position: absolute; right: 10px; top: 60px; font-size: 25px; color: #C0C4CC"></span>
                 </div>
               </van-cell>
             </van-list>
