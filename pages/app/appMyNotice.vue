@@ -100,7 +100,7 @@
               finished-text="没有更多了"
             >
               <van-cell v-for="(item, index) in tableData" :key="index" style="line-height: 15px;padding: 0px 10px">
-                <div class="content-block-item padding-lr-10 padding-tb-10" style="position: relative" @click="dataDetail($event, item)">
+                <div class="content-block-item padding-lr-10 padding-tb-10" style="position: relative" @click="dataDetail($event, item, index)">
                   <div class="color-muted">
                     <span class="fa fa-info-circle"></span>
                     <span>{{ item._id }}</span>
@@ -397,6 +397,7 @@
         popUpVisible: false,
         refreshing: false,
         detailData: '',
+        detailIndex: '',
         detailApplyContentData: [],
         detailApplyAuditList: [],
         textarea: '',
@@ -544,9 +545,9 @@
           }
         });
       },
-      dataDetail(event, item){
-        console.log(item);
+      dataDetail(event, item, index){
         this.detailData = item;
+        this.detailIndex = index;
         if (item.applyContent  && item.applyContent != "[]"){
           this.detailApplyContentData = JSON.parse(item.applyContent);
         }
@@ -591,7 +592,10 @@
         params = this.$qs.stringify(params);
         this.$axios.post(common.server_form_audit_handle, params).then(res => {
           if (res.data.code == 200){
-            this.init();
+            this.tableData.splice(this.detailIndex, 1);
+            let page = Math.ceil(this.tableData.length / 20);
+            this.page = page;
+            //this.init();
             this.popUpVisible = false;
             Toast(res.data.desc);
           }else {
