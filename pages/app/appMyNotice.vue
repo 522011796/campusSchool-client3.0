@@ -25,22 +25,7 @@
       </van-row>
     </div>
 
-    <form action="/">
-      <van-row>
-        <van-col :span="(active == 1 || active == 2 || active == 3) ? 24 : 16">
-          <van-search v-model="serchName" placeholder="姓名/编号/服务名称" @input="onSearch" @clear="onClear"/>
-        </van-col>
-        <van-col v-if="active == 4" :span="8" class="text-right">
-          <el-select class="margin-right-10" style="margin-top: 11px" v-model="type" size="small" placeholder="请选择" @change="dropdownItem">
-            <el-option label="全部" value=""></el-option>
-            <el-option label="通过" value="3"></el-option>
-            <el-option label="未通过" value="4"></el-option>
-            <el-option label="撤销" value="-1"></el-option>
-          </el-select>
-        </van-col>
-      </van-row>
-    </form>
-    <div :style="divHeight12" style="position: relative">
+    <div style="position: relative">
       <div class="moon-left-menu-tag" :style="toggleTag">
         <div class="moon-left-menu-tag-container">
           <div class="moon-left-menu-tag_indicator" @click="isCollapse == true ? toggleLeftMenu($event) : toggleRightMenu($event)">
@@ -54,7 +39,7 @@
           <div v-if="isCollapse == true" class="info-block-header text-center" @click="selMenu($event, '')">
             <span>{{$t("全部")}}</span>
           </div>
-          <div class="custom-el-menu" :style="{height: divHeight10.height1-90 +'px', overflowY: 'auto'}">
+          <div class="custom-el-menu" :style="{height: divHeight10.height1-50 +'px', overflowY: 'auto'}">
             <el-menu
               :default-active="defaultMenuActive"
               background-color="#f2f2f2"
@@ -80,54 +65,82 @@
           </div>
         </template>
       </div>
-      <div>
-        <van-tabs @click="activeTabMenu" color="#007CBB" title-active-color="#007CBB" title-inactive-color="#4B4B4B" background="#f5f5f5">
-          <van-tab name="1" :title="$t('我待办')"></van-tab>
-          <van-tab name="2" :title="$t('我提交')"></van-tab>
-          <van-tab name="3" :title="$t('抄送我')"></van-tab>
-          <van-tab name="4" :title="$t('已完成')"></van-tab>
-        </van-tabs>
-      </div>
-      <div style="margin-top:5px;position: relative">
-        <div class="content-block padding-tb-10" :style="divHeight12">
-          <van-empty v-if="tableData.length == 0" description="暂无数据" />
-          <van-pull-refresh v-else v-model="refreshing" @refresh="onRefresh">
-            <van-list
-              v-model:loading="loading"
-              :finished="finished"
-              @load="onLoad"
-              :offset="0"
-              finished-text="没有更多了"
-            >
-              <van-cell v-for="(item, index) in tableData" :key="index" style="line-height: 15px;padding: 0px 10px">
-                <div class="content-block-item padding-lr-10 padding-tb-10" style="position: relative" @click="dataDetail($event, item, index)">
-                  <div class="color-muted">
-                    <span class="fa fa-info-circle"></span>
-                    <span>{{ item._id }}</span>
-                  </div>
-                  <div class="line-height"></div>
-                  <div class="margin-top-5">
-                    [<span class="color-warning">{{ item.applyUserName }}</span>]
-                    <span>{{$t("提交的")}}</span>
-                    [<span class="color-warning moon-content-text-ellipsis-class" style="max-width: 120px;display: inline-block;position: relative; top: 3px">{{ item.formName }}</span>]
-                  </div>
-                  <div class="color-muted margin-top-5">
-                    <span class="font-size-12">{{ $moment(item.applyTime).format("YYYY-MM-DD HH:mm") }}</span>
-                  </div>
-                  <div class="margin-top-5 font-size-12">
-                    <span class="color-muted">{{$t("审核状态")}}</span>
-                    <span>
+
+      <form action="/">
+        <van-row>
+          <van-col :span="(active == 1 || active == 2 || active == 3) ? 24 : 16">
+            <van-search v-model="serchName" placeholder="姓名/编号/服务名称" @input="onSearch" @clear="onClear"/>
+          </van-col>
+          <van-col v-if="active == 4" :span="8" class="text-right">
+            <el-select class="margin-right-10" style="margin-top: 11px" v-model="type" size="small" placeholder="请选择" @change="dropdownItem">
+              <el-option label="全部" value=""></el-option>
+              <el-option label="通过" value="3"></el-option>
+              <el-option label="未通过" value="4"></el-option>
+              <el-option label="撤销" value="-1"></el-option>
+            </el-select>
+          </van-col>
+        </van-row>
+
+        <div>
+          <van-tabs @click="activeTabMenu" color="#007CBB" title-active-color="#007CBB" title-inactive-color="#4B4B4B" background="#f5f5f5">
+            <van-tab name="1" :title="$t('我待办')"></van-tab>
+            <van-tab name="2" :title="$t('我提交')"></van-tab>
+            <van-tab name="3" :title="$t('抄送我')"></van-tab>
+            <van-tab name="4" :title="$t('已完成')"></van-tab>
+          </van-tabs>
+        </div>
+      </form>
+
+      <div :style="divHeight15" style="position: relative">
+        <!--      <div>
+                <van-tabs @click="activeTabMenu" color="#007CBB" title-active-color="#007CBB" title-inactive-color="#4B4B4B" background="#f5f5f5">
+                  <van-tab name="1" :title="$t('我待办')"></van-tab>
+                  <van-tab name="2" :title="$t('我提交')"></van-tab>
+                  <van-tab name="3" :title="$t('抄送我')"></van-tab>
+                  <van-tab name="4" :title="$t('已完成')"></van-tab>
+                </van-tabs>
+              </div>-->
+        <div style="margin-top:5px;position: relative">
+          <div class="content-block padding-tb-10" :style="divHeight12">
+            <van-empty v-if="tableData.length == 0" description="暂无数据" />
+            <van-pull-refresh v-else v-model="refreshing" @refresh="onRefresh">
+              <van-list
+                v-model:loading="loading"
+                :finished="finished"
+                @load="onLoad"
+                :offset="0"
+                finished-text="没有更多了"
+              >
+                <van-cell v-for="(item, index) in tableData" :key="index" style="line-height: 15px;padding: 0px 10px">
+                  <div class="content-block-item padding-lr-10 padding-tb-10" style="position: relative" @click="dataDetail($event, item, index)">
+                    <div class="color-muted">
+                      <span class="fa fa-info-circle"></span>
+                      <span>{{ item._id }}</span>
+                    </div>
+                    <div class="line-height"></div>
+                    <div class="margin-top-5">
+                      [<span class="color-warning">{{ item.applyUserName }}</span>]
+                      <span>{{$t("提交的")}}</span>
+                      [<span class="color-warning moon-content-text-ellipsis-class" style="max-width: 120px;display: inline-block;position: relative; top: 3px">{{ item.formName }}</span>]
+                    </div>
+                    <div class="color-muted margin-top-5">
+                      <span class="font-size-12">{{ $moment(item.applyTime).format("YYYY-MM-DD HH:mm") }}</span>
+                    </div>
+                    <div class="margin-top-5 font-size-12">
+                      <span class="color-muted">{{$t("审核状态")}}</span>
+                      <span>
                       <label v-if="item.status === -1" class="color-danger">{{$t("撤销")}}</label>
                       <label v-if="item.status === 0" class="color-warning">{{$t("待审核")}}</label>
                       <label v-if="item.status === 3" class="color-success">{{$t("通过")}}</label>
                       <label v-if="item.status === 4" class="color-danger">{{$t("未通过")}}</label>
                     </span>
+                    </div>
+                    <span class="fa fa-angle-right" style="position: absolute; right: 10px; top: 60px; font-size: 25px; color: #C0C4CC"></span>
                   </div>
-                  <span class="fa fa-angle-right" style="position: absolute; right: 10px; top: 60px; font-size: 25px; color: #C0C4CC"></span>
-                </div>
-              </van-cell>
-            </van-list>
-          </van-pull-refresh>
+                </van-cell>
+              </van-list>
+            </van-pull-refresh>
+          </div>
         </div>
       </div>
     </div>
@@ -673,6 +686,8 @@
       selMenu(event, item, index){
         this.departmentPath = item.department_path;
         this.defaultMenuActive = index + '';
+        this.page = 1;
+        this.tableData = [];
         this.init();
       }
     }
@@ -798,5 +813,12 @@
 }
 .icon-class-right{
   transform: rotate(180deg);
+}
+.info-block-header{
+  height: 45px;
+  line-height: 45px;
+  font-size: 14px;
+  color: #909399;
+  background: #e9e9e9;
 }
 </style>
