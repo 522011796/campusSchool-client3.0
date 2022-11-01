@@ -428,7 +428,7 @@
       });
     },
     created() {
-      this.active = this.$route.query.activeType ? this.$route.query.activeType : 6;
+      this.active = 1;
       this.getDeptInfo(2);
       this.init();
       if (this.active == 6){
