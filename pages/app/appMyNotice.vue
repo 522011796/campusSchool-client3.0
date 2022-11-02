@@ -598,6 +598,8 @@
           this.detailApplyContentData = JSON.parse(item.applyContent);
         }
         this.initAuditDetailList(item._id);
+        this.isCollapse = false;
+        this.toggleLeftMenu();
         this.popUpVisible = true;
       },
       initAuditDetailList(id){
