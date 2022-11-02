@@ -4,13 +4,14 @@
     <div class="header-title-block" :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' ">
       <van-row>
         <van-col span="4">
-          <div class="text-left padding-lr-10 color-white">
+          <div class="text-left padding-lr-10 color-white header-class">
             <span class="font-bold font-size-14" @click="returnIndex">
               <i class="fa fa-chevron-left"></i>
+              {{$t("返回")}}
             </span>
           </div>
         </van-col>
-        <van-col span="16" class="text-center" style="position: relative">
+        <van-col span="16" class="text-center header-class" style="position: relative">
 <!--          <van-tabs v-model="active" @click="activeTabMenu" type="card" class="padding-top-10" color="#1EA084" title-active-color="#ffffff" title-inactive-color="#ffffff" background="#949494">-->
 <!--            <van-tab name="6">-->
 <!--              <span slot="title" class="font-size-12">{{$t('推荐服务')}}</span>-->
@@ -27,7 +28,7 @@
 <!--          </van-tabs>-->
           <span class="color-white font-size-14 font-bold">{{$t('全部服务')}}</span>
         </van-col>
-        <van-col span="4" class="text-right;">
+        <van-col span="4" class="text-right header-class">
           <div class="text-right padding-lr-10">
             <div v-if="loginUserAppType != 5 && loginUserType != 5" style="position: relative; top: 5px;" @click="activeTabMenu(7)">
               <img src="~static/img/static_icon.png" style="width: 30px; height: 30px">
@@ -38,20 +39,7 @@
       </van-row>
     </div>
     <div class="content-block">
-      <form action="/">
-        <van-row>
-          <van-col :span="16">
-            <van-search v-model="serchName" placeholder="请输入服务名称" @input="onSearch" @clear="onClear"/>
-          </van-col>
-          <van-col :span="8" class="text-right">
-            <el-select class="margin-right-10" style="margin-top: 11px" v-model="categoryId" size="small" placeholder="请选择" @change="dropdownItem">
-              <el-option label="全部" value=""></el-option>
-              <el-option v-for="(item, index) in categoryMixinsList" :key="index" :label="item.categoryName" :value="item.id"></el-option>
-            </el-select>
-          </van-col>
-        </van-row>
-      </form>
-      <div :style="divHeight9" style="position: relative">
+      <template>
         <div class="moon-left-menu-tag" :style="toggleTag">
           <div class="moon-left-menu-tag-container">
             <div class="moon-left-menu-tag_indicator" @click="isCollapse == true ? toggleLeftMenu($event) : toggleRightMenu($event)">
@@ -63,9 +51,9 @@
         <div class="moon-left-toogle-menu info-block-left" :style="leftHeight">
           <template>
             <div v-if="isCollapse == true" class="info-block-header text-center" @click="selMenu($event, '')">
-              <span>{{$t("全部")}}</span>
+              <span class="info-block-header-text">{{$t("全部")}}</span>
             </div>
-            <div class="custom-el-menu" :style="{height: divHeight10.height1-90 +'px', overflowY: 'auto'}">
+            <div class="custom-el-menu" :style="{height: divHeight10.height1-50 +'px', overflowY: 'auto'}">
               <el-menu
                 :default-active="defaultMenuActive"
                 background-color="#f2f2f2"
@@ -75,22 +63,41 @@
                 <template v-for="(item, index) in dataDept">
                   <el-submenu v-if="item.child_list.length > 0" :index="index+''">
                     <div style="width: 100%" slot="title" @click="selMenu($event, item, index)">
-                      <span class="moon-content-text-ellipsis-class" style="width: 100%;display: inline-block">{{ item.department_name }}</span>
+                      <span class="moon-content-text-ellipsis-class main-menu-class" style="width: 100%;display: inline-block">{{ item.department_name }}</span>
                     </div>
                     <el-menu-item-group v-if="item.child_list.length > 0">
                       <el-menu-item v-for="(itemChild, indexChild) in item.child_list" :key="indexChild" :index="index+'-'+indexChild" @click="selMenu($event, itemChild, index+'-'+indexChild)">
-                        <span class="moon-content-text-ellipsis-class" style="width: 100%;display: inline-block">{{ itemChild.department_name }}</span>
+                        <span class="moon-content-text-ellipsis-class sub-menu-class" style="width: 100%;display: inline-block">{{ itemChild.department_name }}</span>
                       </el-menu-item>
                     </el-menu-item-group>
                   </el-submenu>
                   <el-menu-item v-else :index="index+''" @click="selMenu($event, item, index)">
-                    <span class="moon-content-text-ellipsis-class" style="width: 100%;display: inline-block">{{ item.department_name }}</span>
+                    <span class="moon-content-text-ellipsis-class  sub-menu-class" style="width: 100%;display: inline-block">{{ item.department_name }}</span>
                   </el-menu-item>
                 </template>
               </el-menu>
             </div>
           </template>
         </div>
+      </template>
+      <form action="/">
+        <van-row>
+          <van-col :span="12">
+            <van-search v-model="serchName" placeholder="请输入服务名称" @input="onSearch" @clear="onClear"/>
+          </van-col>
+          <van-col :span="12" class="text-right">
+            <div class="layout-inline" style="position:relative;">
+              <el-select class="layout-item" style="margin-top: 11px;width: 100px" v-model="categoryId" size="small" placeholder="请选择" @change="dropdownItem">
+                <el-option label="全部" value=""></el-option>
+                <el-option v-for="(item, index) in categoryMixinsList" :key="index" :label="item.categoryName" :value="item.id"></el-option>
+              </el-select>
+              <el-button style="margin-top: 11px;margin-right: 2px;width: 65px" class="layout-item moon-content-text-ellipsis-class" size="small" type="default" plain native-type="button" @click="isCollapse == true ? toggleLeftMenu($event) : toggleRightMenu($event)">{{departmentName != "" && departmentName != null ? departmentName : $t('部门')}}</el-button>
+              <span v-if="departmentPath != '' && departmentPath != null" class="fa fa-times-circle color-muted margin-right-5 layout-item" style="position: relative; top: 2px;font-size: 15px" @click="clearSearchDept"></span>
+            </div>
+          </van-col>
+        </van-row>
+      </form>
+      <div :style="divHeight9" style="position: relative">
         <div class="info-block-right">
           <van-grid :gutter="10">
             <van-grid-item class="margin-bottom-5" v-for="(item, index) in serverAppList" :key="index" icon="photo-o" @click="serverBlock($event, item)">
@@ -123,6 +130,7 @@
         defaultMenuActive: '',
         dormTreeList: [],
         departmentPath: '',
+        departmentName: '',
         activeTypeText: '类别',
         isCollapse: false,
         leftHeight: {
@@ -138,6 +146,10 @@
       this.$nextTick(() => {
 
       });
+      document.addEventListener("click", this.bodyCloseMenus);
+    },
+    beforeDestroy() {
+      document.removeEventListener("click", this.bodyCloseMenus);
     },
     created() {
       this.active = this.$route.query.activeType ? this.$route.query.activeType : 6;
@@ -152,6 +164,21 @@
     methods: {
       layoutInit(){
 
+      },
+      bodyCloseMenus(event){
+        console.log(event.target.className);
+        if (event.target.className.indexOf("info-block-right") != -1
+          || event.target.className.indexOf("van-grid") != -1
+          || event.target.className.indexOf("van-grid") != -1
+          || event.target.className.indexOf("fa-times-circle") != -1
+          || event.target.className.indexOf("header-class") != -1
+          || event.target.className.indexOf("sub-menu-class") != -1
+          || event.target.className.indexOf("info-block-header") != -1
+          || event.target.className.indexOf("info-block-header-text") != -1
+          ){
+          this.isCollapse = false;
+          this.toggleLeftMenu();
+        }
       },
       initAppRecommend(value){
         let params = {
@@ -260,6 +287,7 @@
         this.departmentPath = item.department_path;
         this.appletType = this.active;
         this.defaultMenuActive = index + '';
+        this.departmentName = item.department_name;
         if (this.active == 6){
           this.initAppRecommend();
         }else {
@@ -299,6 +327,8 @@
         }else {
           this.initServer();
         }
+        this.isCollapse = false;
+        this.toggleLeftMenu();
       },
       onClear(){
 
@@ -312,6 +342,18 @@
         this.isCollapse = true;
         this.leftHeight.width = "50%";
         this.toggleTag['left'] = "50%";
+      },
+      clearSearchDept(){
+        this.departmentPath = "";
+        this.defaultMenuActive = '';
+        this.page = 1;
+        this.tableData = [];
+        this.departmentName = "";
+        if (this.active == 6){
+          this.initAppRecommend();
+        }else {
+          this.initServer();
+        }
       }
     }
   }

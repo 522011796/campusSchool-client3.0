@@ -45,6 +45,7 @@
         <div v-if="globalAppShow && globalAppShow != ''" class="padding-lr-10 color-white" style="position: absolute; left: 5px" :style="{top: topHeight + 'px'}">
           <span class="font-bold font-size-20" @click="returnIndex">
             <i class="fa fa-chevron-left"></i>
+            <label class="font-size-14" style="position: relative; top: -3px;">{{$t("返回")}}</label>
           </span>
         </div>
         <div v-if="loginUserAppType != 5 && loginUserType != 5" style="position: absolute;right: 30px;" :style="{top: topHeight+5 + 'px'}" @click="activeTabMenu(6)">

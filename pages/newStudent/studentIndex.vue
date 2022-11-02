@@ -6,6 +6,7 @@
         <div class="text-left padding-lr-10 color-white" v-if="globalAppShow && globalAppShow != ''">
             <span class="font-bold font-size-14" @click="returnIndex">
               <i class="fa fa-chevron-left"></i>
+              {{$t("返回")}}
             </span>
         </div>
         <div v-else>
