@@ -166,7 +166,6 @@
 
       },
       bodyCloseMenus(event){
-        console.log(event.target.className);
         if (event.target.className.indexOf("info-block-right") != -1
           || event.target.className.indexOf("van-grid") != -1
           || event.target.className.indexOf("van-grid") != -1
