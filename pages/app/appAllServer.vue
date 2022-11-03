@@ -83,7 +83,16 @@
       <form action="/">
         <van-row>
           <van-col :span="12">
-            <van-search v-model="serchName" placeholder="请输入服务名称" @search="onSearch" @clear="onClear"/>
+            <van-search v-model="serchName" :show-action="true" placeholder="请输入服务名称" @search="onSearch" @clear="onClear">
+              <span slot="left-icon">
+
+              </span>
+              <span slot="action" class="custom-button-small">
+                <el-button type="success" size="small" @click="onSearch">
+                  <i class="fa fa-search"></i>
+                </el-button>
+              </span>
+            </van-search>
           </van-col>
           <van-col :span="12" class="text-right">
             <div class="layout-inline" style="position:relative;">
@@ -312,7 +321,7 @@
         // }else {
         //   this.initAppServer(value);
         // }
-        this.searchKey = value;
+        this.searchKey = this.serchName;
         if (this.active == 6){
           this.initAppRecommend(value);
         }else {
@@ -330,7 +339,13 @@
         this.toggleLeftMenu();
       },
       onClear(){
-
+        this.searchKey = "";
+        this.serchName = "";
+        if (this.active == 6){
+          this.initAppRecommend(this.searchKey);
+        }else {
+          this.initServer(this.searchKey);
+        }
       },
       toggleLeftMenu(event){
         this.isCollapse = false;

@@ -70,7 +70,16 @@
       <form action="/">
         <van-row>
           <van-col :span="(active == 1 || active == 2 || active == 3) ? 16 : 12">
-            <van-search v-model="serchName" placeholder="姓名/编号/服务名称" @search="onSearch" @clear="onClear"/>
+            <van-search v-model="serchName" :show-action="true" placeholder="姓名/编号/服务名称" @search="onSearch" @clear="onClear">
+              <span slot="left-icon">
+
+              </span>
+              <span slot="action" class="custom-button-small">
+                <el-button type="success" size="small" @click="onSearch">
+                  <i class="fa fa-search"></i>
+                </el-button>
+              </span>
+            </van-search>
           </van-col>
           <van-col :span="active == 4 ? 12 : 8" class="text-right">
             <div class="layout-inline" style="position:relative;">
@@ -658,7 +667,7 @@
         });
       },
       onSearch(value){
-        this.searchKey = value;
+        this.searchKey = this.serchName;
         this.page = 1;
         this.totalAuthPage = 0;
         this.finished = false;
@@ -677,7 +686,13 @@
         this.init();
       },
       onClear(){
-
+        this.finished = false;
+        this.serchName = "";
+        this.searchKey = "";
+        this.tableData = [];
+        this.page = 1;
+        this.totalAuthPage = 0;
+        this.init();
       },
       clearSearch(){
         this.startTime = "";

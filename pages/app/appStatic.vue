@@ -92,8 +92,11 @@
           </div>
         </el-card>
 
-        <el-card :body-style="{padding: '10px'}" style="height: 200px;margin-top: 20px">
-          <div style="height: 200px;width: 100%" class="text-center;">
+        <el-card :body-style="{padding: '10px'}" style="height: 240px;margin-top: 20px">
+          <div class="text-left">
+            <span class="color-muted font-size-12">{{circleParams}}</span>
+          </div>
+          <div style="height: 240px;width: 100%" class="text-center;">
             <div class="text-center">
               <el-progress type="dashboard" :width="160" :show-text="false" :percentage="circleValue"></el-progress>
             </div>
@@ -108,8 +111,11 @@
           </div>
         </el-card>
 
-        <el-card :body-style="{padding: '10px'}" style="height: 350px;margin-top: 20px">
-          <div style="height: 350px;width: 100%" class="text-center;">
+        <el-card :body-style="{padding: '10px'}" style="height: 390px;margin-top: 20px">
+          <div class="text-left">
+            <span class="color-muted font-size-12">{{barParams}}</span>
+          </div>
+          <div style="height: 390px;width: 100%" class="text-center;">
             <h-bar-chart chart-id="barId" :data-legned="barDataLegned" :data-key="barDataKey" :data="barData"></h-bar-chart>
           </div>
         </el-card>
@@ -180,13 +186,15 @@
         circleLabel: '',
         circleValue: 0,
         circleValueText: '',
+        circleParams: '',
         barLabel: '',
         barValue: '',
         barDataLegned: [],
         barDataKey: [],
         barData: [
 
-        ]
+        ],
+        barParams: '',
       }
     },
     mounted() {
@@ -242,6 +250,7 @@
                 relaFromField2: res.data.data.unitList[i].relaFromField2,
                 filterType: res.data.data.unitList[i].filterType,
                 filterRules: res.data.data.unitList[i].filterRules,
+                unitName: res.data.data.unitList[i].unitName,
               });
             }
 
@@ -274,7 +283,7 @@
                 case 1:
                   {
                     let obj = JSON.parse(array[1].relaFromField1);
-                    let filed = obj[0].n;
+                    let filed = array[1].unitName;
                     this.cardLabel1 = filed.length > 15 ? filed.substr(0,14)+"..." : filed;
                     this.cardValue1 = res.data.data.dataResult != null ? res.data.data.dataResult : "--";
                     break;
@@ -282,7 +291,7 @@
                 case 2:
                   {
                     let obj = JSON.parse(array[2].relaFromField1);
-                    let filed = obj[0].n;
+                    let filed = array[1].unitName;
                     this.cardLabel2 = filed.length > 15 ? filed.substr(0,14)+"..." : filed;
                     this.cardValue2 = res.data.data.dataResult != null ? res.data.data.dataResult : "--";
                     break;
@@ -290,7 +299,7 @@
                 case 3:
                   {
                     let obj = JSON.parse(array[3].relaFromField1);
-                    let filed = obj[0].n;
+                    let filed = array[1].unitName;
                     this.cardLabel3 = filed.length > 15 ? filed.substr(0,14)+"..." : filed;
                     this.cardValue3 = res.data.data.dataResult != null ? res.data.data.dataResult : "--";
                     break;
@@ -298,7 +307,7 @@
                 case 4:
                   {
                     let obj = JSON.parse(array[4].relaFromField1);
-                    let filed = obj[0].n;
+                    let filed = array[1].unitName;
                     this.cardLabel4 = filed.length > 15 ? filed.substr(0,14)+"..." : filed;
                     this.cardValue4 = res.data.data.dataResult != null ? res.data.data.dataResult : "--";
                     break;
@@ -308,6 +317,7 @@
                     let obj = JSON.parse(array[6].relaFromField1);
                     let filed = obj[0].n;
                     let rate = res.data.data.rate != null ? parseInt(res.data.data.rate) : 0;
+                    this.circleParams = array[6].unitName;
                     this.circleLabel = filed.length > 6 ? filed.substr(0,5)+"..." : filed;
                     this.circleValue = rate;
                     this.circleValueText = res.data.data.rate != null ? res.data.data.rate+"%" : "--";
@@ -359,6 +369,7 @@
                       dataValue = yDataObj;
                     }
 
+                    this.barParams = array[5].unitName;
                     this.barData = dataValue;
                     this.barDataKey = key;
                     this.barDataLegned = legnedArray;
