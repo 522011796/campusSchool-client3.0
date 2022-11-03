@@ -83,7 +83,7 @@
       <form action="/">
         <van-row>
           <van-col :span="12">
-            <van-search v-model="serchName" placeholder="请输入服务名称" @input="onSearch" @clear="onClear"/>
+            <van-search v-model="serchName" placeholder="请输入服务名称" @search="onSearch" @clear="onClear"/>
           </van-col>
           <van-col :span="12" class="text-right">
             <div class="layout-inline" style="position:relative;">

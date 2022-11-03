@@ -70,7 +70,7 @@
       <form action="/">
         <van-row>
           <van-col :span="(active == 1 || active == 2 || active == 3) ? 16 : 12">
-            <van-search v-model="serchName" placeholder="姓名/编号/服务名称" @input="onSearch" @clear="onClear"/>
+            <van-search v-model="serchName" placeholder="姓名/编号/服务名称" @search="onSearch" @clear="onClear"/>
           </van-col>
           <van-col :span="active == 4 ? 12 : 8" class="text-right">
             <div class="layout-inline" style="position:relative;">
