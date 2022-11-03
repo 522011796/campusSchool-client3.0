@@ -3,7 +3,7 @@
     <div :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' " :style="{height: navHeight+'px'}"></div>
     <div class="header-title-block" :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' ">
       <van-row>
-        <van-col span="4">
+        <van-col span="5">
           <div class="text-left padding-lr-10 color-white header-class">
             <span class="font-bold font-size-14" @click="returnIndex">
               <i class="fa fa-chevron-left"></i>
@@ -11,7 +11,7 @@
             </span>
           </div>
         </van-col>
-        <van-col span="16" class="text-center header-class" style="position: relative">
+        <van-col span="14" class="text-center header-class" style="position: relative">
 <!--          <van-tabs v-model="active" @click="activeTabMenu" type="card" class="padding-top-10" color="#1EA084" title-active-color="#ffffff" title-inactive-color="#ffffff" background="#949494">-->
 <!--            <van-tab name="6">-->
 <!--              <span slot="title" class="font-size-12">{{$t('推荐服务')}}</span>-->
@@ -28,7 +28,7 @@
 <!--          </van-tabs>-->
           <span class="color-white font-size-14 font-bold">{{$t('全部服务')}}</span>
         </van-col>
-        <van-col span="4" class="text-right header-class">
+        <van-col span="5" class="text-right header-class">
           <div class="text-right padding-lr-10">
             <div v-if="loginUserAppType != 5 && loginUserType != 5" style="position: relative; top: 5px;" @click="activeTabMenu(7)">
               <img src="~static/img/static_icon.png" style="width: 30px; height: 30px">
@@ -82,8 +82,8 @@
       </template>
       <form action="/">
         <van-row>
-          <van-col :span="12">
-            <van-search v-model="serchName" :show-action="true" placeholder="请输入服务名称" @search="onSearch" @clear="onClear">
+          <van-col :span="10" class="text-left">
+            <van-search v-model="serchName" :show-action="true" placeholder="服务名称" @search="onSearch" @clear="onClear">
               <span slot="left-icon">
 
               </span>
@@ -94,7 +94,7 @@
               </span>
             </van-search>
           </van-col>
-          <van-col :span="12" class="text-right">
+          <van-col :span="14" class="text-right">
             <div class="layout-inline" style="position:relative;">
               <el-select class="layout-item" style="margin-top: 11px;width: 100px" v-model="categoryId" size="small" placeholder="请选择" @change="dropdownItem">
                 <el-option label="全部" value=""></el-option>

@@ -3,7 +3,7 @@
     <div :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' " :style="{height: navHeight+'px'}"></div>
     <div class="header-title-block" :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' ">
       <van-row>
-        <van-col span="4">
+        <van-col span="5">
           <div class="text-left padding-lr-10 color-white">
             <span class="font-bold font-size-14" @click="returnIndex">
               <i class="fa fa-chevron-left"></i>
@@ -11,10 +11,10 @@
             </span>
           </div>
         </van-col>
-        <van-col span="16" class="text-center">
+        <van-col span="14" class="text-center">
           <span class="color-white font-size-14 font-bold">{{$t('我的统计')}}</span>
         </van-col>
-        <van-col span="4">
+        <van-col span="5">
           &nbsp;
         </van-col>
       </van-row>
@@ -23,7 +23,7 @@
       <form action="/">
         <div style="background: #f5f5f5;height: 40px">
           <van-row>
-            <van-col :span="8">
+            <van-col :span="8" class="text-left">
               <el-select class="margin-left-10" style="margin-top: 5px" v-model="formValue" size="small" placeholder="请选择表单" @change="dropdownItem">
                 <el-option v-for="(item, index) in formList" :key="index" :label="item.label" :value="item.value"></el-option>
               </el-select>

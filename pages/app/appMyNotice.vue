@@ -69,8 +69,8 @@
 
       <form action="/">
         <van-row>
-          <van-col :span="(active == 1 || active == 2 || active == 3) ? 16 : 12">
-            <van-search v-model="serchName" :show-action="true" placeholder="姓名/编号/服务名称" @search="onSearch" @clear="onClear">
+          <van-col :span="(active == 1 || active == 2 || active == 3) ? 16 : 12" class="text-left">
+            <van-search v-model="serchName" :show-action="true" placeholder="姓名/编号/名称" @search="onSearch" @clear="onClear">
               <span slot="left-icon">
 
               </span>
