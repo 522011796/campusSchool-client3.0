@@ -118,11 +118,11 @@
               >
                 <van-cell v-for="(item, index) in tableData" :key="index" style="line-height: 15px;padding: 0px 10px">
                   <div class="content-block-item padding-lr-10 padding-tb-10" style="position: relative" @click="dataDetail($event, item, index)">
-                    <div class="color-muted">
+                    <div class="color-muted" v-if="item.formApplyNo">
                       <span class="fa fa-info-circle"></span>
-                      <span>{{ item._id }}</span>
+                      <span>{{ item.formApplyNo }}</span>
                     </div>
-                    <div class="line-height"></div>
+                    <div class="line-height" v-if="item.formApplyNo"></div>
                     <div class="margin-top-5">
                       [<span class="color-warning">{{ item.applyUserName }}</span>]
                       <span>{{$t("提交的")}}</span>
