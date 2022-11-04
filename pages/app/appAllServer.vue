@@ -125,10 +125,10 @@
           <el-row :gutter="8" class="margin-top-10 padding-lr-10">
             <el-col :span="6" v-for="(item, index) in serverAppList" :key="index" @click.native="serverBlock($event, item)">
               <div class="margin-bottom-5 text-center padding-tb-10" style="border: 1px solid #dddddd;border-radius: 5px;height: 75px">
-                <div style="height: 30px;width: 30px;margin: 0 auto;margin-top: 2px">
-                  <van-image width="30" height="30" :src="item.form_logo"/>
+                <div style="height: 35px;width: 35px;margin: 0 auto;margin-top: 2px">
+                  <van-image width="35" height="35" :src="item.form_logo"/>
                 </div>
-                <div class="margin-top-5">
+                <div class="margin-top-8">
                   <div style="width: 70px;margin: 0 auto;">
                     <div v-if="item.form_name.length <= 5" class="font-size-12 text-center;font-family: Simsun,sans-serif,'Helvetica Neue'">
                       {{ item.form_name }}

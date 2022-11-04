@@ -111,11 +111,11 @@
           </div>
         </el-card>
 
-        <el-card :body-style="{padding: '10px'}" style="height: 390px;margin-top: 20px">
+        <el-card :body-style="{padding: '10px'}" style="height: 480px;margin-top: 20px">
           <div class="text-left">
             <span class="color-muted font-size-12">{{barParams}}</span>
           </div>
-          <div style="height: 390px;width: 100%" class="text-center;">
+          <div style="height: 440px;width: 100%" class="text-center;">
             <h-bar-chart chart-id="barId" :data-legned="barDataLegned" :data-key="barDataKey" :data="barData"></h-bar-chart>
           </div>
         </el-card>
