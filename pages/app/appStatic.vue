@@ -291,7 +291,7 @@
                 case 2:
                   {
                     let obj = JSON.parse(array[2].relaFromField1);
-                    let filed = array[1].unitName;
+                    let filed = array[2].unitName;
                     this.cardLabel2 = filed.length > 15 ? filed.substr(0,14)+"..." : filed;
                     this.cardValue2 = res.data.data.dataResult != null ? res.data.data.dataResult : "--";
                     break;
@@ -299,7 +299,7 @@
                 case 3:
                   {
                     let obj = JSON.parse(array[3].relaFromField1);
-                    let filed = array[1].unitName;
+                    let filed = array[3].unitName;
                     this.cardLabel3 = filed.length > 15 ? filed.substr(0,14)+"..." : filed;
                     this.cardValue3 = res.data.data.dataResult != null ? res.data.data.dataResult : "--";
                     break;
@@ -307,7 +307,7 @@
                 case 4:
                   {
                     let obj = JSON.parse(array[4].relaFromField1);
-                    let filed = array[1].unitName;
+                    let filed = array[4].unitName;
                     this.cardLabel4 = filed.length > 15 ? filed.substr(0,14)+"..." : filed;
                     this.cardValue4 = res.data.data.dataResult != null ? res.data.data.dataResult : "--";
                     break;
