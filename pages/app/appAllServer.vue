@@ -108,14 +108,39 @@
       </form>
       <div :style="divHeight9" style="position: relative">
         <div class="info-block-right">
-          <van-grid :gutter="10">
-            <van-grid-item class="margin-bottom-5" v-for="(item, index) in serverAppList" :key="index" icon="photo-o" @click="serverBlock($event, item)">
-              <div slot="icon" class="text-center">
-                <van-image width="30" height="30" :src="item.form_logo"/>
+<!--          <van-grid :gutter="10">-->
+<!--            <van-grid-item class="margin-bottom-5" v-for="(item, index) in serverAppList" :key="index" icon="photo-o" @click="serverBlock($event, item)">-->
+<!--              <div slot="icon" class="text-center">-->
+<!--                <div style="height: 30px;width: 30px">-->
+<!--                  <van-image width="30" height="30" :src="item.form_logo"/>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div slot="text" class="margin-top-10">-->
+<!--                <div class="text-center" style="width: 75px;margin: 0 auto;font-family: Menlo, Monaco, 'Courier New', monospace">-->
+<!--                  {{ item.form_name }}撒123-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </van-grid-item>-->
+<!--          </van-grid>-->
+          <el-row :gutter="8" class="margin-top-10 padding-lr-10">
+            <el-col :span="6" v-for="(item, index) in serverAppList" :key="index" @click.native="serverBlock($event, item)">
+              <div class="margin-bottom-5 text-center padding-tb-10" style="border: 1px solid #dddddd;border-radius: 5px;height: 75px">
+                <div style="height: 30px;width: 30px;margin: 0 auto;margin-top: 2px">
+                  <van-image width="30" height="30" :src="item.form_logo"/>
+                </div>
+                <div class="margin-top-5">
+                  <div style="width: 70px;margin: 0 auto;">
+                    <div v-if="item.form_name.length <= 5" class="font-size-12 text-center;font-family: Simsun,sans-serif,'Helvetica Neue'">
+                      {{ item.form_name }}
+                    </div>
+                    <div v-else class="font-size-12" style="margin-left:2px;display: inline-block;text-align: left;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;text-overflow: ellipsis;overflow : hidden;font-family: Simsun,sans-serif,'Helvetica Neue'">
+                      {{ item.form_name }}
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div slot="text" class="moon-content-text-ellipsis-class margin-top-10 text-center" style="width: 60px">{{ item.form_name }}</div>
-            </van-grid-item>
-          </van-grid>
+            </el-col>
+          </el-row>
         </div>
       </div>
     </div>
