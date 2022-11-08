@@ -10,6 +10,7 @@
     "start:jdztc": "cross-env BASE_URL=http://mianhuatang.jcivt.com:10201 NODE_ENV=production nuxt start",
     "start:aimht": "cross-env BASE_URL=http://campus.aimht.cn:10201 NODE_ENV=production nuxt start",
     "start:dlfy": "cross-env BASE_URL=http://zhxy.dlfy.edu.cn:10201 NODE_ENV=production nuxt start",
+    "start:xdgk": "cross-env BASE_URL=http://www.edu.xiandaigaoke.com:10201 NODE_ENV=production nuxt start",
     "generate": "nuxt generate"
   },
   "config": {
