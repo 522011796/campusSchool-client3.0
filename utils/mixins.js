@@ -528,7 +528,7 @@ export default {
       let params = {
         campusName: this.campusName
       };
-      await this.$axios.get("http://campus.9451.com/campusmanage/appapi/system-version", {params: params}).then(res => {
+      await this.$axios.get("https://campus.9451.com/campusmanage/appapi/system-version", {params: params}).then(res => {
         if (res.data.data){
           this.currentVersion = res.data.data.version;
           this.versionData = res.data.data.logs;
