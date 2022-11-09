@@ -57,7 +57,7 @@
               <el-row class="margin-top-5">
                 <el-col :span="12">
                   <span class="color-muted">{{$t("申请日期")}}:</span>
-                  <span>{{ $moment(detailData.applyTime).format("YYYY-MM-DD HH:mm") }}</span>
+                  <span>{{ detailData.applyTime ? $moment(detailData.applyTime).format("YYYY-MM-DD HH:mm") : "" }}</span>
                 </el-col>
               </el-row>
             </div>
