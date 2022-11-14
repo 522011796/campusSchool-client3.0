@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-upload
+      ref="uploadRef"
       class="avatar-uploader"
       :action="action"
       :accept="accept"
@@ -8,6 +9,7 @@
       :auto-upload="true"
       :show-file-list="false"
       :limit="limit"
+      :multiple = "multiple"
       :on-success="handleAvatarSuccess"
       :on-error="handleAvatarError"
       :before-upload="beforeAvatarUpload">
@@ -48,6 +50,10 @@
       limit: {
         default: 1,
         type: Number
+      },
+      multiple: {
+        default: false,
+        type: Boolean
       }
     },
     computed: {
@@ -62,9 +68,15 @@
     },
     methods: {
       handleAvatarSuccess(res, file){
+        if (this.multiple == false) {
+          this.$refs.uploadRef.clearFiles();
+        }
         this.$emit('success', res, file);
       },
       handleAvatarError(res, file){
+        if (this.multiple == false) {
+          this.$refs.uploadRef.clearFiles();
+        }
         this.$emit('error', res, file);
       },
       beforeAvatarUpload(file){

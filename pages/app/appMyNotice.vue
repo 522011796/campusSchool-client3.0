@@ -178,12 +178,29 @@
               v-model="visibleNo"
               v-if="detailApplyAuditUserData.notagreed1 == true">
               <div class="margin-bottom-10">
-                <el-input
-                  type="textarea"
-                  :rows="2"
-                  placeholder="请输入内容"
-                  v-model="textarea">
-                </el-input>
+                <div>
+                  <el-input
+                    type="textarea"
+                    :rows="2"
+                    placeholder="请输入内容"
+                    v-model="textarea">
+                  </el-input>
+                </div>
+                <div class="margin-top-5">
+                  <div>
+                    <span class="font-size-12 color-muted">{{$t("上传图片")}}</span>
+                  </div>
+                  <div class="margin-top-5">
+                    <span class="pull-left" style="position: relative" v-for="(item, index) in images" :key="index">
+                      <i class="fa fa-times-circle color-danger" style="font-size: 14px;position: absolute; right: 0px; top:-5px;" @click="clearImage($event, index)"></i>
+                      <img  :src="item.picture_url" fit="fit" style="margin-right: 10px;height: 30px;width:30px"></img>
+                    </span>
+                    <upload-square ref="upload" class="pull-left margin-left-5" :action="uploadFileListUrl" :limit="3" max-size="5" :data="{path: 'applet'}" accept=".png,.jpg,.jpeg" @success="uploadImgListFileSuccess">
+                      <i class="el-icon-plus avatar-uploader-icon" style="height: 30px;line-height:30px;width: 30px"></i>
+                    </upload-square>
+                    <div class="moon-clearfix"></div>
+                  </div>
+                </div>
               </div>
               <div style="text-align: right; margin: 0">
                 <el-button size="mini" type="text" @click="cancelPop">取消</el-button>
@@ -356,6 +373,9 @@
                             <el-tooltip v-if="itemUser.des" class="item" effect="dark" :content="itemUser.des" placement="top">
                               <i class="fa fa-warning color-warning"></i>
                             </el-tooltip>
+                            <span v-if="itemUser.url && itemUser.url.length > 0">
+                              <img v-for="(item, index) in itemUser.url" :key="index" :src="item" fit="fit" style="position: relative;top:5px;height: 20px;width:20px;margin-left: 3px" @click="readFile(item)"></img>
+                            </span>
                           </label>
                           <label v-if="itemUser.status === 5" class="color-warning">{{$t("无需审批")}}</label>
                           <label v-if="itemUser.status === 8" class="color-warning">{{$t("审批中")}}</label>
@@ -431,6 +451,7 @@
         detailApplyContentData: [],
         detailApplyAuditList: [],
         textarea: '',
+        images: [],
         visibleNo: false,
         detailApplyAuditUserData: {},
         serchName: '',
@@ -446,6 +467,7 @@
         serverAppList: [],
         departmentPath: '',
         departmentName: '',
+        uploadFileListUrl: common.upload_file,
         leftHeight: {
           'height': '100%',
           'width': '0%'
@@ -646,6 +668,15 @@
           status: type,
           des: this.textarea
         };
+        if (this.images.length > 0){
+          let images = [];
+          for (let i = 0; i < this.images.length; i++){
+            images.push(this.images[i].picture_url);
+          }
+
+          params['url'] = images.join();
+        }
+
         params = this.$qs.stringify(params);
         this.$axios.post(common.server_form_audit_handle, params).then(res => {
           if (res.data.code == 200){
@@ -759,6 +790,18 @@
         this.isCollapse = false;
         this.toggleLeftMenu();
         this.init();
+      },
+      uploadImgListFileSuccess(res,file){
+        if (res.code == 200){
+          this.images.push({
+            picture_url: res.data.url,
+          });
+        }else {
+          MessageError(res.desc);
+        }
+      },
+      clearImage(event, index){
+        this.images.splice(index, 1);
       }
     }
   }
@@ -890,5 +933,15 @@
   font-size: 14px;
   color: #909399;
   background: #e9e9e9;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  border: 1px dashed #dddddd;
+  font-size: 12px;
 }
 </style>
