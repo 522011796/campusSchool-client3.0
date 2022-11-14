@@ -656,6 +656,7 @@
       },
       cancelPop(){
         this.textarea = '';
+        this.images = [];
         this.visibleOk = false;
         this.visibleNo = false;
       },
@@ -684,6 +685,7 @@
             let page = Math.ceil(this.tableData.length / 20);
             this.page = page;
             //this.init();
+            this.images = [];
             this.popUpVisible = false;
             Toast(res.data.desc);
           }else {
