@@ -220,21 +220,76 @@
           </div>
 
           <div v-if="detailData.handle == true">
-            <el-button v-if="detailApplyAuditUserData.agreen1 == true" style="width: 100px" size="small" type="success" @click="handleOk($event, detailData, 1)">同 意</el-button>
             <el-popover
               :tabindex="99999"
-              placement="bottom"
-              width="200"
+              placement="top"
+              width="300"
+              @hide="cancelPop"
+              v-model="visibleYes"
+              v-if="detailApplyAuditUserData.agreen1 == true">
+              <div class="margin-bottom-10">
+                <div>
+                  <el-input
+                    type="textarea"
+                    :rows="2"
+                    placeholder="请输入内容"
+                    v-model="textarea">
+                  </el-input>
+                </div>
+                <div class="margin-top-5">
+                  <div>
+                    <span class="font-size-12 color-muted">{{$t("上传图片")}}</span>
+                  </div>
+                  <div class="margin-top-10">
+                    <span class="pull-left" style="position: relative" v-for="(item, index) in images" :key="index">
+                      <i class="fa fa-times-circle color-danger" style="font-size: 14px;position: absolute; right: 2px; top:-5px;" @click="clearImage($event, index)"></i>
+                      <img  :src="item.picture_url" fit="fit" style="margin-right: 10px;height: 30px;width:30px"></img>
+                    </span>
+                    <upload-square ref="upload" class="pull-left margin-left-5" :action="uploadFileListUrl" :limit="3" max-size="5" :data="{path: 'applet'}" accept=".png,.jpg,.jpeg" @success="uploadImgListFileSuccess">
+                      <i class="el-icon-plus avatar-uploader-icon" style="height: 30px;line-height:30px;width: 30px"></i>
+                    </upload-square>
+                    <div class="moon-clearfix"></div>
+                  </div>
+                </div>
+              </div>
+              <div style="text-align: right; margin: 0">
+                <el-button size="mini" type="text" @click="cancelPop">取消</el-button>
+                <el-button type="primary" size="small" @click="handleOk($event, detailData, 1)">确定</el-button>
+              </div>
+              <el-button slot="reference" style="width: 100px" type="success" size="small">{{$t("同意")}}</el-button>
+            </el-popover>
+
+            <el-popover
+              :tabindex="99999"
+              placement="top"
+              width="300"
               @hide="cancelPop"
               v-model="visibleNo"
               v-if="detailApplyAuditUserData.notagreed1 == true">
               <div class="margin-bottom-10">
-                <el-input
-                  type="textarea"
-                  :rows="2"
-                  placeholder="请输入内容"
-                  v-model="textarea">
-                </el-input>
+                <div>
+                  <el-input
+                    type="textarea"
+                    :rows="2"
+                    placeholder="请输入内容"
+                    v-model="textarea">
+                  </el-input>
+                </div>
+                <div class="margin-top-5">
+                  <div>
+                    <span class="font-size-12 color-muted">{{$t("上传图片")}}</span>
+                  </div>
+                  <div class="margin-top-10">
+                    <span class="pull-left" style="position: relative" v-for="(item, index) in images" :key="index">
+                      <i class="fa fa-times-circle color-danger" style="font-size: 14px;position: absolute; right: 2px; top:-5px;" @click="clearImage($event, index)"></i>
+                      <img  :src="item.picture_url" fit="fit" style="margin-right: 10px;height: 30px;width:30px"></img>
+                    </span>
+                    <upload-square ref="upload" class="pull-left margin-left-5" :action="uploadFileListUrl" :limit="3" max-size="5" :data="{path: 'applet'}" accept=".png,.jpg,.jpeg" @success="uploadImgListFileSuccess">
+                      <i class="el-icon-plus avatar-uploader-icon" style="height: 30px;line-height:30px;width: 30px"></i>
+                    </upload-square>
+                    <div class="moon-clearfix"></div>
+                  </div>
+                </div>
               </div>
               <div style="text-align: right; margin: 0">
                 <el-button size="mini" type="text" @click="cancelPop">取消</el-button>
@@ -260,6 +315,7 @@
   import mixins from "~/utils/mixins";
   import mixinsBridge from "~/utils/mixinsBridge";
   import {ImagePreview, Toast} from "vant";
+  import {MessageError} from "~/utils/utils";
   export default {
     name: 'appMsgDetail',
     layout: 'defaultAppScreen',
@@ -277,7 +333,10 @@
         detailData: '',
         detailIndex: '',
         visibleNo: false,
+        visibleYes: false,
         textarea: '',
+        images: [],
+        uploadFileListUrl: common.upload_file,
       }
     },
     mounted() {
@@ -290,7 +349,7 @@
       if (this.$route.query.sessionId){
         this.initAppConfig();
       }
-      //this.initAppRecommend("636392513f238f036cc231f8");
+      //this.initAppRecommend("6372f39257cd5a294897fc52");
     },
     methods: {
       layoutInit(){
@@ -338,13 +397,25 @@
           status: type,
           des: this.textarea
         };
+
+        if (this.images.length > 0){
+          let images = [];
+          for (let i = 0; i < this.images.length; i++){
+            images.push(this.images[i].picture_url);
+          }
+
+          params['url'] = images.join();
+        }
+
         params = this.$qs.stringify(params);
         this.$axios.post(common.server_form_audit_handle, params).then(res => {
           if (res.data.code == 200){
-            this.tableData.splice(this.detailIndex, 1);
-            let page = Math.ceil(this.tableData.length / 20);
-            this.page = page;
+            //this.tableData.splice(this.detailIndex, 1);
+            //let page = Math.ceil(this.tableData.length / 20);
+            //this.page = page;
             //this.init();
+            this.initAppRecommend(this.$route.query.msgId);
+            this.cancelPop();
             this.popUpVisible = false;
             Toast(res.data.desc);
           }else {
@@ -354,6 +425,7 @@
       },
       cancelPop(){
         this.textarea = '';
+        this.images = [];
         this.visibleOk = false;
         this.visibleNo = false;
       },
@@ -365,6 +437,18 @@
       },
       returnIndex(){
         this.returnGlobalMain(1);
+      },
+      uploadImgListFileSuccess(res,file){
+        if (res.code == 200){
+          this.images.push({
+            picture_url: res.data.url,
+          });
+        }else {
+          MessageError(res.desc);
+        }
+      },
+      clearImage(event, index){
+        this.images.splice(index, 1);
       }
     }
   }
@@ -402,5 +486,15 @@
   border-radius: 5px;
   height: 80px;
   box-shadow: 0px 0px 4px #bbbbbb;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  border: 1px dashed #dddddd;
+  font-size: 12px;
 }
 </style>
