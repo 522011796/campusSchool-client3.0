@@ -342,35 +342,65 @@
 
                     for (let i = 0; i < data.length; i++){
                       key.push(data[i]._name);
+                    }
+
+                    let yDataObj = {};
+                    let yDataItemKey = [];
+                    let yDataObjValue = [];
+                    for (let i = 0; i < data.length; i++){
                       let yData = [];
-                      let yDataObj = [];
+                      let dataObj = {};
+                      for (let item in data[i]){
+                        if (item.indexOf("DateResult") > -1){
+                          yDataItemKey.push(item);
+                        }
+                      }
+                      break
+                    }
+
+                    for (let i = 0; i < yDataItemKey.length; i++){
+                      yDataObj[yDataItemKey[i]] = [];
+                      for (let j = 0; j < data.length; j++){
+                        for (let item in data[j]){
+                          if (item == yDataItemKey[i]){
+                            yDataObj[yDataItemKey[i]].push(data[j][item]);
+                          }
+                        }
+                      }
+                    }
+
+                    for (let i = 0; i < data.length; i++){
+                      let yData = [];
                       let dataObj = {};
                       for (let item in data[i]){
                         for (let z = 0; z < dataF.length; z++){
                           if (dataF[z].f+"DateResult" == item){
-                            let value = data[i][item];
                             let name = dataF[z].n;
-                            yData.push(value);
                             dataObj = {
                               name: name,
+                              label: item,
                               type: 'bar',
                               barWidth:15,
                               data: []
                             };
-                            yDataObj.push(dataObj);
+
+                            yDataObjValue.push(dataObj);
                           }
                         }
                       }
-                      dataObj['data'] = yData;
+                    }
 
-                      for (let k = 0; k < yDataObj.length; k++){
-                        yDataObj[k]['data'] = yData;
+                    let barValueDataArray = [];
+                    for (let i = 0; i < yDataObjValue.length; i++){
+                      for (let itemChild in yDataObj){
+                        if (yDataObjValue[i]['label'] == itemChild){
+                          yDataObjValue[i]['data'] = yDataObj[itemChild];
+                        }
                       }
-                      dataValue = yDataObj;
                     }
 
                     this.barParams = array[5].unitName;
-                    this.barData = dataValue;
+                    this.barData = yDataObjValue;
                     this.barDataKey = key;
                     this.barDataLegned = legnedArray;
                     break;
