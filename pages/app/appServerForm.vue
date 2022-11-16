@@ -227,6 +227,7 @@
           this.btnLoading = true;
           this.$axios.post(url, params, {loading: false}).then(res => {
             if (res.data.code == 200){
+              this.returnBlock();
               Toast(res.data.desc);
             }else {
               Toast(res.data.desc);
