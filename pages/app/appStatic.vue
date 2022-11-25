@@ -4,7 +4,7 @@
     <div class="header-title-block" :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' ">
       <van-row>
         <van-col span="5">
-          <div class="text-left padding-lr-10 color-white">
+          <div class="text-left color-white" style="line-height: 60px;padding-left: 10px">
             <span class="font-bold font-size-14" @click="returnIndex">
               <i class="fa fa-chevron-left"></i>
               {{$t("返回")}}
@@ -12,35 +12,55 @@
           </div>
         </van-col>
         <van-col span="14" class="text-center">
-          <span class="color-white font-size-14 font-bold">{{$t('我的统计')}}</span>
+          <div class="margin-top-20">
+            <span class="color-white font-size-14 font-bold">{{$t('我的统计')}}</span>
+          </div>
+          <div>
+            <span class="font-size-12 color-white">{{dateTime}}</span>
+            <span v-if="dateTime != '' || searchData.length > 0" class="fa fa-times-circle color-white margin-left-5 font-size-14" style="position: relative; top: 0px" @click="clearTime"></span>
+          </div>
         </van-col>
         <van-col span="5">
-          &nbsp;
+          <div style="line-height: 60px;padding-right: 10px" class="text-right">
+            <van-button style="margin-top: 5px" size="mini" type="primary" plain native-type="button" @click="selTime">
+              <span>{{$t('选择时间')}}</span>
+            </van-button>
+          </div>
         </van-col>
       </van-row>
     </div>
     <div class="content-block">
       <form action="/">
-        <div style="background: #f5f5f5;height: 40px">
+        <div style="background: #f5f5f5;height: 80px">
           <van-row>
-            <van-col :span="8" class="text-left">
-              <el-select class="margin-left-10" style="margin-top: 5px" v-model="formValue" size="small" placeholder="请选择表单" @change="dropdownItem">
+            <van-col :span="24" class="text-center padding-lr-10">
+              <van-button v-if="fliterType == 1" class="layout-item" style="margin-top: 5px;width:100%" size="small" type="warning" plain native-type="button" @click="selSearch">{{$t('选择部门')}}</van-button>
+              <van-button v-if="fliterType == 2" class="layout-item" style="margin-top: 5px;width:100%" size="small" type="warning" plain native-type="button" @click="selSearch">{{$t('选择院系')}}</van-button>
+<!--              <van-button class="layout-item" style="margin-top: 5px" size="small" type="default" plain native-type="button" @click="selTime">-->
+<!--                <span>{{dateTime == "" ? $t('选择时间') : dateTime}}</span>-->
+<!--              </van-button>-->
+<!--              <span v-if="dateTime != '' || searchData.length > 0" class="fa fa-times-circle color-muted margin-left-5 font-size-14" style="position: relative; top: 5px" @click="clearTime"></span>-->
+            </van-col>
+          </van-row>
+          <van-row>
+            <van-col :span="24" class="text-center padding-lr-10">
+              <el-select style="margin-top: 5px;width:100%" v-model="formValue" size="small" placeholder="请选择表单" @change="dropdownItem">
                 <el-option v-for="(item, index) in formList" :key="index" :label="item.label" :value="item.value"></el-option>
               </el-select>
             </van-col>
-            <van-col :span="16" class="text-right padding-lr-10">
-              <van-button v-if="fliterType == 1" class="layout-item" style="margin-top: 5px" size="small" type="warning" plain native-type="button" @click="selSearch">{{$t('选择部门')}}</van-button>
-              <van-button v-if="fliterType == 2" class="layout-item" style="margin-top: 5px" size="small" type="warning" plain native-type="button" @click="selSearch">{{$t('选择院系')}}</van-button>
-              <van-button class="layout-item" style="margin-top: 5px" size="small" type="default" plain native-type="button" @click="selTime">
-                <span>{{dateTime == "" ? $t('选择时间') : dateTime}}</span>
-              </van-button>
-              <span v-if="dateTime != '' || searchData.length > 0" class="fa fa-times-circle color-muted margin-left-5 font-size-14" style="position: relative; top: 5px" @click="clearTime"></span>
-            </van-col>
+<!--            <van-col :span="16" class="text-right padding-lr-10">-->
+<!--              <van-button v-if="fliterType == 1" class="layout-item" style="margin-top: 5px" size="small" type="warning" plain native-type="button" @click="selSearch">{{$t('选择部门')}}</van-button>-->
+<!--              <van-button v-if="fliterType == 2" class="layout-item" style="margin-top: 5px" size="small" type="warning" plain native-type="button" @click="selSearch">{{$t('选择院系')}}</van-button>-->
+<!--              <van-button class="layout-item" style="margin-top: 5px" size="small" type="default" plain native-type="button" @click="selTime">-->
+<!--                <span>{{dateTime == "" ? $t('选择时间') : dateTime}}</span>-->
+<!--              </van-button>-->
+<!--              <span v-if="dateTime != '' || searchData.length > 0" class="fa fa-times-circle color-muted margin-left-5 font-size-14" style="position: relative; top: 5px" @click="clearTime"></span>-->
+<!--            </van-col>-->
           </van-row>
         </div>
       </form>
 
-      <div :style="divHeight9" class="detail-card padding-lr-10 margin-top-10" style="position: relative">
+      <div :style="divHeight17" class="detail-card padding-lr-10 margin-top-10" style="position: relative">
         <el-card :body-style="{padding: '10px'}" style="height: 150px">
           <div style="height: 75px;width: 100%">
             <el-row>
@@ -502,7 +522,7 @@
 }
 .header-title-block{
   height: 60px;
-  line-height: 60px;
+  /*line-height: 60px;*/
   width: 100%;
 }
 .content-block{
