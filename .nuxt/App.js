@@ -3,6 +3,8 @@ import Vue from 'vue'
 import { getMatchedComponentsInstances, getChildrenComponentInstancesUsingFetch, promisify, globalHandleError, urlJoin, sanitizeComponent } from './utils'
 import NuxtError from './components/nuxt-error.vue'
 
+import NuxtBuildIndicator from './components/nuxt-build-indicator'
+
 import '../assets/css/animate.min.css'
 
 import '../node_modules/element-ui/lib/theme-chalk/index.css'
@@ -57,6 +59,7 @@ export default {
       }
     }, [
 
+      h(NuxtBuildIndicator),
       transitionEl
     ])
   },
@@ -175,6 +178,10 @@ export default {
     },
 
     setLayout (layout) {
+      if(layout && typeof layout !== 'string') {
+        throw new Error('[nuxt] Avoid using non-string value as layout property.')
+      }
+
       if (!layout || !layouts['_' + layout]) {
         layout = 'default'
       }
