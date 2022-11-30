@@ -164,112 +164,120 @@
 
     <van-popup @close="cancelPop" v-model="popUpVisible" round position="bottom" :style="{ height: '85%' }" style="background: #efefef">
       <div class="padding-tb-10 padding-lr-10 border-bottom-1 bg-white">
-        <template v-if="active == 1">
-          <div class="text-right padding-lr-10">
-<!--            <el-button v-if="detailApplyAuditUserData.agreen1 == true" size="mini" type="success" @click="handleOk($event, detailData, 1)">同 意</el-button>-->
-            <el-popover
-              :tabindex="99999"
-              placement="bottom"
-              width="300"
-              @hide="cancelPop"
-              v-model="visibleYes"
-              v-if="detailApplyAuditUserData.agreen1 == true">
-              <div class="margin-bottom-10">
-                <div>
-                  <el-input
-                    type="textarea"
-                    :rows="2"
-                    placeholder="请输入内容"
-                    v-model="textarea">
-                  </el-input>
-                </div>
-                <div class="margin-top-5">
-                  <div>
-                    <span class="font-size-12 color-muted">{{$t("上传图片")}}</span>
-                  </div>
-                  <div class="margin-top-10">
+        <el-row>
+          <el-col :span="10">
+<!--            <span class="color-success font-bold">{{$t("详细")}}</span>-->
+            <label style="position: relative; top: 5px" v-if="detailData.currentNodeName" class="color-warning font-bold">【{{detailData.currentNodeName}}】</label>
+          </el-col>
+          <el-col :span="14">
+            <template v-if="active == 1">
+              <div class="text-right padding-lr-10">
+                <!--            <el-button v-if="detailApplyAuditUserData.agreen1 == true" size="mini" type="success" @click="handleOk($event, detailData, 1)">同 意</el-button>-->
+                <el-popover
+                  :tabindex="99999"
+                  placement="bottom"
+                  width="300"
+                  @hide="cancelPop"
+                  v-model="visibleYes"
+                  v-if="detailApplyAuditUserData.agreen1 == true">
+                  <div class="margin-bottom-10">
+                    <div>
+                      <el-input
+                        type="textarea"
+                        :rows="2"
+                        placeholder="请输入内容"
+                        v-model="textarea">
+                      </el-input>
+                    </div>
+                    <div class="margin-top-5">
+                      <div>
+                        <span class="font-size-12 color-muted">{{$t("上传图片")}}</span>
+                      </div>
+                      <div class="margin-top-10">
                     <span class="pull-left" style="position: relative" v-for="(item, index) in images" :key="index">
                       <i class="fa fa-times-circle color-danger" style="font-size: 14px;position: absolute; right: 2px; top:-5px;" @click="clearImage($event, index)"></i>
                       <img  :src="item.picture_url" fit="fit" style="margin-right: 10px;height: 30px;width:30px"></img>
                     </span>
-                    <upload-square ref="upload" class="pull-left margin-left-5" :action="uploadFileListUrl" :limit="3" max-size="5" :data="{path: 'applet'}" accept=".png,.jpg,.jpeg" @success="uploadImgListFileSuccess">
-                      <i class="el-icon-plus avatar-uploader-icon" style="height: 30px;line-height:30px;width: 30px"></i>
-                    </upload-square>
-                    <div class="moon-clearfix"></div>
+                        <upload-square ref="upload" class="pull-left margin-left-5" :action="uploadFileListUrl" :limit="3" max-size="5" :data="{path: 'applet'}" accept=".png,.jpg,.jpeg" @success="uploadImgListFileSuccess">
+                          <i class="el-icon-plus avatar-uploader-icon" style="height: 30px;line-height:30px;width: 30px"></i>
+                        </upload-square>
+                        <div class="moon-clearfix"></div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div style="text-align: right; margin: 0">
-                <el-button size="mini" type="text" @click="cancelPop">取消</el-button>
-                <el-button type="primary" size="mini" @click="handleOk($event, detailData, 1)">确定</el-button>
-              </div>
-              <el-button slot="reference" type="success" size="mini">{{$t("同意")}}</el-button>
-            </el-popover>
-            <el-button v-else size="mini" @click="handleCancel">取 消</el-button>
-            <!--            <el-button size="mini" type="primary" @click="handleOk($event, detailData, 6)">转 交</el-button>-->
-<!--            <el-button size="mini" type="primary" @click="handleOk($event, detailData, -1)">撤 销</el-button>-->
-            <el-popover
-              :tabindex="99999"
-              placement="bottom"
-              width="300"
-              @hide="cancelPop"
-              v-model="visibleNo"
-              v-if="detailApplyAuditUserData.notagreed1 == true">
-              <div class="margin-bottom-10">
-                <div>
-                  <el-input
-                    type="textarea"
-                    :rows="2"
-                    placeholder="请输入内容"
-                    v-model="textarea">
-                  </el-input>
-                </div>
-                <div class="margin-top-5">
-                  <div>
-                    <span class="font-size-12 color-muted">{{$t("上传图片")}}</span>
+                  <div style="text-align: right; margin: 0">
+                    <el-button size="mini" type="text" @click="cancelPop">取消</el-button>
+                    <el-button type="primary" size="mini" @click="handleOk($event, detailData, 1)">确定</el-button>
                   </div>
-                  <div class="margin-top-10">
+                  <el-button slot="reference" type="success" size="mini">{{$t("同意")}}</el-button>
+                </el-popover>
+                <el-button v-else size="mini" @click="handleCancel">取 消</el-button>
+                <!--            <el-button size="mini" type="primary" @click="handleOk($event, detailData, 6)">转 交</el-button>-->
+                <!--            <el-button size="mini" type="primary" @click="handleOk($event, detailData, -1)">撤 销</el-button>-->
+                <el-popover
+                  :tabindex="99999"
+                  placement="bottom"
+                  width="300"
+                  @hide="cancelPop"
+                  v-model="visibleNo"
+                  v-if="detailApplyAuditUserData.notagreed1 == true">
+                  <div class="margin-bottom-10">
+                    <div>
+                      <el-input
+                        type="textarea"
+                        :rows="2"
+                        placeholder="请输入内容"
+                        v-model="textarea">
+                      </el-input>
+                    </div>
+                    <div class="margin-top-5">
+                      <div>
+                        <span class="font-size-12 color-muted">{{$t("上传图片")}}</span>
+                      </div>
+                      <div class="margin-top-10">
                     <span class="pull-left" style="position: relative" v-for="(item, index) in images" :key="index">
                       <i class="fa fa-times-circle color-danger" style="font-size: 14px;position: absolute; right: 2px; top:-5px;" @click="clearImage($event, index)"></i>
                       <img  :src="item.picture_url" fit="fit" style="margin-right: 10px;height: 30px;width:30px"></img>
                     </span>
-                    <upload-square ref="upload" class="pull-left margin-left-5" :action="uploadFileListUrl" :limit="3" max-size="5" :data="{path: 'applet'}" accept=".png,.jpg,.jpeg" @success="uploadImgListFileSuccess">
-                      <i class="el-icon-plus avatar-uploader-icon" style="height: 30px;line-height:30px;width: 30px"></i>
-                    </upload-square>
-                    <div class="moon-clearfix"></div>
+                        <upload-square ref="upload" class="pull-left margin-left-5" :action="uploadFileListUrl" :limit="3" max-size="5" :data="{path: 'applet'}" accept=".png,.jpg,.jpeg" @success="uploadImgListFileSuccess">
+                          <i class="el-icon-plus avatar-uploader-icon" style="height: 30px;line-height:30px;width: 30px"></i>
+                        </upload-square>
+                        <div class="moon-clearfix"></div>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                  <div style="text-align: right; margin: 0">
+                    <el-button size="mini" type="text" @click="cancelPop">取消</el-button>
+                    <el-button type="primary" size="mini" @click="handleOk($event, detailData, 2)">确定</el-button>
+                  </div>
+                  <el-button slot="reference" type="warning" size="mini">{{$t("驳回")}}</el-button>
+                </el-popover>
               </div>
-              <div style="text-align: right; margin: 0">
-                <el-button size="mini" type="text" @click="cancelPop">取消</el-button>
-                <el-button type="primary" size="mini" @click="handleOk($event, detailData, 2)">确定</el-button>
+            </template>
+            <template v-if="active == 2">
+              <div class="text-right padding-lr-10">
+                <el-button v-if="detailData.allowRevoke == true" size="mini" type="primary" @click="handleOk($event, detailData, -1)">撤 销</el-button>
+                <el-button v-else size="mini" @click="handleCancel">取 消</el-button>
               </div>
-              <el-button slot="reference" type="warning" size="mini">{{$t("驳回")}}</el-button>
-            </el-popover>
-          </div>
-        </template>
-        <template v-if="active == 2">
-          <div class="text-right padding-lr-10">
-            <el-button v-if="detailData.allowRevoke == true" size="mini" type="primary" @click="handleOk($event, detailData, -1)">撤 销</el-button>
-            <el-button v-else size="mini" @click="handleCancel">取 消</el-button>
-          </div>
-        </template>
-        <template v-if="active == 3">
-          <div class="text-right padding-lr-10">
-            <el-tag size="small" type="info">抄送信息</el-tag>
-          </div>
-        </template>
-        <template v-if="active == 4">
-          <div class="text-right">
-            <el-tag type="primary" size="small" v-if="detailData.status == 5" class="text-center color-white">无需审批</el-tag>
-            <el-tag type="warning" size="small" v-if="detailData.status == 8" class="text-center color-white">审批中</el-tag>
-            <el-tag type="warning" size="small" v-if="detailData.status == -1" class="text-center color-white">已撤销</el-tag>
-            <el-tag type="success" size="small" v-if="detailData.status == 3" class="text-center color-white">已通过</el-tag>
-            <el-tag type="danger" size="small" v-if="detailData.status == 4" class="text-center color-white">未通过</el-tag>
-            <el-tag type="danger" size="small" v-if="detailData.status == 2" class="text-center color-white">已驳回</el-tag>
-            <el-tag type="danger" size="small" v-if="detailData.status == 1" class="text-center color-white">已通过</el-tag>
-          </div>
-        </template>
+            </template>
+            <template v-if="active == 3">
+              <div class="text-right padding-lr-10">
+                <el-tag size="small" type="info">抄送信息</el-tag>
+              </div>
+            </template>
+            <template v-if="active == 4">
+              <div class="text-right">
+                <el-tag type="primary" size="small" v-if="detailData.status == 5" class="text-center color-white">无需审批</el-tag>
+                <el-tag type="warning" size="small" v-if="detailData.status == 8" class="text-center color-white">审批中</el-tag>
+                <el-tag type="warning" size="small" v-if="detailData.status == -1" class="text-center color-white">已撤销</el-tag>
+                <el-tag type="success" size="small" v-if="detailData.status == 3" class="text-center color-white">已通过</el-tag>
+                <el-tag type="danger" size="small" v-if="detailData.status == 4" class="text-center color-white">未通过</el-tag>
+                <el-tag type="danger" size="small" v-if="detailData.status == 2" class="text-center color-white">已驳回</el-tag>
+                <el-tag type="danger" size="small" v-if="detailData.status == 1" class="text-center color-white">已通过</el-tag>
+              </div>
+            </template>
+          </el-col>
+        </el-row>
       </div>
       <div :style="divHeight8">
         <div class="padding-lr-0 bg-white">
@@ -389,11 +397,15 @@
                 </div>
                 <div slot="title" class="font-size-12">
                   <span v-if="item.nodeType == 'handle'" class="color-success">
-                    {{ $t("审批") }}
+                    <label v-if="item.nodeName">【{{item.nodeName}}】</label>
+                    <label>{{ $t("审批") }}</label>
                     <label v-if="item.andor == 'and'"> ({{ $t("与签") }}) </label>
                     <label v-if="item.andor == 'or'"> ({{ $t("或签") }}) </label>
                   </span>
-                  <span v-if="item.nodeType == 'cc'" class="color-warning">{{ $t("抄送") }}</span>
+                  <span v-if="item.nodeType == 'cc'" class="color-warning">
+                    <label v-if="item.nodeName">【{{item.nodeName}}】</label>
+                    <label>{{ $t("抄送") }}</label>
+                  </span>
                 </div>
                 <div slot="description" class="font-size-12 color-sub-title">
                   <div>
@@ -695,6 +707,7 @@
         this.$axios.get(common.server_form_audit_query, {params: params}).then(res=>{
           if (res.data.code == 200){
             if (res.data.data){
+              this.detailData = res.data.data;
               this.detailApplyAuditList = res.data.data.handleList;
               let orderIndex = res.data.data.orderIndex;
               for (let i = 0; i < res.data.data.handleList.length; i++){
