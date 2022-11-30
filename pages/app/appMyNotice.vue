@@ -165,11 +165,7 @@
     <van-popup @close="cancelPop" v-model="popUpVisible" round position="bottom" :style="{ height: '85%' }" style="background: #efefef">
       <div class="padding-tb-10 padding-lr-10 border-bottom-1 bg-white">
         <el-row>
-          <el-col :span="10">
-<!--            <span class="color-success font-bold">{{$t("详细")}}</span>-->
-            <label style="position: relative; top: 5px" v-if="detailData.currentNodeName" class="color-warning font-bold">【{{detailData.currentNodeName}}】</label>
-          </el-col>
-          <el-col :span="14">
+          <el-col :span="24">
             <template v-if="active == 1">
               <div class="text-right padding-lr-10">
                 <!--            <el-button v-if="detailApplyAuditUserData.agreen1 == true" size="mini" type="success" @click="handleOk($event, detailData, 1)">同 意</el-button>-->
@@ -280,6 +276,17 @@
         </el-row>
       </div>
       <div :style="divHeight8">
+        <div class="padding-lr-0 bg-white margin-bottom-10" v-if="detailData.currentNodeName">
+          <div class="color-muted margin-top-0 font-size-12 padding-top-10 padding-lr-10" style="padding-bottom: 0px;">
+            <span>
+              <label class="title-block-tag"></label>
+              <label class="title-block-text color-warning">{{$t("当前审批环节")}}</label>
+            </span>
+          </div>
+          <div class="padding-lr-10 padding-tb-5 font-size-12">
+            <label class="margin-left-10">{{detailData.currentNodeName}}</label>
+          </div>
+        </div>
         <div class="padding-lr-0 bg-white">
           <div class="color-muted margin-top-0 font-size-12 padding-lr-10 padding-tb-10">
             <span>
