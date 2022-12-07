@@ -6,7 +6,7 @@ import {
   setSchoolBuildChildren,
   setDormBuildChildren,
   setDeptChildren,
-  MessageSuccess, MessageError
+  MessageSuccess, MessageError, setProcessChildren
 } from "~/utils/utils";
 import {Dialog} from "vant";
 
@@ -48,6 +48,7 @@ export default {
       dataSchoolBuild: global.dataSchoolBuildList,
       dataDormBuild: global.dataDormBuildList,
       dataDept: global.dataDeptList,
+      dataProcessList: global.dataProcessList,
       currentSeciton: global.currentSeciton,
       currentYear: global.currentYear,
       currentMonth: global.currentMonth,
@@ -705,6 +706,23 @@ export default {
         if (res.data.data){
           this.dataDept = setDeptChildren(res.data.data[0].child_list, arr, 'child_list', 'children', type);
           //console.log(this.dataDept);
+        }
+      });
+    },
+    /**
+     * 获取环节的list信息
+     * 主要用于树形菜单，下来菜单等
+     * @returns {Promise<void>}
+     */
+    async getProcessInfo() {
+      let params = {
+        superDeptId: 0
+      };
+      await this.$axios.get(common.server_form_audit_process_list, {params: params}).then(res => {
+        let arr = [];
+        if (res.data.data){
+          this.dataProcessList = setProcessChildren(res.data.data, arr);
+          console.log(this.dataProcessList);
         }
       });
     },

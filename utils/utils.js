@@ -57,6 +57,33 @@ export function setDeptChildren(tree, obj, param, param2, type){//迭代方法--
   }
 }
 
+export function setProcessChildren(tree, obj){//迭代方法--环节
+  let _self = this;
+  let arr = [];
+  if (tree && tree.length > 0){
+    for (let i = 0; i < tree.length; i++){
+      arr.push({
+        label: tree[i].processName,
+        value: tree[i].processId,
+        id: tree[i].processId
+      });
+
+      if (tree[i].nodeList && tree[i].nodeList.length > 0) {
+        let childList = tree[i].nodeList;
+        arr[i]['children'] = [];
+        for (let j = 0; j < childList.length; j++){
+          arr[i]['children'].push({
+            label: childList[j].nodeName,
+            value: childList[j].orderIndex,
+            index: childList[j].orderIndex,
+          });
+        }
+      }
+    };
+    return arr;
+  }
+}
+
 export function setSchoolBuildChildren(tree, type){//迭代方法--教学楼
   let _self = this;
   let arr = [];

@@ -69,7 +69,7 @@
 
       <form action="/">
         <van-row>
-          <van-col :span="(active == 1 || active == 2 || active == 3) ? 16 : 12" class="text-left">
+          <van-col :span="(active == 2 || active == 3) ? 16 : 12" class="text-left">
             <van-search v-model="serchName" :show-action="true" placeholder="姓名/编号/名称" @search="onSearch" @clear="onClear">
               <span slot="left-icon">
 
@@ -81,7 +81,7 @@
               </span>
             </van-search>
           </van-col>
-          <van-col :span="active == 4 ? 12 : 8" class="text-right">
+          <van-col :span="active == 4 || active == 1 ? 12 : 8" class="text-right">
             <div class="layout-inline" style="position:relative;">
               <el-select v-if="active == 4" class="layout-item margin-right-10" style="margin-top: 11px;width: 85px" v-model="type" size="small" placeholder="请选择" @change="dropdownItem">
                 <el-option label="全部" value=""></el-option>
@@ -89,8 +89,9 @@
                 <el-option label="未通过" value="4"></el-option>
                 <el-option label="撤销" value="-1"></el-option>
               </el-select>
+              <el-button v-if="active == 1" style="margin-top: 11px;margin-right: 2px;width: 70px" class="layout-item moon-content-text-ellipsis-class" size="small" type="default" plain native-type="button" @click="urgeDetial">{{urgeName != "" && urgeName != null ? urgeName : $t('环节')}}</el-button>
               <el-button style="margin-top: 11px;margin-right: 2px;width: 70px" :style="active == 4 ? {width: '70px'} : {width: '80px'}" class="layout-item moon-content-text-ellipsis-class" size="small" type="default" plain native-type="button" @click="isCollapse == true ? toggleLeftMenu($event) : toggleRightMenu($event)">{{departmentName != "" && departmentName != null ? departmentName : $t('部门')}}</el-button>
-              <span v-if="departmentPath != '' && departmentPath != null" class="fa fa-times-circle color-muted margin-right-5 layout-item" style="position: relative; top: 2px;font-size: 15px" @click="clearSearchDept"></span>
+              <span v-if="(departmentPath != '' && departmentPath != null) || searchDept.length > 0" class="fa fa-times-circle color-muted margin-right-5 layout-item" style="position: relative; top: 2px;font-size: 15px" @click="clearSearchDept"></span>
             </div>
           </van-col>
         </van-row>
@@ -128,8 +129,19 @@
                 <van-cell v-for="(item, index) in tableData" :key="index" style="line-height: 15px;padding: 0px 10px">
                   <div class="content-block-item padding-lr-10 padding-tb-10" style="position: relative" @click="dataDetail($event, item, index)">
                     <div class="color-muted" v-if="item.formApplyNo">
-                      <span class="fa fa-info-circle"></span>
-                      <span>{{ item.formApplyNo }}</span>
+                      <el-row>
+                        <el-col :span="12"  style="position: relative">
+                          <div style="height: 20px;line-height: 20px">
+                            <span class="fa fa-info-circle"></span>
+                            <span>{{ item.formApplyNo }}</span>
+                          </div>
+                        </el-col>
+                        <el-col :span="12">
+                          <div class="text-right" style="height: 20px;line-height: 20px">
+                            <el-tag v-if="item.urge == true" size="small" effect="dark" type="danger">{{$t("催办")}}</el-tag>
+                          </div>
+                        </el-col>
+                      </el-row>
                     </div>
                     <div class="line-height" v-if="item.formApplyNo"></div>
                     <div class="margin-top-5">
@@ -169,6 +181,7 @@
             <template v-if="active == 1">
               <div class="text-right padding-lr-10">
                 <!--            <el-button v-if="detailApplyAuditUserData.agreen1 == true" size="mini" type="success" @click="handleOk($event, detailData, 1)">同 意</el-button>-->
+                <el-button v-if="detailData.urge == true" type="danger" size="mini" @click="handleUrge($event, detailData)">{{$t("催办")}}</el-button>
                 <el-popover
                   :tabindex="99999"
                   placement="bottom"
@@ -252,6 +265,7 @@
             </template>
             <template v-if="active == 2">
               <div class="text-right padding-lr-10">
+                <el-button v-if="detailData.urge == true" type="danger" size="mini" @click="handleUrge($event, detailData)">{{$t("催办")}}</el-button>
                 <el-button v-if="detailData.allowRevoke == true" size="mini" type="primary" @click="handleOk($event, detailData, -1)">撤 销</el-button>
                 <el-button v-else size="mini" @click="handleCancel">取 消</el-button>
               </div>
@@ -497,6 +511,10 @@
     </van-popup>
 
     <van-calendar v-model="showCalendar" type="range" :min-date="minDate" :max-date="maxDate" @confirm="onConfirm" />
+
+    <van-popup v-model="urgeDialog" round position="bottom" class="custom-cascader" :style="{ height: '350px' }">
+      <el-cascader-panel ref="SelectorDept" :style="{ height: '350px' }" :props="{multiple: false,checkStrictly:true}" v-model="searchDept" :options="dataProcessList" @change="searchProcess"></el-cascader-panel>
+    </van-popup>
   </div>
 </template>
 
@@ -532,6 +550,7 @@
         startTime: '',
         endTime: '',
         showCalendar: false,
+        urgeDialog: false,
         dateTime: '',
         minDate: new Date(2020, 0, 1),
         maxDate: new Date(2030, 12, 1),
@@ -541,7 +560,11 @@
         serverAppList: [],
         departmentPath: '',
         departmentName: '',
+        urgeName: '',
         uploadFileListUrl: common.upload_file,
+        searchDept: [],
+        processId: '',
+        orderIndex: '',
         leftHeight: {
           'height': '100%',
           'width': '0%'
@@ -563,6 +586,7 @@
     created() {
       this.active = 1;
       this.getDeptInfo(2);
+      this.getProcessInfo();
       this.init();
       if (this.active == 6){
         this.initAppRecommend();
@@ -646,7 +670,9 @@
           endTime: this.endTime,
           searchKey: this.searchKey,
           queryApplyListType: this.active,
-          departmentPath: this.departmentPath
+          departmentPath: this.departmentPath,
+          processId: this.processId,
+          orderIndex: this.orderIndex,
         };
         await this.getSessionInfo();
         this.$axios.get(common.server_form_audit_page, {params: params,loading: false}).then(res=>{
@@ -769,6 +795,27 @@
           }
         });
       },
+      handleUrge(event, data){
+        let params = {
+          id: data._id
+        };
+
+        params = this.$qs.stringify(params);
+        this.$axios.post(common.server_form_audit_urge_handle, params).then(res => {
+          if (res.data.code == 200){
+            //this.tableData[this.detailIndex]['urge'] = true;
+            this.$set(this.tableData[this.detailIndex], 'urge', true);
+            let page = Math.ceil(this.tableData.length / 20);
+            this.page = page;
+            //this.init();
+            this.images = [];
+            this.popUpVisible = false;
+            Toast(res.data.desc);
+          }else {
+            Toast(res.data.desc);
+          }
+        });
+      },
       readFile(file){//预览
         ImagePreview({
           images: [file],
@@ -836,6 +883,9 @@
         this.init();
         this.showCalendar = false;
       },
+      urgeDetial(){
+        this.urgeDialog = true;
+      },
       toggleLeftMenu(event){
         this.isCollapse = false;
         this.leftHeight.width = "0%";
@@ -866,6 +916,10 @@
         this.tableData = [];
         this.departmentName = "";
         this.isCollapse = false;
+        this.urgeName = "";
+        this.searchDept = [];
+        this.processId = '';
+        this.orderIndex = '';
         this.toggleLeftMenu();
         this.init();
       },
@@ -880,6 +934,27 @@
       },
       clearImage(event, index){
         this.images.splice(index, 1);
+      },
+      searchProcess(event){
+        this.page = 1;
+        this.totalAuthPage = 0;
+        this.finished = false;
+        this.type = "";
+        this.tableData = [];
+        this.processId = '';
+        this.orderIndex = '';
+        this.urgeName = '';
+        console.log(this.$refs['SelectorDept']);
+        if(event.length == 1){
+          this.processId = event[0];
+          this.urgeName = this.$refs['SelectorDept'].checkedNodePaths[0][0].label;
+        }else if(event.length == 2){
+          this.processId = event[0];
+          this.orderIndex = event[1];
+          this.urgeName = this.$refs['SelectorDept'].checkedNodePaths[0][1].label;
+        }
+        this.searchDept = event;
+        this.init();
       }
     }
   }

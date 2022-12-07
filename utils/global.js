@@ -387,6 +387,7 @@ export default {
   dataSchoolBuildList: [],
   dataDormBuildList: [],
   dataDeptList: [],
+  dataProcessList: [],
   currentDay,
   currentMonth,
   currentTermId,
