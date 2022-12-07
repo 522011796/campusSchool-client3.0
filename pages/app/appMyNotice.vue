@@ -723,7 +723,7 @@
         });
       },
       dataDetail(event, item, index){
-        this.detailData = item;
+        //this.detailData = item;
         this.detailIndex = index;
         if (item.applyContent  && item.applyContent != "[]"){
           this.detailApplyContentData = JSON.parse(item.applyContent);
