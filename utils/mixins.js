@@ -722,7 +722,6 @@ export default {
         let arr = [];
         if (res.data.data){
           this.dataProcessList = setProcessChildren(res.data.data, arr);
-          console.log(this.dataProcessList);
         }
       });
     },

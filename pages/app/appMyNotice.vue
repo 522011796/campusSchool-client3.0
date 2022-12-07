@@ -944,7 +944,6 @@
         this.processId = '';
         this.orderIndex = '';
         this.urgeName = '';
-        console.log(this.$refs['SelectorDept']);
         if(event.length == 1){
           this.processId = event[0];
           this.urgeName = this.$refs['SelectorDept'].checkedNodePaths[0][0].label;
