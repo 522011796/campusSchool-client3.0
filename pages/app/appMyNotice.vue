@@ -512,8 +512,29 @@
 
     <van-calendar v-model="showCalendar" type="range" :min-date="minDate" :max-date="maxDate" @confirm="onConfirm" />
 
-    <van-popup v-model="urgeDialog" round position="bottom" class="custom-cascader" :style="{ height: '350px' }">
-      <el-cascader-panel ref="SelectorDept" :style="{ height: '350px' }" :props="{multiple: false,checkStrictly:true}" v-model="searchDept" :options="dataProcessList" @change="searchProcess"></el-cascader-panel>
+    <van-popup v-model="urgeDialog" round position="bottom" class="custom-cascader" :style="{ height: '400px' }">
+      <div style="height: 40px;line-height: 40px;background: #f5f5f5">
+        <el-row>
+          <el-col :span="6">
+            <div class="text-center" @click="resetProcessPop">
+              <a href="javascript:;" class="color-warning">{{$t("重置")}}</a>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div class="text-center">
+              &nbsp;
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="text-center" @click="cancelProcessPop">
+              <a href="javascript:;" class="color-muted">{{$t("取消")}}</a>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+      <div :style="divHeight18">
+        <el-cascader-panel ref="SelectorDept" :style="{ height: '350px' }" :props="{multiple: true,checkStrictly:false}" v-model="searchDept" :options="dataProcessList" @change="searchProcess"></el-cascader-panel>
+      </div>
     </van-popup>
   </div>
 </template>
@@ -564,6 +585,7 @@
         uploadFileListUrl: common.upload_file,
         searchDept: [],
         processId: '',
+        processIds: [],
         orderIndex: '',
         leftHeight: {
           'height': '100%',
@@ -671,8 +693,7 @@
           searchKey: this.searchKey,
           queryApplyListType: this.active,
           departmentPath: this.departmentPath,
-          processId: this.processId,
-          orderIndex: this.orderIndex,
+          processId: this.processIds.length <= 0 ? '' : JSON.stringify(this.processIds)
         };
         await this.getSessionInfo();
         this.$axios.get(common.server_form_audit_page, {params: params,loading: false}).then(res=>{
@@ -862,6 +883,15 @@
         this.toggleLeftMenu();
         this.init();
       },
+      resetProcessPop(){
+        this.searchDept = [];
+        this.$refs['SelectorDept'].clearCheckedNodes();
+      },
+      cancelProcessPop(){
+        this.searchDept = [];
+        this.$refs['SelectorDept'].clearCheckedNodes();
+        this.urgeDialog = false;
+      },
       calendarManage(){
         this.showCalendar = true;
       },
@@ -920,6 +950,7 @@
         this.searchDept = [];
         this.processId = '';
         this.orderIndex = '';
+        this.processIds = [];
         this.toggleLeftMenu();
         this.init();
       },
@@ -936,6 +967,7 @@
         this.images.splice(index, 1);
       },
       searchProcess(event){
+        console.log(event);
         this.page = 1;
         this.totalAuthPage = 0;
         this.finished = false;
@@ -944,14 +976,16 @@
         this.processId = '';
         this.orderIndex = '';
         this.urgeName = '';
-        if(event.length == 1){
-          this.processId = event[0];
-          this.urgeName = this.$refs['SelectorDept'].checkedNodePaths[0][0].label;
-        }else if(event.length == 2){
-          this.processId = event[0];
-          this.orderIndex = event[1];
-          this.urgeName = this.$refs['SelectorDept'].checkedNodePaths[0][1].label;
-        }
+        this.processIds = [];
+        // if(event.length == 1){
+        //   this.processId = event[0];
+        //   this.urgeName = this.$refs['SelectorDept'].checkedNodePaths[0][0].label;
+        // }else if(event.length == 2){
+        //   this.processId = event[0];
+        //   this.orderIndex = event[1];
+        //   this.urgeName = this.$refs['SelectorDept'].checkedNodePaths[0][1].label;
+        // }
+        this.processIds = event
         this.searchDept = event;
         this.init();
       }
