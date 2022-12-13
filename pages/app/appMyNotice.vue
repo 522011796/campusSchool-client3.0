@@ -521,13 +521,12 @@
             </div>
           </el-col>
           <el-col :span="12">
-            <div class="text-center">
-              &nbsp;
+            <div class="text-center">&nbsp;
             </div>
           </el-col>
           <el-col :span="6">
-            <div class="text-center" @click="cancelProcessPop">
-              <a href="javascript:;" class="color-muted">{{$t("取消")}}</a>
+            <div class="text-center" @click="okProcessPop">
+              <a href="javascript:;" class="color-success">{{$t("确认")}}</a>
             </div>
           </el-col>
         </el-row>
@@ -899,6 +898,21 @@
         // this.$refs['SelectorDept'].clearCheckedNodes();
         this.urgeDialog = false;
       },
+      okProcessPop(){
+        // if(this.processIds.length == 0){
+        //   Toast(this.$t("请选择环节"));
+        //   return;
+        // }
+
+        this.page = 1;
+        this.totalAuthPage = 0;
+        this.finished = false;
+        this.type = "";
+        this.tableData = [];
+        this.init();
+
+        this.urgeDialog = false;
+      },
       calendarManage(){
         this.showCalendar = true;
       },
@@ -976,11 +990,11 @@
       },
       searchProcess(event){
         //console.log(this.$refs['SelectorDept']);
-        this.page = 1;
-        this.totalAuthPage = 0;
-        this.finished = false;
-        this.type = "";
-        this.tableData = [];
+        // this.page = 1;
+        // this.totalAuthPage = 0;
+        // this.finished = false;
+        // this.type = "";
+        // this.tableData = [];
         this.processId = '';
         this.orderIndex = '';
         this.urgeName = '';
@@ -993,9 +1007,9 @@
         //   this.orderIndex = event[1];
         //   this.urgeName = this.$refs['SelectorDept'].checkedNodePaths[0][1].label;
         // }
-        this.processIds = event
+        this.processIds = event;
         this.searchDept = event;
-        this.init();
+        //this.init();
       }
     }
   }
