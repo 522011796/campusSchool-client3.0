@@ -587,6 +587,7 @@
         processId: '',
         processIds: [],
         orderIndex: '',
+        cascaderIndex: 1,
         leftHeight: {
           'height': '100%',
           'width': '0%'
@@ -885,6 +886,7 @@
       },
       resetProcessPop(){
         this.searchDept = [];
+        this.processIds = [];
         this.$refs['SelectorDept'].clearCheckedNodes();
         this.page = 1;
         this.totalAuthPage = 0;
@@ -919,7 +921,7 @@
         this.showCalendar = false;
       },
       urgeDetial(){
-        this.getDeptInfo(2);
+        //this.getProcessInfo();
         this.urgeDialog = true;
       },
       toggleLeftMenu(event){
