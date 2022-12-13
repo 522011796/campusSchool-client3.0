@@ -91,7 +91,7 @@
               </el-select>
               <el-button v-if="active == 1" style="margin-top: 11px;margin-right: 2px;width: 70px" class="layout-item moon-content-text-ellipsis-class" size="small" type="default" plain native-type="button" @click="urgeDetial">{{urgeName != "" && urgeName != null ? urgeName : $t('环节')}}</el-button>
               <el-button style="margin-top: 11px;margin-right: 2px;width: 70px" :style="active == 4 ? {width: '70px'} : {width: '80px'}" class="layout-item moon-content-text-ellipsis-class" size="small" type="default" plain native-type="button" @click="isCollapse == true ? toggleLeftMenu($event) : toggleRightMenu($event)">{{departmentName != "" && departmentName != null ? departmentName : $t('部门')}}</el-button>
-              <span v-if="(departmentPath != '' && departmentPath != null) || searchDept.length > 0" class="fa fa-times-circle color-muted margin-right-5 layout-item" style="position: relative; top: 2px;font-size: 15px" @click="clearSearchDept"></span>
+<!--              <span v-if="(departmentPath != '' && departmentPath != null) || searchDept.length > 0" class="fa fa-times-circle color-muted margin-right-5 layout-item" style="position: relative; top: 2px;font-size: 15px" @click="clearSearchDept"></span>-->
             </div>
           </van-col>
         </van-row>
@@ -886,10 +886,15 @@
       resetProcessPop(){
         this.searchDept = [];
         this.$refs['SelectorDept'].clearCheckedNodes();
+        this.page = 1;
+        this.totalAuthPage = 0;
+        this.finished = false;
+        this.tableData = [];
+        this.init();
       },
       cancelProcessPop(){
-        this.searchDept = [];
-        this.$refs['SelectorDept'].clearCheckedNodes();
+        // this.searchDept = [];
+        // this.$refs['SelectorDept'].clearCheckedNodes();
         this.urgeDialog = false;
       },
       calendarManage(){
@@ -914,6 +919,7 @@
         this.showCalendar = false;
       },
       urgeDetial(){
+        this.getDeptInfo(2);
         this.urgeDialog = true;
       },
       toggleLeftMenu(event){
