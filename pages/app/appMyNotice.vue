@@ -973,7 +973,7 @@
         this.images.splice(index, 1);
       },
       searchProcess(event){
-        console.log(event);
+        //console.log(this.$refs['SelectorDept']);
         this.page = 1;
         this.totalAuthPage = 0;
         this.finished = false;
