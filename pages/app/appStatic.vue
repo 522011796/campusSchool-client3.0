@@ -392,6 +392,7 @@
                     for (let i = 0; i < data.length; i++){
                       let yData = [];
                       let dataObj = {};
+                      yDataObjValue = [];
                       for (let item in data[i]){
                         for (let z = 0; z < dataF.length; z++){
                           if (dataF[z].f+"DateResult" == item){

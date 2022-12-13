@@ -71,84 +71,6 @@
   "LazyLayoutTb": {
     "description": "Auto imported from components/Layout/LayoutTb.vue"
   },
-  "BarChart": {
-    "description": "Auto imported from components/charts/BarChart.vue"
-  },
-  "LazyBarChart": {
-    "description": "Auto imported from components/charts/BarChart.vue"
-  },
-  "CircleChart": {
-    "description": "Auto imported from components/charts/CircleChart.vue"
-  },
-  "LazyCircleChart": {
-    "description": "Auto imported from components/charts/CircleChart.vue"
-  },
-  "HBarChart": {
-    "description": "Auto imported from components/charts/HBarChart.vue"
-  },
-  "LazyHBarChart": {
-    "description": "Auto imported from components/charts/HBarChart.vue"
-  },
-  "LineChart": {
-    "description": "Auto imported from components/charts/LineChart.vue"
-  },
-  "LazyLineChart": {
-    "description": "Auto imported from components/charts/LineChart.vue"
-  },
-  "LineClassPopChart": {
-    "description": "Auto imported from components/charts/LineClassPopChart.vue"
-  },
-  "LazyLineClassPopChart": {
-    "description": "Auto imported from components/charts/LineClassPopChart.vue"
-  },
-  "LinePopChart": {
-    "description": "Auto imported from components/charts/LinePopChart.vue"
-  },
-  "LazyLinePopChart": {
-    "description": "Auto imported from components/charts/LinePopChart.vue"
-  },
-  "PopChart": {
-    "description": "Auto imported from components/charts/PopChart.vue"
-  },
-  "LazyPopChart": {
-    "description": "Auto imported from components/charts/PopChart.vue"
-  },
-  "RadarChart": {
-    "description": "Auto imported from components/charts/RadarChart.vue"
-  },
-  "LazyRadarChart": {
-    "description": "Auto imported from components/charts/RadarChart.vue"
-  },
-  "RadarDormChart": {
-    "description": "Auto imported from components/charts/RadarDormChart.vue"
-  },
-  "LazyRadarDormChart": {
-    "description": "Auto imported from components/charts/RadarDormChart.vue"
-  },
-  "SexPieChart": {
-    "description": "Auto imported from components/charts/SexPieChart.vue"
-  },
-  "LazySexPieChart": {
-    "description": "Auto imported from components/charts/SexPieChart.vue"
-  },
-  "SexPieMoreChart": {
-    "description": "Auto imported from components/charts/SexPieMoreChart.vue"
-  },
-  "LazySexPieMoreChart": {
-    "description": "Auto imported from components/charts/SexPieMoreChart.vue"
-  },
-  "TableBarChart": {
-    "description": "Auto imported from components/charts/TableBarChart.vue"
-  },
-  "LazyTableBarChart": {
-    "description": "Auto imported from components/charts/TableBarChart.vue"
-  },
-  "MyServerDialog": {
-    "description": "Auto imported from components/dialog/MyServerDialog.vue"
-  },
-  "LazyMyServerDialog": {
-    "description": "Auto imported from components/dialog/MyServerDialog.vue"
-  },
   "MyInputButton": {
     "description": "Auto imported from components/search/MyInputButton.vue"
   },
@@ -173,6 +95,36 @@
   "LazyMyYearTerm": {
     "description": "Auto imported from components/search/MyYearTerm.vue"
   },
+  "MyServerDialog": {
+    "description": "Auto imported from components/dialog/MyServerDialog.vue"
+  },
+  "LazyMyServerDialog": {
+    "description": "Auto imported from components/dialog/MyServerDialog.vue"
+  },
+  "MyBlockListChildTree": {
+    "description": "Auto imported from components/tree/MyBlockListChildTree.vue"
+  },
+  "LazyMyBlockListChildTree": {
+    "description": "Auto imported from components/tree/MyBlockListChildTree.vue"
+  },
+  "MyBlockListTree": {
+    "description": "Auto imported from components/tree/MyBlockListTree.vue"
+  },
+  "LazyMyBlockListTree": {
+    "description": "Auto imported from components/tree/MyBlockListTree.vue"
+  },
+  "MyElTree": {
+    "description": "Auto imported from components/tree/MyElTree.vue"
+  },
+  "LazyMyElTree": {
+    "description": "Auto imported from components/tree/MyElTree.vue"
+  },
+  "TreeNode": {
+    "description": "Auto imported from components/tree/treeNode.js"
+  },
+  "LazyTreeNode": {
+    "description": "Auto imported from components/tree/treeNode.js"
+  },
   "MyAuditStatus": {
     "description": "Auto imported from components/utils/MyAuditStatus.vue"
   },
@@ -196,42 +148,6 @@
   },
   "LazyMyUserType": {
     "description": "Auto imported from components/utils/MyUserType.vue"
-  },
-  "AuditStatusButton": {
-    "description": "Auto imported from components/utils/button/AuditStatusButton.vue"
-  },
-  "LazyAuditStatusButton": {
-    "description": "Auto imported from components/utils/button/AuditStatusButton.vue"
-  },
-  "DormAttendStatusButtonGroup": {
-    "description": "Auto imported from components/utils/button/DormAttendStatusButtonGroup.vue"
-  },
-  "LazyDormAttendStatusButtonGroup": {
-    "description": "Auto imported from components/utils/button/DormAttendStatusButtonGroup.vue"
-  },
-  "TabGroupButton": {
-    "description": "Auto imported from components/utils/button/TabGroupButton.vue"
-  },
-  "LazyTabGroupButton": {
-    "description": "Auto imported from components/utils/button/TabGroupButton.vue"
-  },
-  "TimeoutButton": {
-    "description": "Auto imported from components/utils/button/TimeoutButton.vue"
-  },
-  "LazyTimeoutButton": {
-    "description": "Auto imported from components/utils/button/TimeoutButton.vue"
-  },
-  "MyHeadImg": {
-    "description": "Auto imported from components/utils/common/MyHeadImg.vue"
-  },
-  "LazyMyHeadImg": {
-    "description": "Auto imported from components/utils/common/MyHeadImg.vue"
-  },
-  "MyViewImg": {
-    "description": "Auto imported from components/utils/common/MyViewImg.vue"
-  },
-  "LazyMyViewImg": {
-    "description": "Auto imported from components/utils/common/MyViewImg.vue"
   },
   "AuditButton": {
     "description": "Auto imported from components/utils/auditDetail/AuditButton.vue"
@@ -287,11 +203,41 @@
   "LazyTerleaveDetail": {
     "description": "Auto imported from components/utils/auditDetail/TerleaveDetail.vue"
   },
-  "MyCascader": {
-    "description": "Auto imported from components/utils/select/MyCascader.vue"
+  "AuditStatusButton": {
+    "description": "Auto imported from components/utils/button/AuditStatusButton.vue"
   },
-  "LazyMyCascader": {
-    "description": "Auto imported from components/utils/select/MyCascader.vue"
+  "LazyAuditStatusButton": {
+    "description": "Auto imported from components/utils/button/AuditStatusButton.vue"
+  },
+  "DormAttendStatusButtonGroup": {
+    "description": "Auto imported from components/utils/button/DormAttendStatusButtonGroup.vue"
+  },
+  "LazyDormAttendStatusButtonGroup": {
+    "description": "Auto imported from components/utils/button/DormAttendStatusButtonGroup.vue"
+  },
+  "TabGroupButton": {
+    "description": "Auto imported from components/utils/button/TabGroupButton.vue"
+  },
+  "LazyTabGroupButton": {
+    "description": "Auto imported from components/utils/button/TabGroupButton.vue"
+  },
+  "TimeoutButton": {
+    "description": "Auto imported from components/utils/button/TimeoutButton.vue"
+  },
+  "LazyTimeoutButton": {
+    "description": "Auto imported from components/utils/button/TimeoutButton.vue"
+  },
+  "MyHeadImg": {
+    "description": "Auto imported from components/utils/common/MyHeadImg.vue"
+  },
+  "LazyMyHeadImg": {
+    "description": "Auto imported from components/utils/common/MyHeadImg.vue"
+  },
+  "MyViewImg": {
+    "description": "Auto imported from components/utils/common/MyViewImg.vue"
+  },
+  "LazyMyViewImg": {
+    "description": "Auto imported from components/utils/common/MyViewImg.vue"
   },
   "DialogNormal": {
     "description": "Auto imported from components/utils/dialog/DialogNormal.vue"
@@ -316,6 +262,12 @@
   },
   "LazyMyNormalDialog": {
     "description": "Auto imported from components/utils/dialog/MyNormalDialog.vue"
+  },
+  "MyCascader": {
+    "description": "Auto imported from components/utils/select/MyCascader.vue"
+  },
+  "LazyMyCascader": {
+    "description": "Auto imported from components/utils/select/MyCascader.vue"
   },
   "MyAdminAtten": {
     "description": "Auto imported from components/utils/status/MyAdminAtten.vue"
@@ -461,28 +413,76 @@
   "LazyUploadSquare": {
     "description": "Auto imported from components/utils/upload/UploadSquare.vue"
   },
-  "MyBlockListChildTree": {
-    "description": "Auto imported from components/tree/MyBlockListChildTree.vue"
+  "BarChart": {
+    "description": "Auto imported from components/charts/BarChart.vue"
   },
-  "LazyMyBlockListChildTree": {
-    "description": "Auto imported from components/tree/MyBlockListChildTree.vue"
+  "LazyBarChart": {
+    "description": "Auto imported from components/charts/BarChart.vue"
   },
-  "MyBlockListTree": {
-    "description": "Auto imported from components/tree/MyBlockListTree.vue"
+  "CircleChart": {
+    "description": "Auto imported from components/charts/CircleChart.vue"
   },
-  "LazyMyBlockListTree": {
-    "description": "Auto imported from components/tree/MyBlockListTree.vue"
+  "LazyCircleChart": {
+    "description": "Auto imported from components/charts/CircleChart.vue"
   },
-  "MyElTree": {
-    "description": "Auto imported from components/tree/MyElTree.vue"
+  "HBarChart": {
+    "description": "Auto imported from components/charts/HBarChart.vue"
   },
-  "LazyMyElTree": {
-    "description": "Auto imported from components/tree/MyElTree.vue"
+  "LazyHBarChart": {
+    "description": "Auto imported from components/charts/HBarChart.vue"
   },
-  "TreeNode": {
-    "description": "Auto imported from components/tree/treeNode.js"
+  "LineChart": {
+    "description": "Auto imported from components/charts/LineChart.vue"
   },
-  "LazyTreeNode": {
-    "description": "Auto imported from components/tree/treeNode.js"
+  "LazyLineChart": {
+    "description": "Auto imported from components/charts/LineChart.vue"
+  },
+  "LineClassPopChart": {
+    "description": "Auto imported from components/charts/LineClassPopChart.vue"
+  },
+  "LazyLineClassPopChart": {
+    "description": "Auto imported from components/charts/LineClassPopChart.vue"
+  },
+  "LinePopChart": {
+    "description": "Auto imported from components/charts/LinePopChart.vue"
+  },
+  "LazyLinePopChart": {
+    "description": "Auto imported from components/charts/LinePopChart.vue"
+  },
+  "PopChart": {
+    "description": "Auto imported from components/charts/PopChart.vue"
+  },
+  "LazyPopChart": {
+    "description": "Auto imported from components/charts/PopChart.vue"
+  },
+  "RadarChart": {
+    "description": "Auto imported from components/charts/RadarChart.vue"
+  },
+  "LazyRadarChart": {
+    "description": "Auto imported from components/charts/RadarChart.vue"
+  },
+  "RadarDormChart": {
+    "description": "Auto imported from components/charts/RadarDormChart.vue"
+  },
+  "LazyRadarDormChart": {
+    "description": "Auto imported from components/charts/RadarDormChart.vue"
+  },
+  "SexPieChart": {
+    "description": "Auto imported from components/charts/SexPieChart.vue"
+  },
+  "LazySexPieChart": {
+    "description": "Auto imported from components/charts/SexPieChart.vue"
+  },
+  "SexPieMoreChart": {
+    "description": "Auto imported from components/charts/SexPieMoreChart.vue"
+  },
+  "LazySexPieMoreChart": {
+    "description": "Auto imported from components/charts/SexPieMoreChart.vue"
+  },
+  "TableBarChart": {
+    "description": "Auto imported from components/charts/TableBarChart.vue"
+  },
+  "LazyTableBarChart": {
+    "description": "Auto imported from components/charts/TableBarChart.vue"
   }
 }
