@@ -45,7 +45,16 @@
           <td class="font-size-12 font-bold">{{$t("编号")}}</td>
           <td class="color-black font-size-12">{{detailData.formId}}</td>
           <td class="font-size-12 font-bold">{{$t("表单名称")}}</td>
-          <td class="color-black font-size-12" colspan="3">{{detailData.formName}}</td>
+          <td class="color-black font-size-12">{{detailData.formName}}</td>
+          <td class="font-size-12 font-bold">{{$t("宿舍")}}</td>
+          <td class="color-black font-size-12" colspan="3">
+            <span v-if="detailData.buildName">
+              {{detailData.buildName}}{{detailData.floorNum}}{{$t("层")}}-{{detailData.roomNo}}
+            </span>
+            <span v-else>
+              --
+            </span>
+          </td>
         </tr>
       </table>
     </div>

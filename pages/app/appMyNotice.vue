@@ -337,6 +337,19 @@
                 <span class="color-muted">{{$t("申请日期")}}:</span>
                 <span>{{ $moment(detailData.applyTime).format("YYYY-MM-DD HH:mm") }}</span>
               </el-col>
+              <el-col :span="12">
+                <span class="color-muted">{{$t("宿舍")}}:</span>
+                <span v-if="detailData.buildName">
+                  <el-tooltip effect="dark" :content="`${detailData.buildName}-${detailData.floorNum}${$t('层')}-${detailData.roomNo}`" placement="top">
+                      <span class="moon-content-text-ellipsis-class width-100" style="display: inline-block;position: relative; top: 4px">
+                        {{detailData.buildName}}{{detailData.floorNum}}{{$t("层")}}-{{detailData.roomNo}}
+                      </span>
+                    </el-tooltip>
+                </span>
+                <span v-else>
+                  --
+                </span>
+              </el-col>
             </el-row>
           </div>
         </div>
@@ -778,6 +791,19 @@
               <el-col :span="12">
                 <span class="color-muted">{{$t("申请日期")}}:</span>
                 <span>{{ $moment(detailCheckData.applyTime).format("YYYY-MM-DD HH:mm") }}</span>
+              </el-col>
+              <el-col :span="12">
+                <span class="color-muted">{{$t("宿舍")}}:</span>
+                <span v-if="detailCheckData.buildName">
+                  <el-tooltip effect="dark" :content="`${detailCheckData.buildName}-${detailCheckData.floorNum}${$t('层')}-${detailCheckData.roomNo}`" placement="top">
+                      <span class="moon-content-text-ellipsis-class width-100" style="display: inline-block;position: relative; top: 4px">
+                        {{detailCheckData.buildName}}{{detailCheckData.floorNum}}{{$t("层")}}-{{detailCheckData.roomNo}}
+                      </span>
+                    </el-tooltip>
+                </span>
+                <span v-else>
+                  --
+                </span>
               </el-col>
             </el-row>
           </div>
