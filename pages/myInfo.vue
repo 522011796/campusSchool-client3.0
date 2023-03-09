@@ -608,7 +608,6 @@
                   <span>{{$t("核查结果")}}:</span>
                   <span>
                   {{ detailCheckData.checkFiledResult.result }}
-                  <i v-if="detailCheckData.checkApplyId && detailCheckData.checkApplyId != ''" class="fa fa-file-text color-success"></i>
                 </span>
                 </el-col>
               </el-row>
