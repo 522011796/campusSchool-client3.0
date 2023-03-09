@@ -340,6 +340,119 @@
             </el-row>
           </div>
         </div>
+        <div class="margin-top-10 padding-lr-10 bg-white padding-tb-10" v-if="detailData.checkFiledResult != null">
+          <div class="color-muted margin-top-5 font-size-12">
+              <span>
+                <label class="title-block-tag"></label>
+                <label class="title-block-text color-warning">{{$t("系统核查(表单数据)")}}</label>
+              </span>
+          </div>
+          <div class="block-item-bg font-size-12 margin-top-10 color-sub-title">
+            <div v-if="detailData.checkFiledResult != null">
+              <el-row>
+                <el-col :span="12">
+                  <span>{{$t("核查类型")}}:</span>
+                  <span>
+                    <el-tooltip effect="dark" :content="detailData.checkFiledResult.name" placement="top">
+                      <span class="moon-content-text-ellipsis-class width-100" style="display: inline-block;position: relative; top: 4px">
+                        {{ detailData.checkFiledResult.name }}
+                      </span>
+                    </el-tooltip>
+                  </span>
+                </el-col>
+                <el-col :span="12">
+                  <span>{{$t("核查表名称")}}:</span>
+                  <span>
+                    <el-tooltip effect="dark" :content="detailData.checkFiledResult.formName" placement="top">
+                      <span class="moon-content-text-ellipsis-class width-100" style="display: inline-block;position: relative; top: 4px">
+                        {{ detailData.checkFiledResult.formName }}
+                      </span>
+                    </el-tooltip>
+                  </span>
+                </el-col>
+              </el-row>
+              <el-row class="margin-top-5">
+                <el-col :span="12">
+                  <span>{{$t("核查条件")}}:</span>
+                  <span>
+                    <el-tooltip effect="dark" :content="detailData.checkFiledResult.type" placement="top">
+                      <span class="moon-content-text-ellipsis-class width-100" style="display: inline-block;position: relative; top: 4px">
+                        {{ detailData.checkFiledResult.type }}
+                      </span>
+                    </el-tooltip>
+                  </span>
+                </el-col>
+                <el-col :span="12">
+                  <span>{{$t("核查结果")}}:</span>
+                  <span>
+                    <el-tooltip effect="dark" :content="detailData.checkFiledResult.result" placement="top">
+                      <span class="moon-content-text-ellipsis-class width-100" style="display: inline-block;position: relative; top: 4px">
+                        {{ detailData.checkFiledResult.result }}
+                      </span>
+                    </el-tooltip>
+                  </span>
+                </el-col>
+              </el-row>
+            </div>
+          </div>
+        </div>
+        <div class="margin-top-10 padding-lr-10 bg-white padding-tb-10" v-if="detailData.checkApplyResult != null">
+          <div class="color-muted margin-top-5 font-size-12">
+              <span>
+                <label class="title-block-tag"></label>
+                <label class="title-block-text color-warning">{{$t("系统核查(审核状态)")}}</label>
+              </span>
+          </div>
+          <div class="block-item-bg font-size-12 margin-top-10 color-sub-title">
+            <div v-if="detailData.checkApplyResult != null">
+              <el-row>
+                <el-col :span="12">
+                  <span>{{$t("核查类型")}}:</span>
+                  <span>
+                    <el-tooltip effect="dark" :content="detailData.checkApplyResult.name" placement="top">
+                      <span class="moon-content-text-ellipsis-class width-100" style="display: inline-block;position: relative; top: 4px">
+                        {{ detailData.checkApplyResult.name }}
+                      </span>
+                    </el-tooltip>
+                  </span>
+                </el-col>
+                <el-col :span="12">
+                  <span>{{$t("核查表名称")}}:</span>
+                  <span>
+                    <el-tooltip effect="dark" :content="detailData.checkApplyResult.formName" placement="top">
+                      <span class="moon-content-text-ellipsis-class width-100" style="display: inline-block;position: relative; top: 4px">
+                        {{ detailData.checkApplyResult.formName }}
+                      </span>
+                    </el-tooltip>
+                  </span>
+                </el-col>
+              </el-row>
+              <el-row class="margin-top-5">
+                <el-col :span="12">
+                  <span>{{$t("核查条件")}}:</span>
+                  <span>
+                    <el-tooltip effect="dark" :content="detailData.checkApplyResult.type" placement="top">
+                      <span class="moon-content-text-ellipsis-class width-100" style="display: inline-block;position: relative; top: 4px">
+                        {{ detailData.checkApplyResult.type }}
+                      </span>
+                    </el-tooltip>
+                  </span>
+                </el-col>
+                <el-col :span="12">
+                  <span>{{$t("核查结果")}}:</span>
+                  <span>
+                    <el-tooltip effect="dark" :content="detailData.checkApplyResult.result" placement="top">
+                      <span class="moon-content-text-ellipsis-class" style="max-width: 100px;;display: inline-block;position: relative; top: 4px">
+                        {{ detailData.checkApplyResult.result }}
+                        <i v-if="detailData.checkApplyId && detailData.checkApplyId != ''" class="fa fa-file-text color-success" @click="detailCheckClick($event, detailData.checkApplyId)"></i>
+                      </span>
+                    </el-tooltip>
+                  </span>
+                </el-col>
+              </el-row>
+            </div>
+          </div>
+        </div>
         <div class="margin-top-10 padding-lr-10 bg-white padding-tb-10">
           <div class="color-muted margin-top-5 font-size-12">
               <span>
@@ -348,14 +461,6 @@
               </span>
           </div>
           <div class="block-item-bg font-size-12 margin-top-10 color-sub-title">
-<!--            <div class="block-item-row font-bold margin-bottom-5" v-for="(item, index) in detailApplyContentData">-->
-<!--              <span class="color-muted" style="position: relative;top: -3px">{{item.title}}: </span>-->
-<!--              <el-tooltip class="item" effect="dark" :content="item.value" placement="top">-->
-<!--                  <span class="moon-content-text-ellipsis-class" style="max-width: 300px;display: inline-block">-->
-<!--                    {{ item.value }}-->
-<!--                  </span>-->
-<!--              </el-tooltip>-->
-<!--            </div>-->
             <table class="custom-table">
               <tr v-for="(item, index) in detailApplyContentData" :key="index">
                 <template  v-if="item.type != 'fc-editor' && item.type != 'upload'">
@@ -510,6 +615,438 @@
       </div>
     </van-popup>
 
+    <van-popup @close="cancelPop" v-model="popCheckUpVisible" round position="bottom" :style="{ height: '80%' }" style="background: #efefef">
+      <div class="padding-tb-10 padding-lr-10 border-bottom-1 bg-white">
+<!--        <el-row>-->
+<!--          <el-col :span="24">-->
+<!--            <template v-if="active == 1">-->
+<!--              <div class="text-right padding-lr-10">-->
+<!--                &lt;!&ndash;            <el-button v-if="detailApplyAuditUserData.agreen1 == true" size="mini" type="success" @click="handleOk($event, detailData, 1)">同 意</el-button>&ndash;&gt;-->
+<!--                <el-button v-if="detailData.urge == true" type="danger" size="mini" @click="handleUrge($event, detailData)">{{$t("催办")}}</el-button>-->
+<!--                <el-popover-->
+<!--                  :tabindex="99999"-->
+<!--                  placement="bottom"-->
+<!--                  width="300"-->
+<!--                  @hide="cancelPop"-->
+<!--                  v-model="visibleYes"-->
+<!--                  v-if="detailCheckApplyAuditUserData.agreen1 == true">-->
+<!--                  <div class="margin-bottom-10">-->
+<!--                    <div>-->
+<!--                      <el-input-->
+<!--                        type="textarea"-->
+<!--                        :rows="2"-->
+<!--                        placeholder="请输入内容"-->
+<!--                        v-model="textarea">-->
+<!--                      </el-input>-->
+<!--                    </div>-->
+<!--                    <div class="margin-top-5">-->
+<!--                      <div>-->
+<!--                        <span class="font-size-12 color-muted">{{$t("上传图片")}}</span>-->
+<!--                      </div>-->
+<!--                      <div class="margin-top-10">-->
+<!--                    <span class="pull-left" style="position: relative" v-for="(item, index) in images" :key="index">-->
+<!--                      <i class="fa fa-times-circle color-danger" style="font-size: 14px;position: absolute; right: 2px; top:-5px;" @click="clearImage($event, index)"></i>-->
+<!--                      <img  :src="item.picture_url" fit="fit" style="margin-right: 10px;height: 30px;width:30px"></img>-->
+<!--                    </span>-->
+<!--                        <upload-square ref="upload" class="pull-left margin-left-5" :action="uploadFileListUrl" :limit="3" max-size="5" :data="{path: 'applet'}" accept=".png,.jpg,.jpeg" @success="uploadImgListFileSuccess">-->
+<!--                          <i class="el-icon-plus avatar-uploader-icon" style="height: 30px;line-height:30px;width: 30px"></i>-->
+<!--                        </upload-square>-->
+<!--                        <div class="moon-clearfix"></div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                  <div style="text-align: right; margin: 0">-->
+<!--                    <el-button size="mini" type="text" @click="cancelPop">取消</el-button>-->
+<!--                    <el-button type="primary" size="mini" @click="handleOk($event, detailData, 1)">确定</el-button>-->
+<!--                  </div>-->
+<!--                  <el-button slot="reference" type="success" size="mini">{{$t("同意")}}</el-button>-->
+<!--                </el-popover>-->
+<!--                <el-button v-else size="mini" @click="handleCancel">取 消</el-button>-->
+<!--                &lt;!&ndash;            <el-button size="mini" type="primary" @click="handleOk($event, detailData, 6)">转 交</el-button>&ndash;&gt;-->
+<!--                &lt;!&ndash;            <el-button size="mini" type="primary" @click="handleOk($event, detailData, -1)">撤 销</el-button>&ndash;&gt;-->
+<!--                <el-popover-->
+<!--                  :tabindex="99999"-->
+<!--                  placement="bottom"-->
+<!--                  width="300"-->
+<!--                  @hide="cancelPop"-->
+<!--                  v-model="visibleNo"-->
+<!--                  v-if="detailCheckApplyAuditUserData.notagreed1 == true">-->
+<!--                  <div class="margin-bottom-10">-->
+<!--                    <div>-->
+<!--                      <el-input-->
+<!--                        type="textarea"-->
+<!--                        :rows="2"-->
+<!--                        placeholder="请输入内容"-->
+<!--                        v-model="textarea">-->
+<!--                      </el-input>-->
+<!--                    </div>-->
+<!--                    <div class="margin-top-5">-->
+<!--                      <div>-->
+<!--                        <span class="font-size-12 color-muted">{{$t("上传图片")}}</span>-->
+<!--                      </div>-->
+<!--                      <div class="margin-top-10">-->
+<!--                    <span class="pull-left" style="position: relative" v-for="(item, index) in images" :key="index">-->
+<!--                      <i class="fa fa-times-circle color-danger" style="font-size: 14px;position: absolute; right: 2px; top:-5px;" @click="clearImage($event, index)"></i>-->
+<!--                      <img  :src="item.picture_url" fit="fit" style="margin-right: 10px;height: 30px;width:30px"></img>-->
+<!--                    </span>-->
+<!--                        <upload-square ref="upload" class="pull-left margin-left-5" :action="uploadFileListUrl" :limit="3" max-size="5" :data="{path: 'applet'}" accept=".png,.jpg,.jpeg" @success="uploadImgListFileSuccess">-->
+<!--                          <i class="el-icon-plus avatar-uploader-icon" style="height: 30px;line-height:30px;width: 30px"></i>-->
+<!--                        </upload-square>-->
+<!--                        <div class="moon-clearfix"></div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                  <div style="text-align: right; margin: 0">-->
+<!--                    <el-button size="mini" type="text" @click="cancelPop">取消</el-button>-->
+<!--                    <el-button type="primary" size="mini" @click="handleOk($event, detailData, 2)">确定</el-button>-->
+<!--                  </div>-->
+<!--                  <el-button slot="reference" type="warning" size="mini">{{$t("驳回")}}</el-button>-->
+<!--                </el-popover>-->
+<!--              </div>-->
+<!--            </template>-->
+<!--            <template v-if="active == 2">-->
+<!--              <div class="text-right padding-lr-10">-->
+<!--                <el-button v-if="detailCheckData.urge == true" type="danger" size="mini" @click="handleUrge($event, detailCheckData)">{{$t("催办")}}</el-button>-->
+<!--                <el-button v-if="detailCheckData.allowRevoke == true" size="mini" type="primary" @click="handleOk($event, detailCheckData, -1)">撤 销</el-button>-->
+<!--                <el-button v-else size="mini" @click="handleCancel">取 消</el-button>-->
+<!--              </div>-->
+<!--            </template>-->
+<!--            <template v-if="active == 3">-->
+<!--              <div class="text-right padding-lr-10">-->
+<!--                <el-tag size="small" type="info">抄送信息</el-tag>-->
+<!--              </div>-->
+<!--            </template>-->
+<!--            <template v-if="active == 4">-->
+<!--              <div class="text-right">-->
+<!--                <el-tag type="primary" size="small" v-if="detailCheckData.status == 5" class="text-center color-white">无需审批</el-tag>-->
+<!--                <el-tag type="warning" size="small" v-if="detailCheckData.status == 8" class="text-center color-white">审批中</el-tag>-->
+<!--                <el-tag type="warning" size="small" v-if="detailCheckData.status == -1" class="text-center color-white">已撤销</el-tag>-->
+<!--                <el-tag type="success" size="small" v-if="detailCheckData.status == 3" class="text-center color-white">已通过</el-tag>-->
+<!--                <el-tag type="danger" size="small" v-if="detailCheckData.status == 4" class="text-center color-white">未通过</el-tag>-->
+<!--                <el-tag type="danger" size="small" v-if="detailCheckData.status == 2" class="text-center color-white">已驳回</el-tag>-->
+<!--                <el-tag type="danger" size="small" v-if="detailCheckData.status == 1" class="text-center color-white">已通过</el-tag>-->
+<!--              </div>-->
+<!--            </template>-->
+<!--          </el-col>-->
+<!--        </el-row>-->
+        <span class="font-bold">核查详细</span>
+      </div>
+      <div :style="divHeight8">
+        <div class="padding-lr-0 bg-white margin-bottom-10" v-if="detailCheckData.currentNodeName">
+          <div class="color-muted margin-top-0 font-size-12 padding-top-10 padding-lr-10" style="padding-bottom: 0px;">
+            <span>
+              <label class="title-block-tag"></label>
+              <label class="title-block-text color-warning">{{$t("当前审批环节")}}</label>
+            </span>
+          </div>
+          <div class="padding-lr-10 padding-tb-5 font-size-12">
+            <label class="margin-left-10">{{detailCheckData.currentNodeName}}</label>
+          </div>
+        </div>
+        <div class="padding-lr-0 bg-white">
+          <div class="color-muted margin-top-0 font-size-12 padding-lr-10 padding-tb-10">
+            <span>
+              <label class="title-block-tag"></label>
+              <label class="title-block-text color-warning">{{$t("基础信息")}}</label>
+            </span>
+          </div>
+          <div class="detail-block-title padding-lr-10 padding-tb-5 font-size-12">
+            <el-row>
+              <el-col :span="12">
+                <span class="color-muted">{{$t("申请人")}}:</span>
+                <span>{{ detailCheckData.applyUserName }}</span>
+              </el-col>
+              <el-col :span="12">
+                <span class="color-muted">{{$t("学号/工号")}}:</span>
+                <span>{{ detailCheckData.userNo }}</span>
+              </el-col>
+            </el-row>
+            <el-row class="margin-top-5">
+              <el-col :span="12">
+                <span class="color-muted">{{$t("服务名称")}}:</span>
+                <span>{{ detailCheckData.formName }}</span>
+              </el-col>
+              <el-col :span="12">
+                <span class="color-muted">{{$t("班级/部门")}}:</span>
+                <span>
+                <label v-if="detailCheckData.userType == 5">{{ detailCheckData.className }}</label>
+                <label v-if="detailCheckData.userType == 4">{{ detailCheckData.departmentName }}</label>
+              </span>
+              </el-col>
+            </el-row>
+            <el-row class="margin-top-5">
+              <el-col :span="12">
+                <span class="color-muted">{{$t("申请日期")}}:</span>
+                <span>{{ $moment(detailCheckData.applyTime).format("YYYY-MM-DD HH:mm") }}</span>
+              </el-col>
+            </el-row>
+          </div>
+        </div>
+        <div class="margin-top-10 padding-lr-10 bg-white padding-tb-10" v-if="detailCheckData.checkFiledResult != null || detailCheckData.checkApplyResult != null">
+          <div class="color-muted margin-top-5 font-size-12">
+              <span>
+                <label class="title-block-tag"></label>
+                <label class="title-block-text color-warning">{{$t("系统核查")}}</label>
+              </span>
+          </div>
+          <div class="block-item-bg font-size-12 margin-top-10 color-sub-title">
+            <div v-if="detailCheckData.checkFiledResult != null">
+              <el-row>
+                <el-col :span="12">
+                  <span>{{$t("核查类型")}}:</span>
+                  <span>
+                    <el-tooltip effect="dark" :content="detailCheckData.checkFiledResult.name" placement="top">
+                      <span class="moon-content-text-ellipsis-class width-100" style="display: inline-block;position: relative; top: 4px">
+                        {{ detailCheckData.checkFiledResult.name }}
+                      </span>
+                    </el-tooltip>
+                  </span>
+                </el-col>
+                <el-col :span="12">
+                  <span>{{$t("核查表名称")}}:</span>
+                  <span>
+                    <el-tooltip effect="dark" :content="detailCheckData.checkFiledResult.formName" placement="top">
+                      <span class="moon-content-text-ellipsis-class width-100" style="display: inline-block;position: relative; top: 4px">
+                        {{ detailCheckData.checkFiledResult.formName }}
+                      </span>
+                    </el-tooltip>
+                  </span>
+                </el-col>
+              </el-row>
+              <el-row class="margin-top-5">
+                <el-col :span="12">
+                  <span>{{$t("核查条件")}}:</span>
+                  <span>
+                    <el-tooltip effect="dark" :content="detailCheckData.checkFiledResult.type" placement="top">
+                      <span class="moon-content-text-ellipsis-class width-100" style="display: inline-block;position: relative; top: 4px">
+                        {{ detailCheckData.checkFiledResult.type }}
+                      </span>
+                    </el-tooltip>
+                  </span>
+                </el-col>
+                <el-col :span="12">
+                  <span>{{$t("核查结果")}}:</span>
+                  <span>
+                    <el-tooltip effect="dark" :content="detailCheckData.checkFiledResult.result" placement="top">
+                      <span class="moon-content-text-ellipsis-class width-100" style="display: inline-block;position: relative; top: 4px">
+                        {{ detailCheckData.checkFiledResult.result }}
+                      </span>
+                    </el-tooltip>
+                  </span>
+                </el-col>
+              </el-row>
+            </div>
+            <div class="line-height"></div>
+            <div v-if="detailCheckData.checkApplyResult != null">
+              <el-row>
+                <el-col :span="12">
+                  <span>{{$t("核查类型")}}:</span>
+                  <span>
+                    <el-tooltip effect="dark" :content="detailCheckData.checkApplyResult.name" placement="top">
+                      <span class="moon-content-text-ellipsis-class width-100" style="display: inline-block;position: relative; top: 4px">
+                        {{ detailCheckData.checkApplyResult.name }}
+                      </span>
+                    </el-tooltip>
+                  </span>
+                </el-col>
+                <el-col :span="12">
+                  <span>{{$t("核查表名称")}}:</span>
+                  <span>
+                    <el-tooltip effect="dark" :content="detailCheckData.checkApplyResult.formName" placement="top">
+                      <span class="moon-content-text-ellipsis-class width-100" style="display: inline-block;position: relative; top: 4px">
+                        {{ detailCheckData.checkApplyResult.formName }}
+                      </span>
+                    </el-tooltip>
+                  </span>
+                </el-col>
+              </el-row>
+              <el-row class="margin-top-5">
+                <el-col :span="12">
+                  <span>{{$t("核查条件")}}:</span>
+                  <span>
+                    <el-tooltip effect="dark" :content="detailCheckData.checkApplyResult.type" placement="top">
+                      <span class="moon-content-text-ellipsis-class width-100" style="display: inline-block;position: relative; top: 4px">
+                        {{ detailCheckData.checkApplyResult.type }}
+                      </span>
+                    </el-tooltip>
+                  </span>
+                </el-col>
+                <el-col :span="12">
+                  <span>{{$t("核查结果")}}:</span>
+                  <span>
+                    <el-tooltip effect="dark" :content="detailCheckData.checkApplyResult.result" placement="top">
+                      <span class="moon-content-text-ellipsis-class" style="max-width: 100px;;display: inline-block;position: relative; top: 4px">
+                        {{ detailCheckData.checkApplyResult.result }}
+                      </span>
+                    </el-tooltip>
+                  </span>
+                </el-col>
+              </el-row>
+            </div>
+          </div>
+        </div>
+        <div class="margin-top-10 padding-lr-10 bg-white padding-tb-10">
+          <div class="color-muted margin-top-5 font-size-12">
+              <span>
+                <label class="title-block-tag"></label>
+                <label class="title-block-text color-warning">{{$t("申请内容")}}</label>
+              </span>
+          </div>
+          <div class="block-item-bg font-size-12 margin-top-10 color-sub-title">
+            <table class="custom-table">
+              <tr v-for="(item, index) in detailCheckApplyContentData" :key="index">
+                <template  v-if="item.type != 'fc-editor' && item.type != 'upload'">
+                  <td style="width: 30%;text-align: right;padding-right: 15px">
+                    <span class="color-muted moon-content-text-ellipsis-class">
+                      <label class="font-size-12">{{item.title}}</label>
+                    </span>
+                  </td>
+                  <td style="text-align: left;padding-left: 15px">
+                    <el-tooltip class="item" effect="dark" :content="item.value" placement="top">
+                    <span class="moon-content-text-ellipsis-class">
+                      <label class="font-size-12">{{ item.value }}</label>
+                    </span>
+                    </el-tooltip>
+                  </td>
+                </template>
+
+                <template v-else-if="item.type != 'fc-editor' && item.type == 'upload'">
+                  <td style="width: 30%;text-align: right;padding-right: 15px">
+                    <span v-if="!item.value || item.value.length <= 0" class="color-muted moon-content-text-ellipsis-class">
+                      {{item.title}}
+                    </span>
+                    <span v-else class="color-muted" style="position: relative;">{{item.title}}: </span>
+                  </td>
+                  <td style="text-align: left;padding-left: 15px">
+                    <span v-if="!item.value || item.value.length <= 0">
+                      <div style="height: 20px;line-height: 20px"></div>
+                    </span>
+                    <span v-else class="custom-avatar" style="display: inline-block;margin-right: 5px;position: relative; top: 5px" v-for="(itemImg, indexImg) in item.value" :key="indexImg" @click="readFile(itemImg)">
+                      <el-avatar shape="square" size="small" :src="itemImg" fit="fill"></el-avatar>
+                    </span>
+                  </td>
+                </template>
+
+                <template v-else>
+                  <td style="width: 30%;text-align: right;padding-right: 15px">
+                    <span class="color-muted font-bold moon-content-text-ellipsis-class" style="position: relative;top: -50px;">{{item.title}}: </span>
+                  </td>
+                  <td style="text-align: left;padding-left: 15px">
+                    <div v-if="item.type == 'fc-editor'"  v-html="item.value" style="width: 90%;height: 150px;overflow-y:auto;display: inline-block;border: 1px solid #dddddd;border-radius: 5px;padding: 0px 10px">
+                    </div>
+                  </td>
+                </template>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="margin-top-10 padding-lr-10 bg-white padding-tb-10">
+          <div class="color-muted margin-top-5 font-size-12">
+              <span>
+                <label class="title-block-tag"></label>
+                <label class="title-block-text color-warning">{{$t("审批进度")}}</label>
+              </span>
+          </div>
+          <div class="block-item-bg font-size-12 margin-top-10 color-sub-title">
+            <el-steps direction="vertical" space="60px">
+              <el-step v-for="(item, index) in detailCheckApplyAuditList" :key="index">
+                <div slot="icon">
+                  <i class="fa fa-flag" style="font-size: 12px"></i>
+                </div>
+                <div slot="title" class="font-size-12">
+                  <span v-if="item.nodeType == 'handle'" class="color-success">
+                    <label v-if="item.nodeName">【{{item.nodeName}}】</label>
+                    <label>{{ $t("审批") }}</label>
+                    <label v-if="item.andor == 'and'"> ({{ $t("与签") }}) </label>
+                    <label v-if="item.andor == 'or'"> ({{ $t("或签") }}) </label>
+                  </span>
+                  <span v-if="item.nodeType == 'cc'" class="color-warning">
+                    <label v-if="item.nodeName">【{{item.nodeName}}】</label>
+                    <label>{{ $t("抄送") }}</label>
+                  </span>
+                </div>
+                <div slot="description" class="font-size-12 color-sub-title">
+                  <div>
+                    <template v-if="item.nodeType == 'handle'">
+                      <div v-for="(itemUser, indexUser) in item.handleUserList" :key="indexUser">
+                        <span class="color-grand"> <i class="fa fa-user"></i> {{ itemUser.userName }} </span>
+                        <span class="margin-left-10">
+                          <label v-if="itemUser.status === -1" class="color-warning">{{$t("撤销")}}</label>
+                          <label v-if="itemUser.status === 0" class="color-warning">{{$t("待审核")}}</label>
+                          <label v-if="itemUser.status === 3" class="color-success">
+                            {{$t("已通过")}}
+                            <el-tooltip v-if="itemUser.des" class="item" effect="dark" :content="itemUser.des" placement="top">
+                              <i class="fa fa-warning color-warning"></i>
+                            </el-tooltip>
+                            <span v-if="itemUser.url && itemUser.url.length > 0">
+                              <img v-for="(item, index) in itemUser.url" :key="index" :src="item" fit="fit" style="position: relative;top:5px;height: 20px;width:20px;margin-left: 3px" @click="readFile(item)"></img>
+                            </span>
+                          </label>
+                          <label v-if="itemUser.status === 4" class="color-danger">{{$t("未通过")}}</label>
+                          <label v-if="itemUser.status === 1" class="color-success">
+                            {{$t("已通过")}}
+                            <el-tooltip v-if="itemUser.des" class="item" effect="dark" :content="itemUser.des" placement="top">
+                              <i class="fa fa-warning color-warning"></i>
+                            </el-tooltip>
+                            <span v-if="itemUser.url && itemUser.url.length > 0">
+                              <img v-for="(item, index) in itemUser.url" :key="index" :src="item" fit="fit" style="position: relative;top:5px;height: 20px;width:20px;margin-left: 3px" @click="readFile(item)"></img>
+                            </span>
+                          </label>
+                          <label v-if="itemUser.status === 2" class="color-warning">
+                            {{$t("已驳回")}}
+                            <el-tooltip v-if="itemUser.des" class="item" effect="dark" :content="itemUser.des" placement="top">
+                              <i class="fa fa-warning color-warning"></i>
+                            </el-tooltip>
+                            <span v-if="itemUser.url && itemUser.url.length > 0">
+                              <img v-for="(item, index) in itemUser.url" :key="index" :src="item" fit="fit" style="position: relative;top:5px;height: 20px;width:20px;margin-left: 3px" @click="readFile(item)"></img>
+                            </span>
+                          </label>
+                          <label v-if="itemUser.status === 5" class="color-warning">{{$t("无需审批")}}</label>
+                          <label v-if="itemUser.status === 8" class="color-warning">{{$t("审批中")}}</label>
+                        </span>
+                        <span class="margin-left-10" v-if="itemUser.handleTime">
+                          <label class="color-muted">{{$moment(itemUser.handleTime).format("YYYY-MM-DD HH:mm:ss")}}</label>
+                        </span>
+                      </div>
+                    </template>
+                    <template v-if="item.nodeType == 'cc'">
+                      <el-tag size="mini" v-for="(itemUser, indexUser) in item.handleUserNameList" :key="indexUser" v-if="indexUser <= 3">
+                        <div class="moon-content-text-ellipsis-class" style="width: 50px">
+                          <el-tooltip class="item" effect="dark" :content="itemUser" placement="top-start">
+                            <span>{{ itemUser }}</span>
+                          </el-tooltip>
+                        </div>
+                      </el-tag>
+
+                      <el-popover
+                        placement="left"
+                        width="200"
+                        trigger="hover"
+                        v-if="item.handleUserNameList.length > 3">
+                        <div style="height: 100px;overflow-y: auto">
+                          <div v-for="(itemUser, indexUser) in item.handleUserNameList" :key="indexUser">
+                            <div class="font-size-12 padding-tb-5">
+                              <span>{{itemUser}}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <el-tag slot="reference" size="mini" type="success">
+                          <div class="moon-content-text-ellipsis-class padding-lr-5">
+                            <i class="fa fa-user"></i>
+                            <label class="margin-left-5">{{item.handleUserNameList.length}}</label>
+                          </div>
+                        </el-tag>
+                      </el-popover>
+                    </template>
+                  </div>
+                </div>
+              </el-step>
+            </el-steps>
+          </div>
+        </div>
+      </div>
+    </van-popup>
+
     <van-calendar v-model="showCalendar" type="range" :min-date="minDate" :max-date="maxDate" @confirm="onConfirm" />
 
     <van-popup v-model="urgeDialog" round position="bottom" class="custom-cascader" :style="{ height: '400px' }">
@@ -556,16 +1093,21 @@
         loading: false,
         finished: false,
         popUpVisible: false,
+        popCheckUpVisible: false,
         refreshing: false,
         detailData: '',
+        detailCheckData: '',
         detailIndex: '',
         detailApplyContentData: [],
         detailApplyAuditList: [],
+        detailCheckApplyContentData: [],
+        detailCheckApplyAuditList: [],
         textarea: '',
         images: [],
         visibleNo: false,
         visibleYes: false,
         detailApplyAuditUserData: {},
+        detailCheckApplyAuditUserData: {},
         serchName: '',
         startTime: '',
         endTime: '',
@@ -749,27 +1291,47 @@
         if (item.applyContent  && item.applyContent != "[]"){
           this.detailApplyContentData = JSON.parse(item.applyContent);
         }
-        this.initAuditDetailList(item._id);
+        this.initAuditDetailList(item._id, 'main');
         this.isCollapse = false;
         this.toggleLeftMenu();
         this.popUpVisible = true;
       },
-      initAuditDetailList(id){
+      detailCheckClick($event, id){
+        this.initAuditDetailList(id, 'check');
+        this.isCollapse = false;
+        this.toggleLeftMenu();
+        this.popCheckUpVisible = true;
+      },
+      initAuditDetailList(id, type){
         let params = {
           id: id
         };
         this.$axios.get(common.server_form_audit_query, {params: params}).then(res=>{
           if (res.data.code == 200){
             if (res.data.data){
-              this.detailData = res.data.data;
-              this.detailApplyAuditList = res.data.data.handleList;
-              let orderIndex = res.data.data.orderIndex;
-              for (let i = 0; i < res.data.data.handleList.length; i++){
-                if (res.data.data.handleList[i].orderIndex == orderIndex){
-                  this.detailApplyAuditUserData = {
-                    agreen1: res.data.data.handleList[i].agreed1,
-                    notagreed1: res.data.data.handleList[i].notagreed1
-                  };
+              if (type == 'main'){
+                this.detailData = res.data.data;
+                this.detailApplyAuditList = res.data.data.handleList;
+                let orderIndex = res.data.data.orderIndex;
+                for (let i = 0; i < res.data.data.handleList.length; i++){
+                  if (res.data.data.handleList[i].orderIndex == orderIndex){
+                    this.detailApplyAuditUserData = {
+                      agreen1: res.data.data.handleList[i].agreed1,
+                      notagreed1: res.data.data.handleList[i].notagreed1
+                    };
+                  }
+                }
+              }else if (type == 'check'){
+                this.detailCheckData = res.data.data;
+                this.detailCheckApplyAuditList = res.data.data.handleList;
+                let orderIndex = res.data.data.orderIndex;
+                for (let i = 0; i < res.data.data.handleList.length; i++){
+                  if (res.data.data.handleList[i].orderIndex == orderIndex){
+                    this.detailCheckApplyAuditUserData = {
+                      agreen1: res.data.data.handleList[i].agreed1,
+                      notagreed1: res.data.data.handleList[i].notagreed1
+                    };
+                  }
                 }
               }
             }

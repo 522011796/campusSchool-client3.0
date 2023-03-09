@@ -10,11 +10,23 @@ export { default as MyTree } from '../../components/MyTree.vue'
 export { default as LayoutLr } from '../../components/Layout/LayoutLr.vue'
 export { default as LayoutLrBefore } from '../../components/Layout/LayoutLrBefore.vue'
 export { default as LayoutTb } from '../../components/Layout/LayoutTb.vue'
+export { default as MyServerDialog } from '../../components/dialog/MyServerDialog.vue'
+export { default as BarChart } from '../../components/charts/BarChart.vue'
+export { default as CircleChart } from '../../components/charts/CircleChart.vue'
+export { default as HBarChart } from '../../components/charts/HBarChart.vue'
+export { default as LineChart } from '../../components/charts/LineChart.vue'
+export { default as LineClassPopChart } from '../../components/charts/LineClassPopChart.vue'
+export { default as LinePopChart } from '../../components/charts/LinePopChart.vue'
+export { default as PopChart } from '../../components/charts/PopChart.vue'
+export { default as RadarChart } from '../../components/charts/RadarChart.vue'
+export { default as RadarDormChart } from '../../components/charts/RadarDormChart.vue'
+export { default as SexPieChart } from '../../components/charts/SexPieChart.vue'
+export { default as SexPieMoreChart } from '../../components/charts/SexPieMoreChart.vue'
+export { default as TableBarChart } from '../../components/charts/TableBarChart.vue'
 export { default as MyInputButton } from '../../components/search/MyInputButton.vue'
 export { default as MySearchOfDate } from '../../components/search/MySearchOfDate.vue'
 export { default as MySearchOfDateGroup } from '../../components/search/MySearchOfDateGroup.vue'
 export { default as MyYearTerm } from '../../components/search/MyYearTerm.vue'
-export { default as MyServerDialog } from '../../components/dialog/MyServerDialog.vue'
 export { default as MyBlockListChildTree } from '../../components/tree/MyBlockListChildTree.vue'
 export { default as MyBlockListTree } from '../../components/tree/MyBlockListTree.vue'
 export { default as MyElTree } from '../../components/tree/MyElTree.vue'
@@ -67,18 +79,6 @@ export { default as TeacherTreeAndListBak } from '../../components/utils/treeAnd
 export { default as TeacherTreeAndListNoPage } from '../../components/utils/treeAndList/TeacherTreeAndListNoPage.vue'
 export { default as QuillBlock } from '../../components/utils/upload/QuillBlock.vue'
 export { default as UploadSquare } from '../../components/utils/upload/UploadSquare.vue'
-export { default as BarChart } from '../../components/charts/BarChart.vue'
-export { default as CircleChart } from '../../components/charts/CircleChart.vue'
-export { default as HBarChart } from '../../components/charts/HBarChart.vue'
-export { default as LineChart } from '../../components/charts/LineChart.vue'
-export { default as LineClassPopChart } from '../../components/charts/LineClassPopChart.vue'
-export { default as LinePopChart } from '../../components/charts/LinePopChart.vue'
-export { default as PopChart } from '../../components/charts/PopChart.vue'
-export { default as RadarChart } from '../../components/charts/RadarChart.vue'
-export { default as RadarDormChart } from '../../components/charts/RadarDormChart.vue'
-export { default as SexPieChart } from '../../components/charts/SexPieChart.vue'
-export { default as SexPieMoreChart } from '../../components/charts/SexPieMoreChart.vue'
-export { default as TableBarChart } from '../../components/charts/TableBarChart.vue'
 
 export const LazyLogo = import('../../components/Logo.vue' /* webpackChunkName: "components/Logo" */).then(c => c.default || c)
 export const LazyMyBlockTree = import('../../components/MyBlockTree.vue' /* webpackChunkName: "components/MyBlockTree" */).then(c => c.default || c)
@@ -92,11 +92,23 @@ export const LazyMyTree = import('../../components/MyTree.vue' /* webpackChunkNa
 export const LazyLayoutLr = import('../../components/Layout/LayoutLr.vue' /* webpackChunkName: "components/Layout/LayoutLr" */).then(c => c.default || c)
 export const LazyLayoutLrBefore = import('../../components/Layout/LayoutLrBefore.vue' /* webpackChunkName: "components/Layout/LayoutLrBefore" */).then(c => c.default || c)
 export const LazyLayoutTb = import('../../components/Layout/LayoutTb.vue' /* webpackChunkName: "components/Layout/LayoutTb" */).then(c => c.default || c)
+export const LazyMyServerDialog = import('../../components/dialog/MyServerDialog.vue' /* webpackChunkName: "components/dialog/MyServerDialog" */).then(c => c.default || c)
+export const LazyBarChart = import('../../components/charts/BarChart.vue' /* webpackChunkName: "components/charts/BarChart" */).then(c => c.default || c)
+export const LazyCircleChart = import('../../components/charts/CircleChart.vue' /* webpackChunkName: "components/charts/CircleChart" */).then(c => c.default || c)
+export const LazyHBarChart = import('../../components/charts/HBarChart.vue' /* webpackChunkName: "components/charts/HBarChart" */).then(c => c.default || c)
+export const LazyLineChart = import('../../components/charts/LineChart.vue' /* webpackChunkName: "components/charts/LineChart" */).then(c => c.default || c)
+export const LazyLineClassPopChart = import('../../components/charts/LineClassPopChart.vue' /* webpackChunkName: "components/charts/LineClassPopChart" */).then(c => c.default || c)
+export const LazyLinePopChart = import('../../components/charts/LinePopChart.vue' /* webpackChunkName: "components/charts/LinePopChart" */).then(c => c.default || c)
+export const LazyPopChart = import('../../components/charts/PopChart.vue' /* webpackChunkName: "components/charts/PopChart" */).then(c => c.default || c)
+export const LazyRadarChart = import('../../components/charts/RadarChart.vue' /* webpackChunkName: "components/charts/RadarChart" */).then(c => c.default || c)
+export const LazyRadarDormChart = import('../../components/charts/RadarDormChart.vue' /* webpackChunkName: "components/charts/RadarDormChart" */).then(c => c.default || c)
+export const LazySexPieChart = import('../../components/charts/SexPieChart.vue' /* webpackChunkName: "components/charts/SexPieChart" */).then(c => c.default || c)
+export const LazySexPieMoreChart = import('../../components/charts/SexPieMoreChart.vue' /* webpackChunkName: "components/charts/SexPieMoreChart" */).then(c => c.default || c)
+export const LazyTableBarChart = import('../../components/charts/TableBarChart.vue' /* webpackChunkName: "components/charts/TableBarChart" */).then(c => c.default || c)
 export const LazyMyInputButton = import('../../components/search/MyInputButton.vue' /* webpackChunkName: "components/search/MyInputButton" */).then(c => c.default || c)
 export const LazyMySearchOfDate = import('../../components/search/MySearchOfDate.vue' /* webpackChunkName: "components/search/MySearchOfDate" */).then(c => c.default || c)
 export const LazyMySearchOfDateGroup = import('../../components/search/MySearchOfDateGroup.vue' /* webpackChunkName: "components/search/MySearchOfDateGroup" */).then(c => c.default || c)
 export const LazyMyYearTerm = import('../../components/search/MyYearTerm.vue' /* webpackChunkName: "components/search/MyYearTerm" */).then(c => c.default || c)
-export const LazyMyServerDialog = import('../../components/dialog/MyServerDialog.vue' /* webpackChunkName: "components/dialog/MyServerDialog" */).then(c => c.default || c)
 export const LazyMyBlockListChildTree = import('../../components/tree/MyBlockListChildTree.vue' /* webpackChunkName: "components/tree/MyBlockListChildTree" */).then(c => c.default || c)
 export const LazyMyBlockListTree = import('../../components/tree/MyBlockListTree.vue' /* webpackChunkName: "components/tree/MyBlockListTree" */).then(c => c.default || c)
 export const LazyMyElTree = import('../../components/tree/MyElTree.vue' /* webpackChunkName: "components/tree/MyElTree" */).then(c => c.default || c)
@@ -149,15 +161,3 @@ export const LazyTeacherTreeAndListBak = import('../../components/utils/treeAndL
 export const LazyTeacherTreeAndListNoPage = import('../../components/utils/treeAndList/TeacherTreeAndListNoPage.vue' /* webpackChunkName: "components/utils/treeAndList/TeacherTreeAndListNoPage" */).then(c => c.default || c)
 export const LazyQuillBlock = import('../../components/utils/upload/QuillBlock.vue' /* webpackChunkName: "components/utils/upload/QuillBlock" */).then(c => c.default || c)
 export const LazyUploadSquare = import('../../components/utils/upload/UploadSquare.vue' /* webpackChunkName: "components/utils/upload/UploadSquare" */).then(c => c.default || c)
-export const LazyBarChart = import('../../components/charts/BarChart.vue' /* webpackChunkName: "components/charts/BarChart" */).then(c => c.default || c)
-export const LazyCircleChart = import('../../components/charts/CircleChart.vue' /* webpackChunkName: "components/charts/CircleChart" */).then(c => c.default || c)
-export const LazyHBarChart = import('../../components/charts/HBarChart.vue' /* webpackChunkName: "components/charts/HBarChart" */).then(c => c.default || c)
-export const LazyLineChart = import('../../components/charts/LineChart.vue' /* webpackChunkName: "components/charts/LineChart" */).then(c => c.default || c)
-export const LazyLineClassPopChart = import('../../components/charts/LineClassPopChart.vue' /* webpackChunkName: "components/charts/LineClassPopChart" */).then(c => c.default || c)
-export const LazyLinePopChart = import('../../components/charts/LinePopChart.vue' /* webpackChunkName: "components/charts/LinePopChart" */).then(c => c.default || c)
-export const LazyPopChart = import('../../components/charts/PopChart.vue' /* webpackChunkName: "components/charts/PopChart" */).then(c => c.default || c)
-export const LazyRadarChart = import('../../components/charts/RadarChart.vue' /* webpackChunkName: "components/charts/RadarChart" */).then(c => c.default || c)
-export const LazyRadarDormChart = import('../../components/charts/RadarDormChart.vue' /* webpackChunkName: "components/charts/RadarDormChart" */).then(c => c.default || c)
-export const LazySexPieChart = import('../../components/charts/SexPieChart.vue' /* webpackChunkName: "components/charts/SexPieChart" */).then(c => c.default || c)
-export const LazySexPieMoreChart = import('../../components/charts/SexPieMoreChart.vue' /* webpackChunkName: "components/charts/SexPieMoreChart" */).then(c => c.default || c)
-export const LazyTableBarChart = import('../../components/charts/TableBarChart.vue' /* webpackChunkName: "components/charts/TableBarChart" */).then(c => c.default || c)

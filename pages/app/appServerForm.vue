@@ -13,6 +13,16 @@
         </van-col>
         <van-col span="18">
           <div class="text-right padding-lr-10">
+            <template v-if="checkApply == true">
+              <el-select  style="width: 130px" size="small" v-model="applyCheckValue" collapse-tags placeholder="关联表单申请">
+                <el-option
+                  v-for="item in detailApplyCheckList"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </template>
             <template v-if="customUserStatus == true">
               <el-select style="width: 130px" size="small" v-model="auditSelUser" multiple collapse-tags placeholder="请选择审批人">
                 <el-option
@@ -107,6 +117,9 @@
         auditUsers: [],
         auditSelUser: [],
         activeName: '',
+        checkApply: false,
+        applyCheckValue: [],
+        detailApplyCheckList: [],
       }
     },
     mounted() {
@@ -116,6 +129,7 @@
     },
     created() {
       this.init();
+      this.initCheckForm(this.$route.query.id);
     },
     methods: {
       layoutInit(){
@@ -135,7 +149,8 @@
             let processList = res.data.data.processList;
             this.customUserStatus = false;
             this.fromCreateBtnShow = res.data.data.submitButton;
-            this.fromCreateBtnText = res.data.data.buttonName != "" ? res.data.data.buttonName : this.$t("提交")
+            this.fromCreateBtnText = res.data.data.buttonName != "" ? res.data.data.buttonName : this.$t("提交");
+            this.checkApply = res.data.data.checkApply;
 
             if (res.data.data.formContent != null && res.data.data.formContent != ''){
               this.formCreateRuleData = JSON.parse(res.data.data.formContent).rule;
@@ -158,6 +173,23 @@
               }
             }
             this.auditUsers = auditUser;
+          }
+        });
+      },
+      initCheckForm(id){
+        let params = {
+          formId: id
+        };
+        this.$axios.get(common.server_form_check_apply_list,{params: params}).then(res => {
+          if (res.data.code == 200){
+            let array = [];
+            for (let i = 0; i < res.data.data.length; i++){
+              array.push({
+                value: res.data.data[i].id,
+                label: res.data.data[i].name
+              });
+            }
+            this.detailApplyCheckList = array;
           }
         });
       },
@@ -216,6 +248,10 @@
             userId: this.loginUserId,
             //applyContent: JSON.stringify(formData),
             customHandleUserIds: JSON.stringify(this.auditSelUser),
+          }
+
+          if (this.checkApply == true){
+            params['checkApplyId'] = this.applyCheckValue;
           }
 
           let rule = fApi.rule;

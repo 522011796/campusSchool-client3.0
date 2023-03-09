@@ -202,6 +202,16 @@
       </div>
       <div slot="footer">
         <div class="text-right padding-lr-10">
+          <template v-if="checkApply == true">
+            <el-select size="mini" v-model="applyCheckValue" collapse-tags placeholder="请选择关联表单申请">
+              <el-option
+                v-for="item in detailApplyCheckList"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </template>
           <template v-if="customUserStatus == true">
             <span>{{$t("审批人")}}</span>:
             <el-select size="mini" v-model="auditSelUser" multiple collapse-tags placeholder="请选择审批人">
@@ -255,12 +265,15 @@
         dialogServerDetail: false,
         btnLoading: false,
         customUserStatus: false,
+        checkApply: false,
         testArea: '',
         activeMenu: '',
         treeId: '',
         serverDetailData: {},
         auditUsers: [],
-        auditSelUser: []
+        auditSelUser: [],
+        detailApplyCheckList: [],
+        applyCheckValue: []
       }
     },
     mounted() {
@@ -278,6 +291,23 @@
     methods: {
       layoutInit(){
 
+      },
+      initCheckForm(id){
+        let params = {
+          formId: id
+        };
+        this.$axios.get(common.server_form_check_apply_list,{params: params}).then(res => {
+          if (res.data.code == 200){
+            let array = [];
+            for (let i = 0; i < res.data.data.length; i++){
+              array.push({
+                value: res.data.data[i].id,
+                label: res.data.data[i].name
+              });
+            }
+            this.detailApplyCheckList = array;
+          }
+        });
       },
       initAuditUser(id){
         let params = {
@@ -343,13 +373,15 @@
         this.formCreateTitleData = data.form_name;
         this.formCreateIdData = data.id;
         this.fromCreateBtnShow = data.submit_button;
-        this.fromCreateBtnText = data.button_name != "" ? data.button_name : this.$t("提交")
+        this.fromCreateBtnText = data.button_name != "" ? data.button_name : this.$t("提交");
+        this.checkApply = data.check_apply;
         if (data.form_content != null && data.form_content != ''){
           this.formCreateRuleData = JSON.parse(data.form_content).rule;
           this.formCreateOptionData = JSON.parse(data.form_content).option;
           this.setFormChildren(this.formCreateRuleData, list, 'children');
         }
         this.initAuditUser(data.id);
+        this.initCheckForm(data.id);
 
         this.dialogServerDetail = true;
       },
@@ -427,7 +459,10 @@
             appletFormId: this.formCreateIdData,
             userId: this.loginUserId,
             //applyContent: JSON.stringify(formData),
-            customHandleUserIds: JSON.stringify(this.auditSelUser),
+            customHandleUserIds: JSON.stringify(this.auditSelUser)
+          }
+          if (this.checkApply == true){
+            params['checkApplyId'] = this.applyCheckValue;
           }
           let rule = fApi.rule;
           let ruleObjList =  this.setRuleChild(rule, ruleList);

@@ -49,7 +49,50 @@
         </tr>
       </table>
     </div>
-    <div class="margin-top-20">
+
+    <div class="margin-top-10" v-if="detailData.checkFiledResult != null">
+      <div class="padding-tb-10 padding-lr-10">
+        <span class="title-block-tag"></span>
+        <span class="title-block-text color-black">{{$t("系统核查(表单数据)")}}</span>
+      </div>
+      <table class="custom-table-black" v-if="detailData.checkFiledResult != null">
+        <tr>
+          <td style="width: 10%" class="font-size-12 font-bold">{{$t("核查类型")}}</td>
+          <td style="width: 20%" class="color-black font-size-12">{{detailData.checkFiledResult.name}}</td>
+          <td style="width: 10%" class="font-size-12 font-bold">{{$t("核查表名称")}}</td>
+          <td style="width: 15%" class="color-black font-size-12">{{detailData.checkFiledResult.formName}}</td>
+        </tr>
+        <tr>
+          <td style="width: 10%" class="font-size-12 font-bold">{{$t("核查条件")}}</td>
+          <td style="width: 20%" class="color-black font-size-12">{{detailData.checkFiledResult.type}}</td>
+          <td style="width: 10%" class="font-size-12 font-bold">{{$t("核查结果")}}</td>
+          <td style="width: 15%" class="color-black font-size-12">{{detailData.checkFiledResult.result}}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="margin-top-10" v-if="detailData.checkApplyResult != null">
+      <div class="padding-tb-10 padding-lr-10" v-if="detailData.checkApplyResult != null">
+        <span class="title-block-tag"></span>
+        <span class="title-block-text color-black">{{$t("系统核查(审核状态)")}}</span>
+      </div>
+      <table class="custom-table-black" v-if="detailData.checkApplyResult != null">
+        <tr>
+          <td style="width: 10%" class="font-size-12 font-bold">{{$t("核查类型")}}</td>
+          <td style="width: 20%" class="color-black font-size-12">{{detailData.checkApplyResult.name}}</td>
+          <td style="width: 10%" class="font-size-12 font-bold">{{$t("核查表名称")}}</td>
+          <td style="width: 15%" class="color-black font-size-12">{{detailData.checkApplyResult.formName}}</td>
+        </tr>
+        <tr>
+          <td style="width: 10%" class="font-size-12 font-bold">{{$t("核查条件")}}</td>
+          <td style="width: 20%" class="color-black font-size-12">{{detailData.checkApplyResult.type}}</td>
+          <td style="width: 10%" class="font-size-12 font-bold">{{$t("核查结果")}}</td>
+          <td style="width: 15%" class="color-black font-size-12">{{detailData.checkApplyResult.result}}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="margin-top-10">
       <div class="padding-tb-10 padding-lr-10">
         <span class="title-block-tag"></span>
         <span class="title-block-text color-black">{{$t("表单内容")}}</span>
@@ -99,7 +142,7 @@
         </tr>
       </table>
     </div>
-    <div class="margin-top-20">
+    <div class="margin-top-10">
       <div class="padding-tb-10 padding-lr-10">
         <span class="title-block-tag"></span>
         <span class="title-block-text color-black">{{$t("审核信息")}}</span>

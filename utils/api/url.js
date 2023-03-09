@@ -574,6 +574,7 @@ export const common = {
   server_form_audit_handle: '/proxy/school/applet/form/apply/handle',//服务审批操作
   server_form_audit_urge_handle: '/proxy/school/applet/form/apply/urge',//服务催办操作
   server_form_audit_process_list: '/proxy/school/applet/my/process/list',//服务环节列表
+  server_form_check_apply_list: '/proxy/school/applet/form/check-apply/list',//服务核查应用列表
 
   server_enroll_app_student_info: '/proxy/school/enroll-app/student/info',//学生/老师--获取学生信息/缴费信息
   server_enroll_app_process_current: '/proxy/school/enroll-app/process/current',//环节列表
