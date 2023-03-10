@@ -457,9 +457,9 @@
                     <el-tooltip effect="dark" :content="detailData.checkApplyResult.result" placement="top">
                       <span class="moon-content-text-ellipsis-class" style="max-width: 100px;;display: inline-block;position: relative; top: 4px">
                         {{ detailData.checkApplyResult.result }}
-                        <i v-if="detailData.checkApplyId && detailData.checkApplyId != ''" class="fa fa-file-text color-success" @click="detailCheckClick($event, detailData.checkApplyId)"></i>
                       </span>
                     </el-tooltip>
+                    <i v-if="detailData.checkApplyId && detailData.checkApplyId != ''" class="fa fa-file-text color-success" @click="detailCheckClick($event, detailData.checkApplyId)"></i>
                   </span>
                 </el-col>
               </el-row>
