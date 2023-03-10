@@ -598,11 +598,11 @@
             </el-col>
           </el-row>
         </div>
-        <div class="margin-top-10" v-if="detailCheckData.checkFiledResult != null || detailCheckData.checkApplyResult != null">
+        <div class="margin-top-10" v-if="detailCheckData.checkFiledResult != null">
           <div class="color-muted margin-top-5 font-size-12 border-bottom-1">
               <span>
                 <label class="title-block-tag"></label>
-                <label class="title-block-text color-warning">{{$t("系统核查")}}</label>
+                <label class="title-block-text color-warning">{{$t("系统核查(表单数据)")}}</label>
               </span>
           </div>
           <div class="block-item-bg font-size-12 margin-top-10 color-sub-title">
@@ -630,7 +630,16 @@
                 </el-col>
               </el-row>
             </div>
-            <div class="line-height"></div>
+          </div>
+        </div>
+        <div class="margin-top-10" v-if="detailCheckData.checkApplyResult != null">
+          <div class="color-muted margin-top-5 font-size-12 border-bottom-1">
+              <span>
+                <label class="title-block-tag"></label>
+                <label class="title-block-text color-warning">{{$t("系统核查(表单数据)")}}</label>
+              </span>
+          </div>
+          <div class="block-item-bg font-size-12 margin-top-10 color-sub-title">
             <div v-if="detailCheckData.checkApplyResult != null">
               <el-row>
                 <el-col :span="12">
