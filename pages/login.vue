@@ -35,13 +35,13 @@
           <div class="right-bottom-triangle"></div>
           <div class="left-bottom-triangle"></div>
 
-          <label class="login-user-change-tag select-none" v-if="userType == 1" @click="changeUserType(2)"><i class="fa fa-retweet font-size-12"></i> {{$t("切换教职工")}}</label>
-          <label class="login-user-change-tag select-none" v-if="userType == 2" @click="changeUserType(1)"><i class="fa fa-retweet font-size-12"></i> {{$t("切换学生")}}</label>
+<!--          <label class="login-user-change-tag select-none" v-if="userType == 1" @click="changeUserType(2)"><i class="fa fa-retweet font-size-12"></i> {{$t("切换教职工")}}</label>-->
+<!--          <label class="login-user-change-tag select-none" v-if="userType == 2" @click="changeUserType(1)"><i class="fa fa-retweet font-size-12"></i> {{$t("切换学生")}}</label>-->
           <div>
             <span class="login-user-title">{{$t("用户登录")}}</span>
             ｜
-            <span class="color-muted font-size-12" v-if="userType == 1">{{$t("学生登录")}}</span>
-            <span class="color-muted font-size-12" v-if="userType == 2">{{$t("教职工登录")}}</span>
+            <span class="color-muted font-size-12">{{$t("登录")}}</span>
+<!--            <span class="color-muted font-size-12" v-if="userType == 2">{{$t("教职工登录")}}</span>-->
           </div>
           <div class="line-height"></div>
           <div class="margin-top-30">
@@ -49,7 +49,7 @@
               <div v-if="userSubType == 1">
                 <div>
                   <div>
-                    <span class="login-title-label">{{$t("用户名/手机号")}}</span>
+                    <span class="login-title-label">{{$t("用户名/手机号/身份证")}}</span>
                   </div>
                   <div class="margin-top-5">
                     <el-input v-model="form.username" @keyup.enter.native="login"></el-input>
@@ -68,7 +68,7 @@
               <div v-if="userSubType == 2">
                 <div>
                   <div>
-                    <span class="login-title-label">{{$t("身份证号码")}}</span>
+                    <span class="login-title-label">{{$t("用户名/手机号/身份证")}}</span>
                   </div>
                   <div class="margin-top-5">
                     <el-input v-model="form.username"></el-input>
@@ -152,7 +152,7 @@
               </div>
             </div>
 
-            <div class="margin-top-20">
+            <div style="margin-top: 60px">
               <div>
                 <el-button type="primary" :loading="dialogLoading" class="login-btn" @click="login">
                   {{$t("登录")}}
@@ -160,12 +160,12 @@
               </div>
             </div>
             <div class="login-bottom-other-block margin-top-40" v-if="userType == 2 || userType == 1">
-              <div class="line-height"></div>
-              <div class="text-center login-bottom-other margin-top-10">
-                <label class="color-muted" @click="changeSubType(1)"><i class="fa fa-user-circle-o"></i> {{$t("账号/手机号")}}</label>
-                <label class="color-muted" @click="changeSubType(2)"><i class="fa fa-id-card-o"></i> {{$t("身份证")}}</label>
-<!--                <label class="color-muted" @click="changeSubType(3)"><i class="fa fa-credit-card"></i> {{$t("工号")}}</label>-->
-              </div>
+<!--              <div class="line-height"></div>-->
+<!--              <div class="text-center login-bottom-other margin-top-10">-->
+<!--                <label class="color-muted" @click="changeSubType(1)"><i class="fa fa-user-circle-o"></i> {{$t("账号/手机号")}}</label>-->
+<!--                <label class="color-muted" @click="changeSubType(2)"><i class="fa fa-id-card-o"></i> {{$t("身份证")}}</label>-->
+<!--&lt;!&ndash;                <label class="color-muted" @click="changeSubType(3)"><i class="fa fa-credit-card"></i> {{$t("工号")}}</label>&ndash;&gt;-->
+<!--              </div>-->
             </div>
           </div>
         </div>
