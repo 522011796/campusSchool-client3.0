@@ -227,7 +227,7 @@
 
                     }
                     file.url = res.data.url
-                    console.log(res.data.url)
+                    //console.log(res.data.url)
                   }
                 }
               }
