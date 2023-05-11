@@ -217,16 +217,17 @@
                       // }else {
                       //   url = res.data.url
                       // }
-                      if (res.data.url.indexOf("files") > -1) {
-                        let url1 = res.data.url.split("files")[0];
-                        let url2 = res.data.url.split("files")[1];
 
-                        url = "https://campus.9451.com:28090/files/" + url2;
-                      }
+                      // if (res.data.url.indexOf("files") > -1) {
+                      //   let url1 = res.data.url.split("files")[0];
+                      //   let url2 = res.data.url.split("files")[1];
+                      //
+                      //   url = "https://campus.9451.com:28090/files/" + url2;
+                      // }
 
                     }
-                    file.url = url
-                    console.log(url)
+                    file.url = res.data.url
+                    console.log(res.data.url)
                   }
                 }
               }

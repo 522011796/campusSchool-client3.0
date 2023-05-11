@@ -304,7 +304,7 @@
           //params['campusNo'] = this.form.campusNo;
           params['accountType'] = 0;
         }else if (this.userSubType == 2){
-          params['accountType'] = 3;
+          params['accountType'] = 0;
         }
         if (this.userType == 1){
           userType = 5;
