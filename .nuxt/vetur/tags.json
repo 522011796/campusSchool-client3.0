@@ -71,6 +71,12 @@
   "LazyLayoutTb": {
     "description": "Auto imported from components/Layout/LayoutTb.vue"
   },
+  "MyServerDialog": {
+    "description": "Auto imported from components/dialog/MyServerDialog.vue"
+  },
+  "LazyMyServerDialog": {
+    "description": "Auto imported from components/dialog/MyServerDialog.vue"
+  },
   "BarChart": {
     "description": "Auto imported from components/charts/BarChart.vue"
   },
@@ -142,12 +148,6 @@
   },
   "LazyTableBarChart": {
     "description": "Auto imported from components/charts/TableBarChart.vue"
-  },
-  "MyServerDialog": {
-    "description": "Auto imported from components/dialog/MyServerDialog.vue"
-  },
-  "LazyMyServerDialog": {
-    "description": "Auto imported from components/dialog/MyServerDialog.vue"
   },
   "MyInputButton": {
     "description": "Auto imported from components/search/MyInputButton.vue"

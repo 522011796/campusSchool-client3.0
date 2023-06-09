@@ -10,6 +10,7 @@ export { default as MyTree } from '../../components/MyTree.vue'
 export { default as LayoutLr } from '../../components/Layout/LayoutLr.vue'
 export { default as LayoutLrBefore } from '../../components/Layout/LayoutLrBefore.vue'
 export { default as LayoutTb } from '../../components/Layout/LayoutTb.vue'
+export { default as MyServerDialog } from '../../components/dialog/MyServerDialog.vue'
 export { default as BarChart } from '../../components/charts/BarChart.vue'
 export { default as CircleChart } from '../../components/charts/CircleChart.vue'
 export { default as HBarChart } from '../../components/charts/HBarChart.vue'
@@ -22,7 +23,6 @@ export { default as RadarDormChart } from '../../components/charts/RadarDormChar
 export { default as SexPieChart } from '../../components/charts/SexPieChart.vue'
 export { default as SexPieMoreChart } from '../../components/charts/SexPieMoreChart.vue'
 export { default as TableBarChart } from '../../components/charts/TableBarChart.vue'
-export { default as MyServerDialog } from '../../components/dialog/MyServerDialog.vue'
 export { default as MyInputButton } from '../../components/search/MyInputButton.vue'
 export { default as MySearchOfDate } from '../../components/search/MySearchOfDate.vue'
 export { default as MySearchOfDateGroup } from '../../components/search/MySearchOfDateGroup.vue'
@@ -92,6 +92,7 @@ export const LazyMyTree = import('../../components/MyTree.vue' /* webpackChunkNa
 export const LazyLayoutLr = import('../../components/Layout/LayoutLr.vue' /* webpackChunkName: "components/Layout/LayoutLr" */).then(c => c.default || c)
 export const LazyLayoutLrBefore = import('../../components/Layout/LayoutLrBefore.vue' /* webpackChunkName: "components/Layout/LayoutLrBefore" */).then(c => c.default || c)
 export const LazyLayoutTb = import('../../components/Layout/LayoutTb.vue' /* webpackChunkName: "components/Layout/LayoutTb" */).then(c => c.default || c)
+export const LazyMyServerDialog = import('../../components/dialog/MyServerDialog.vue' /* webpackChunkName: "components/dialog/MyServerDialog" */).then(c => c.default || c)
 export const LazyBarChart = import('../../components/charts/BarChart.vue' /* webpackChunkName: "components/charts/BarChart" */).then(c => c.default || c)
 export const LazyCircleChart = import('../../components/charts/CircleChart.vue' /* webpackChunkName: "components/charts/CircleChart" */).then(c => c.default || c)
 export const LazyHBarChart = import('../../components/charts/HBarChart.vue' /* webpackChunkName: "components/charts/HBarChart" */).then(c => c.default || c)
@@ -104,7 +105,6 @@ export const LazyRadarDormChart = import('../../components/charts/RadarDormChart
 export const LazySexPieChart = import('../../components/charts/SexPieChart.vue' /* webpackChunkName: "components/charts/SexPieChart" */).then(c => c.default || c)
 export const LazySexPieMoreChart = import('../../components/charts/SexPieMoreChart.vue' /* webpackChunkName: "components/charts/SexPieMoreChart" */).then(c => c.default || c)
 export const LazyTableBarChart = import('../../components/charts/TableBarChart.vue' /* webpackChunkName: "components/charts/TableBarChart" */).then(c => c.default || c)
-export const LazyMyServerDialog = import('../../components/dialog/MyServerDialog.vue' /* webpackChunkName: "components/dialog/MyServerDialog" */).then(c => c.default || c)
 export const LazyMyInputButton = import('../../components/search/MyInputButton.vue' /* webpackChunkName: "components/search/MyInputButton" */).then(c => c.default || c)
 export const LazyMySearchOfDate = import('../../components/search/MySearchOfDate.vue' /* webpackChunkName: "components/search/MySearchOfDate" */).then(c => c.default || c)
 export const LazyMySearchOfDateGroup = import('../../components/search/MySearchOfDateGroup.vue' /* webpackChunkName: "components/search/MySearchOfDateGroup" */).then(c => c.default || c)

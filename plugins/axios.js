@@ -40,32 +40,38 @@ export default async function({ $axios, redirect }) {
      */
     response => {
       const res = response;
-      if (res.data.code === 200) {
-        hideLoading();
-        return res;
-      } else if (res.data.code === 3022) {
-        return res;
-      } else if (res.data.code === 401) {
-        hideLoading();
-        let browerTempType = browerType();
-        if (browerTempType == 2){
-          redirect('/loginApp');
+      if (res.data){
+        if (res.data.code === 200) {
+          hideLoading();
+          return res;
+        } else if (res.data.code === 3022) {
+          return res;
+        } else if (res.data.code === 401) {
+          hideLoading();
+          let browerTempType = browerType();
+          if (browerTempType == 2){
+            redirect('/loginApp');
+          }else {
+            redirect('/login');
+          }
+          return res;
+        } else if (res.data.code === 403) {
+          hideLoading();
+          //redirect('/noPermission');
+          return res;
+        } else if (res.data.code === 404) {
+          hideLoading();
+          redirect('/404');
+          return res;
         }else {
-          redirect('/login');
+          hideLoading();
+          return res;
         }
-        return res;
-      } else if (res.data.code === 403) {
-        hideLoading();
-        //redirect('/noPermission');
-        return res;
-      } else if (res.data.code === 404) {
-        hideLoading();
-        redirect('/404');
-        return res;
       }else {
         hideLoading();
         return res;
       }
+
       return Promise.reject(new Error(res.msg || 'Error'))
     },
     error => {
