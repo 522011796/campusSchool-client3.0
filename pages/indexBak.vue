@@ -268,7 +268,7 @@
     },
     created() {
       this.appletType = this.activeTab;
-      this.initCategoryList();
+      //this.initCategoryList();
       this.initDeptList();
       this.initServer();
       this.initApplet();

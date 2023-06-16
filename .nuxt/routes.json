@@ -91,6 +91,13 @@
     "_name": "_5f275d36"
   },
   {
+    "name": "app-appOtherServer",
+    "path": "/app/appOtherServer",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appOtherServer.vue",
+    "chunkName": "pages/app/appOtherServer",
+    "_name": "_66f3f851"
+  },
+  {
     "name": "app-appServer",
     "path": "/app/appServer",
     "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appServer.vue",
@@ -110,6 +117,20 @@
     "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appStatic.vue",
     "chunkName": "pages/app/appStatic",
     "_name": "_0d85e500"
+  },
+  {
+    "name": "app-appSystemJKGL",
+    "path": "/app/appSystemJKGL",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemJKGL.vue",
+    "chunkName": "pages/app/appSystemJKGL",
+    "_name": "_27ba0f27"
+  },
+  {
+    "name": "app-appSystemMoneyForm",
+    "path": "/app/appSystemMoneyForm",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemMoneyForm.vue",
+    "chunkName": "pages/app/appSystemMoneyForm",
+    "_name": "_91ff4bda"
   },
   {
     "name": "newStudent-studentAllSever",

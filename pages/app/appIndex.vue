@@ -340,6 +340,17 @@
               sessionId: this.$route.query.sessionId
             }
           });
+        }else if(name == 2){
+          this.$router.push({
+            path: '/app/appOtherServer',
+            query: {
+              id: parseInt(name),
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow,
+              sessionId: this.$route.query.sessionId
+            }
+          });
         }else {
           this.active = name;
           this.$router.push({

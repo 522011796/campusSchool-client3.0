@@ -129,7 +129,7 @@
           <div class="block-item-right-tag-content" :style="{height: divHeight.height1 - 19 + 'px'}">
             <div class="block-item-left-header">
               <el-row>
-                <el-col :span="20">
+                <el-col :span="24">
                   <span class="font-bold block-item-header-tab" :class="activeTab === 0 ? 'color-grand': 'color-sub-grand'" @click="tabClick(0)">
                     <i class="fa fa-user"></i>
                     {{$t("学生办事")}}
@@ -143,21 +143,21 @@
                     {{$t("单位办事")}}
                   </span>
                 </el-col>
-                <el-col :span="4" class="text-right" style="position: relative">
-                  <span class="margin-right-20">
-                    <el-dropdown class="custon-el-dropdown-block" trigger="click" type="default" size="small" placement="bottom" split-button>
-                      <label class="font-size-12 color-sub-grand">
-                        {{activeTypeText}}
-                      </label>
-                      <el-dropdown-menu slot="dropdown">
-                        <div style="height: 200px;overflow-y: auto">
-                          <el-dropdown-item @click.native="dropdownItem($event, 'all', 1, '全部')">{{$t("全部")}}</el-dropdown-item>
-                          <el-dropdown-item v-for="(item, index) in categoryMixinsList" :key="index" @click.native="dropdownItem($event, item, 1, item.categoryName)">{{ item.categoryName }}</el-dropdown-item>
-                        </div>
-                      </el-dropdown-menu>
-                    </el-dropdown>
-                  </span>
-                </el-col>
+<!--                <el-col :span="4" class="text-right" style="position: relative">-->
+<!--                  <span class="margin-right-20">-->
+<!--                    <el-dropdown class="custon-el-dropdown-block" trigger="click" type="default" size="small" placement="bottom" split-button>-->
+<!--                      <label class="font-size-12 color-sub-grand">-->
+<!--                        {{activeTypeText}}-->
+<!--                      </label>-->
+<!--                      <el-dropdown-menu slot="dropdown">-->
+<!--                        <div style="height: 200px;overflow-y: auto">-->
+<!--                          <el-dropdown-item @click.native="dropdownItem($event, 'all', 1, '全部')">{{$t("全部")}}</el-dropdown-item>-->
+<!--                          <el-dropdown-item v-for="(item, index) in categoryMixinsList" :key="index" @click.native="dropdownItem($event, item, 1, item.categoryName)">{{ item.categoryName }}</el-dropdown-item>-->
+<!--                        </div>-->
+<!--                      </el-dropdown-menu>-->
+<!--                    </el-dropdown>-->
+<!--                  </span>-->
+<!--                </el-col>-->
               </el-row>
             </div>
             <div class="padding-lr-10 padding-tb-10" :style="{height: divHeight.height1 - 80 + 'px', 'overflow-y': 'auto'}">
@@ -281,7 +281,7 @@
     },
     created() {
       this.appletType = this.activeTab;
-      this.initCategoryList();
+      //this.initCategoryList();
       this.getDeptInfo(2);
       this.initServer();
       this.initApplet();

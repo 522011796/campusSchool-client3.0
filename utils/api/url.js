@@ -627,4 +627,11 @@ export const common = {
 
   login_check: '/proxy/user/loginCheck',//登录状态
 
+  system_app_server_list: '/proxy/school/applet/form/list4',//系统服务列表
+
+  cost_list: '/proxy/school/applet/cost/list',//费用管理列表
+  cost_tree: '/proxy/school/applet/cost/tree',//费用管理tree
+  cost_sublist: '/proxy/school/applet/cost/sublist',//费用管理下级
+  cost_info: '/proxy/school/applet/cost/info',//费用管理信息
+
 };

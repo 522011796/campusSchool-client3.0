@@ -123,18 +123,19 @@
 <!--            </van-grid-item>-->
 <!--          </van-grid>-->
           <el-row :gutter="8" class="margin-top-10 padding-lr-10">
-            <el-col :span="6" v-for="(item, index) in serverAppList" :key="index" @click.native="serverBlock($event, item)">
+            <el-col :span="6" v-for="(item, index) in serverAppList" :key="index" v-if="item.applet_type == 2" @click.native="serverBlock($event, item)">
               <div class="margin-bottom-5 text-center padding-tb-10" style="border: 1px solid #dddddd;border-radius: 5px;height: 75px">
                 <div style="height: 35px;width: 35px;margin: 0 auto;margin-top: 2px">
-                  <van-image width="35" height="35" :src="item.form_logo"/>
+                  <img v-if="item.applet_name == '财务报销'" src="~static/img/baoxiao_icon.png" style="height: 35px;width: 35px">
+                  <van-image v-else width="35" height="35" :src="item.form_logo"/>
                 </div>
                 <div class="margin-top-8">
                   <div style="width: 70px;margin: 0 auto;">
-                    <div v-if="item.form_name.length <= 5" class="font-size-12 text-center;font-family: Simsun,sans-serif,'Helvetica Neue'">
-                      {{ item.form_name }}
+                    <div v-if="item.applet_name.length <= 5" class="font-size-12 text-center;font-family: Simsun,sans-serif,'Helvetica Neue'">
+                      {{ item.applet_name }}
                     </div>
                     <div v-else class="font-size-12" style="margin-left:2px;display: inline-block;text-align: left;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;text-overflow: ellipsis;overflow : hidden;font-family: Simsun,sans-serif,'Helvetica Neue'">
-                      {{ item.form_name }}
+                      {{ item.applet_name }}
                     </div>
                   </div>
                 </div>
@@ -189,11 +190,7 @@
       this.active = this.$route.query.activeType ? this.$route.query.activeType : 6;
       this.getDeptInfo(2);
       //this.initCategoryList();
-      if (this.active == 6){
-        this.initAppRecommend();
-      }else {
-        this.initAppServer();
-      }
+      this.initAppServer();
     },
     methods: {
       layoutInit(){
@@ -229,10 +226,12 @@
       },
       initAppServer(value){
         let params = {
-          appletType: this.active,
-          searchKey: value
+          searchKey: this.searchKey
         };
-        this.$axios.get(common.server_list_list, {params: params}).then(res => {
+        if (this.departmentPath != ''){
+          params['deptId'] = this.departmentPath;
+        }
+        this.$axios.get(common.server_applet_list, {params: params}).then(res => {
           if (res.data.data){
             this.serverAppList = res.data.data;
           }
@@ -254,20 +253,19 @@
         });
       },
       serverBlock(event, item){
-        if (item == 'all'){
-
+        if (item.applet_name == '财务报销'){
+          this.$router.push({
+            path: '/app/appSystemMoneyForm',
+            query: {
+              id: item.id,
+              activeType: this.active,
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow,
+              page: '/app/appOtherServer'
+            }
+          });
         }else {
-          // this.$router.push({
-          //   path: '/app/appServer',
-          //   query: {
-          //     id: item.id,
-          //     activeType: this.active,
-          //     userType: this.loginUserAppType,
-          //     navH: this.navHeight,
-          //     appType: this.globalAppShow,
-          //     page: '/app/appAllServer'
-          //   }
-          // });
           this.$router.push({
             path: '/app/appServerForm',
             query: {
@@ -276,7 +274,7 @@
               userType: this.loginUserAppType,
               navH: this.navHeight,
               appType: this.globalAppShow,
-              page: '/app/appAllServer'
+              page: '/app/appOtherServer'
             }
           });
         }
@@ -321,11 +319,7 @@
         this.appletType = this.active;
         this.defaultMenuActive = index + '';
         this.departmentName = item.department_name;
-        if (this.active == 6){
-          this.initAppRecommend();
-        }else {
-          this.initServer();
-        }
+        this.initAppServer();
       },
       returnIndex(){
         this.$router.push({
@@ -340,18 +334,13 @@
         });
       },
       onSearch(value){
-        console.log(value);
         // if (this.active == 6){
         //   this.initAppRecommend(value);
         // }else {
         //   this.initAppServer(value);
         // }
         this.searchKey = this.serchName;
-        if (this.active == 6){
-          this.initAppRecommend(value);
-        }else {
-          this.initServer(value);
-        }
+        this.initAppServer(value);
       },
       dropdownItem(item){
         this.categoryId = item;
@@ -388,11 +377,7 @@
         this.page = 1;
         this.tableData = [];
         this.departmentName = "";
-        if (this.active == 6){
-          this.initAppRecommend();
-        }else {
-          this.initServer();
-        }
+        this.initAppServer();
       }
     }
   }

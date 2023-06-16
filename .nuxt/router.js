@@ -16,9 +16,12 @@ const _754323ba = () => interopDefault(import('../pages/app/appAllServerBak.vue'
 const _2edb50a0 = () => interopDefault(import('../pages/app/appIndex.vue' /* webpackChunkName: "pages/app/appIndex" */))
 const _40943310 = () => interopDefault(import('../pages/app/appMsgDetail.vue' /* webpackChunkName: "pages/app/appMsgDetail" */))
 const _5f275d36 = () => interopDefault(import('../pages/app/appMyNotice.vue' /* webpackChunkName: "pages/app/appMyNotice" */))
+const _66f3f851 = () => interopDefault(import('../pages/app/appOtherServer.vue' /* webpackChunkName: "pages/app/appOtherServer" */))
 const _da0a0856 = () => interopDefault(import('../pages/app/appServer.vue' /* webpackChunkName: "pages/app/appServer" */))
 const _ae0ef78e = () => interopDefault(import('../pages/app/appServerForm.vue' /* webpackChunkName: "pages/app/appServerForm" */))
 const _0d85e500 = () => interopDefault(import('../pages/app/appStatic.vue' /* webpackChunkName: "pages/app/appStatic" */))
+const _27ba0f27 = () => interopDefault(import('../pages/app/appSystemJKGL.vue' /* webpackChunkName: "pages/app/appSystemJKGL" */))
+const _91ff4bda = () => interopDefault(import('../pages/app/appSystemMoneyForm.vue' /* webpackChunkName: "pages/app/appSystemMoneyForm" */))
 const _3aa41d48 = () => interopDefault(import('../pages/newStudent/studentAllSever.vue' /* webpackChunkName: "pages/newStudent/studentAllSever" */))
 const _1f77ea42 = () => interopDefault(import('../pages/newStudent/studentBill.vue' /* webpackChunkName: "pages/newStudent/studentBill" */))
 const _07b6f35e = () => interopDefault(import('../pages/newStudent/studentDorm.vue' /* webpackChunkName: "pages/newStudent/studentDorm" */))
@@ -101,6 +104,10 @@ export const routerOptions = {
     component: _5f275d36,
     name: "app-appMyNotice"
   }, {
+    path: "/app/appOtherServer",
+    component: _66f3f851,
+    name: "app-appOtherServer"
+  }, {
     path: "/app/appServer",
     component: _da0a0856,
     name: "app-appServer"
@@ -112,6 +119,14 @@ export const routerOptions = {
     path: "/app/appStatic",
     component: _0d85e500,
     name: "app-appStatic"
+  }, {
+    path: "/app/appSystemJKGL",
+    component: _27ba0f27,
+    name: "app-appSystemJKGL"
+  }, {
+    path: "/app/appSystemMoneyForm",
+    component: _91ff4bda,
+    name: "app-appSystemMoneyForm"
   }, {
     path: "/newStudent/studentAllSever",
     component: _3aa41d48,
