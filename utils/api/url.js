@@ -628,10 +628,18 @@ export const common = {
   login_check: '/proxy/user/loginCheck',//登录状态
 
   system_app_server_list: '/proxy/school/applet/form/list4',//系统服务列表
+  teacher_account_list: '/proxy/school/applet/employee/account/list',//教师财务账号列表
+  object_order_used_list: '/proxy/school/applet/form/apply/xm/list',//项目可用列表
+  ht_list: '/proxy/school/applet/form/apply/ht/list',//合同列表
+  tag_list: '/proxy/school/applet/label/list',//标签管理列表
 
   cost_list: '/proxy/school/applet/cost/list',//费用管理列表
   cost_tree: '/proxy/school/applet/cost/tree',//费用管理tree
   cost_sublist: '/proxy/school/applet/cost/sublist',//费用管理下级
   cost_info: '/proxy/school/applet/cost/info',//费用管理信息
+
+  fp_check: '/proxy/school/applet/apply/invoice/check',//发票验真
+  fp_ocr: '/proxy/school//applet/apply/invoice/ocr',//发票OCR
+  fp_list: '/proxy/school/user/invoice/list',//发票列表
 
 };

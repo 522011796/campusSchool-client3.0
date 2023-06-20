@@ -111,6 +111,7 @@ export default {
       filterPoliticsType: global.filterPoliticsType,
       filterRetireType: global.filterRetireType,
       filterHardType: global.filterHardType,
+      filterFpType: global.filterFpType,
       filterProcessLinkParamType: global.filterProcessLinkParamType,
       g_currentDate: {},
       currentYearData: '',
@@ -255,6 +256,12 @@ export default {
         'overflow-x': 'hidden'
       },
       divHeight20: {
+        'height': '',
+        'height1': '',
+        'overflow-y': 'auto',
+        'overflow-x': 'hidden'
+      },
+      divHeight21: {
         'height': '',
         'height1': '',
         'overflow-y': 'auto',
@@ -548,6 +555,7 @@ export default {
         this.divHeight18.height = window.innerHeight - itemHeight - 400 - 25 + 'px';
         this.divHeight19.height = window.innerHeight - itemHeight - 90 + 'px';
         this.divHeight20.height = window.innerHeight - itemHeight - 60 + 'px';
+        this.divHeight21.height = window.innerHeight - itemHeight - 400 - 45 + 'px';
         this.tableHeight.height = (window.innerHeight - 60) * 0.86 - 30;
         this.drawHeight.height = window.innerHeight - 80 + 'px';
         this.drawHeight2.height = window.innerHeight - 15 + 'px';
