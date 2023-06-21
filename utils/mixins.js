@@ -113,6 +113,7 @@ export default {
       filterHardType: global.filterHardType,
       filterFpType: global.filterFpType,
       filterProcessLinkParamType: global.filterProcessLinkParamType,
+      filterBillTypes: global.filterBillTypes,
       g_currentDate: {},
       currentYearData: '',
       currentTermData: '',

@@ -400,6 +400,19 @@ const filterFpType = [
   { text: '其他发票', value: '其他发票' ,label: '其他发票'}
 ];
 
+const filterBillTypes = [
+  { text: "项目管理", value: 'XMGL' ,label: '项目管理'},
+  { text: '采购合同单', value: 'CGHT' ,label: '采购合同单'},
+  { text: '销售合同单', value: 'XSHT' ,label: '销售合同单'},
+  { text: '通用合同单', value: 'TYHT' ,label: '通用合同单'},
+  { text: '报账/报销单', value: 'BZBX' ,label: '报账/报销单'},
+  { text: '对公打款单', value: 'DGDK' ,label: '对公打款单'},
+  { text: '普通申请单', value: 'PIGL' ,label: '普通申请单'},
+  { text: '借款单', value: 'JKGL' ,label: '借款单'},
+  { text: '收款单', value: 'SKD' ,label: '收款单'},
+  { text: '还款单', value: 'HKD' ,label: '还款单'}
+];
+
 export default {
   total,
   page,
@@ -484,5 +497,6 @@ export default {
   filterPoliticsType,
   filterRetireType,
   filterHardType,
-  filterFpType
+  filterFpType,
+  filterBillTypes
 }

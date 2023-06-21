@@ -285,7 +285,7 @@
             </el-col>
             <el-col :span="12" class="text-right">
               <div>
-                <el-button type="success" size="mini" @click="selAppFun(1)">{{ $t("申请") }}</el-button>
+                <el-button type="success" size="mini" @click="selAppFun(index+1, item.form_code)">{{ $t("申请") }}</el-button>
               </div>
             </el-col>
           </el-row>
@@ -558,6 +558,18 @@
         if (code == 'JKGL'){
           this.$router.push({
             path: '/app/appSystemJKGL',
+            query: {
+              id: '',
+              activeType: this.active,
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow,
+              page: '/app/appSystemMoneyForm'
+            }
+          });
+        }else if (code == 'HKD'){
+          this.$router.push({
+            path: '/app/appSystemHKGL',
             query: {
               id: '',
               activeType: this.active,

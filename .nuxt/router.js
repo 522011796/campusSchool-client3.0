@@ -20,6 +20,7 @@ const _66f3f851 = () => interopDefault(import('../pages/app/appOtherServer.vue' 
 const _da0a0856 = () => interopDefault(import('../pages/app/appServer.vue' /* webpackChunkName: "pages/app/appServer" */))
 const _ae0ef78e = () => interopDefault(import('../pages/app/appServerForm.vue' /* webpackChunkName: "pages/app/appServerForm" */))
 const _0d85e500 = () => interopDefault(import('../pages/app/appStatic.vue' /* webpackChunkName: "pages/app/appStatic" */))
+const _57f7b569 = () => interopDefault(import('../pages/app/appSystemHKGL.vue' /* webpackChunkName: "pages/app/appSystemHKGL" */))
 const _27ba0f27 = () => interopDefault(import('../pages/app/appSystemJKGL.vue' /* webpackChunkName: "pages/app/appSystemJKGL" */))
 const _91ff4bda = () => interopDefault(import('../pages/app/appSystemMoneyForm.vue' /* webpackChunkName: "pages/app/appSystemMoneyForm" */))
 const _8aa6b4ea = () => interopDefault(import('../pages/app/appSystemOrderInfo.vue' /* webpackChunkName: "pages/app/appSystemOrderInfo" */))
@@ -120,6 +121,10 @@ export const routerOptions = {
     path: "/app/appStatic",
     component: _0d85e500,
     name: "app-appStatic"
+  }, {
+    path: "/app/appSystemHKGL",
+    component: _57f7b569,
+    name: "app-appSystemHKGL"
   }, {
     path: "/app/appSystemJKGL",
     component: _27ba0f27,

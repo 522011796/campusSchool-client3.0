@@ -632,6 +632,7 @@ export const common = {
   object_order_used_list: '/proxy/school/applet/form/apply/xm/list',//项目可用列表
   ht_list: '/proxy/school/applet/form/apply/ht/list',//合同列表
   tag_list: '/proxy/school/applet/label/list',//标签管理列表
+  jk_list: '/proxy/school/applet/my-jk/apply/list',//借款管理列表
 
   cost_list: '/proxy/school/applet/cost/list',//费用管理列表
   cost_tree: '/proxy/school/applet/cost/tree',//费用管理tree

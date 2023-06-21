@@ -13,7 +13,7 @@
         </van-col>
         <van-col span="14" class="text-center">
           <div>
-            <span class="color-white font-size-14 font-bold">{{$t('借款单')}}</span>
+            <span class="color-white font-size-14 font-bold">{{$t('还款单')}}</span>
           </div>
         </van-col>
         <van-col span="5">
@@ -44,16 +44,16 @@
               <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('申请部门'),'dept')"/>
             </template>
           </van-field>
-          <van-field required v-model="form.jkTime" :name="$t('借款日期')" :label="$t('借款日期')" :rules="[{ required: true, message: $t('请设置信息') }]" @click="selBlockFun($t('借款日期'),'jkTime')">
+          <van-field required v-model="form.hkTime" :name="$t('还款日期')" :label="$t('还款日期')" :rules="[{ required: true, message: $t('请设置信息') }]" @click="selBlockFun($t('还款日期'),'hkTime')">
             <template #input>
-              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.jkTime}}</div>
-              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('借款日期'),'jkTime')"/>
+              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.hkTime}}</div>
+              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('还款日期'),'hkTime')"/>
             </template>
           </van-field>
           <van-field
             v-model="form.des"
-            :name="$t('借款说明')"
-            :label="$t('借款说明')"
+            :name="$t('还款说明')"
+            :label="$t('还款说明')"
             :placeholder="$t('请填写信息')"
           />
           <van-field required v-model="form.orderInfo" :name="$t('单据明细')" :label="$t('单据明细')" :rules="[{ required: true,type: 'array', min: 1, message: $t('请设置信息') }]" @click="selBlockFun($t('单据明细'),'orderInfo')">
@@ -81,16 +81,10 @@
               </div>
             </div>
           </template>
-          <van-field :name="$t('还款日期')" :label="$t('还款日期')" @click="selBlockFun($t('还款日期'),'hkTime')">
-            <template #input>
-              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.hkTime}}</div>
-              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('还款日期'),'hkTime')"/>
-            </template>
-          </van-field>
-          <van-field :name="$t('收款账户')" :label="$t('收款账户')" @click="selBlockFun($t('收款账户'),'account')">
+          <van-field :name="$t('还入账户')" :label="$t('还入账户')" @click="selBlockFun($t('还入账户'),'account')">
             <template #input>
               <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.skAccountName}}</div>
-              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('收款账户'),'account')"/>
+              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('还入账户'),'account')"/>
             </template>
           </van-field>
           <van-field :name="$t('上传附件')" :label="$t('上传附件')">
@@ -119,22 +113,22 @@
               </el-upload>
             </template>
           </van-field>
-          <van-field :name="$t('关联项目')" :label="$t('关联项目')" @click="selBlockFun($t('关联项目'),'object')">
+          <van-field :name="$t('关联单据')" :label="$t('关联单据')" @click="selBlockFun($t('关联单据'),'object')">
             <template #input>
               <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.object}}</div>
-              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('关联项目'),'object')"/>
-            </template>
-          </van-field>
-          <van-field :name="$t('关联合同')" :label="$t('关联合同')" @click="selBlockFun($t('关联合同'),'ht')">
-            <template #input>
-              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.order}}</div>
-              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('关联合同'),'ht')"/>
+              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('关联单据'),'object')"/>
             </template>
           </van-field>
           <van-field :name="$t('标签')" :label="$t('标签')" @click="selBlockFun($t('标签'),'tag')">
             <template #input>
               <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.tag}}</div>
               <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('标签'),'tag')"/>
+            </template>
+          </van-field>
+          <van-field :name="$t('核销借款')" :label="$t('核销借款')" @click="selBlockFun($t('核销借款'),'jk')">
+            <template #input>
+              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.order}}</div>
+              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('核销借款'),'jk')"/>
             </template>
           </van-field>
         </van-form>
@@ -275,10 +269,10 @@
           />
         </template>
 
-        <template v-if="pageType == 'ht'">
+        <template v-if="pageType == 'jk'">
           <van-picker
-            ref="htRef"
-            :columns="tableHtData"
+            ref="jkRef"
+            :columns="tableJKData"
           />
         </template>
 
@@ -334,14 +328,15 @@
         tableObjectData: [],
         tableHtData: [],
         tableTagData: [],
+        tableJKData: [],
         searchTreeData: '',
         dataTreeList: [],
         defaultMenuActive: '',
+        btnLoading: false,
         isCollapse: false,
         showBottom: false,
         showBottomPicker: false,
         showTimePicker: false,
-        btnLoading: false,
         departmentPath: '',
         pageType: '',
         pageTypeStr: '',
@@ -377,7 +372,7 @@
           dept: '',
           deptId: '',
           des: '',
-          jkTime: '',
+          hkTime: '',
           orderInfo: '',
           orderInfoList: [],
           hkTime: '',
@@ -459,23 +454,7 @@
         });
       },
       initObject(){
-        let params = {
-          page: 1,
-          num: 9999
-        };
-        this.$axios.get(common.object_order_used_list, {params: params, loading:false}).then(res => {
-          if (res.data.data){
-            let array = [];
-            for (let i = 0; i < res.data.data.length; i++){
-              array.push({
-                label: res.data.data[i]['applyData'] ? res.data.data[i]['applyData'].xm_name20230501.value : '',
-                text: res.data.data[i]['applyData'] ? res.data.data[i]['applyData'].xm_name20230501.value : '',
-                value: res.data.data[i]._id
-              });
-            }
-            this.tableObjectData = array;
-          }
-        });
+        this.tableObjectData = this.filterBillTypes;
       },
       initHt(){
         let params = {
@@ -512,6 +491,25 @@
               });
             }
             this.tableTagData = array;
+          }
+        });
+      },
+      initJK(){
+        let params = {
+          page: 1,
+          num: 9999
+        };
+        this.$axios.get(common.jk_list, {params: params, loading:false}).then(res => {
+          if (res.data.data){
+            let array = [];
+            for (let i = 0; i < res.data.data.length; i++){
+              array.push({
+                label: res.data.data[i].noticeName,
+                text: res.data.data[i].noticeName,
+                value: res.data.data[i].id
+              });
+            }
+            this.tableJKData = array;
           }
         });
       },
@@ -558,7 +556,7 @@
           this.dataTreeList = this.dataDept;
           this.dataModalList = this.dataModalBakList;
           this.showBottomPicker = true;
-        }else if (type == 'jkTime' || type == 'hkTime'){
+        }else if (type == 'hkTime' || type == 'hkTime'){
           this.showTimePicker = true;
         }else if (type == 'account'){
           this.initTeacherAccount();
@@ -566,8 +564,8 @@
         }else if (type == 'object'){
           this.initObject();
           this.showBottomPicker = true;
-        }else if (type == 'ht'){
-          this.initHt();
+        }else if (type == 'jk'){
+          this.initJK();
           this.showBottomPicker = true;
         }else if (type == 'tag'){
           this.initTag();
@@ -592,9 +590,9 @@
             userType: this.loginUserAppType,
             navH: this.navHeight,
             appType: this.globalAppShow,
-            page: '/app/appSystemJKGL',
+            page: '/app/appSystemHKGL',
             pageParent: '/app/appSystemMoneyForm',
-            name: 'app-appSystemJKGL'
+            name: 'app-appSystemHKGL'
           },
           params: {
             formObj: this.form,
@@ -653,8 +651,8 @@
         this.showBottomPicker = false;
       },
       onTimeConfirm(time) {
-        if (this.pageType == 'jkTime'){
-          this.form.jkTime = this.$moment(time).format("YYYY-MM-DD");
+        if (this.pageType == 'hkTime'){
+          this.form.hkTime = this.$moment(time).format("YYYY-MM-DD");
         }else if (this.pageType == 'hkTime'){
           this.form.hkTime = this.$moment(time).format("YYYY-MM-DD");
         }
@@ -691,13 +689,13 @@
           }
           this.form.objectId = this.$refs.objectRef.getValues().length > 0 ? this.$refs.objectRef.getValues()[0].value : '';
           this.form.object = this.$refs.objectRef.getValues().length > 0 ? this.$refs.objectRef.getValues()[0].label : '';
-        }else if (this.pageType == 'ht'){
-          if (this.$refs.htRef.getValues().length == 0 || (this.$refs.htRef.getValues().length > 0 && !this.$refs.htRef.getValues()[0])){
+        }else if (this.pageType == 'jk'){
+          if (this.$refs.jkRef.getValues().length == 0 || (this.$refs.jkRef.getValues().length > 0 && !this.$refs.jkRef.getValues()[0])){
             Toast(this.$t("请选择信息!"));
             return;
           }
-          this.form.orderId = this.$refs.htRef.getValues().length > 0 ? this.$refs.htRef.getValues()[0].value : '';
-          this.form.order = this.$refs.htRef.getValues().length > 0 ? this.$refs.htRef.getValues()[0].label : '';
+          this.form.orderId = this.$refs.jkRef.getValues().length > 0 ? this.$refs.jkRef.getValues()[0].value : '';
+          this.form.order = this.$refs.jkRef.getValues().length > 0 ? this.$refs.jkRef.getValues()[0].label : '';
         }else if (this.pageType == 'tag'){
           if (this.$refs.tagRef.getValues().length == 0 || (this.$refs.tagRef.getValues().length > 0 && !this.$refs.tagRef.getValues()[0])){
             Toast(this.$t("请选择信息!"));
@@ -748,25 +746,17 @@
               value: this.form.userId,
             },
             {
-              field: 'jk_date20230501',
-              value: this.form.jkTime,
-            },
-            {
-              field: 'hk_date20230501',
-              value: this.form.hkTime,
-            },
-            {
               field: 'tag_id20230501',
               value: this.form.tagId,
               name: this.form.tag
             },
             {
-              field: 'xm_id20230501',
+              field: 'rela_apply20230501',
               value: this.form.objectId,
               name: this.form.object
             },
             {
-              field: 'ht_id20230501',
+              field: 'borrow_apply20230501',
               value: this.form.orderId,
               name: this.form.order
             },
@@ -783,7 +773,7 @@
 
           console.log(contentJson);
           let params = {
-            formCode: 'JKGL',
+            formCode: 'HKD',
             userId: this.form.userId,
           }
 
