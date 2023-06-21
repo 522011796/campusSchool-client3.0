@@ -13,7 +13,7 @@
         </van-col>
         <van-col span="14" class="text-center">
           <div>
-            <span class="color-white font-size-14 font-bold">{{$t('借款单')}}</span>
+            <span class="color-white font-size-14 font-bold">{{$t('报账/报销单')}}</span>
           </div>
         </van-col>
         <van-col span="5">
@@ -44,23 +44,23 @@
               <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('申请部门'),'dept')"/>
             </template>
           </van-field>
-          <van-field required v-model="form.jkTime" :name="$t('借款日期')" :label="$t('借款日期')" :rules="[{ required: true, message: $t('请设置信息') }]" @click="selBlockFun($t('借款日期'),'jkTime')">
+          <van-field required v-model="form.bxTime" :name="$t('报销日期')" :label="$t('报销日期')" :rules="[{ required: true, message: $t('请设置信息') }]" @click="selBlockFun($t('报销日期'),'bxTime')">
             <template #input>
-              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.jkTime}}</div>
-              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('借款日期'),'jkTime')"/>
+              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.bxTime}}</div>
+              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('报销日期'),'bxTime')"/>
             </template>
           </van-field>
           <van-field
             v-model="form.des"
-            :name="$t('借款说明')"
-            :label="$t('借款说明')"
+            :name="$t('报销说明')"
+            :label="$t('报销说明')"
             :placeholder="$t('请填写信息')"
           />
-          <van-field required v-model="form.orderInfo" :name="$t('单据明细')" :label="$t('单据明细')" :rules="[{ required: true,type: 'array', min: 1, message: $t('请设置信息') }]" @click="selBlockFun($t('单据明细'),'orderInfo')">
+          <van-field required v-model="form.orderInfo" :name="$t('报销/报账明细')" :label="$t('报销/报账明细')" :rules="[{ required: true,type: 'array', min: 1, message: $t('请设置信息') }]" @click="selBlockFun($t('报销/报账明细'),'orderInfo')">
             <template #input>
               <div>
                 <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.orderInfo == 'null' ? '' : ''}}</div>
-                <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('单据明细'),'orderInfo')"/>
+                <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('报销/报账明细'),'orderInfo')"/>
               </div>
             </template>
           </van-field>
@@ -81,12 +81,6 @@
               </div>
             </div>
           </template>
-          <van-field :name="$t('还款日期')" :label="$t('还款日期')" @click="selBlockFun($t('还款日期'),'hkTime')">
-            <template #input>
-              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.hkTime}}</div>
-              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('还款日期'),'hkTime')"/>
-            </template>
-          </van-field>
           <van-field :name="$t('收款账户')" :label="$t('收款账户')" @click="selBlockFun($t('收款账户'),'account')">
             <template #input>
               <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.skAccountName}}</div>
@@ -119,22 +113,28 @@
               </el-upload>
             </template>
           </van-field>
-          <van-field :name="$t('关联项目')" :label="$t('关联项目')" @click="selBlockFun($t('关联项目'),'object')">
+          <van-field :name="$t('关联单据')" :label="$t('关联单据')" @click="selBlockFun($t('关联单据'),'dj')">
             <template #input>
-              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.object}}</div>
-              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('关联项目'),'object')"/>
-            </template>
-          </van-field>
-          <van-field :name="$t('关联合同')" :label="$t('关联合同')" @click="selBlockFun($t('关联合同'),'ht')">
-            <template #input>
-              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.order}}</div>
-              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('关联合同'),'ht')"/>
+              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.dj}}</div>
+              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('关联单据'),'dj')"/>
             </template>
           </van-field>
           <van-field :name="$t('标签')" :label="$t('标签')" @click="selBlockFun($t('标签'),'tag')">
             <template #input>
               <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.tag}}</div>
               <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('标签'),'tag')"/>
+            </template>
+          </van-field>
+          <van-field :name="$t('关联项目')" :label="$t('关联项目')" @click="selBlockFun($t('关联项目'),'object')">
+            <template #input>
+              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.object}}</div>
+              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('关联项目'),'object')"/>
+            </template>
+          </van-field>
+          <van-field :name="$t('核销借款')" :label="$t('核销借款')" @click="selBlockFun($t('核销借款'),'jk')">
+            <template #input>
+              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.order}}</div>
+              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('核销借款'),'jk')"/>
             </template>
           </van-field>
         </van-form>
@@ -144,13 +144,39 @@
         <div class="padding-lr-10">
           <span class="font-bold color-muted">{{$t("金额合计")}}</span>
         </div>
-        <div class="text-center">
-          <div class="margin-top-5">
-            <span class="color-success font-bold">¥{{moneyTotal}}</span>
-          </div>
-          <div class="margin-top-5">
-            <span class="font-bold color-muted">{{$t("总金额")}}</span>
-          </div>
+        <div>
+          <el-row>
+            <el-col :span="8">
+              <div class="text-center">
+                <div class="margin-top-5">
+                  <span class="color-success font-bold">¥{{moneyTotal}}</span>
+                </div>
+                <div class="margin-top-5">
+                  <span class="font-bold color-muted">{{$t("报销金额")}}</span>
+                </div>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="text-center">
+                <div class="margin-top-5">
+                  <span class="color-success font-bold">¥{{form.orderMoney}}</span>
+                </div>
+                <div class="margin-top-5">
+                  <span class="font-bold color-muted">{{$t("核销金额")}}</span>
+                </div>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="text-center">
+                <div class="margin-top-5">
+                  <span class="color-success font-bold">¥{{moneyTotal-form.orderMoney}}</span>
+                </div>
+                <div class="margin-top-5">
+                  <span class="font-bold color-muted">{{$t("应付金额")}}</span>
+                </div>
+              </div>
+            </el-col>
+          </el-row>
         </div>
       </div>
 
@@ -275,10 +301,17 @@
           />
         </template>
 
-        <template v-if="pageType == 'ht'">
+        <template v-if="pageType == 'dj'">
           <van-picker
-            ref="htRef"
-            :columns="tableHtData"
+            ref="djRef"
+            :columns="tableDjData"
+          />
+        </template>
+
+        <template v-if="pageType == 'jk'">
+          <van-picker
+            ref="jkRef"
+            :columns="tableJKData"
           />
         </template>
 
@@ -333,15 +366,17 @@
         tableTeacherAccountData: [],
         tableObjectData: [],
         tableHtData: [],
+        tableDjData: [],
         tableTagData: [],
+        tableJKData: [],
         searchTreeData: '',
         dataTreeList: [],
         defaultMenuActive: '',
+        btnLoading: false,
         isCollapse: false,
         showBottom: false,
         showBottomPicker: false,
         showTimePicker: false,
-        btnLoading: false,
         departmentPath: '',
         pageType: '',
         pageTypeStr: '',
@@ -377,10 +412,9 @@
           dept: '',
           deptId: '',
           des: '',
-          jkTime: '',
+          bxTime: '',
           orderInfo: '',
           orderInfoList: [],
-          hkTime: '',
           skAccount: '',
           skAccountName: '',
           files: [],
@@ -389,8 +423,11 @@
           objectId: '',
           order: '',
           orderId: '',
+          orderMoney: 0,
           tag: '',
-          tagId: ''
+          tagId: '',
+          dj: '',
+          djId: ''
         }
       }
     },
@@ -459,23 +496,7 @@
         });
       },
       initObject(){
-        let params = {
-          page: 1,
-          num: 9999
-        };
-        this.$axios.get(common.object_order_used_list, {params: params, loading:false}).then(res => {
-          if (res.data.data){
-            let array = [];
-            for (let i = 0; i < res.data.data.length; i++){
-              array.push({
-                label: res.data.data[i]['applyData'] ? res.data.data[i]['applyData'].xm_name20230501.value : '',
-                text: res.data.data[i]['applyData'] ? res.data.data[i]['applyData'].xm_name20230501.value : '',
-                value: res.data.data[i]._id
-              });
-            }
-            this.tableObjectData = array;
-          }
-        });
+        this.tableObjectData = this.filterBillTypes;
       },
       initHt(){
         let params = {
@@ -512,6 +533,26 @@
               });
             }
             this.tableTagData = array;
+          }
+        });
+      },
+      initJK(){
+        let params = {
+          page: 1,
+          num: 9999
+        };
+        this.$axios.get(common.jk_list, {params: params, loading:false}).then(res => {
+          if (res.data.data){
+            let array = [];
+            for (let i = 0; i < res.data.data.length; i++){
+              array.push({
+                label: res.data.data[i].noticeName,
+                text: res.data.data[i].noticeName,
+                value: res.data.data[i]._id,
+                money: res.data.data[i].applyData['cost_allAmount20230501'].value,
+              });
+            }
+            this.tableJKData = array;
           }
         });
       },
@@ -558,7 +599,7 @@
           this.dataTreeList = this.dataDept;
           this.dataModalList = this.dataModalBakList;
           this.showBottomPicker = true;
-        }else if (type == 'jkTime' || type == 'hkTime'){
+        }else if (type == 'bxTime'){
           this.showTimePicker = true;
         }else if (type == 'account'){
           this.initTeacherAccount();
@@ -566,8 +607,11 @@
         }else if (type == 'object'){
           this.initObject();
           this.showBottomPicker = true;
-        }else if (type == 'ht'){
-          this.initHt();
+        }else if (type == 'dj'){
+          this.tableDjData = this.filterBillTypes;;
+          this.showBottomPicker = true;
+        }else if (type == 'jk'){
+          this.initJK();
           this.showBottomPicker = true;
         }else if (type == 'tag'){
           this.initTag();
@@ -592,9 +636,9 @@
             userType: this.loginUserAppType,
             navH: this.navHeight,
             appType: this.globalAppShow,
-            page: '/app/appSystemJKGL',
+            page: '/app/appSystemBZBX',
             pageParent: '/app/appSystemMoneyForm',
-            name: 'app-appSystemJKGL'
+            name: 'app-appSystemBZBX'
           },
           params: {
             formObj: this.form,
@@ -653,10 +697,8 @@
         this.showBottomPicker = false;
       },
       onTimeConfirm(time) {
-        if (this.pageType == 'jkTime'){
-          this.form.jkTime = this.$moment(time).format("YYYY-MM-DD");
-        }else if (this.pageType == 'hkTime'){
-          this.form.hkTime = this.$moment(time).format("YYYY-MM-DD");
+        if (this.pageType == 'bxTime'){
+          this.form.bxTime = this.$moment(time).format("YYYY-MM-DD");
         }
         this.showTimePicker = false;
       },
@@ -691,13 +733,21 @@
           }
           this.form.objectId = this.$refs.objectRef.getValues().length > 0 ? this.$refs.objectRef.getValues()[0].value : '';
           this.form.object = this.$refs.objectRef.getValues().length > 0 ? this.$refs.objectRef.getValues()[0].label : '';
-        }else if (this.pageType == 'ht'){
-          if (this.$refs.htRef.getValues().length == 0 || (this.$refs.htRef.getValues().length > 0 && !this.$refs.htRef.getValues()[0])){
+        }else if (this.pageType == 'jk'){
+          if (this.$refs.jkRef.getValues().length == 0 || (this.$refs.jkRef.getValues().length > 0 && !this.$refs.jkRef.getValues()[0])){
             Toast(this.$t("请选择信息!"));
             return;
           }
-          this.form.orderId = this.$refs.htRef.getValues().length > 0 ? this.$refs.htRef.getValues()[0].value : '';
-          this.form.order = this.$refs.htRef.getValues().length > 0 ? this.$refs.htRef.getValues()[0].label : '';
+          this.form.orderId = this.$refs.jkRef.getValues().length > 0 ? this.$refs.jkRef.getValues()[0].value : '';
+          this.form.order = this.$refs.jkRef.getValues().length > 0 ? this.$refs.jkRef.getValues()[0].label : '';
+          this.form.orderMoney = this.$refs.jkRef.getValues().length > 0 ? this.$refs.jkRef.getValues()[0].money : '';
+        }else if (this.pageType == 'dj'){
+          if (this.$refs.djRef.getValues().length == 0 || (this.$refs.djRef.getValues().length > 0 && !this.$refs.djRef.getValues()[0])){
+            Toast(this.$t("请选择信息!"));
+            return;
+          }
+          this.form.djId = this.$refs.djRef.getValues().length > 0 ? this.$refs.djRef.getValues()[0].value : '';
+          this.form.dj = this.$refs.djRef.getValues().length > 0 ? this.$refs.djRef.getValues()[0].label : '';
         }else if (this.pageType == 'tag'){
           if (this.$refs.tagRef.getValues().length == 0 || (this.$refs.tagRef.getValues().length > 0 && !this.$refs.tagRef.getValues()[0])){
             Toast(this.$t("请选择信息!"));
@@ -723,19 +773,19 @@
           }
           let contentJson = [
             {
-              field: 'jk_name20230501',
+              field: 'bb_name20230501',
               value: this.form.title,
             },
             {
-              field: 'jk_des20230501',
+              field: 'bb_des20230501',
               value: this.form.des,
             },
             {
               field: 'jk_date20230501',
-              value: this.form.hkTime,
+              value: this.form.bxTime,
             },
             {
-              field: 'jk_files20230501',
+              field: 'bb_files20230501',
               value: this.form.files,
               name: this.form.files
             },
@@ -748,32 +798,29 @@
               value: this.form.userId,
             },
             {
-              field: 'jk_date20230501',
-              value: this.form.jkTime,
-            },
-            {
-              field: 'hk_date20230501',
-              value: this.form.hkTime,
-            },
-            {
               field: 'tag_id20230501',
               value: this.form.tagId,
               name: this.form.tag
             },
             {
-              field: 'xm_id20230501',
+              field: 'rela_apply20230501',
               value: this.form.objectId,
               name: this.form.object
             },
             {
-              field: 'ht_id20230501',
+              field: 'borrow_apply20230501',
               value: this.form.orderId,
               name: this.form.order
             },
             {
-              field: 'jk_account20230501',
+              field: 'my_account20230501',
               value: this.form.skAccount,
-              name: this.form.skAccountName,
+              name: this.form.skAccountName
+            },
+            {
+              field: 'xm_id20230501',
+              value: this.form.object,
+              name: this.form.objectId
             },
             {
               field: 'cost_info20230501',
@@ -783,7 +830,7 @@
 
           console.log(contentJson);
           let params = {
-            formCode: 'JKGL',
+            formCode: 'BZBX',
             userId: this.form.userId,
           }
 

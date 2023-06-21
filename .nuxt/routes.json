@@ -119,6 +119,13 @@
     "_name": "_0d85e500"
   },
   {
+    "name": "app-appSystemBZBX",
+    "path": "/app/appSystemBZBX",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemBZBX.vue",
+    "chunkName": "pages/app/appSystemBZBX",
+    "_name": "_0b620022"
+  },
+  {
     "name": "app-appSystemHKGL",
     "path": "/app/appSystemHKGL",
     "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemHKGL.vue",

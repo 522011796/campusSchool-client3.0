@@ -506,7 +506,7 @@
               array.push({
                 label: res.data.data[i].noticeName,
                 text: res.data.data[i].noticeName,
-                value: res.data.data[i].id
+                value: res.data.data[i]._id
               });
             }
             this.tableJKData = array;
@@ -756,14 +756,14 @@
               name: this.form.object
             },
             {
+              field: 'jk_account20230501',
+              value: this.form.skAccount,
+              name: this.form.skAccountName,
+            },
+            {
               field: 'borrow_apply20230501',
               value: this.form.orderId,
               name: this.form.order
-            },
-            {
-              field: 'jk_files20230501',
-              value: this.form.files,
-              filename: this.form.fileNames
             },
             {
               field: 'cost_info20230501',
