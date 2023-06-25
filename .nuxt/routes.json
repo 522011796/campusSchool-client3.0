@@ -154,6 +154,13 @@
     "_name": "_8aa6b4ea"
   },
   {
+    "name": "app-appSystemPTGL",
+    "path": "/app/appSystemPTGL",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemPTGL.vue",
+    "chunkName": "pages/app/appSystemPTGL",
+    "_name": "_731931aa"
+  },
+  {
     "name": "newStudent-studentAllSever",
     "path": "/newStudent/studentAllSever",
     "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/newStudent/studentAllSever.vue",

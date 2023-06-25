@@ -25,6 +25,7 @@ const _57f7b569 = () => interopDefault(import('../pages/app/appSystemHKGL.vue' /
 const _27ba0f27 = () => interopDefault(import('../pages/app/appSystemJKGL.vue' /* webpackChunkName: "pages/app/appSystemJKGL" */))
 const _91ff4bda = () => interopDefault(import('../pages/app/appSystemMoneyForm.vue' /* webpackChunkName: "pages/app/appSystemMoneyForm" */))
 const _8aa6b4ea = () => interopDefault(import('../pages/app/appSystemOrderInfo.vue' /* webpackChunkName: "pages/app/appSystemOrderInfo" */))
+const _731931aa = () => interopDefault(import('../pages/app/appSystemPTGL.vue' /* webpackChunkName: "pages/app/appSystemPTGL" */))
 const _3aa41d48 = () => interopDefault(import('../pages/newStudent/studentAllSever.vue' /* webpackChunkName: "pages/newStudent/studentAllSever" */))
 const _1f77ea42 = () => interopDefault(import('../pages/newStudent/studentBill.vue' /* webpackChunkName: "pages/newStudent/studentBill" */))
 const _07b6f35e = () => interopDefault(import('../pages/newStudent/studentDorm.vue' /* webpackChunkName: "pages/newStudent/studentDorm" */))
@@ -142,6 +143,10 @@ export const routerOptions = {
     path: "/app/appSystemOrderInfo",
     component: _8aa6b4ea,
     name: "app-appSystemOrderInfo"
+  }, {
+    path: "/app/appSystemPTGL",
+    component: _731931aa,
+    name: "app-appSystemPTGL"
   }, {
     path: "/newStudent/studentAllSever",
     component: _3aa41d48,

@@ -591,6 +591,18 @@
               page: '/app/appSystemMoneyForm'
             }
           });
+        }else if (code == 'PTGL'){
+          this.$router.push({
+            path: '/app/appSystemPTGL',
+            query: {
+              id: '',
+              activeType: this.active,
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow,
+              page: '/app/appSystemMoneyForm'
+            }
+          });
         }
       },
       searchSubTypeFun(type){
