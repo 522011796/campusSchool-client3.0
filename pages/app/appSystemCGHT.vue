@@ -13,7 +13,7 @@
         </van-col>
         <van-col span="14" class="text-center">
           <div>
-            <span class="color-white font-size-14 font-bold">{{$t('通用合同单')}}</span>
+            <span class="color-white font-size-14 font-bold">{{$t('采购合同单')}}</span>
           </div>
         </van-col>
         <van-col span="5">
@@ -49,6 +49,19 @@
               <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.sqTime}}</div>
               <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('申请日期'),'sqTime')"/>
             </template>
+          </van-field>
+          <van-field :name="$t('供应商')" :label="$t('供应商')" @click="selBlockFun($t('供应商'),'gys')">
+            <template #input>
+              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.gys}}</div>
+              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('供应商'),'gys')"/>
+            </template>
+          </van-field>
+          <van-field
+            v-model="form.amount"
+            :name="$t('合同总金额')"
+            :label="$t('合同总金额')"
+            :placeholder="$t('请填写信息')"
+            :rules="[{ pattern: moneyReg, message: '请设置整数或者2位小数' }]">
           </van-field>
           <van-field
             v-model="form.des"
@@ -94,6 +107,74 @@
               <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('合同标签'),'tag')"/>
             </template>
           </van-field>
+          <van-field :name="$t('支付计划')" :label="$t('支付计划')">
+            <template #input>
+              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.tag}}</div>
+              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('支付计划'),'rules')"/>
+            </template>
+          </van-field>
+          <template v-if="form.backMoney.length > 0">
+            <div class="system-order-main-block">
+              <div v-for="(item, index) in form.backMoney" :key="index" class="system-order-item-block">
+                <div class="border-bottom-1">
+                  <el-row>
+                    <el-col :span="8">
+                      <div class="system-order-item-left-block">
+                        <span>{{$t("期数")}}</span>
+                      </div>
+                    </el-col>
+                    <el-col :span="16">
+                      <div class="text-right font-bold" style="padding: 10px 16px;line-height: 24px;position: relative">
+                        <label>{{index+1}}{{$t("期")}}</label>
+                        <label v-if="index != 0" class="fa fa-times-circle color-danger" style="font-size: 20px;position: absolute; right: -10px; top: -10px" @click="minTableItem(index)"></label>
+                      </div>
+                    </el-col>
+                  </el-row>
+                </div>
+                <div class="border-bottom-1">
+                  <el-row>
+                    <el-col :span="8">
+                      <div class="system-order-item-left-block">
+                        <span>{{$t("支付比例")}}</span>
+                      </div>
+                    </el-col>
+                    <el-col :span="16">
+                      <van-field v-model="item.rate" :placeholder="$t('请填写信息')">
+                        <span slot="right-icon">%</span>
+                      </van-field>
+                    </el-col>
+                  </el-row>
+                </div>
+                <div class="border-bottom-1">
+                  <el-row>
+                    <el-col :span="8">
+                      <div class="system-order-item-left-block">
+                        <span>{{$t("支付金额")}}</span>
+                      </div>
+                    </el-col>
+                    <el-col :span="16">
+                      <div class="text-right" style="padding: 10px 16px;line-height: 24px;position: relative">
+                        <label>{{isNaN((item.rate * form.amount / 100)) ? '合同金额有误' : (item.rate * form.amount / 100).toFixed(2)}}</label>
+                      </div>
+                    </el-col>
+                  </el-row>
+                </div>
+                <div>
+                  <el-row>
+                    <el-col :span="8">
+                      <div class="system-order-item-left-block">
+                        <span>{{$t("备注")}}</span>
+                      </div>
+                    </el-col>
+                    <el-col :span="16">
+                      <van-field v-model="item.des" :placeholder="$t('请填写信息')">
+                      </van-field>
+                    </el-col>
+                  </el-row>
+                </div>
+              </div>
+            </div>
+          </template>
         </van-form>
       </div>
 
@@ -231,6 +312,13 @@
             :columns="tableTagData"
           />
         </template>
+
+        <template v-if="pageType == 'gys'">
+          <van-picker
+            ref="gysRef"
+            :columns="tableGysData"
+          />
+        </template>
       </div>
     </van-popup>
 
@@ -276,6 +364,7 @@
         tableTeacherAccountData: [],
         tableObjectData: [],
         tableHtData: [],
+        tableGysData: [],
         tableTagData: [],
         tableJKData: [],
         searchTreeData: '',
@@ -314,6 +403,7 @@
         dataModalBakList: [],
         orderType: '',
         formObj: {},
+        moneyReg: /^([0-9]+[0-9]*(\.[0-9]{1,2})?|0\.[1-9][0-9]?|0\.0[1-9])$/,
         form: {
           title: '',
           user: '',
@@ -333,7 +423,19 @@
           order: '',
           orderId: '',
           tag: '',
-          tagId: ''
+          tagId: '',
+          gys: '',
+          gysId: '',
+          amount: 0,
+          backMoney: [
+            {
+              stage: 1,
+              rate: 1,
+              amount: 0,
+              time: '',
+              des: ''
+            }
+          ]
         }
       }
     },
@@ -403,6 +505,25 @@
       },
       initObject(){
         this.tableObjectData = this.filterBillTypes;
+      },
+      initGys(){
+        let params = {
+          page: 1,
+          num: 9999
+        };
+        this.$axios.get(common.supplier_account_list, {params: params, loading:false}).then(res => {
+          if (res.data.data){
+            let array = [];
+            for (let i = 0; i < res.data.data.length; i++){
+              array.push({
+                label: res.data.data[i].company,
+                text: res.data.data[i].company,
+                value: res.data.data[i].id
+              });
+            }
+            this.tableGysData = array;
+          }
+        });
       },
       initHt(){
         let params = {
@@ -506,6 +627,9 @@
           this.showBottomPicker = true;
         }else if (type == 'sqTime' || type == 'sqTime'){
           this.showTimePicker = true;
+        }else if (type == 'gys'){
+          this.initGys();
+          this.showBottomPicker = true;
         }else if (type == 'account'){
           this.initTeacherAccount();
           this.showBottomPicker = true;
@@ -526,7 +650,19 @@
           }else {
             this.jumpPage(this.form.orderInfoList[0].processId);
           }
+        }else if (type == 'rules'){
+          let obj = {
+            stage: 1,
+            rate: 1,
+            amount: 0,
+            time: '',
+            des: ''
+          };
+          this.form.backMoney.splice((this.form.backMoney.length-1)+1, 0, obj);
         }
+      },
+      minTableItem(index){
+        this.form.backMoney.splice(index, 1);
       },
       jumpPage(id){
         this.$router.push({
@@ -538,9 +674,9 @@
             userType: this.loginUserAppType,
             navH: this.navHeight,
             appType: this.globalAppShow,
-            page: '/app/appSystemTYHT',
+            page: '/app/appSystemCGHT',
             pageParent: '/app/appSystemMoneyForm',
-            name: 'app-appSystemTYHT'
+            name: 'app-appSystemCGHT'
           },
           params: {
             formObj: this.form,
@@ -658,10 +794,19 @@
           }
           this.form.userId = this.$refs.teacherRef.getValues().length > 0 ? this.$refs.teacherRef.getValues()[0].value : '';
           this.form.user = this.$refs.teacherRef.getValues().length > 0 ? this.$refs.teacherRef.getValues()[0].label : '';
+        }else if (this.pageType == 'gys'){
+          if (this.$refs.gysRef.getValues().length == 0 || (this.$refs.gysRef.getValues().length > 0 && !this.$refs.gysRef.getValues()[0])){
+            Toast(this.$t("请选择信息!"));
+            return;
+          }
+          this.form.gysId = this.$refs.gysRef.getValues().length > 0 ? this.$refs.gysRef.getValues()[0].value : '';
+          this.form.gys = this.$refs.gysRef.getValues().length > 0 ? this.$refs.gysRef.getValues()[0].label : '';
         }
         this.showBottomPicker = false;
       },
       saveForm(type){
+        let error = 0;
+        let req = /^([1-9][0-9]{0,1}|100)$/;
         this.$refs.form.validate().then(() => {
           let contentJson = [
             {
@@ -681,6 +826,15 @@
               value: this.form.sqTime,
             },
             {
+              field: 'ht_supplierId20230501',
+              value: this.form.gysId,
+              name: this.form.gys
+            },
+            {
+              field: 'ht_amount20230501',
+              value: this.form.amount,
+            },
+            {
               field: 'ht_des20230501',
               value: this.form.des,
             },
@@ -690,20 +844,59 @@
               name: this.form.files
             },
             {
-              field: 'tag_id20230501',
-              value: this.form.tagId,
-              name: this.form.tag
-            },
-            {
               field: 'xm_id20230501',
               value: this.form.objectId,
               name: this.form.object
+            },
+            {
+              field: 'tag_id20230501',
+              value: this.form.tagId,
+              name: this.form.tag
             }
           ];
 
+          let error = 0;
+          for (let i = 0; i < this.formOrder.backMoney.length; i++){
+            if (this.form.backMoney[i].rate == ''){
+              error++;
+              break;
+            }
+            if (this.form.backMoney[i].rate != '' && !req.test(this.form.backMoney[i].rate)){
+              error++;
+              break;
+            }
+            if (this.form.backMoney[i].time == ''){
+              error++;
+              break;
+            }
+
+            contentJson.push({
+              field: 'ht_payStage20230501_' + (i+1),
+              value: this.form.backMoney[i].stage
+            },{
+              field: 'ht_payRate20230501_' + (i+1),
+              value: this.form.backMoney[i].rate
+            },{
+              field: 'ht_payAmount20230501_' + (i+1),
+              value: this.form.backMoney[i].amount
+            },{
+              field: 'ht_payTime20230501_' + (i+1),
+              value: this.form.backMoney[i].time
+            },{
+              field: 'ht_payDes20230501_' + (i+1),
+              value: this.form.backMoney[i].des
+            });
+          }
+
+          if (error > 0){
+            this.dialogLoading = false;
+            MessageWarning(this.$t("支付计划未设置有误(比例:1-100),请检查!"));
+            return;
+          }
+
           console.log(contentJson);
           let params = {
-            formCode: 'TYHT',
+            formCode: 'CGHT',
             userId: this.form.userId,
           }
 
@@ -773,11 +966,11 @@
   position: relative;
 }
 .system-order-item-block{
-  border-radius: 5px;
-  background: #f5f5f5;
-  padding: 5px 10px;
-  margin-bottom: 8px;
+  border-radius: 0px;
+  padding: 0px 0px;
   position: relative;
+  margin-bottom: 10px;
+  border: 1px solid #ebebeb;
 }
 .system-order-main-block::after {
   position: absolute;
@@ -794,5 +987,11 @@
 .system-order-info-item-block{
   height: 35px;
   line-height: 35px;
+}
+.system-order-item-left-block{
+  background: #EBEBEB;
+  text-align: center;
+  padding: 10px 16px;
+  line-height: 24px;
 }
 </style>

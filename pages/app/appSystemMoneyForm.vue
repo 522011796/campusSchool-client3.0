@@ -639,6 +639,18 @@
               page: '/app/appSystemMoneyForm'
             }
           });
+        }else if (code == 'CGHT'){
+          this.$router.push({
+            path: '/app/appSystemCGHT',
+            query: {
+              id: '',
+              activeType: this.active,
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow,
+              page: '/app/appSystemMoneyForm'
+            }
+          });
         }
       },
       searchSubTypeFun(type){

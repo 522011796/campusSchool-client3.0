@@ -126,6 +126,13 @@
     "_name": "_0b620022"
   },
   {
+    "name": "app-appSystemCGHT",
+    "path": "/app/appSystemCGHT",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemCGHT.vue",
+    "chunkName": "pages/app/appSystemCGHT",
+    "_name": "_7f1e7cb1"
+  },
+  {
     "name": "app-appSystemDGDK",
     "path": "/app/appSystemDGDK",
     "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemDGDK.vue",
