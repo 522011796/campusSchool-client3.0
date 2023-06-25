@@ -633,6 +633,7 @@ export const common = {
   ht_list: '/proxy/school/applet/form/apply/ht/list',//合同列表
   tag_list: '/proxy/school/applet/label/list',//标签管理列表
   jk_list: '/proxy/school/applet/my-jk/apply/list',//借款管理列表
+  supplier_account_list: '/proxy/school/applet/supplier/account/list',//供应商财务账号列表
 
   cost_list: '/proxy/school/applet/cost/list',//费用管理列表
   cost_tree: '/proxy/school/applet/cost/tree',//费用管理tree

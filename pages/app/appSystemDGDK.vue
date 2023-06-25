@@ -13,7 +13,7 @@
         </van-col>
         <van-col span="14" class="text-center">
           <div>
-            <span class="color-white font-size-14 font-bold">{{$t('普通申请单')}}</span>
+            <span class="color-white font-size-14 font-bold">{{$t('对公打款单')}}</span>
           </div>
         </van-col>
         <van-col span="5">
@@ -44,10 +44,16 @@
               <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('申请部门'),'dept')"/>
             </template>
           </van-field>
+          <van-field required v-model="form.fkTime" :name="$t('付款日期')" :label="$t('付款日期')" :rules="[{ required: true, message: $t('请设置信息') }]" @click="selBlockFun($t('付款日期'),'fkTime')">
+            <template #input>
+              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.fkTime}}</div>
+              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('付款日期'),'fkTime')"/>
+            </template>
+          </van-field>
           <van-field
             v-model="form.des"
-            :name="$t('申请事由')"
-            :label="$t('申请事由')"
+            :name="$t('打款事由')"
+            :label="$t('打款事由')"
             :placeholder="$t('请填写信息')"
           />
           <van-field required v-model="form.orderInfo" :name="$t('单据明细')" :label="$t('单据明细')" :rules="[{ required: true,type: 'array', min: 1, message: $t('请设置信息') }]" @click="selBlockFun($t('单据明细'),'orderInfo')">
@@ -75,16 +81,10 @@
               </div>
             </div>
           </template>
-          <van-field :name="$t('关联项目')" :label="$t('关联项目')" @click="selBlockFun($t('关联项目'),'object')">
+          <van-field :name="$t('供应商')" :label="$t('供应商')" @click="selBlockFun($t('供应商'),'gys')">
             <template #input>
-              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.object}}</div>
-              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('关联项目'),'object')"/>
-            </template>
-          </van-field>
-          <van-field :name="$t('标签')" :label="$t('标签')" @click="selBlockFun($t('标签'),'tag')">
-            <template #input>
-              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.tag}}</div>
-              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('标签'),'tag')"/>
+              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.gys}}</div>
+              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('供应商'),'gys')"/>
             </template>
           </van-field>
           <van-field :name="$t('上传附件')" :label="$t('上传附件')">
@@ -108,9 +108,33 @@
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
                 :on-error="handleAvatarError"
-              >
+                >
                 <van-icon name="plus" size="20" class="color-muted"/>
               </el-upload>
+            </template>
+          </van-field>
+          <van-field :name="$t('关联单据')" :label="$t('关联单据')" @click="selBlockFun($t('关联单据'),'dj')">
+            <template #input>
+              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.dj}}</div>
+              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('关联单据'),'dj')"/>
+            </template>
+          </van-field>
+          <van-field :name="$t('关联项目')" :label="$t('关联项目')" @click="selBlockFun($t('关联项目'),'object')">
+            <template #input>
+              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.object}}</div>
+              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('关联项目'),'object')"/>
+            </template>
+          </van-field>
+          <van-field :name="$t('关联合同')" :label="$t('关联合同')" @click="selBlockFun($t('关联合同'),'ht')">
+            <template #input>
+              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.order}}</div>
+              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('关联合同'),'ht')"/>
+            </template>
+          </van-field>
+          <van-field :name="$t('标签')" :label="$t('标签')" @click="selBlockFun($t('标签'),'tag')">
+            <template #input>
+              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.tag}}</div>
+              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('标签'),'tag')"/>
             </template>
           </van-field>
         </van-form>
@@ -258,10 +282,24 @@
           />
         </template>
 
+        <template v-if="pageType == 'dj'">
+          <van-picker
+            ref="djRef"
+            :columns="tableDjData"
+          />
+        </template>
+
         <template v-if="pageType == 'tag'">
           <van-picker
             ref="tagRef"
             :columns="tableTagData"
+          />
+        </template>
+
+        <template v-if="pageType == 'gys'">
+          <van-picker
+            ref="gysRef"
+            :columns="tableGysData"
           />
         </template>
       </div>
@@ -309,7 +347,9 @@
         tableTeacherAccountData: [],
         tableObjectData: [],
         tableHtData: [],
+        tableDjData: [],
         tableTagData: [],
+        tableGysData: [],
         searchTreeData: '',
         dataTreeList: [],
         defaultMenuActive: '',
@@ -353,7 +393,7 @@
           dept: '',
           deptId: '',
           des: '',
-          jkTime: '',
+          fkTime: '',
           orderInfo: '',
           orderInfoList: [],
           hkTime: '',
@@ -366,7 +406,11 @@
           order: '',
           orderId: '',
           tag: '',
-          tagId: ''
+          tagId: '',
+          dj: '',
+          djId: '',
+          gys: '',
+          gysId: '',
         }
       }
     },
@@ -491,6 +535,25 @@
           }
         });
       },
+      initGys(){
+        let params = {
+          page: 1,
+          num: 9999
+        };
+        this.$axios.get(common.supplier_account_list, {params: params, loading:false}).then(res => {
+          if (res.data.data){
+            let array = [];
+            for (let i = 0; i < res.data.data.length; i++){
+              array.push({
+                label: res.data.data[i].company,
+                text: res.data.data[i].company,
+                value: res.data.data[i].id
+              });
+            }
+            this.tableGysData = array;
+          }
+        });
+      },
       initMoneyCount(){
         let count = 0;
         for (let i = 0; i < this.form.orderInfoList.length; i++){
@@ -534,7 +597,7 @@
           this.dataTreeList = this.dataDept;
           this.dataModalList = this.dataModalBakList;
           this.showBottomPicker = true;
-        }else if (type == 'jkTime' || type == 'hkTime'){
+        }else if (type == 'fkTime' || type == 'hkTime'){
           this.showTimePicker = true;
         }else if (type == 'account'){
           this.initTeacherAccount();
@@ -544,6 +607,12 @@
           this.showBottomPicker = true;
         }else if (type == 'ht'){
           this.initHt();
+          this.showBottomPicker = true;
+        }else if (type == 'dj'){
+          this.tableDjData = this.filterBillTypes;
+          this.showBottomPicker = true;
+        }else if (type == 'gys'){
+          this.initGys();
           this.showBottomPicker = true;
         }else if (type == 'tag'){
           this.initTag();
@@ -568,9 +637,9 @@
             userType: this.loginUserAppType,
             navH: this.navHeight,
             appType: this.globalAppShow,
-            page: '/app/appSystemPTGL',
+            page: '/app/appSystemDGDK',
             pageParent: '/app/appSystemMoneyForm',
-            name: 'app-appSystemPTGL'
+            name: 'app-appSystemDGDK'
           },
           params: {
             formObj: this.form,
@@ -629,8 +698,8 @@
         this.showBottomPicker = false;
       },
       onTimeConfirm(time) {
-        if (this.pageType == 'jkTime'){
-          this.form.jkTime = this.$moment(time).format("YYYY-MM-DD");
+        if (this.pageType == 'fkTime'){
+          this.form.fkTime = this.$moment(time).format("YYYY-MM-DD");
         }else if (this.pageType == 'hkTime'){
           this.form.hkTime = this.$moment(time).format("YYYY-MM-DD");
         }
@@ -667,13 +736,20 @@
           }
           this.form.objectId = this.$refs.objectRef.getValues().length > 0 ? this.$refs.objectRef.getValues()[0].value : '';
           this.form.object = this.$refs.objectRef.getValues().length > 0 ? this.$refs.objectRef.getValues()[0].label : '';
-        }else if (this.pageType == 'user'){
-          if (this.$refs.teacherRef.getValues().length == 0 || (this.$refs.teacherRef.getValues().length > 0 && !this.$refs.teacherRef.getValues()[0])){
+        }else if (this.pageType == 'ht'){
+          if (this.$refs.htRef.getValues().length == 0 || (this.$refs.htRef.getValues().length > 0 && !this.$refs.htRef.getValues()[0])){
             Toast(this.$t("请选择信息!"));
             return;
           }
-          this.form.userId = this.$refs.teacherRef.getValues().length > 0 ? this.$refs.teacherRef.getValues()[0].value : '';
-          this.form.user = this.$refs.teacherRef.getValues().length > 0 ? this.$refs.teacherRef.getValues()[0].label : '';
+          this.form.orderId = this.$refs.htRef.getValues().length > 0 ? this.$refs.htRef.getValues()[0].value : '';
+          this.form.order = this.$refs.htRef.getValues().length > 0 ? this.$refs.htRef.getValues()[0].label : '';
+        }else if (this.pageType == 'dj'){
+          if (this.$refs.djRef.getValues().length == 0 || (this.$refs.djRef.getValues().length > 0 && !this.$refs.djRef.getValues()[0])){
+            Toast(this.$t("请选择信息!"));
+            return;
+          }
+          this.form.djId = this.$refs.djRef.getValues().length > 0 ? this.$refs.djRef.getValues()[0].value : '';
+          this.form.dj = this.$refs.djRef.getValues().length > 0 ? this.$refs.djRef.getValues()[0].label : '';
         }else if (this.pageType == 'tag'){
           if (this.$refs.tagRef.getValues().length == 0 || (this.$refs.tagRef.getValues().length > 0 && !this.$refs.tagRef.getValues()[0])){
             Toast(this.$t("请选择信息!"));
@@ -681,6 +757,20 @@
           }
           this.form.tagId = this.$refs.tagRef.getValues().length > 0 ? this.$refs.tagRef.getValues()[0].value : '';
           this.form.tag = this.$refs.tagRef.getValues().length > 0 ? this.$refs.tagRef.getValues()[0].label : '';
+        }else if (this.pageType == 'gys'){
+          if (this.$refs.gysRef.getValues().length == 0 || (this.$refs.gysRef.getValues().length > 0 && !this.$refs.gysRef.getValues()[0])){
+            Toast(this.$t("请选择信息!"));
+            return;
+          }
+          this.form.gysId = this.$refs.gysRef.getValues().length > 0 ? this.$refs.gysRef.getValues()[0].value : '';
+          this.form.gys = this.$refs.gysRef.getValues().length > 0 ? this.$refs.gysRef.getValues()[0].label : '';
+        }else if (this.pageType == 'user'){
+          if (this.$refs.teacherRef.getValues().length == 0 || (this.$refs.teacherRef.getValues().length > 0 && !this.$refs.teacherRef.getValues()[0])){
+            Toast(this.$t("请选择信息!"));
+            return;
+          }
+          this.form.userId = this.$refs.teacherRef.getValues().length > 0 ? this.$refs.teacherRef.getValues()[0].value : '';
+          this.form.user = this.$refs.teacherRef.getValues().length > 0 ? this.$refs.teacherRef.getValues()[0].label : '';
         }
         this.showBottomPicker = false;
       },
@@ -700,6 +790,10 @@
               value: this.form.des,
             },
             {
+              field: 'fk_date20230501',
+              value: this.form.fkTime,
+            },
+            {
               field: 'fk_files20230501',
               value: this.form.files,
               name: this.form.files
@@ -713,14 +807,33 @@
               value: this.form.userId,
             },
             {
-              field: 'xm_id20230501',
-              value: this.form.objectId,
-              name: this.form.object
+              field: 'fk_date20230501',
+              value: this.form.fkTime,
             },
             {
               field: 'tag_id20230501',
               value: this.form.tagId,
               name: this.form.tag
+            },
+            {
+              field: 'xm_id20230501',
+              value: this.form.objectId,
+              name: this.form.object
+            },
+            {
+              field: 'ht_id20230501',
+              value: this.form.orderId,
+              name: this.form.order
+            },
+            {
+              field: 'supplierId20230501',
+              value: this.form.gysId,
+              name: this.form.gys,
+            },
+            {
+              field: 'rela_apply20230501',
+              value: this.form.djId,
+              name: this.form.dj,
             },
             {
               field: 'cost_info20230501',
@@ -730,7 +843,7 @@
 
           console.log(contentJson);
           let params = {
-            formCode: 'PTGL',
+            formCode: 'DGDK',
             userId: this.form.userId,
           }
 

@@ -603,6 +603,42 @@
               page: '/app/appSystemMoneyForm'
             }
           });
+        }else if (code == 'DGDK'){
+          this.$router.push({
+            path: '/app/appSystemDGDK',
+            query: {
+              id: '',
+              activeType: this.active,
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow,
+              page: '/app/appSystemMoneyForm'
+            }
+          });
+        }else if (code == 'SKD'){
+          this.$router.push({
+            path: '/app/appSystemSKD',
+            query: {
+              id: '',
+              activeType: this.active,
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow,
+              page: '/app/appSystemMoneyForm'
+            }
+          });
+        }else if (code == 'TYHT'){
+          this.$router.push({
+            path: '/app/appSystemTYHT',
+            query: {
+              id: '',
+              activeType: this.active,
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow,
+              page: '/app/appSystemMoneyForm'
+            }
+          });
         }
       },
       searchSubTypeFun(type){

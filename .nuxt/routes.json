@@ -126,6 +126,13 @@
     "_name": "_0b620022"
   },
   {
+    "name": "app-appSystemDGDK",
+    "path": "/app/appSystemDGDK",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemDGDK.vue",
+    "chunkName": "pages/app/appSystemDGDK",
+    "_name": "_40a518ea"
+  },
+  {
     "name": "app-appSystemHKGL",
     "path": "/app/appSystemHKGL",
     "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemHKGL.vue",
@@ -159,6 +166,20 @@
     "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemPTGL.vue",
     "chunkName": "pages/app/appSystemPTGL",
     "_name": "_731931aa"
+  },
+  {
+    "name": "app-appSystemSKD",
+    "path": "/app/appSystemSKD",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemSKD.vue",
+    "chunkName": "pages/app/appSystemSKD",
+    "_name": "_45ad6a8a"
+  },
+  {
+    "name": "app-appSystemTYHT",
+    "path": "/app/appSystemTYHT",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemTYHT.vue",
+    "chunkName": "pages/app/appSystemTYHT",
+    "_name": "_1d42a212"
   },
   {
     "name": "newStudent-studentAllSever",
