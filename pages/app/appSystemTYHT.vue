@@ -402,7 +402,23 @@
         });
       },
       initObject(){
-        this.tableObjectData = this.filterBillTypes;
+        let params = {
+          page: 1,
+          num: 9999
+        };
+        this.$axios.get(common.object_order_used_list, {params: params, loading:false}).then(res => {
+          if (res.data.data){
+            let array = [];
+            for (let i = 0; i < res.data.data.length; i++){
+              array.push({
+                label: res.data.data[i]['applyData'] ? res.data.data[i]['applyData'].xm_name20230501.value : '',
+                text: res.data.data[i]['applyData'] ? res.data.data[i]['applyData'].xm_name20230501.value : '',
+                value: res.data.data[i]._id
+              });
+            }
+            this.tableObjectData = array;
+          }
+        });
       },
       initHt(){
         let params = {
@@ -674,7 +690,8 @@
             },
             {
               field: 'apply_dept20230501',
-              value: this.form.dept,
+              value: this.form.deptId,
+              deptName: this.form.dept,
             },
             {
               field: 'ht_time20230501',

@@ -706,7 +706,8 @@
             },
             {
               field: 'apply_dept20230501',
-              value: this.form.dept,
+              value: this.form.deptId,
+              deptName: this.form.dept,
             },
             {
               field: 'apply_user20230501',

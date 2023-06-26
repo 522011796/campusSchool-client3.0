@@ -71,6 +71,12 @@
   "LazyLayoutTb": {
     "description": "Auto imported from components/Layout/LayoutTb.vue"
   },
+  "MyServerDialog": {
+    "description": "Auto imported from components/dialog/MyServerDialog.vue"
+  },
+  "LazyMyServerDialog": {
+    "description": "Auto imported from components/dialog/MyServerDialog.vue"
+  },
   "BarChart": {
     "description": "Auto imported from components/charts/BarChart.vue"
   },
@@ -143,12 +149,6 @@
   "LazyTableBarChart": {
     "description": "Auto imported from components/charts/TableBarChart.vue"
   },
-  "MyServerDialog": {
-    "description": "Auto imported from components/dialog/MyServerDialog.vue"
-  },
-  "LazyMyServerDialog": {
-    "description": "Auto imported from components/dialog/MyServerDialog.vue"
-  },
   "MyInputButton": {
     "description": "Auto imported from components/search/MyInputButton.vue"
   },
@@ -173,30 +173,6 @@
   "LazyMyYearTerm": {
     "description": "Auto imported from components/search/MyYearTerm.vue"
   },
-  "MyAuditStatus": {
-    "description": "Auto imported from components/utils/MyAuditStatus.vue"
-  },
-  "LazyMyAuditStatus": {
-    "description": "Auto imported from components/utils/MyAuditStatus.vue"
-  },
-  "MyCourseSelect": {
-    "description": "Auto imported from components/utils/MyCourseSelect.vue"
-  },
-  "LazyMyCourseSelect": {
-    "description": "Auto imported from components/utils/MyCourseSelect.vue"
-  },
-  "MySexSelect": {
-    "description": "Auto imported from components/utils/MySexSelect.vue"
-  },
-  "LazyMySexSelect": {
-    "description": "Auto imported from components/utils/MySexSelect.vue"
-  },
-  "MyUserType": {
-    "description": "Auto imported from components/utils/MyUserType.vue"
-  },
-  "LazyMyUserType": {
-    "description": "Auto imported from components/utils/MyUserType.vue"
-  },
   "MyBlockListChildTree": {
     "description": "Auto imported from components/tree/MyBlockListChildTree.vue"
   },
@@ -220,6 +196,30 @@
   },
   "LazyTreeNode": {
     "description": "Auto imported from components/tree/treeNode.js"
+  },
+  "MyAuditStatus": {
+    "description": "Auto imported from components/utils/MyAuditStatus.vue"
+  },
+  "LazyMyAuditStatus": {
+    "description": "Auto imported from components/utils/MyAuditStatus.vue"
+  },
+  "MyCourseSelect": {
+    "description": "Auto imported from components/utils/MyCourseSelect.vue"
+  },
+  "LazyMyCourseSelect": {
+    "description": "Auto imported from components/utils/MyCourseSelect.vue"
+  },
+  "MySexSelect": {
+    "description": "Auto imported from components/utils/MySexSelect.vue"
+  },
+  "LazyMySexSelect": {
+    "description": "Auto imported from components/utils/MySexSelect.vue"
+  },
+  "MyUserType": {
+    "description": "Auto imported from components/utils/MyUserType.vue"
+  },
+  "LazyMyUserType": {
+    "description": "Auto imported from components/utils/MyUserType.vue"
   },
   "AuditStatusButton": {
     "description": "Auto imported from components/utils/button/AuditStatusButton.vue"

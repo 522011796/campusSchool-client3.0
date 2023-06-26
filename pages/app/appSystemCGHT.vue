@@ -38,9 +38,9 @@
               <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('申请人'),'user')"/>
             </template>
           </van-field>
-          <van-field required v-model="form.dept" :name="$t('申请部门')" :label="$t('申请部门')" :rules="[{ required: true, message: $t('请设置信息') }]" @click="selBlockFun($t('申请部门'),'dept')">
+          <van-field required v-model="form.deptName" :name="$t('申请部门')" :label="$t('申请部门')" :rules="[{ required: true, message: $t('请设置信息') }]" @click="selBlockFun($t('申请部门'),'dept')">
             <template #input>
-              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.dept}}</div>
+              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.deptName}}</div>
               <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('申请部门'),'dept')"/>
             </template>
           </van-field>
@@ -109,7 +109,7 @@
           </van-field>
           <van-field :name="$t('支付计划')" :label="$t('支付计划')">
             <template #input>
-              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.tag}}</div>
+              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width"></div>
               <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('支付计划'),'rules')"/>
             </template>
           </van-field>
@@ -125,7 +125,7 @@
                     </el-col>
                     <el-col :span="16">
                       <div class="text-right font-bold" style="padding: 10px 16px;line-height: 24px;position: relative">
-                        <label>{{index+1}}{{$t("期")}}</label>
+                        <label class="color-muted">{{index+1}}{{$t("期")}}</label>
                         <label v-if="index != 0" class="fa fa-times-circle color-danger" style="font-size: 20px;position: absolute; right: -10px; top: -10px" @click="minTableItem(index)"></label>
                       </div>
                     </el-col>
@@ -135,12 +135,14 @@
                   <el-row>
                     <el-col :span="8">
                       <div class="system-order-item-left-block">
-                        <span>{{$t("支付比例")}}</span>
+                        <span>{{$t("支付比例")}}%</span>
                       </div>
                     </el-col>
                     <el-col :span="16">
                       <van-field v-model="item.rate" :placeholder="$t('请填写信息')">
-                        <span slot="right-icon">%</span>
+                        <span slot="right-icon">
+                          <i class="fa fa-edit color-success"></i>
+                        </span>
                       </van-field>
                     </el-col>
                   </el-row>
@@ -154,7 +156,25 @@
                     </el-col>
                     <el-col :span="16">
                       <div class="text-right" style="padding: 10px 16px;line-height: 24px;position: relative">
-                        <label>{{isNaN((item.rate * form.amount / 100)) ? '合同金额有误' : (item.rate * form.amount / 100).toFixed(2)}}</label>
+                        <label class="color-muted">{{isNaN((item.rate * form.amount / 100)) ? '合同金额有误' : (item.rate * form.amount / 100).toFixed(2)}}</label>
+                      </div>
+                    </el-col>
+                  </el-row>
+                </div>
+                <div class="border-bottom-1">
+                  <el-row>
+                    <el-col :span="8">
+                      <div class="system-order-item-left-block">
+                        <span>{{$t("支付日期")}}</span>
+                      </div>
+                    </el-col>
+                    <el-col :span="16">
+                      <div class="text-right" style="position: relative">
+                        <van-field readonly v-model="item.time" :placeholder="$t('请设置信息')" @click="selBlockFun($t('支付日期'),'zfTime', index)">
+                          <span slot="right-icon">
+                            <i class="fa fa-edit color-success"></i>
+                          </span>
+                        </van-field>
                       </div>
                     </el-col>
                   </el-row>
@@ -168,6 +188,9 @@
                     </el-col>
                     <el-col :span="16">
                       <van-field v-model="item.des" :placeholder="$t('请填写信息')">
+                        <span slot="right-icon">
+                          <i class="fa fa-edit color-success"></i>
+                        </span>
                       </van-field>
                     </el-col>
                   </el-row>
@@ -345,7 +368,7 @@
   import {Toast} from "vant";
   import {MessageWarning} from "~/utils/utils";
   export default {
-    name: 'appSystemJKGL',
+    name: 'appSystemCGHT',
     computed: {
       datalist() {
         return datalist
@@ -409,6 +432,7 @@
           user: '',
           userId: '',
           dept: '',
+          deptName: '',
           deptId: '',
           des: '',
           orderInfo: '',
@@ -427,6 +451,7 @@
           gys: '',
           gysId: '',
           amount: 0,
+          backMoneyIndex: '',
           backMoney: [
             {
               stage: 1,
@@ -504,7 +529,23 @@
         });
       },
       initObject(){
-        this.tableObjectData = this.filterBillTypes;
+        let params = {
+          page: 1,
+          num: 9999
+        };
+        this.$axios.get(common.object_order_used_list, {params: params, loading:false}).then(res => {
+          if (res.data.data){
+            let array = [];
+            for (let i = 0; i < res.data.data.length; i++){
+              array.push({
+                label: res.data.data[i]['applyData'] ? res.data.data[i]['applyData'].xm_name20230501.value : '',
+                text: res.data.data[i]['applyData'] ? res.data.data[i]['applyData'].xm_name20230501.value : '',
+                value: res.data.data[i]._id
+              });
+            }
+            this.tableObjectData = array;
+          }
+        });
       },
       initGys(){
         let params = {
@@ -615,17 +656,18 @@
         this.form.skAccountName = data.account_name + "("+data.account_num+")";
         this.showBottomPicker = false;
       },
-      async selBlockFun(data, type){
+      async selBlockFun(data, type, index){
         this.pageType = type;
         this.pageTypeStr = data;
+        this.backMoneyIndex= index;
         if (type == 'user'){
           this.showBottomPicker = true;
         }else if (type == 'dept'){
-          await this.getDeptInfo(0);
+          await this.getDeptInfo('id');
           this.dataTreeList = this.dataDept;
           this.dataModalList = this.dataModalBakList;
           this.showBottomPicker = true;
-        }else if (type == 'sqTime' || type == 'sqTime'){
+        }else if (type == 'sqTime' || type == 'zfTime'){
           this.showTimePicker = true;
         }else if (type == 'gys'){
           this.initGys();
@@ -737,8 +779,8 @@
       onTimeConfirm(time) {
         if (this.pageType == 'sqTime'){
           this.form.sqTime = this.$moment(time).format("YYYY-MM-DD");
-        }else if (this.pageType == 'sqTime'){
-          this.form.sqTime = this.$moment(time).format("YYYY-MM-DD");
+        }else if (this.pageType == 'zfTime'){
+          this.$set(this.form.backMoney[this.backMoneyIndex], 'time', this.$moment(time).format("YYYY-MM-DD"));
         }
         this.showTimePicker = false;
       },
@@ -755,8 +797,9 @@
             }
           }
 
-          this.form.dept = deptPathStr;
-          this.form.deptId = deptPath.length > 0 ? JSON.parse(JSON.stringify(deptPath)).join() : '';
+          this.form.dept = deptPathLabel.length > 0 ? deptPathLabel : [];
+          this.form.deptName = deptPathStr;
+          this.form.deptId = deptPath.length > 0 ? deptPath : [];
           this.dataModalList = deptPath.length > 0 ? JSON.parse(JSON.stringify(deptPath)) : [];
           this.dataModalBakList = JSON.parse(JSON.stringify(this.dataModalList));
         }else if (this.pageType == 'account'){
@@ -819,7 +862,8 @@
             },
             {
               field: 'apply_dept20230501',
-              value: this.form.dept,
+              value: this.form.deptId,
+              deptName: this.form.dept,
             },
             {
               field: 'ht_time20230501',
@@ -856,7 +900,7 @@
           ];
 
           let error = 0;
-          for (let i = 0; i < this.formOrder.backMoney.length; i++){
+          for (let i = 0; i < this.form.backMoney.length; i++){
             if (this.form.backMoney[i].rate == ''){
               error++;
               break;
