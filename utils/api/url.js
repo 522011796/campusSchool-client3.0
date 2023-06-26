@@ -644,4 +644,7 @@ export const common = {
   fp_ocr: '/proxy/school//applet/apply/invoice/ocr',//发票OCR
   fp_list: '/proxy/school/user/invoice/list',//发票列表
 
+  teacher_account_del: '/proxy/school/applet/employee/account/del',//教师财务账号删除
+  teacher_account_save: '/proxy/school/applet/employee/account/save',//教师财务账号保存
+
 };

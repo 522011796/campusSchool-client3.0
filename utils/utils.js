@@ -803,6 +803,21 @@ export function classAttendStatus(type, str){
     return classStatusList;
   }
 }
+export function accountPayType(str, type){
+  let accountType = {
+    "0": "默认账户",
+    "1": "现金账户",
+    "2": "支付宝账户",
+    "3": "微信账户啊",
+    "99": "其他账户"
+  };
+  if (str != null && type == 'set') {
+    return accountType[str];
+  }
+  if (!str && type == 'get'){
+    return accountType;
+  }
+}
 
 export function getWeekTotalSelect(){
   let arr = [];

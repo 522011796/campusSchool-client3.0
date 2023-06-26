@@ -552,6 +552,18 @@
         if (type == 1){
           this.initServerAppList();
           this.showTopOprPicker = true;
+        }else if (type == 3){
+          this.$router.push({
+            path: '/app/appSystemGRXX',
+            query: {
+              id: '',
+              activeType: this.active,
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow,
+              page: '/app/appSystemMoneyForm'
+            }
+          });
         }
       },
       selAppFun(type, code){
@@ -642,6 +654,18 @@
         }else if (code == 'CGHT'){
           this.$router.push({
             path: '/app/appSystemCGHT',
+            query: {
+              id: '',
+              activeType: this.active,
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow,
+              page: '/app/appSystemMoneyForm'
+            }
+          });
+        }else if (code == 'XSHT'){
+          this.$router.push({
+            path: '/app/appSystemXSHT',
             query: {
               id: '',
               activeType: this.active,

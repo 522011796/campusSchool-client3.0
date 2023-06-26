@@ -23,6 +23,7 @@ const _0d85e500 = () => interopDefault(import('../pages/app/appStatic.vue' /* we
 const _0b620022 = () => interopDefault(import('../pages/app/appSystemBZBX.vue' /* webpackChunkName: "pages/app/appSystemBZBX" */))
 const _7f1e7cb1 = () => interopDefault(import('../pages/app/appSystemCGHT.vue' /* webpackChunkName: "pages/app/appSystemCGHT" */))
 const _40a518ea = () => interopDefault(import('../pages/app/appSystemDGDK.vue' /* webpackChunkName: "pages/app/appSystemDGDK" */))
+const _ffe4b828 = () => interopDefault(import('../pages/app/appSystemGRXX.vue' /* webpackChunkName: "pages/app/appSystemGRXX" */))
 const _57f7b569 = () => interopDefault(import('../pages/app/appSystemHKGL.vue' /* webpackChunkName: "pages/app/appSystemHKGL" */))
 const _27ba0f27 = () => interopDefault(import('../pages/app/appSystemJKGL.vue' /* webpackChunkName: "pages/app/appSystemJKGL" */))
 const _91ff4bda = () => interopDefault(import('../pages/app/appSystemMoneyForm.vue' /* webpackChunkName: "pages/app/appSystemMoneyForm" */))
@@ -30,6 +31,7 @@ const _8aa6b4ea = () => interopDefault(import('../pages/app/appSystemOrderInfo.v
 const _731931aa = () => interopDefault(import('../pages/app/appSystemPTGL.vue' /* webpackChunkName: "pages/app/appSystemPTGL" */))
 const _45ad6a8a = () => interopDefault(import('../pages/app/appSystemSKD.vue' /* webpackChunkName: "pages/app/appSystemSKD" */))
 const _1d42a212 = () => interopDefault(import('../pages/app/appSystemTYHT.vue' /* webpackChunkName: "pages/app/appSystemTYHT" */))
+const _7f61f208 = () => interopDefault(import('../pages/app/appSystemXSHT.vue' /* webpackChunkName: "pages/app/appSystemXSHT" */))
 const _3aa41d48 = () => interopDefault(import('../pages/newStudent/studentAllSever.vue' /* webpackChunkName: "pages/newStudent/studentAllSever" */))
 const _1f77ea42 = () => interopDefault(import('../pages/newStudent/studentBill.vue' /* webpackChunkName: "pages/newStudent/studentBill" */))
 const _07b6f35e = () => interopDefault(import('../pages/newStudent/studentDorm.vue' /* webpackChunkName: "pages/newStudent/studentDorm" */))
@@ -140,6 +142,10 @@ export const routerOptions = {
     component: _40a518ea,
     name: "app-appSystemDGDK"
   }, {
+    path: "/app/appSystemGRXX",
+    component: _ffe4b828,
+    name: "app-appSystemGRXX"
+  }, {
     path: "/app/appSystemHKGL",
     component: _57f7b569,
     name: "app-appSystemHKGL"
@@ -167,6 +173,10 @@ export const routerOptions = {
     path: "/app/appSystemTYHT",
     component: _1d42a212,
     name: "app-appSystemTYHT"
+  }, {
+    path: "/app/appSystemXSHT",
+    component: _7f61f208,
+    name: "app-appSystemXSHT"
   }, {
     path: "/newStudent/studentAllSever",
     component: _3aa41d48,
