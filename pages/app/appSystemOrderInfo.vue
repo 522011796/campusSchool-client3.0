@@ -277,14 +277,14 @@
         <div v-for="(item, index) in fpList" :key="index" :class="selFpObj.no == item.no ? 'card-list-active-block' : 'card-list-block'" @click="selFpInfo(item, index)">
           <div>
             <span class="color-muted">{{ item.no }}</span>
-            <span class="color-success" v-if="item.real == true">({{$t('已验真')}})</span>
-            <span class="color-warning" v-if="item.real == false">({{$t('未验真')}})</span>
+            <span class="color-success" v-if="item.reals == true">({{$t('已验真')}})</span>
+            <span class="color-warning" v-if="item.reals == false">({{$t('未验真')}})</span>
           </div>
           <div class="margin-top-5 font-size-14">
             <div class="system-order-info-item-block">
               <el-row>
                 <el-col :span="12">
-                  <span class="color-muted font-bold">{{ item.name }}</span>
+                  <span class="color-muted font-bold">{{ item.buyer }}</span>
                 </el-col>
                 <el-col :span="12" class="text-right">
                   <span class="color-success font-bold">¥{{ item.total_amount }}</span>
@@ -302,7 +302,7 @@
           <el-row>
             <el-col :span="18">
               <div class="margin-top-5">
-                <span class="color-danger">{{fpDetailInfo.title}}</span>
+                <span class="color-danger">{{fpDetailInfo.title ? fpDetailInfo.title : fpDetailInfo.type}}</span>
                 <span class="color-success" v-if="fpDetailInfo.real == true">({{$t('已验真')}})</span>
                 <span class="color-warning" v-if="fpDetailInfo.real == false">({{$t('未验真')}})</span>
               </div>
@@ -519,7 +519,7 @@
                 </el-col>
                 <el-col :span="18">
                   <div class="text-right">
-                    <span>{{item.taxRate}}</span>
+                    <span>{{item.taxRate}}%</span>
                   </div>
                 </el-col>
               </el-row>
@@ -594,6 +594,7 @@
         searchTeacherValue: '',
         selFpObj: {},
         fpDetailInfo: {},
+        fpDetailRealInfo: {},
         moneyReg: /^([0-9]+[0-9]*(\.[0-9]{1,2})?|0\.[1-9][0-9]?|0\.0[1-9])$/,
         leftHeight: {
           'height': '100%',
@@ -718,9 +719,10 @@
         let params = {
           no: no
         };
-        this.$axios.get(common.fp_ocr, {params: params, loading: false}).then(res => {
+        params = this.$qs.stringify(params);
+        this.$axios.post(common.fp_ocr, params, {loading: false}).then(res => {
           if (res.data.code == 200) {
-
+            this.setBackShowData(res.data);
           }
         })
       },
@@ -775,8 +777,34 @@
         this.showFpPicker = true;
       },
       selFpInfo(item, index){
-        //this.initOcr(item.no);
-        this.selFpObj = item;
+        let data = {};
+        console.log(item, item.reals);
+        if (item.reals == true){
+          data = item.check_content != '' ? JSON.parse(item.orc_content) : {};
+          data['no'] = data['invoiceNumber'];
+        }else {
+          let time = '';
+          if (item.time && item.time != ''){
+            console.log(item.time);
+            let timeSplit = item.time.split("-");
+            time = timeSplit[0]+"年"+timeSplit[1]+"月"+timeSplit[2]+"日";
+          }
+          data = {
+            "checkCode": item.check_code,
+            "invoiceAmountPreTax": item.total_amount,
+            "invoiceCode": item.code,
+            "invoiceDate": time != '' ? time : '',
+            "invoiceNumber": item.no,
+            "invoiceType": item.type,
+            "totalAmount": item.total_amount,
+            "url": item.url,
+            "real": item.reals,
+            "no": item.no,
+            "sellerName": item.buyer,
+            "title": item.type
+          };
+        }
+        this.selFpObj = data;
       },
       async selBlockFun(data, type){
         this.pageType = type;
@@ -829,6 +857,7 @@
         this.initTeacher();
       },
       setBackShowData(data){
+        console.log(data);
         this.form.fp.push(data);
         //this.form.sl = res.data.invoiceType;
         this.form.se = data.invoiceTax;
@@ -895,10 +924,15 @@
           return;
         }
 
+        let timeStr = this.form.fpTime;
+        let timeYearSplit = timeStr.split("年")[0];
+        let timeMonthSplit = timeStr.split("年")[1].split("月")[0];
+        let timeDaySplit = timeStr.split("年")[1].split("月")[1];
+        let timeDay = timeDaySplit.split("日")[0];
         let params = {
           no: this.form.fpNo,
           code: this.form.fpCode,
-          time: this.form.fpTime,
+          time: timeYearSplit+timeMonthSplit+timeDay,
           checkCode: this.form.fpVerCode
         };
 
@@ -919,14 +953,13 @@
           params['sum'] = this.form.fpHsMoney;
         }
         params = this.$qs.stringify(params);
-        this.form.fp = [];
         this.btnLoading = true;
         this.$axios.post(common.fp_check, params, {loading: false}).then(res => {
           if (res.data.code == 200){
-            //this.$set(this.form.fp[0], 'real', res.data.data.real);
-            this.fpDetailInfo['real'] = res.data.data.real;
+            this.$set(this.form.fp[0], 'real', res.data.data.real);
+            //this.fpDetailInfo['real'] = res.data.data.real;
             //this.form.fp.push(res.data.data);
-            this.setBackShowData(res.data.data);
+            //this.setBackShowData(res.data.data);
           }else {
             Toast(res.data.desc);
           }
@@ -955,7 +988,8 @@
           Toast(this.$t("请选择信息"));
           return;
         }
-        this.initOcr(this.selFpObj.no);
+
+        this.setBackShowData(this.selFpObj);
         this.showFpPicker = false;
       },
       cancelPop(){

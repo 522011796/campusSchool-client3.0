@@ -635,14 +635,20 @@ export const common = {
   jk_list: '/proxy/school/applet/my-jk/apply/list',//借款管理列表
   supplier_account_list: '/proxy/school/applet/supplier/account/list',//供应商财务账号列表
 
+  invoice_list: '/proxy/school/user/invoice/list',//发票列表
+  invoice_del: '/proxy/school/user/invoice/del',//发票删除
+  invoice_save: '/proxy/school/user/invoice/save',//发票保存
+
   cost_list: '/proxy/school/applet/cost/list',//费用管理列表
   cost_tree: '/proxy/school/applet/cost/tree',//费用管理tree
   cost_sublist: '/proxy/school/applet/cost/sublist',//费用管理下级
   cost_info: '/proxy/school/applet/cost/info',//费用管理信息
 
   fp_check: '/proxy/school/applet/apply/invoice/check',//发票验真
-  fp_ocr: '/proxy/school//applet/apply/invoice/ocr',//发票OCR
+  fp_ocr: '/proxy/school/applet/apply/invoice/ocr',//发票OCR
+  fp_ocr_save: '/proxy/school/user/invoice/save2',//发票OCR保存
   fp_list: '/proxy/school/user/invoice/list',//发票列表
+  fp_info_check: '/proxy/school/user/invoice/check',//发票检查
 
   teacher_account_del: '/proxy/school/applet/employee/account/del',//教师财务账号删除
   teacher_account_save: '/proxy/school/applet/employee/account/save',//教师财务账号保存

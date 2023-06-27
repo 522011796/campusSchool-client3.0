@@ -65,12 +65,12 @@
                   </div>
                   <div class="system-order-info-item-block">
                     <span class="color-muted" style="position: relative;top: 0px">{{$t('户名')}}:</span>
-                    <div class="color-muted font-bold moon-content-text-ellipsis-class" style="max-width: 180px;position: relative;top:4px; display: inline-block">{{ item.account_name }}</div>
+                    <div class="color-muted font-bold moon-content-text-ellipsis-class" style="max-width: 180px;position: relative;top:4px; display: inline-block">{{ item.account_name ? item.account_name : '--' }}</div>
                   </div>
                   <div class="system-order-info-item-block">
                     <span class="color-muted" style="position: relative;top: 0px">{{$t('开户行')}}:</span>
                     <div class="color-muted font-bold moon-content-text-ellipsis-class" style="max-width: 180px;position: relative;top:4px; display: inline-block">
-                      {{ item.bank_name }}
+                      {{ item.bank_name ? item.bank_name : '--' }}
                     </div>
                   </div>
                 </div>
@@ -98,7 +98,7 @@
               <i class="fa fa-angle-down color-success" style="font-size: 20px"></i>
             </span>
           </van-field>
-          <van-field v-if="form.type != 2 && form.type != 3" :name="$t('户名')" v-model="form.accountName" :label="$t('户名')" :placeholder="$t('请设置信息')">
+          <van-field v-if="form.typeId != 2 && form.typeId != 3" :name="$t('户名')" v-model="form.accountName" :label="$t('户名')" :placeholder="$t('请设置信息')">
             <span slot="right-icon">
               <i class="fa fa-edit color-success"></i>
             </span>
@@ -108,7 +108,7 @@
               <i class="fa fa-edit color-success"></i>
             </span>
           </van-field>
-          <van-field v-if="form.type != 2 && form.type != 3" :name="$t('开户行')" v-model="form.bankName" :label="$t('开户行')" :placeholder="$t('请设置信息')">
+          <van-field v-if="form.typeId != 2 && form.typeId != 3" :name="$t('开户行')" v-model="form.bankName" :label="$t('开户行')" :placeholder="$t('请设置信息')">
             <span slot="right-icon">
               <i class="fa fa-edit color-success"></i>
             </span>
@@ -256,7 +256,14 @@
         }
       },
       closePop(){
-
+        this.form = {
+          id: '',
+          type: '',
+          typeId: '',
+          accountName: '',
+          bankAccount: '',
+          bankName: ''
+        }
       },
       cancelPop(){
         this.dialogLoading = true;
@@ -286,7 +293,7 @@
           userId: this.infoUserId,
           accountNum: this.form.bankAccount
         };
-        if (this.form.type != 2 && this.form.type != 3){
+        if (this.form.typeId != 2 && this.form.typeId != 3){
           if (this.form.bankName == '' && this.form.accountName == ''){
             Toast(this.$t("请设置信息"));
             return;

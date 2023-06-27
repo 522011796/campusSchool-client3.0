@@ -140,6 +140,13 @@
     "_name": "_40a518ea"
   },
   {
+    "name": "app-appSystemFPJ",
+    "path": "/app/appSystemFPJ",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemFPJ.vue",
+    "chunkName": "pages/app/appSystemFPJ",
+    "_name": "_3655108f"
+  },
+  {
     "name": "app-appSystemGRXX",
     "path": "/app/appSystemGRXX",
     "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemGRXX.vue",

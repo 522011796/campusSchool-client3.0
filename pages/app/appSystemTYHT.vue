@@ -348,6 +348,7 @@
       this.formObj = this.$route.params.formObj && this.$route.params.formObj != '' ? this.$route.params.formObj : {};
       if (JSON.stringify(this.formObj) == "{}"){
         this.form = this.form;
+        this.init();
       }else {
         this.form = this.formObj;
       }
@@ -360,6 +361,11 @@
     methods: {
       layoutInit(){
 
+      },
+      async init(){
+        await this.getSessionInfo();
+        this.form.user = this.realName;
+        this.form.userId = this.loginUserId;
       },
       initTeacher(){
         let params = {

@@ -346,7 +346,7 @@
     },
     created() {
       this.init();
-      this.initCheckForm(this.$route.query.id);
+      //this.initCheckForm(this.$route.query.id);
     },
     methods: {
       layoutInit(){
@@ -398,6 +398,11 @@
         this.$axios.get(common.cost_list, {params: params, loading: false}).then(res => {
           if (res.data.code == 200) {
             let array = [];
+            array.push({
+              label: this.$t("全部"),
+              text: this.$t("全部"),
+              value: ''
+            });
             for (let i = 0; i < res.data.data.length; i++){
               array.push({
                 label: res.data.data[i].cost_name,
@@ -555,6 +560,18 @@
         }else if (type == 3){
           this.$router.push({
             path: '/app/appSystemGRXX',
+            query: {
+              id: '',
+              activeType: this.active,
+              userType: this.loginUserAppType,
+              navH: this.navHeight,
+              appType: this.globalAppShow,
+              page: '/app/appSystemMoneyForm'
+            }
+          });
+        }else if (type == 2){
+          this.$router.push({
+            path: '/app/appSystemFPJ',
             query: {
               id: '',
               activeType: this.active,
