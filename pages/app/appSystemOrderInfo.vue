@@ -87,7 +87,7 @@
                       <el-row>
                         <el-col :span="16">
                           <!--                        <span><img src="~static/img/static_icon.png" style="height: 20px;width: 20px;position: relative;top: 5px"/></span>-->
-                          <div class="color-muted font-bold moon-content-text-ellipsis-class">{{ item.sellerName }}</div>
+                          <div class="color-muted font-bold moon-content-text-ellipsis-class">{{ item.purchaserName }}</div>
                         </el-col>
                         <el-col :span="8" class="text-right">
                           <span class="color-success font-bold">¥{{item.totalAmount}}</span>
@@ -284,7 +284,7 @@
             <div class="system-order-info-item-block">
               <el-row>
                 <el-col :span="12">
-                  <span class="color-muted font-bold">{{ item.buyer }}</span>
+                  <span class="color-muted font-bold">{{ item.purchaserName }}</span>
                 </el-col>
                 <el-col :span="12" class="text-right">
                   <span class="color-success font-bold">¥{{ item.total_amount }}</span>
@@ -519,7 +519,7 @@
                 </el-col>
                 <el-col :span="18">
                   <div class="text-right">
-                    <span>{{item.taxRate}}%</span>
+                    <span>{{item.taxRate}}</span>
                   </div>
                 </el-col>
               </el-row>
@@ -594,6 +594,7 @@
         searchTeacherValue: '',
         selFpObj: {},
         fpDetailInfo: {},
+        fpDetailInfoBak: {},
         fpDetailRealInfo: {},
         moneyReg: /^([0-9]+[0-9]*(\.[0-9]{1,2})?|0\.[1-9][0-9]?|0\.0[1-9])$/,
         leftHeight: {
@@ -739,6 +740,7 @@
       seeFpInfo(data){
         console.log(data);
         this.fpDetailInfo = data;
+        this.fpDetailInfoBak = data;
         this.showFpDetailPicker = true;
       },
       returnIndex(){
@@ -954,12 +956,16 @@
         }
         params = this.$qs.stringify(params);
         this.btnLoading = true;
+        this.form.fp = [];
         this.$axios.post(common.fp_check, params, {loading: false}).then(res => {
           if (res.data.code == 200){
-            this.$set(this.form.fp[0], 'real', res.data.data.real);
-            //this.fpDetailInfo['real'] = res.data.data.real;
+            //this.$set(this.form.fp[0], 'real', res.data.data.real);
+            this.fpDetailInfo = res.data.data;
+            if (this.fpDetailInfo['invoiceType'] == null){
+              this.fpDetailInfo['title'] = this.fpDetailInfoBak['invoiceType'];
+            }
             //this.form.fp.push(res.data.data);
-            //this.setBackShowData(res.data.data);
+            this.setBackShowData(res.data.data);
           }else {
             Toast(res.data.desc);
           }

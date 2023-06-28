@@ -1301,8 +1301,9 @@
         this.init();
       },
       returnIndex(){
+        let page = this.$route.query.page ? this.$route.query.page : '/app/appIndex';
         this.$router.push({
-          path: '/app/appIndex',
+          path: page,
           query: {
             userType: this.loginUserAppType,
             navH: this.navHeight,

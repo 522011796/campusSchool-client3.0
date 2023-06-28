@@ -653,4 +653,10 @@ export const common = {
   teacher_account_del: '/proxy/school/applet/employee/account/del',//教师财务账号删除
   teacher_account_save: '/proxy/school/applet/employee/account/save',//教师财务账号保存
 
+  cost_static_info: '/proxy/school/applet/fk/apply/my-allcost/sum',//财务首页统计
+  cost_wait_static_info: '/proxy/school/applet/fk/apply/my/count',//财务首页我的待办
+  cost_my_sub_list: '/proxy/school/applet/fk/apply/my-cost/sum1',//财务首页我提交
+  cost_my_check_list: '/proxy/school/applet/fk/apply/my-cost/sum2',//财务首页我审批
+  cost_my_budget_list: '/proxy/school/applet/budget/list',//财务首页看预算
+
 };

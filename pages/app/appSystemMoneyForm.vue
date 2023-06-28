@@ -82,7 +82,7 @@
                   <el-col :span="12">
                     <div class="text-center">
                       <div>
-                        <span class="color-success font-size-14 font-bold">¥0.00</span>
+                        <span class="color-success font-size-14 font-bold">¥{{myEndAmount}}</span>
                       </div>
                       <div class="margin-top-5">
                         <span class="font-size-14 color-muted">{{$t("我通过的")}}</span>
@@ -92,7 +92,7 @@
                   <el-col :span="12">
                     <div class="text-center">
                       <div>
-                        <span class="color-success font-size-14 font-bold">¥0.00</span>
+                        <span class="color-success font-size-14 font-bold">¥{{mySubmitSuccessAmount}}</span>
                       </div>
                       <div class="margin-top-5">
                         <span class="font-size-14 color-muted">{{$t("我提交的")}}</span>
@@ -105,7 +105,7 @@
                   <el-col :span="12">
                     <div class="text-center">
                       <div class="margin-top-20">
-                        <span class="color-success font-size-14 font-bold">¥0.00</span>
+                        <span class="color-warning font-size-14 font-bold">¥{{ waitMeAmount }}</span>
                       </div>
                       <div class="margin-top-5">
                         <span class="font-size-14 color-muted">{{$t("待我审的")}}</span>
@@ -115,7 +115,7 @@
                   <el-col :span="12">
                     <div class="text-center">
                       <div class="margin-top-20">
-                        <span class="color-success font-size-14 font-bold">¥0.00</span>
+                        <span class="color-warning font-size-14 font-bold">¥{{mySubmitWaitAmount}}</span>
                       </div>
                       <div class="margin-top-5">
                         <span class="font-size-14 color-muted">{{$t("提交待审")}}</span>
@@ -135,40 +135,40 @@
             </div>
             <div class="margin-top-10">
               <el-row>
-                <el-col :span="6">
+                <el-col :span="6" @click.native="jumpAudit('waitSubmitCount')">
                   <div class="text-center">
                     <div class="margin-top-10">
-                      <span class="color-grand font-size-14 font-bold">0{{$t("笔")}}</span>
+                      <span class="color-grand font-size-14 font-bold">{{waitSubmitCount}}{{$t("笔")}}</span>
                     </div>
                     <div class="margin-top-5">
                       <span class="font-size-14 color-muted">{{$t("待提交")}}</span>
                     </div>
                   </div>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="6" @click.native="jumpAudit('waitHandCount')">
                   <div class="text-center">
                     <div class="margin-top-10">
-                      <span class="color-grand font-size-14 font-bold">0{{$t("笔")}}</span>
+                      <span class="color-grand font-size-14 font-bold">{{waitHandCount}}{{$t("笔")}}</span>
                     </div>
                     <div class="margin-top-5">
                       <span class="font-size-14 color-muted">{{$t("待审批")}}</span>
                     </div>
                   </div>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="6" @click.native="jumpAudit('waitPatCount')">
                   <div class="text-center">
                     <div class="margin-top-10">
-                      <span class="color-grand font-size-14 font-bold">0{{$t("笔")}}</span>
+                      <span class="color-grand font-size-14 font-bold">{{waitPatCount}}{{$t("笔")}}</span>
                     </div>
                     <div class="margin-top-5">
                       <span class="font-size-14 color-muted">{{$t("待支付")}}</span>
                     </div>
                   </div>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="6" @click.native="jumpAudit('waitCheckCount')">
                   <div class="text-center">
                     <div class="margin-top-10">
-                      <span class="color-grand font-size-14 font-bold">0{{$t("笔")}}</span>
+                      <span class="color-grand font-size-14 font-bold">{{waitCheckCount}}{{$t("笔")}}</span>
                     </div>
                     <div class="margin-top-5">
                       <span class="font-size-14 color-muted">{{$t("待签收")}}</span>
@@ -193,8 +193,9 @@
               <el-col :span="12">
                 <div class="text-right">
                   <el-button type="text" size="small" @click="searchTimeFun">
-                    <span class="font-size-14 color-muted">{{searchTime != '' ? searchTime : $t("时间选择")}}</span>
-                    <i class="el-icon-caret-bottom color-muted"></i>
+                    <span class="font-size-14 color-muted" :style="startTime != '' ? {position: 'relative',top:'-8px'} : ''">{{dateTime}}</span>
+                    <i v-if="startTime == ''" class="el-icon-caret-bottom color-muted"></i>
+                    <i v-if="startTime != ''" class="el-icon-circle-close color-danger" style="font-size: 23px;position: relative; top: -4px;margin-left: 5px;" @click.stop="clearTime"></i>
                   </el-button>
                 </div>
               </el-col>
@@ -205,6 +206,7 @@
         <div style="position: relative;">
           <div class="system-auto-block">
             <el-table
+              v-if="searchSubType == 1 || searchSubType == 2"
               ref="refTable"
               :data="tableData"
               size="medium"
@@ -212,10 +214,10 @@
               <el-table-column align="center" :label="$t('单据/费用')">
                 <template slot-scope="scope">
                   <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                    <div class="text-center">{{scope.row.item_name}}</div>
+                    <div class="text-center">{{scope.row.costName ? scope.row.costName : '--'}}</div>
                     <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                    {{scope.row.item_name}}
-                  </span>
+                      {{scope.row.costName ? scope.row.costName : '--'}}
+                    </span>
                   </el-popover>
                 </template>
               </el-table-column>
@@ -224,8 +226,8 @@
                   <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
                     <div class="text-center">{{scope.row.delay_amount}}</div>
                     <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                    {{scope.row.delay_amount}}
-                  </span>
+                      {{scope.row.totalAmount}}
+                    </span>
                   </el-popover>
                 </template>
               </el-table-column>
@@ -234,8 +236,47 @@
                   <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
                     <div class="text-center">{{scope.row.delay_amount}}</div>
                     <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                    {{scope.row.delay_amount}}
-                  </span>
+                      {{scope.row.delay_amount ? scope.row.delay_amount : '--'}}
+                    </span>
+                  </el-popover>
+                </template>
+              </el-table-column>
+            </el-table>
+
+            <el-table
+              v-if="searchSubType == 3"
+              ref="refTable"
+              :data="tableData"
+              size="medium"
+              style="width: 100%">
+              <el-table-column align="center" :label="$t('预算名称')">
+                <template slot-scope="scope">
+                  <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                    <div class="text-center">{{scope.row.budget_name ? scope.row.budget_name : '--'}}</div>
+                    <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                      {{scope.row.budget_name ? scope.row.budget_name : '--'}}
+                    </span>
+                  </el-popover>
+                </template>
+              </el-table-column>
+              <el-table-column align="center" :label="$t('已占用/总预算')">
+                <template slot-scope="scope">
+                  <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                    <div class="text-center">{{scope.row.used}}/{{scope.row.total}}</div>
+                    <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                      {{scope.row.used}}/{{scope.row.total}}
+                    </span>
+                  </el-popover>
+                </template>
+              </el-table-column>
+              <el-table-column align="center" :label="$t('预警状态')">
+                <template slot-scope="scope">
+                  <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                    <div class="text-center">{{scope.row.delay_amount}}</div>
+                    <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                      <label v-if="scope.row.used >= scope.row.warn" class="color-warning">{{$t("已预警")}}</label>
+                      <label v-else class="color-success">{{$t("未预警")}}</label>
+                    </span>
                   </el-popover>
                 </template>
               </el-table-column>
@@ -245,16 +286,16 @@
       </div>
     </div>
 
-    <van-popup v-model="showTimePicker" position="bottom">
-      <van-datetime-picker
-        type="year-month"
-        v-model="currentDate"
-        :min-date="minDate"
-        :max-date="maxDate"
-        @confirm="onTimeConfirm"
-        @cancel="showTimePicker = false"
-      />
-    </van-popup>
+<!--    <van-popup v-model="showTimePicker" position="bottom">-->
+<!--      <van-datetime-picker-->
+<!--        type="year-month"-->
+<!--        v-model="currentDate"-->
+<!--        :min-date="minDate"-->
+<!--        :max-date="maxDate"-->
+<!--        @confirm="onTimeConfirm"-->
+<!--        @cancel="showTimePicker = false"-->
+<!--      />-->
+<!--    </van-popup>-->
 
     <van-popup v-model="showMoneyPicker" position="bottom">
       <van-picker
@@ -292,6 +333,8 @@
         </div>
       </div>
     </van-popup>
+
+    <van-calendar v-model="showTimePicker" type="range" :min-date="minDate" :max-date="maxDate" @confirm="onConfirm" />
   </div>
 </template>
 
@@ -337,6 +380,19 @@
         applyCheckValue: [],
         detailApplyCheckList: [],
         tableData: [],
+        boardObj: {},
+        waitObj: {},
+        myEndAmount: 0,
+        mySubmitSuccessAmount: 0,
+        mySubmitWaitAmount: 0,
+        waitMeAmount: 0,
+        waitCheckCount: 0,
+        waitHandCount: 0,
+        waitPatCount: 0,
+        waitSubmitCount: 0,
+        dateTime: this.$t("选择日期"),
+        startTime: '',
+        endTime: '',
       }
     },
     mounted() {
@@ -346,50 +402,57 @@
     },
     created() {
       this.init();
+      this.initWait();
+      this.initTableData();
       //this.initCheckForm(this.$route.query.id);
     },
     methods: {
       layoutInit(){
 
       },
-      async init(){
+      init(id){
         let list = [];
         let params = {
-          id: this.$route.query.id
+          costId: id
         };
-        await this.getSessionInfo();
-        this.$axios.get(common.server_form_allInfo, {params: params}).then(res => {
+        this.$axios.get(common.cost_static_info, {params: params}).then(res => {
           if (res.data.code == 200){
-            let auditUser = [];
-            this.serverDetail = res.data.data;
-            this.serverDetailTitle = res.data.data.des ? res.data.data.des.substr(0, 50) + "..." : '';
-            let processList = res.data.data.processList;
-            this.customUserStatus = false;
-            this.fromCreateBtnShow = res.data.data.submitButton;
-            this.fromCreateBtnText = res.data.data.buttonName != "" ? res.data.data.buttonName : this.$t("提交");
-            this.checkApply = res.data.data.checkApply;
-
-            if (res.data.data.formContent != null && res.data.data.formContent != ''){
-              this.formCreateRuleData = JSON.parse(res.data.data.formContent).rule;
-              this.formCreateOptionData = JSON.parse(res.data.data.formContent).option;
-              this.setFormChildren(this.formCreateRuleData, list, 'children');
-            }
-
-            for (let i = 0; i < processList.length; i++){
-              if (processList[i].htype == 'CustomUser'){
-                let processUser = processList[i].hid;
-                let processUserName = processList[i].hname;
-                for (let j = 0; j < processUser.length; j++){
-                  auditUser.push({
-                    label: processUserName[j],
-                    value: processUser[j],
-                    text: processUserName[j]
-                  });
-                }
-                this.customUserStatus = true;
-              }
-            }
-            this.auditUsers = auditUser;
+            this.myEndAmount = res.data.data.myEndAmount;
+            this.mySubmitSuccessAmount = res.data.data.mySubmitSuccessAmount;
+            this.mySubmitWaitAmount = res.data.data.mySubmitWaitAmount;
+            this.waitMeAmount = res.data.data.waitMeAmount;
+          }
+        });
+      },
+      initWait(){
+        let list = [];
+        let params = {};
+        this.$axios.get(common.cost_wait_static_info, {params: params}).then(res => {
+          if (res.data.code == 200){
+            this.waitCheckCount = res.data.data.waitCheckCount;
+            this.waitHandCount = res.data.data.waitHandCount;
+            this.waitPatCount = res.data.data.waitPatCount;
+            this.waitSubmitCount = res.data.data.waitSubmitCount;
+          }
+        });
+      },
+      initTableData(){
+        let url = '';
+        if (this.searchSubType == 1){
+          url = common.cost_my_sub_list;
+        }else if (this.searchSubType == 2){
+          url = common.cost_my_check_list;
+        }else if (this.searchSubType == 3){
+          url = common.cost_my_budget_list;
+        }
+        let params = {
+          beginTime: this.startTime,
+          endTime: this.endTime,
+        };
+        this.$axios.get(url, {params: params}).then(res => {
+          if (res.data.code == 200){
+            console.log(res.data.data);
+            this.tableData = res.data.data;
           }
         });
       },
@@ -553,6 +616,18 @@
         }
         return ruleList;
       },
+      jumpAudit(type){
+        this.$router.push({
+          path: '/app/appMyNotice',
+          query: {
+            id: parseInt(5),
+            userType: this.loginUserAppType,
+            navH: this.navHeight,
+            appType: this.globalAppShow,
+            page: '/app/appSystemMoneyForm'
+          }
+        });
+      },
       topBlockOpr(type){
         if (type == 1){
           this.initServerAppList();
@@ -696,6 +771,7 @@
       },
       searchSubTypeFun(type){
         this.searchSubType = type;
+        this.initTableData();
       },
       searchTimeFun(){
         this.showTimePicker = true;
@@ -708,13 +784,42 @@
         this.searchTime = this.$moment(time).format("YYYY-MM");
         this.showTimePicker = false;
       },
+      onConfirm(date){
+        const [start, end] = date;
+        this.dateTime = `${this.formatDate2(start)} - ${this.formatDate2(end)}`;
+        this.startTime = `${this.formatDate(start)}`;
+        this.endTime = `${this.formatDate(end)}`;
+
+        this.initTableData();
+        this.showTimePicker = false;
+      },
       onVehicleCancel(){
         this.showMoneyPicker = false;
       },
       onVehicleChange(value, index){
         this.searchMoney = value.label;
         this.searchMoneyId = value.value;
+        this.init(value.value);
         this.showMoneyPicker = false;
+      },
+      formatDate2(date) {
+        return `${date.getMonth() + 1}/${date.getDate()}`;
+      },
+      formatDate(date) {
+        //date.getMonth() + 1)
+        //date.getDate()
+        let monthInt = parseInt(date.getMonth());
+        let dayInt = parseInt(date.getDate());
+        let month = monthInt + 1;
+        let day = dayInt + 1;
+
+        return `${date.getFullYear()}-${month > 10 ? month : '0'+month}-${day > 10 ? day : '0'+day}`;
+      },
+      clearTime(){
+        this.dateTime = this.$t("选择日期");
+        this.startTime = '';
+        this.endTime = '';
+        this.initTableData();
       }
     }
   }

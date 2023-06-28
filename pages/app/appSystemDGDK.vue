@@ -131,6 +131,12 @@
               <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('关联合同'),'ht')"/>
             </template>
           </van-field>
+          <van-field :name="$t('关联款项')" :label="$t('关联款项')" @click="selBlockFun($t('关联款项'),'kx')">
+            <template #input>
+              <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.kx}}</div>
+              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('关联款项'),'kx')"/>
+            </template>
+          </van-field>
           <van-field :name="$t('标签')" :label="$t('标签')" @click="selBlockFun($t('标签'),'tag')">
             <template #input>
               <div class="margin-right-5 color-muted moon-content-text-ellipsis-class input-width">{{form.tag}}</div>
@@ -302,6 +308,13 @@
             :columns="tableGysData"
           />
         </template>
+
+        <template v-if="pageType == 'kx'">
+          <van-picker
+            ref="kxRef"
+            :columns="form.kxList"
+          />
+        </template>
       </div>
     </van-popup>
 
@@ -350,6 +363,7 @@
         tableDjData: [],
         tableTagData: [],
         tableGysData: [],
+        tableKxData: [],
         searchTreeData: '',
         dataTreeList: [],
         defaultMenuActive: '',
@@ -411,6 +425,9 @@
           djId: '',
           gys: '',
           gysId: '',
+          kx: '',
+          kxId: '',
+          kxList: []
         }
       }
     },
@@ -512,10 +529,21 @@
           if (res.data.data){
             let array = [];
             for (let i = 0; i < res.data.data.length; i++){
+              let payableDataList = [];
+              if (res.data.data[i].payableDataList && res.data.data[i].payableDataList.length > 0){
+                for (let j = 0; j < res.data.data[i].payableDataList.length; j++){
+                  payableDataList.push({
+                    label: "第"+res.data.data[i].payableDataList[j].stage+"期" + "("+"¥"+res.data.data[i].payableDataList[j].shouldAmount+")",
+                    text: "第"+res.data.data[i].payableDataList[j].stage+"期" + "("+"¥"+res.data.data[i].payableDataList[j].shouldAmount+")",
+                    value: res.data.data[i].payableDataList[j]._id,
+                  });
+                }
+              }
               array.push({
                 label: res.data.data[i]['applyData'] ? res.data.data[i]['applyData'].ht_name20230501.value : '',
                 text: res.data.data[i]['applyData'] ? res.data.data[i]['applyData'].ht_name20230501.value : '',
-                value: res.data.data[i]._id
+                value: res.data.data[i]._id,
+                kxList: payableDataList
               });
             }
             this.tableHtData = array;
@@ -619,6 +647,9 @@
           this.showBottomPicker = true;
         }else if (type == 'gys'){
           this.initGys();
+          this.showBottomPicker = true;
+        }else if (type == 'kx'){
+
           this.showBottomPicker = true;
         }else if (type == 'tag'){
           this.initTag();
@@ -749,6 +780,17 @@
           }
           this.form.orderId = this.$refs.htRef.getValues().length > 0 ? this.$refs.htRef.getValues()[0].value : '';
           this.form.order = this.$refs.htRef.getValues().length > 0 ? this.$refs.htRef.getValues()[0].label : '';
+          this.form.kxList = this.$refs.htRef.getValues().length > 0 ? this.$refs.htRef.getValues()[0].kxList : [];
+
+          this.form.kx = '';
+          this.form.kxId = '';
+        }else if (this.pageType == 'kx'){
+          if (this.$refs.kxRef.getValues().length == 0 || (this.$refs.kxRef.getValues().length > 0 && !this.$refs.kxRef.getValues()[0])){
+            Toast(this.$t("请选择信息!"));
+            return;
+          }
+          this.form.kxId = this.$refs.kxRef.getValues().length > 0 ? this.$refs.kxRef.getValues()[0].value : '';
+          this.form.kx = this.$refs.kxRef.getValues().length > 0 ? this.$refs.kxRef.getValues()[0].label : '';
         }else if (this.pageType == 'dj'){
           if (this.$refs.djRef.getValues().length == 0 || (this.$refs.djRef.getValues().length > 0 && !this.$refs.djRef.getValues()[0])){
             Toast(this.$t("请选择信息!"));
@@ -784,6 +826,10 @@
         this.$refs.form.validate().then(() => {
           if (this.form.orderInfoList.length == 0){
             Toast(this.$t("请设置单据明细"));
+            return;
+          }
+          if (this.form.orderId != '' && this.form.kxId == ''){
+            Toast(this.$t("请设置款项"));
             return;
           }
           let contentJson = [
@@ -831,6 +877,11 @@
               field: 'ht_id20230501',
               value: this.form.orderId,
               name: this.form.order
+            },
+            {
+              field: 'ht_pay20230501',
+              value: this.form.kxId,
+              name: this.form.kx
             },
             {
               field: 'supplierId20230501',

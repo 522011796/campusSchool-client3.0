@@ -280,7 +280,7 @@
             </el-col>
             <el-col :span="6">
               <div class="text-right">
-                <el-button v-if="fpDetailInfo.reals == false || fpDetailInfo.real == false" plain type="success" size="small" @click="checkFpInfo(fpDetailInfo)">{{$t('验真')}}</el-button>
+                <el-button v-if="fpDetailInfo.reals == false || fpDetailInfo.real == false" plain type="success" size="small" :loading="btnLoading" @click="checkFpInfo(fpDetailInfo)">{{$t('验真')}}</el-button>
                 <span v-else>&nbsp;</span>
               </div>
             </el-col>
@@ -490,7 +490,7 @@
                 </el-col>
                 <el-col :span="18">
                   <div class="text-right">
-                    <span>{{item.taxRate}}%</span>
+                    <span>{{item.taxRate}}</span>
                   </div>
                 </el-col>
               </el-row>
@@ -797,7 +797,10 @@
       detailInfo(item){
         console.log(item,JSON.parse(item.orc_content));
         if (item.reals == true){
-          this.fpDetailInfo = JSON.parse(item.orc_content);
+          this.fpDetailInfo = item.orc_content ? JSON.parse(item.orc_content) : {};
+          if (!this.fpDetailInfo['title'] || this.fpDetailInfo['title'] != ''){
+            this.fpDetailInfo['title'] = item.type;
+          }
           //this.fpDetailInfo['title'] = item.type;
         }else {
           this.fpDetailInfo = item;
@@ -811,6 +814,7 @@
         };
         let url = common.fp_info_check;
         params = this.$qs.stringify(params);
+        this.btnLoading = true;
         this.$axios.post(url, params, {loading: false}).then(res => {
           if (res.data.code == 200){
             this.fpDetailInfo = item;
@@ -819,6 +823,7 @@
           }else {
             Toast(res.data.desc);
           }
+          this.btnLoading = false;
         });
       },
       editFp(item){
