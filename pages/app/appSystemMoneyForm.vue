@@ -183,14 +183,14 @@
         <div style="position: relative;" class="padding-lr-10 margin-top-10">
           <div>
             <el-row>
-              <el-col :span="12">
+              <el-col :span="16">
                 <div class="text-left">
                   <van-button :type="searchSubType == 1 ? 'info' : 'default'" size="small" @click="searchSubTypeFun(1)">{{ $t("我提交") }}</van-button>
                   <van-button :type="searchSubType == 2 ? 'info' : 'default'" size="small" @click="searchSubTypeFun(2)">{{ $t("我审批") }}</van-button>
                   <van-button :type="searchSubType == 3 ? 'info' : 'default'" size="small" @click="searchSubTypeFun(3)">{{ $t("看预算") }}</van-button>
                 </div>
               </el-col>
-              <el-col :span="12">
+              <el-col :span="8">
                 <div class="text-right">
                   <el-button type="text" size="small" @click="searchTimeFun">
                     <span class="font-size-14 color-muted" :style="startTime != '' ? {position: 'relative',top:'-8px'} : ''">{{dateTime}}</span>
