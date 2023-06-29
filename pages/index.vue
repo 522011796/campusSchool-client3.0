@@ -230,6 +230,22 @@
         </div>
       </div>
     </drawer-layout-right>
+
+    <drawer-layout-right tabindex="0" @changeDrawer="closeDetailDialog" :visible="dialogSystemServer" size="500px" :title="formCreateSystemTitleData" @right-close="cancelDrawDialog">
+      <div slot="content" class="color-muted">
+        <div class="right-dialog-main-block">
+          <template v-if="serverSysDetailData.form_code == 'PTGL'">
+            <system-form-ptgl ref="ptglRef"></system-form-ptgl>
+          </template>
+        </div>
+      </div>
+      <div slot="footer">
+        <div class="text-right padding-lr-10">
+          <el-button size="small">{{$t("暂存")}}</el-button>
+          <el-button type="primary" size="small">{{$t("提交")}}</el-button>
+        </div>
+      </div>
+    </drawer-layout-right>
   </div>
 </template>
 
@@ -241,10 +257,12 @@
   import MyServerDialog from "~/components/dialog/MyServerDialog";
   import DrawerLayoutRight from "~/components/utils/dialog/DrawerLayoutRight";
   import {MessageError, MessageSuccess, MessageWarning} from "~/utils/utils";
+  import SystemFormPtgl from "~/components/utils/serverForm/SystemFormPTGL.vue";
+  import AppSystemPtgl from "~/pages/app/appSystemPTGL.vue";
   export default {
     name: 'index',
     mixins: [mixins],
-    components: {DrawerLayoutRight, MyServerDialog, MyElTree, DialogNormal},
+    components: {AppSystemPtgl, SystemFormPtgl, DrawerLayoutRight, MyServerDialog, MyElTree, DialogNormal},
     data(){
       return {
         defaultMenuActive: '',
@@ -257,11 +275,13 @@
         formCreateOptionData: {},
         fApi: {},
         formCreateTitleData: '',
+        formCreateSystemTitleData: '',
         formCreateIdData: '',
         fromCreateOptions: '',
         fromCreateBtnText: '',
         fromCreateBtnShow: true,
         dialogServer: false,
+        dialogSystemServer: false,
         dialogServerDetail: false,
         btnLoading: false,
         customUserStatus: false,
@@ -270,6 +290,7 @@
         activeMenu: '',
         treeId: '',
         serverDetailData: {},
+        serverSysDetailData: {},
         auditUsers: [],
         auditSelUser: [],
         detailApplyCheckList: [],
@@ -345,8 +366,17 @@
         item.active = true;
       },
       serverClick($event, item){
-        this.serverDetailData = item;
-        this.dialogServer = true;
+        if (item.is_default == false){
+          this.serverDetailData = item;
+          this.dialogServer = true;
+        }else if (item.is_default == true){
+          console.log(item);
+          if (item.form_code == 'PTGL'){
+            this.formCreateSystemTitleData = this.$t("普通申请单");
+          }
+          this.serverSysDetailData = item;
+          this.dialogSystemServer = true;
+        }
       },
       closeDialog(event){
         this.dialogServer = false;
@@ -359,12 +389,14 @@
         this.customUserStatus = false;
         this.btnLoading = false;
         this.dialogServerDetail = false;
+        this.dialogSystemServer = false;
       },
       cancelDialog(){
         this.dialogServer = false;
       },
       cancelDrawDialog(){
         this.dialogServerDetail = false;
+        this.dialogSystemServer = false;
       },
       async detailClick(data){
         let rules = '';
@@ -620,5 +652,10 @@
 }
 .block-left{
   width: 400px;
+}
+.right-dialog-main-block{
+  border-radius: 5px;
+  background: #ffffff;
+  padding: 10px;
 }
 </style>

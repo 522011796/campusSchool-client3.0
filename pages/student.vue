@@ -219,7 +219,8 @@
               <el-row>
                 <el-col :span="6" class="text-center">
                   <div class="custom-avatar">
-                    <el-avatar :size="70" :src="form.headImg" fit="fill"></el-avatar>
+                    <img v-if="form.headImg != ''" :src="form.headImg" style="border-radius: 70px;width: 70px;height: 70px">
+                    <div v-else style="border-radius: 70px;width: 70px;height: 70px;background: #dddddd"></div>
                   </div>
                   <div>
                     <upload-square class="margin-top-5" :limit="9999" :action="uploadFile" max-size="20" :data="{path: 'headPhone'}" accept=".png,.jpg,.jpeg" @success="uploadFileSuccess">
@@ -324,6 +325,18 @@
                 <el-col :span="12">
                   <el-form-item :label="$t('毕业学校')" prop="graduationSchool">
                     <el-input :disabled="form.id != '' && oprType == 'detail'" v-model="form.graduationSchool" size="small" class="width-150"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item :label="$t('班主任姓名')" prop="bzrName">
+                    <el-input :disabled="form.id != '' && oprType == 'detail'" v-model="form.bzrName" size="small" class="width-150"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item :label="$t('班主任电话')" prop="bzrPhone">
+                    <el-input :disabled="form.id != '' && oprType == 'detail'" v-model="form.bzrPhone" size="small" class="width-150"></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -1093,7 +1106,9 @@
           hard: '',
           graduationSchool: '',
           connType: [],
-          adProvince: []
+          adProvince: [],
+          bzrName: '',
+          bzrPhone: ''
         },
         formStation: {
           id: '',
@@ -1414,6 +1429,8 @@
               connType: [],
               adProvince: [res.data.data.enroll_province,res.data.data.enroll_city],
               adCity: res.data.data.enroll_city+'',
+              bzrName: res.data.data.master_name,
+              bzrPhone: res.data.data.master_phone
             };
             if (!res.data.data.enroll_province || !res.data.data.enroll_city){
               this.form.adProvince = [];
@@ -1618,7 +1635,9 @@
           hard: '',
           graduationSchool: '',
           connType: [],
-          adProvince: []
+          adProvince: [],
+          bzrName: '',
+          bzrPhone: ''
         };
         this.formStation = {
           id: '',
@@ -1762,6 +1781,8 @@
               highSchool: this.form.graduationSchool,
               enrollProvince: this.form.adProvince.length > 0 ? this.form.adProvince[0] : '',
               enrollCity: this.form.adProvince.length > 0 ? this.form.adProvince[1] : '',
+              masterName: this.form.bzrName,
+              masterPhone: this.form.bzrPhone,
             };
             params = this.$qs.stringify(params);
             this.$axios.post(url, params).then(res => {

@@ -516,7 +516,7 @@
               array.push({
                 label: res.data.data[i].label_name,
                 text: res.data.data[i].label_name,
-                value: res.data.data[i].id
+                value: res.data.data[i].label_id
               });
             }
             this.tableTagData = array;

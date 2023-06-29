@@ -216,6 +216,20 @@
                        autocomplete="off"
                        :rules="[{ required: true, message: '请输入信息' }]">
             </van-field>
+            <van-field v-model="form.bzrName"
+                       :name="$t('班主任姓名')"
+                       :label="$t('班主任姓名')"
+                       :placeholder="$t('请输入信息')"
+                       autocomplete="off"
+                       :rules="[{ required: true, message: '请输入信息' }]">
+            </van-field>
+            <van-field v-model="form.bzrPhone"
+                       :name="$t('班主任电话')"
+                       :label="$t('班主任电话')"
+                       :placeholder="$t('请输入信息')"
+                       autocomplete="off"
+                       :rules="telRules">
+            </van-field>
             <van-field v-model="form.adProvinceLabel"
                        :name="$t('所在省份')"
                        :label="$t('所在省份')"
@@ -408,7 +422,9 @@
           graduationSchool: '',
           connType: [],
           adProvince: [],
-          adProvinceLabel: ''
+          adProvinceLabel: '',
+          bzrName: '',
+          bzrPhone: ''
         }
       }
     },
@@ -504,7 +520,9 @@
               connType: [],
               adProvince: [res.data.data.enroll_province,res.data.data.enroll_city],
               adCity: res.data.data.enroll_city+'',
-              adProvinceLabel: res.data.data.enroll_province+","+res.data.data.enroll_city
+              adProvinceLabel: res.data.data.enroll_province+","+res.data.data.enroll_city,
+              bzrName: res.data.data.master_name,
+              bzrPhone: res.data.data.master_phone
             };
             if (!res.data.data.enroll_province || !res.data.data.enroll_city){
               this.form.adProvince = [];
@@ -549,6 +567,8 @@
             highSchool: this.form.graduationSchool,
             enrollProvince: this.form.adProvince.length > 0 ? this.form.adProvince[0] : '',
             enrollCity: this.form.adProvince.length > 0 ? this.form.adProvince[1] : '',
+            masterName: this.form.bzrName,
+            masterPhone: this.form.bzrPhone,
           };
           params = this.$qs.stringify(params);
           this.$axios.post(url, params).then(res => {

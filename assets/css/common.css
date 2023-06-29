@@ -1143,6 +1143,9 @@ ul{
 .custom-button-small .el-button--small, .el-button--small.is-round {
   padding: 9px 8px;
 }
+.custom-textarea-inner .el-textarea__inner {
+  resize: none !important;
+}
 /***自定义radio组件颜色***/
 /*.el-radio__input.is-checked + .el-radio__label {
   color: #fd7624 !important;

@@ -54,6 +54,13 @@ export default {
         ],
         adProvince: [
           { required: true, type: 'array', min: 2, message: this.$t("请选择信息"), trigger: 'change' }
+        ],
+        bzrName: [
+          { required: true, message: this.$t("请输入姓名"), trigger: 'blur' }
+        ],
+        bzrPhone: [
+          { required: true, message: this.$t("请输入手机号"), trigger: 'blur' },
+          { validator: rules.FormValidate.Form().validatePhone, trigger: 'blur' }
         ]
       }
     }
