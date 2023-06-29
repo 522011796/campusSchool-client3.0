@@ -326,21 +326,24 @@ export function MessageError(text = '失败',) {
   Message({
     message: text,
     type: 'error',
-    duration: 3 * 1000
+    duration: 3 * 1000,
+    showClose: true
   })
 }
 export function MessageInfo(text = '消息') {
   Message({
     message: text,
     type: 'info',
-    duration: 3 * 1000
+    duration: 3 * 1000,
+    showClose: true
   })
 }
 export function MessageSuccess(text = '成功') {
   Message({
     message: text,
     type: 'success',
-    duration: 3 * 1000
+    duration: 3 * 1000,
+    showClose: true
   })
 }
 
@@ -348,7 +351,8 @@ export function MessageWarning(text = '警告') {
   Message({
     message: text,
     type: 'warning',
-    duration: 3 * 1000
+    duration: 3 * 1000,
+    showClose: true
   })
 }
 

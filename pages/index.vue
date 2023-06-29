@@ -231,21 +231,7 @@
       </div>
     </drawer-layout-right>
 
-    <drawer-layout-right tabindex="0" @changeDrawer="closeDetailDialog" :visible="dialogSystemServer" size="500px" :title="formCreateSystemTitleData" @right-close="cancelDrawDialog">
-      <div slot="content" class="color-muted">
-        <div class="right-dialog-main-block">
-          <template v-if="serverSysDetailData.form_code == 'PTGL'">
-            <system-form-ptgl ref="ptglRef"></system-form-ptgl>
-          </template>
-        </div>
-      </div>
-      <div slot="footer">
-        <div class="text-right padding-lr-10">
-          <el-button size="small">{{$t("暂存")}}</el-button>
-          <el-button type="primary" size="small">{{$t("提交")}}</el-button>
-        </div>
-      </div>
-    </drawer-layout-right>
+    <system-form-ptgl v-if="serverSysDetailData.form_code == 'PTGL'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer" @changeDrawer="closeDetailDialog"></system-form-ptgl>
   </div>
 </template>
 
@@ -257,12 +243,12 @@
   import MyServerDialog from "~/components/dialog/MyServerDialog";
   import DrawerLayoutRight from "~/components/utils/dialog/DrawerLayoutRight";
   import {MessageError, MessageSuccess, MessageWarning} from "~/utils/utils";
+  import {Toast} from "vant";
   import SystemFormPtgl from "~/components/utils/serverForm/SystemFormPTGL.vue";
-  import AppSystemPtgl from "~/pages/app/appSystemPTGL.vue";
   export default {
     name: 'index',
     mixins: [mixins],
-    components: {AppSystemPtgl, SystemFormPtgl, DrawerLayoutRight, MyServerDialog, MyElTree, DialogNormal},
+    components: {SystemFormPtgl, DrawerLayoutRight, MyServerDialog, MyElTree, DialogNormal},
     data(){
       return {
         defaultMenuActive: '',
@@ -370,11 +356,10 @@
           this.serverDetailData = item;
           this.dialogServer = true;
         }else if (item.is_default == true){
-          console.log(item);
           if (item.form_code == 'PTGL'){
+            this.serverSysDetailData = item;
             this.formCreateSystemTitleData = this.$t("普通申请单");
           }
-          this.serverSysDetailData = item;
           this.dialogSystemServer = true;
         }
       },
@@ -534,6 +519,76 @@
           }
         }
         return ruleList;
+      },
+      saveForm(type){
+        this.$refs.form.validate().then(() => {
+          if (this.form.orderInfoList.length == 0){
+            Toast(this.$t("请设置单据明细"));
+            return;
+          }
+          let contentJson = [
+            {
+              field: 'fk_name20230501',
+              value: this.form.title,
+            },
+            {
+              field: 'fk_des20230501',
+              value: this.form.des,
+            },
+            {
+              field: 'fk_files20230501',
+              value: this.form.files,
+              name: this.form.files
+            },
+            {
+              field: 'apply_dept20230501',
+              value: this.form.deptId,
+              deptName: this.form.dept,
+            },
+            {
+              field: 'apply_user20230501',
+              value: this.form.userId,
+            },
+            {
+              field: 'xm_id20230501',
+              value: this.form.objectId,
+              name: this.form.object
+            },
+            {
+              field: 'tag_id20230501',
+              value: this.form.tagId,
+              name: this.form.tag
+            },
+            {
+              field: 'cost_info20230501',
+              value: this.form.orderInfoList,
+            }
+          ];
+
+          let params = {
+            formCode: 'PTGL',
+            userId: this.form.userId,
+          }
+
+          let url = common.server_form_add;
+          if (type == 1){
+            params['submit'] = false;
+          }else if (type == 2){
+            params['submit'] = true;
+          }
+          params['applyContent'] = JSON.stringify(contentJson);
+          params = this.$qs.stringify(params);
+          this.btnLoading = true;
+          this.$axios.post(url, params, {loading: false}).then(res => {
+            if (res.data.code == 200){
+              this.returnIndex();
+              Toast(res.data.desc);
+            }else {
+              Toast(res.data.desc);
+            }
+            this.btnLoading = false;
+          });
+        });
       }
     }
   }

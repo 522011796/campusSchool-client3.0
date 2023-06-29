@@ -1137,6 +1137,14 @@ ul{
 .custom-cascader .el-cascader-menu__wrap {
   height: 350px;
 }
+.custom-cascader-w415 .el-cascader-menu{
+  min-width: 415px;
+  max-width: 415px;
+}
+.custom-cascader-w180 .el-cascader-menu{
+  min-width: 180px;
+  max-width: 415px;
+}
 .el-scrollbar .el-scrollbar__bar {
   opacity: 1 !important;
 }
