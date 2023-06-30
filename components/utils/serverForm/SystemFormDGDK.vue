@@ -38,7 +38,10 @@
               <el-cascader-panel ref="SelectorDept" :style="{ width: '415px',overflowX:'auto' }" :props="{multiple: false,checkStrictly:true}" v-model="dataModalList" :options="dataTreeList" @expand-change="changeDept" @change="searchDept"></el-cascader-panel>
             </div>
           </el-form-item>
-          <el-form-item :label="$t('申请事由')" class="custom-textarea-inner">
+          <el-form-item :label="$t('付款日期')" prop="fkTime">
+            <my-date-picker size="small" width-style="415" :sel-value="form.skTime" @change="selBlockFun($event, 'fkTime')"></my-date-picker>
+          </el-form-item>
+          <el-form-item :label="$t('打款事由')" class="custom-textarea-inner">
             <el-input size="small" type="textarea" v-model="form.des" class="width-415"></el-input>
           </el-form-item>
           <el-form-item :label="$t('单据明细')">
@@ -67,8 +70,20 @@
               </div>
             </template>
           </el-form-item>
+          <el-form-item :label="$t('供应商')" prop="gys">
+            <my-select size="small" :sel-value="form.gysId" :options="tableGysData" width-style="415" @change="selBlockFun($event, 'gys')"></my-select>
+          </el-form-item>
+          <el-form-item :label="$t('关联单据')">
+            <my-select size="small" :sel-value="form.djId" :options="filterBillTypes" width-style="415" @change="selBlockFun($event, 'dj')"></my-select>
+          </el-form-item>
           <el-form-item :label="$t('关联项目')">
             <my-select size="small" :sel-value="form.objectId" :options="tableObjectData" width-style="415" @change="selBlockFun($event, 'object')"></my-select>
+          </el-form-item>
+          <el-form-item :label="$t('关联合同')">
+            <my-select size="small" :sel-value="form.orderId" :options="tableHtData" width-style="415" @change="selBlockFun($event, 'ht')"></my-select>
+          </el-form-item>
+          <el-form-item :label="$t('关联款项')">
+            <my-select size="small" :sel-value="form.kxId" :options="form.kxList" width-style="415" @change="selBlockFun($event, 'kx')"></my-select>
           </el-form-item>
           <el-form-item :label="$t('标签')">
             <my-select size="small" :sel-value="form.tagId" :options="tableTagData" width-style="415" @change="selBlockFun($event, 'tag')"></my-select>
@@ -121,11 +136,12 @@
   import {MessageError, MessageSuccess, MessageWarning} from "~/utils/utils";
   import systemServerValidater from "~/utils/validater/systemServerValidater";
   import SystemFormDataInfo from "~/components/utils/serverForm/SystemFormDataInfo.vue";
+  import MyDatePicker from "~/components/MyDatePicker.vue";
 
   export default {
-    name: 'systemFormPtgl',
+    name: 'systemFormDgdk',
     mixins: [mixins, systemServerValidater],
-    components: {SystemFormDataInfo, DrawerLayoutRight, MySelect},
+    components: {MyDatePicker, SystemFormDataInfo, DrawerLayoutRight, MySelect},
     props: {
       dialogVisible: {
         default: false,
@@ -143,6 +159,9 @@
           this.initTag();
           this.init();
           this.initDept();
+          this.initGys();
+          this.initTeacherAccount();
+          this.initHt();
         }
         this.dialogVisibleInner = this.dialogVisible;
       }
@@ -152,8 +171,14 @@
         uploadAction: common.upload_file,
         value: '',
         tableTagData: [],
+        tableOrderData: [],
         tableObjectData: [],
         tableTeacherData: [],
+        tableGysData: [],
+        tableDjData: [],
+        tableJKData: [],
+        tableHtData: [],
+        tableTeacherAccountData: [],
         userOptions: [],
         dataTreeList: [],
         dataModalList: [],
@@ -169,6 +194,7 @@
         btnLoading: false,
         moneyTotal: 0.00,
         processId: '',
+        backMoneyIndex: '',
         form: {
           title: '',
           user: '',
@@ -176,7 +202,7 @@
           dept: '',
           deptId: '',
           des: '',
-          jkTime: '',
+          fkTime: '',
           orderInfo: '',
           orderInfoList: [],
           hkTime: '',
@@ -189,7 +215,14 @@
           order: '',
           orderId: '',
           tag: '',
-          tagId: ''
+          tagId: '',
+          dj: '',
+          djId: '',
+          gys: '',
+          gysId: '',
+          kx: '',
+          kxId: '',
+          kxList: []
         }
       }
     },
@@ -210,6 +243,36 @@
         this.dataTreeList = this.dataDept;
         this.dataModalList = this.dataModalBakList;
       },
+      initHt(){
+        let params = {
+          page: 1,
+          num: 9999
+        };
+        this.$axios.get(common.ht_list, {params: params, loading:false}).then(res => {
+          if (res.data.data){
+            let array = [];
+            for (let i = 0; i < res.data.data.length; i++){
+              let payableDataList = [];
+              if (res.data.data[i].payableDataList && res.data.data[i].payableDataList.length > 0){
+                for (let j = 0; j < res.data.data[i].payableDataList.length; j++){
+                  payableDataList.push({
+                    label: "第"+res.data.data[i].payableDataList[j].stage+"期" + "("+"¥"+res.data.data[i].payableDataList[j].shouldAmount+")",
+                    text: "第"+res.data.data[i].payableDataList[j].stage+"期" + "("+"¥"+res.data.data[i].payableDataList[j].shouldAmount+")",
+                    value: res.data.data[i].payableDataList[j]._id,
+                  });
+                }
+              }
+              array.push({
+                label: res.data.data[i]['applyData'] ? res.data.data[i]['applyData'].ht_name20230501.value : '',
+                text: res.data.data[i]['applyData'] ? res.data.data[i]['applyData'].ht_name20230501.value : '',
+                value: res.data.data[i]._id,
+                kxList: payableDataList
+              });
+            }
+            this.tableHtData = array;
+          }
+        });
+      },
       initObject(){
         let params = {
           page: 1,
@@ -226,6 +289,44 @@
               });
             }
             this.tableObjectData = array;
+          }
+        });
+      },
+      initTeacherAccount(){
+        let params = {
+          page: 1,
+          num: 9999
+        };
+        this.$axios.get(common.teacher_account_list, {params: params}).then(res => {
+          if (res.data.data){
+            let array = [];
+            for (let i = 0; i < res.data.data.length; i++){
+              array.push({
+                label: res.data.data[i].account_num + "("+ res.data.data[i].account_name +")",
+                text: res.data.data[i].account_num + "("+ res.data.data[i].account_name +")",
+                value: res.data.data[i].account_num
+              });
+            }
+            this.tableTeacherAccountData = array;
+          }
+        });
+      },
+      initGys(){
+        let params = {
+          page: 1,
+          num: 9999
+        };
+        this.$axios.get(common.supplier_account_list, {params: params, loading:false}).then(res => {
+          if (res.data.data){
+            let array = [];
+            for (let i = 0; i < res.data.data.length; i++){
+              array.push({
+                label: res.data.data[i].company,
+                text: res.data.data[i].company,
+                value: res.data.data[i].id
+              });
+            }
+            this.tableGysData = array;
           }
         });
       },
@@ -298,9 +399,10 @@
       handleAvatarError(res, file){
 
       },
-      async selBlockFun(data, type){
+      async selBlockFun(data, type, index){
         this.pageType = type;
         this.pageTypeStr = data;
+        this.backMoneyIndex= index;
         if (type == 'object'){
           let obj = {};
           obj = this.tableObjectData.find((item)=>{
@@ -322,6 +424,63 @@
           });
           this.form.user = obj.label;
           this.form.userId = data;
+        }else if (type == 'ht'){
+          let obj = {};
+          obj = this.tableHtData.find((item)=>{
+            return item.value === data;
+          });
+          this.form.order = obj.label;
+          this.form.orderId = data;
+          this.form.kxList = obj.kxList;
+        }else if (type == 'kx'){
+          let obj = {};
+          obj = this.form.kxList.find((item)=>{
+            return item.value === data;
+          });
+          this.form.kx = obj.label;
+          this.form.kxId = data;
+        }else if (type == 'rules'){
+          let obj = {
+            stage: 1,
+            rate: 1,
+            amount: 0,
+            time: '',
+            des: ''
+          };
+          this.form.backMoney.splice((this.form.backMoney.length-1)+1, 0, obj);
+        }else if (this.pageType == 'zfTime'){
+          this.$set(this.form.backMoney[index], 'time', data);
+        }else if (this.pageType == 'sqTime'){
+          this.form.sqTime = data;
+        }else if (this.pageType == 'hkTime'){
+          this.form.hkTime = data;
+        }else if (this.pageType == 'jkTime'){
+          this.form.jkTime = data;
+        }else if (this.pageType == 'skTime'){
+          this.form.skTime = data;
+        }else if (this.pageType == 'fkTime'){
+          this.form.fkTime = data;
+        }else if (type == 'account'){
+          let obj = {};
+          obj = this.tableTeacherAccountData.find((item)=>{
+            return item.value === data;
+          });
+          this.form.skAccountName = obj.label;
+          this.form.skAccount = data;
+        }else if (this.pageType == 'gys'){
+          let obj = {};
+          obj = this.tableGysData.find((item)=>{
+            return item.value === data;
+          });
+          this.form.gys = obj.label;
+          this.form.gysId = data;
+        }else if (type == 'dj'){
+          let obj = {};
+          obj = this.filterBillTypes.find((item)=>{
+            return item.value === data;
+          });
+          this.form.dj = obj.label;
+          this.form.djId = data;
         }
       },
       selUserMethod(query) {
@@ -363,7 +522,7 @@
           dept: '',
           deptId: '',
           des: '',
-          jkTime: '',
+          fkTime: '',
           orderInfo: '',
           orderInfoList: [],
           hkTime: '',
@@ -376,7 +535,14 @@
           order: '',
           orderId: '',
           tag: '',
-          tagId: ''
+          tagId: '',
+          dj: '',
+          djId: '',
+          gys: '',
+          gysId: '',
+          kx: '',
+          kxId: '',
+          kxList: []
         }
         this.dataModalList = [];
         this.dataModalBakList = [];
@@ -390,7 +556,7 @@
         this.dialogVisibleInner = false;
       },
       addDataInfo(data){
-        this.processId = data.typeId;
+        this.processId = this.form.orderInfoList.length > 0 ? this.form.orderInfoList[0].type : '';
         this.dialogChildVisible = true;
       },
       closeDetailDialog(){
@@ -398,7 +564,12 @@
         this.btnLoading = false;
         this.dialogVisibleInner = false;
       },
+      minTableItem(index){
+        this.form.backMoney.splice(index, 1);
+      },
       saveForm(type){
+        let error = 0;
+        let req = /^([1-9][0-9]{0,1}|100)$/;
         this.$refs.form.validate().then(() => {
           if (this.form.deptId.length == 0){
             MessageWarning(this.$t("请设置部门"));
@@ -418,6 +589,10 @@
               value: this.form.des,
             },
             {
+              field: 'fk_date20230501',
+              value: this.form.fkTime,
+            },
+            {
               field: 'fk_files20230501',
               value: this.form.files,
               name: this.form.files
@@ -432,14 +607,38 @@
               value: this.form.userId,
             },
             {
-              field: 'xm_id20230501',
-              value: this.form.objectId,
-              name: this.form.object
+              field: 'fk_date20230501',
+              value: this.form.fkTime,
             },
             {
               field: 'tag_id20230501',
               value: this.form.tagId,
               name: this.form.tag
+            },
+            {
+              field: 'xm_id20230501',
+              value: this.form.objectId,
+              name: this.form.object
+            },
+            {
+              field: 'ht_id20230501',
+              value: this.form.orderId,
+              name: this.form.order
+            },
+            {
+              field: 'ht_pay20230501',
+              value: this.form.kxId,
+              name: this.form.kx
+            },
+            {
+              field: 'supplierId20230501',
+              value: this.form.gysId,
+              name: this.form.gys,
+            },
+            {
+              field: 'rela_apply20230501',
+              value: this.form.djId,
+              name: this.form.dj,
             },
             {
               field: 'cost_info20230501',
@@ -449,7 +648,7 @@
 
           console.log(contentJson);
           let params = {
-            formCode: 'PTGL',
+            formCode: 'DGDK',
             userId: this.form.userId,
           }
 
@@ -497,7 +696,7 @@
   border-radius: 5px;
   background: #FFFFFF;
   padding: 0px 10px;
-  margin-bottom: 0px;
+  margin-bottom: 10px;
   position: relative;
   width: 415px;
 }

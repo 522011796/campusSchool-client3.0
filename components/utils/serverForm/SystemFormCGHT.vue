@@ -38,7 +38,16 @@
               <el-cascader-panel ref="SelectorDept" :style="{ width: '415px',overflowX:'auto' }" :props="{multiple: false,checkStrictly:true}" v-model="dataModalList" :options="dataTreeList" @expand-change="changeDept" @change="searchDept"></el-cascader-panel>
             </div>
           </el-form-item>
-          <el-form-item :label="$t('申请事由')" class="custom-textarea-inner">
+          <el-form-item :label="$t('申请日期')" prop="sqTime">
+            <my-date-picker size="small" width-style="415" :sel-value="form.sqTime" @change="selBlockFun($event, 'sqTime')"></my-date-picker>
+          </el-form-item>
+          <el-form-item :label="$t('供应商')" prop="gys">
+            <my-select size="small" :sel-value="form.gysId" :options="tableGysData" width-style="415" @change="selBlockFun($event, 'gys')"></my-select>
+          </el-form-item>
+          <el-form-item :label="$t('合同总金额')" prop="amount">
+            <el-input size="small" v-model="form.amount" class="width-415"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('申请说明')" class="custom-textarea-inner">
             <el-input size="small" type="textarea" v-model="form.des" class="width-415"></el-input>
           </el-form-item>
           <el-form-item :label="$t('单据明细')">
@@ -70,7 +79,7 @@
           <el-form-item :label="$t('关联项目')">
             <my-select size="small" :sel-value="form.objectId" :options="tableObjectData" width-style="415" @change="selBlockFun($event, 'object')"></my-select>
           </el-form-item>
-          <el-form-item :label="$t('标签')">
+          <el-form-item :label="$t('合同标签')">
             <my-select size="small" :sel-value="form.tagId" :options="tableTagData" width-style="415" @change="selBlockFun($event, 'tag')"></my-select>
           </el-form-item>
           <el-form-item :label="$t('上传附件')">
@@ -97,6 +106,86 @@
               <el-button size="small" type="primary">{{$t("上传附件")}}</el-button>
             </el-upload>
           </el-form-item>
+          <el-form-item :label="$t('支付计划')">
+            <div>
+              <van-icon name="plus" size="20" class="color-muted" @click="selBlockFun($t('支付计划'),'rules')"/>
+            </div>
+            <template v-if="form.backMoney.length > 0">
+              <div class="system-order-main-block">
+                <div v-for="(item, index) in form.backMoney" :key="index" class="system-order-item-block">
+                  <div class="border-bottom-1">
+                    <el-row>
+                      <el-col :span="8">
+                        <div class="system-order-item-left-block">
+                          <span>{{$t("期数")}}</span>
+                        </div>
+                      </el-col>
+                      <el-col :span="16">
+                        <div class="text-right font-bold" style="padding: 10px 16px;line-height: 24px;position: relative">
+                          <label class="color-muted">{{index+1}}{{$t("期")}}</label>
+                          <label v-if="index != 0" class="fa fa-times-circle color-danger" style="font-size: 20px;position: absolute; right: -10px; top: -10px" @click="minTableItem(index)"></label>
+                        </div>
+                      </el-col>
+                    </el-row>
+                  </div>
+                  <div class="border-bottom-1">
+                    <el-row>
+                      <el-col :span="8">
+                        <div class="system-order-item-left-block">
+                          <span>{{$t("支付比例")}}</span>
+                        </div>
+                      </el-col>
+                      <el-col :span="16">
+                        <el-input size="small" v-model="item.rate" style="position: relative; top: 3px" :placeholder="$t('比例:1-100')">
+                          <template slot="append">%</template>
+                        </el-input>
+                      </el-col>
+                    </el-row>
+                  </div>
+                  <div class="border-bottom-1">
+                    <el-row>
+                      <el-col :span="8">
+                        <div class="system-order-item-left-block">
+                          <span>{{$t("支付金额")}}</span>
+                        </div>
+                      </el-col>
+                      <el-col :span="16">
+                        <div class="text-right" style="padding: 10px 16px;line-height: 24px;position: relative">
+                          <label class="color-muted">{{isNaN((item.rate * form.amount / 100)) ? '合同金额有误' : (item.rate * form.amount / 100).toFixed(2)}}</label>
+                        </div>
+                      </el-col>
+                    </el-row>
+                  </div>
+                  <div class="border-bottom-1">
+                    <el-row>
+                      <el-col :span="8">
+                        <div class="system-order-item-left-block">
+                          <span>{{$t("支付日期")}}</span>
+                        </div>
+                      </el-col>
+                      <el-col :span="16">
+                        <div class="text-right" style="position: relative">
+                          <my-date-picker width-style="275" size="small" :sel-value="item.time" @change="selBlockFun($event, 'zfTime', index)" :placeholder="$t('请设置信息')"></my-date-picker>
+                        </div>
+                      </el-col>
+                    </el-row>
+                  </div>
+                  <div>
+                    <el-row>
+                      <el-col :span="8">
+                        <div class="system-order-item-left-block">
+                          <span>{{$t("备注")}}</span>
+                        </div>
+                      </el-col>
+                      <el-col :span="16">
+                        <el-input size="small" v-model="item.des" style="position: relative; top: 3px" :placeholder="$t('请设置信息')"></el-input>
+                      </el-col>
+                    </el-row>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </el-form-item>
         </el-form>
       </div>
       <div slot="footer">
@@ -121,11 +210,12 @@
   import {MessageError, MessageSuccess, MessageWarning} from "~/utils/utils";
   import systemServerValidater from "~/utils/validater/systemServerValidater";
   import SystemFormDataInfo from "~/components/utils/serverForm/SystemFormDataInfo.vue";
+  import MyDatePicker from "~/components/MyDatePicker.vue";
 
   export default {
-    name: 'systemFormPtgl',
+    name: 'systemFormCght',
     mixins: [mixins, systemServerValidater],
-    components: {SystemFormDataInfo, DrawerLayoutRight, MySelect},
+    components: {MyDatePicker, SystemFormDataInfo, DrawerLayoutRight, MySelect},
     props: {
       dialogVisible: {
         default: false,
@@ -143,6 +233,7 @@
           this.initTag();
           this.init();
           this.initDept();
+          this.initGys();
         }
         this.dialogVisibleInner = this.dialogVisible;
       }
@@ -154,6 +245,10 @@
         tableTagData: [],
         tableObjectData: [],
         tableTeacherData: [],
+        tableGysData: [],
+        tableDjData: [],
+        tableJKData: [],
+        tableHtData: [],
         userOptions: [],
         dataTreeList: [],
         dataModalList: [],
@@ -169,17 +264,18 @@
         btnLoading: false,
         moneyTotal: 0.00,
         processId: '',
+        backMoneyIndex: '',
         form: {
           title: '',
           user: '',
           userId: '',
           dept: '',
+          deptName: '',
           deptId: '',
           des: '',
-          jkTime: '',
           orderInfo: '',
           orderInfoList: [],
-          hkTime: '',
+          sqTime: '',
           skAccount: '',
           skAccountName: '',
           files: [],
@@ -189,7 +285,20 @@
           order: '',
           orderId: '',
           tag: '',
-          tagId: ''
+          tagId: '',
+          gys: '',
+          gysId: '',
+          amount: 0,
+          backMoneyIndex: '',
+          backMoney: [
+            {
+              stage: 1,
+              rate: 1,
+              amount: 0,
+              time: '',
+              des: ''
+            }
+          ]
         }
       }
     },
@@ -226,6 +335,25 @@
               });
             }
             this.tableObjectData = array;
+          }
+        });
+      },
+      initGys(){
+        let params = {
+          page: 1,
+          num: 9999
+        };
+        this.$axios.get(common.supplier_account_list, {params: params, loading:false}).then(res => {
+          if (res.data.data){
+            let array = [];
+            for (let i = 0; i < res.data.data.length; i++){
+              array.push({
+                label: res.data.data[i].company,
+                text: res.data.data[i].company,
+                value: res.data.data[i].id
+              });
+            }
+            this.tableGysData = array;
           }
         });
       },
@@ -298,9 +426,10 @@
       handleAvatarError(res, file){
 
       },
-      async selBlockFun(data, type){
+      async selBlockFun(data, type, index){
         this.pageType = type;
         this.pageTypeStr = data;
+        this.backMoneyIndex= index;
         if (type == 'object'){
           let obj = {};
           obj = this.tableObjectData.find((item)=>{
@@ -322,6 +451,26 @@
           });
           this.form.user = obj.label;
           this.form.userId = data;
+        }else if (type == 'rules'){
+          let obj = {
+            stage: 1,
+            rate: 1,
+            amount: 0,
+            time: '',
+            des: ''
+          };
+          this.form.backMoney.splice((this.form.backMoney.length-1)+1, 0, obj);
+        }else if (this.pageType == 'zfTime'){
+          this.$set(this.form.backMoney[index], 'time', data);
+        }else if (this.pageType == 'sqTime'){
+          this.form.sqTime = data;
+        }else if (this.pageType == 'gys'){
+          let obj = {};
+          obj = this.tableGysData.find((item)=>{
+            return item.value === data;
+          });
+          this.form.gys = obj.label;
+          this.form.gysId = data;
         }
       },
       selUserMethod(query) {
@@ -361,12 +510,12 @@
           user: '',
           userId: '',
           dept: '',
+          deptName: '',
           deptId: '',
           des: '',
-          jkTime: '',
           orderInfo: '',
           orderInfoList: [],
-          hkTime: '',
+          sqTime: '',
           skAccount: '',
           skAccountName: '',
           files: [],
@@ -376,7 +525,20 @@
           order: '',
           orderId: '',
           tag: '',
-          tagId: ''
+          tagId: '',
+          gys: '',
+          gysId: '',
+          amount: 0,
+          backMoneyIndex: '',
+          backMoney: [
+            {
+              stage: 1,
+              rate: 1,
+              amount: 0,
+              time: '',
+              des: ''
+            }
+          ]
         }
         this.dataModalList = [];
         this.dataModalBakList = [];
@@ -398,7 +560,12 @@
         this.btnLoading = false;
         this.dialogVisibleInner = false;
       },
+      minTableItem(index){
+        this.form.backMoney.splice(index, 1);
+      },
       saveForm(type){
+        let error = 0;
+        let req = /^([1-9][0-9]{0,1}|100)$/;
         this.$refs.form.validate().then(() => {
           if (this.form.deptId.length == 0){
             MessageWarning(this.$t("请设置部门"));
@@ -410,17 +577,12 @@
           }
           let contentJson = [
             {
-              field: 'fk_name20230501',
+              field: 'ht_name20230501',
               value: this.form.title,
             },
             {
-              field: 'fk_des20230501',
-              value: this.form.des,
-            },
-            {
-              field: 'fk_files20230501',
-              value: this.form.files,
-              name: this.form.files
+              field: 'apply_user20230501',
+              value: this.form.userId,
             },
             {
               field: 'apply_dept20230501',
@@ -428,8 +590,26 @@
               deptName: this.form.dept,
             },
             {
-              field: 'apply_user20230501',
-              value: this.form.userId,
+              field: 'ht_time20230501',
+              value: this.form.sqTime,
+            },
+            {
+              field: 'ht_supplierId20230501',
+              value: this.form.gysId,
+              name: this.form.gys
+            },
+            {
+              field: 'ht_amount20230501',
+              value: this.form.amount,
+            },
+            {
+              field: 'ht_des20230501',
+              value: this.form.des,
+            },
+            {
+              field: 'ht_files20230501',
+              value: this.form.files,
+              name: this.form.files
             },
             {
               field: 'xm_id20230501',
@@ -440,16 +620,51 @@
               field: 'tag_id20230501',
               value: this.form.tagId,
               name: this.form.tag
-            },
-            {
-              field: 'cost_info20230501',
-              value: this.form.orderInfoList,
             }
           ];
 
+          let error = 0;
+          for (let i = 0; i < this.form.backMoney.length; i++){
+            if (this.form.backMoney[i].rate == ''){
+              error++;
+              break;
+            }
+            if (this.form.backMoney[i].rate != '' && !req.test(this.form.backMoney[i].rate)){
+              error++;
+              break;
+            }
+            if (this.form.backMoney[i].time == ''){
+              error++;
+              break;
+            }
+
+            contentJson.push({
+              field: 'ht_payStage20230501_' + (i+1),
+              value: this.form.backMoney[i].stage
+            },{
+              field: 'ht_payRate20230501_' + (i+1),
+              value: this.form.backMoney[i].rate
+            },{
+              field: 'ht_payAmount20230501_' + (i+1),
+              value: this.form.backMoney[i].amount
+            },{
+              field: 'ht_payTime20230501_' + (i+1),
+              value: this.form.backMoney[i].time
+            },{
+              field: 'ht_payDes20230501_' + (i+1),
+              value: this.form.backMoney[i].des
+            });
+          }
+
+          if (error > 0){
+            this.dialogLoading = false;
+            MessageWarning(this.$t("支付计划未设置有误(比例:1-100),请检查!"));
+            return;
+          }
+
           console.log(contentJson);
           let params = {
-            formCode: 'PTGL',
+            formCode: 'CGHT',
             userId: this.form.userId,
           }
 
@@ -497,7 +712,7 @@
   border-radius: 5px;
   background: #FFFFFF;
   padding: 0px 10px;
-  margin-bottom: 0px;
+  margin-bottom: 10px;
   position: relative;
   width: 415px;
 }

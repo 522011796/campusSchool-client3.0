@@ -2,7 +2,7 @@
   <div>
     <drawer-layout-right tabindex="9999" v-bind="selectModel" @close="closeDialog" @changeDrawer="closeDetailDialog" :visible="dialogVisibleInner" size="550px" :title="title" @right-close="cancelDrawDialog">
       <div slot="content" class="color-muted">
-        <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form ref="form" :model="form" :rules="rules" label-width="100px">
           <el-form-item :label="$t('费用类型')" prop="type">
             <my-select size="small" :sel-value="form.type" :options="moneyList" width-style="415" @change="selBlockFun($event, 'type')"></my-select>
           </el-form-item>
@@ -512,7 +512,7 @@
         if (res.code == '200') {
           this.setBackShowData(res.data);
         } else {
-          Toast(res.desc);
+          MessageWarning(res.desc);
         }
       },
       handleAvatarFpOcrError(res, file){
@@ -645,7 +645,7 @@
           obj = this.tableObjectData.find((item)=>{
             return item.value === data;
           });
-          this.form.object = data.label;
+          this.form.object = obj.label;
           this.form.objectId = data;
         }else if (type == 'tag'){
           let obj = {};
@@ -718,6 +718,9 @@
         this.dataModalList = [];
         this.dataModalBakList = [];
         this.deptStatusContent = [];
+        if (this.$refs['form']){
+          this.$refs['form'].resetFields();
+        }
         this.$parent.dialogChildVisible = false;
       },
       cancelDrawDialog(){

@@ -827,8 +827,8 @@
             },
             {
               field: 'rela_apply20230501',
-              value: this.form.objectId,
-              name: this.form.object
+              value: this.form.djId,
+              name: this.form.dj
             },
             {
               field: 'borrow_apply20230501',

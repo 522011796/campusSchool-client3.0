@@ -38,39 +38,16 @@
               <el-cascader-panel ref="SelectorDept" :style="{ width: '415px',overflowX:'auto' }" :props="{multiple: false,checkStrictly:true}" v-model="dataModalList" :options="dataTreeList" @expand-change="changeDept" @change="searchDept"></el-cascader-panel>
             </div>
           </el-form-item>
-          <el-form-item :label="$t('申请事由')" class="custom-textarea-inner">
-            <el-input size="small" type="textarea" v-model="form.des" class="width-415"></el-input>
+          <el-form-item :label="$t('申请日期')" prop="sqTime">
+            <my-date-picker size="small" width-style="415" :sel-value="form.sqTime" @change="selBlockFun($event, 'sqTime')"></my-date-picker>
           </el-form-item>
-          <el-form-item :label="$t('单据明细')">
-            <span slot="label">
-              <label class="color-danger">*</label>
-              {{$t('单据明细')}}
-            </span>
-            <div>
-              <el-button size="small" type="primary" @click="addDataInfo">{{$t("添加单据")}}</el-button>
-            </div>
-            <template v-if="form.orderInfoList.length > 0" class="margin-top-5">
-              <div class="system-order-main-block">
-                <div v-for="(item, index) in form.orderInfoList" :key="index" class="system-order-item-block">
-                  <i class="fa fa-times-circle" style="font-size: 20px;position: absolute;right: 5px;top: 3px" @click="removeOrderItem(index)"></i>
-                  <div>
-                    <span class="color-muted">{{ item.time }}</span>
-                  </div>
-                  <div class="margin-top-5 font-size-14">
-                    <div class="system-order-info-item-block">
-                      <span class="color-muted" style="position: relative;top: -10px">{{$t('费用')}}:</span>
-                      <div class="color-muted font-bold moon-content-text-ellipsis-class" style="max-width: 180px;position: relative;top:0px; display: inline-block">{{ item.typeStr }}</div>
-                      <span class="color-success font-bold" style="position: relative;top: -10px">¥{{ item.amount }}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </template>
+          <el-form-item :label="$t('申请说明')" class="custom-textarea-inner">
+            <el-input size="small" type="textarea" v-model="form.des" class="width-415"></el-input>
           </el-form-item>
           <el-form-item :label="$t('关联项目')">
             <my-select size="small" :sel-value="form.objectId" :options="tableObjectData" width-style="415" @change="selBlockFun($event, 'object')"></my-select>
           </el-form-item>
-          <el-form-item :label="$t('标签')">
+          <el-form-item :label="$t('合同标签')">
             <my-select size="small" :sel-value="form.tagId" :options="tableTagData" width-style="415" @change="selBlockFun($event, 'tag')"></my-select>
           </el-form-item>
           <el-form-item :label="$t('上传附件')">
@@ -121,11 +98,12 @@
   import {MessageError, MessageSuccess, MessageWarning} from "~/utils/utils";
   import systemServerValidater from "~/utils/validater/systemServerValidater";
   import SystemFormDataInfo from "~/components/utils/serverForm/SystemFormDataInfo.vue";
+  import MyDatePicker from "~/components/MyDatePicker.vue";
 
   export default {
-    name: 'systemFormPtgl',
+    name: 'systemFormTyht',
     mixins: [mixins, systemServerValidater],
-    components: {SystemFormDataInfo, DrawerLayoutRight, MySelect},
+    components: {MyDatePicker, SystemFormDataInfo, DrawerLayoutRight, MySelect},
     props: {
       dialogVisible: {
         default: false,
@@ -143,6 +121,7 @@
           this.initTag();
           this.init();
           this.initDept();
+          this.initGys();
         }
         this.dialogVisibleInner = this.dialogVisible;
       }
@@ -154,6 +133,10 @@
         tableTagData: [],
         tableObjectData: [],
         tableTeacherData: [],
+        tableGysData: [],
+        tableDjData: [],
+        tableJKData: [],
+        tableHtData: [],
         userOptions: [],
         dataTreeList: [],
         dataModalList: [],
@@ -169,6 +152,7 @@
         btnLoading: false,
         moneyTotal: 0.00,
         processId: '',
+        backMoneyIndex: '',
         form: {
           title: '',
           user: '',
@@ -176,10 +160,9 @@
           dept: '',
           deptId: '',
           des: '',
-          jkTime: '',
           orderInfo: '',
           orderInfoList: [],
-          hkTime: '',
+          sqTime: '',
           skAccount: '',
           skAccountName: '',
           files: [],
@@ -226,6 +209,25 @@
               });
             }
             this.tableObjectData = array;
+          }
+        });
+      },
+      initGys(){
+        let params = {
+          page: 1,
+          num: 9999
+        };
+        this.$axios.get(common.supplier_account_list, {params: params, loading:false}).then(res => {
+          if (res.data.data){
+            let array = [];
+            for (let i = 0; i < res.data.data.length; i++){
+              array.push({
+                label: res.data.data[i].company,
+                text: res.data.data[i].company,
+                value: res.data.data[i].id
+              });
+            }
+            this.tableGysData = array;
           }
         });
       },
@@ -298,9 +300,10 @@
       handleAvatarError(res, file){
 
       },
-      async selBlockFun(data, type){
+      async selBlockFun(data, type, index){
         this.pageType = type;
         this.pageTypeStr = data;
+        this.backMoneyIndex= index;
         if (type == 'object'){
           let obj = {};
           obj = this.tableObjectData.find((item)=>{
@@ -322,6 +325,26 @@
           });
           this.form.user = obj.label;
           this.form.userId = data;
+        }else if (type == 'rules'){
+          let obj = {
+            stage: 1,
+            rate: 1,
+            amount: 0,
+            time: '',
+            des: ''
+          };
+          this.form.backMoney.splice((this.form.backMoney.length-1)+1, 0, obj);
+        }else if (this.pageType == 'zfTime'){
+          this.$set(this.form.backMoney[index], 'time', data);
+        }else if (this.pageType == 'sqTime'){
+          this.form.sqTime = data;
+        }else if (this.pageType == 'gys'){
+          let obj = {};
+          obj = this.tableGysData.find((item)=>{
+            return item.value === data;
+          });
+          this.form.gys = obj.label;
+          this.form.gysId = data;
         }
       },
       selUserMethod(query) {
@@ -363,10 +386,9 @@
           dept: '',
           deptId: '',
           des: '',
-          jkTime: '',
           orderInfo: '',
           orderInfoList: [],
-          hkTime: '',
+          sqTime: '',
           skAccount: '',
           skAccountName: '',
           files: [],
@@ -398,29 +420,29 @@
         this.btnLoading = false;
         this.dialogVisibleInner = false;
       },
+      minTableItem(index){
+        this.form.backMoney.splice(index, 1);
+      },
       saveForm(type){
+        let error = 0;
+        let req = /^([1-9][0-9]{0,1}|100)$/;
         this.$refs.form.validate().then(() => {
           if (this.form.deptId.length == 0){
             MessageWarning(this.$t("请设置部门"));
             return;
           }
-          if (this.form.orderInfoList.length == 0){
-            MessageWarning(this.$t("请设置单据明细"));
-            return;
-          }
+          // if (this.form.orderInfoList.length == 0){
+          //   MessageWarning(this.$t("请设置单据明细"));
+          //   return;
+          // }
           let contentJson = [
             {
-              field: 'fk_name20230501',
+              field: 'ht_name20230501',
               value: this.form.title,
             },
             {
-              field: 'fk_des20230501',
-              value: this.form.des,
-            },
-            {
-              field: 'fk_files20230501',
-              value: this.form.files,
-              name: this.form.files
+              field: 'apply_user20230501',
+              value: this.form.userId,
             },
             {
               field: 'apply_dept20230501',
@@ -428,13 +450,17 @@
               deptName: this.form.dept,
             },
             {
-              field: 'apply_user20230501',
-              value: this.form.userId,
+              field: 'ht_time20230501',
+              value: this.form.sqTime,
             },
             {
-              field: 'xm_id20230501',
-              value: this.form.objectId,
-              name: this.form.object
+              field: 'ht_des20230501',
+              value: this.form.des,
+            },
+            {
+              field: 'ht_files20230501',
+              value: this.form.files,
+              name: this.form.files
             },
             {
               field: 'tag_id20230501',
@@ -442,14 +468,15 @@
               name: this.form.tag
             },
             {
-              field: 'cost_info20230501',
-              value: this.form.orderInfoList,
+              field: 'xm_id20230501',
+              value: this.form.objectId,
+              name: this.form.object
             }
           ];
 
           console.log(contentJson);
           let params = {
-            formCode: 'PTGL',
+            formCode: 'TYHT',
             userId: this.form.userId,
           }
 
@@ -497,7 +524,7 @@
   border-radius: 5px;
   background: #FFFFFF;
   padding: 0px 10px;
-  margin-bottom: 0px;
+  margin-bottom: 10px;
   position: relative;
   width: 415px;
 }

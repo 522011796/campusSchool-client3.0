@@ -328,7 +328,7 @@
   import {Toast} from "vant";
   import {MessageWarning} from "~/utils/utils";
   export default {
-    name: 'appSystemJKGL',
+    name: 'appSystemSKD',
     computed: {
       datalist() {
         return datalist
@@ -484,25 +484,6 @@
       },
       initObject(){
         this.tableObjectData = this.filterBillTypes;
-      },
-      initHt(){
-        let params = {
-          page: 1,
-          num: 9999
-        };
-        this.$axios.get(common.ht_list, {params: params, loading:false}).then(res => {
-          if (res.data.data){
-            let array = [];
-            for (let i = 0; i < res.data.data.length; i++){
-              array.push({
-                label: res.data.data[i]['applyData'] ? res.data.data[i]['applyData'].ht_name20230501.value : '',
-                text: res.data.data[i]['applyData'] ? res.data.data[i]['applyData'].ht_name20230501.value : '',
-                value: res.data.data[i]._id
-              });
-            }
-            this.tableHtData = array;
-          }
-        });
       },
       initTag(){
         let params = {

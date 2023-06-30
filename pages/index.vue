@@ -170,7 +170,7 @@
                 </div>
               </div>
               <el-row v-else :gutter="16">
-                <el-col :span="6" v-for="(item, index) in serverDataList" :key="index" @click.native="serverClick($event, item)" class="margin-bottom-20">
+                <el-col :span="6" v-for="(item, index) in serverDataList" v-if="item.form_code != 'XMGL'" :key="index" @click.native="serverClick($event, item)" class="margin-bottom-20">
                   <el-card shadow="always" :body-style="{padding: '18px',background: '#EBEEF5'}">
                     <div class="moon-content-text-ellipsis-class">
                       <el-image class="block-icon-class" :src="item.form_logo">
@@ -232,6 +232,14 @@
     </drawer-layout-right>
 
     <system-form-ptgl v-if="serverSysDetailData.form_code == 'PTGL'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-ptgl>
+    <system-form-cght v-if="serverSysDetailData.form_code == 'CGHT'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-cght>
+    <system-form-xsht v-if="serverSysDetailData.form_code == 'XSHT'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-xsht>
+    <system-form-tyht v-if="serverSysDetailData.form_code == 'TYHT'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-tyht>
+    <system-form-jkgl v-if="serverSysDetailData.form_code == 'JKGL'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-jkgl>
+    <system-form-skd v-if="serverSysDetailData.form_code == 'SKD'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-skd>
+    <system-form-hkd v-if="serverSysDetailData.form_code == 'HKD'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-hkd>
+    <system-form-bzbx v-if="serverSysDetailData.form_code == 'BZBX'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-bzbx>
+    <system-form-dgdk v-if="serverSysDetailData.form_code == 'DGDK'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-dgdk>
   </div>
 </template>
 
@@ -245,10 +253,26 @@
   import {MessageError, MessageSuccess, MessageWarning} from "~/utils/utils";
   import {Toast} from "vant";
   import SystemFormPtgl from "~/components/utils/serverForm/SystemFormPTGL.vue";
+  import SystemFormCght from "~/components/utils/serverForm/SystemFormCGHT.vue";
+  import SystemFormXsht from "~/components/utils/serverForm/SystemFormXSHT.vue";
+  import SystemFormTyht from "~/components/utils/serverForm/SystemFormTYHT.vue";
+  import SystemFormJkgl from "~/components/utils/serverForm/SystemFormJKGL.vue";
+  import SystemFormSkd from "~/components/utils/serverForm/SystemFormSKD.vue";
+  import SystemFormHkd from "~/components/utils/serverForm/SystemFormHKD.vue";
+  import SystemFormBzbx from "~/components/utils/serverForm/SystemFormBZBX.vue";
+  import SystemFormDgdk from "~/components/utils/serverForm/SystemFormDGDK.vue";
   export default {
     name: 'index',
     mixins: [mixins],
-    components: {SystemFormPtgl, DrawerLayoutRight, MyServerDialog, MyElTree, DialogNormal},
+    components: {
+      SystemFormDgdk,
+      SystemFormBzbx,
+      SystemFormHkd,
+      SystemFormSkd,
+      SystemFormJkgl,
+      SystemFormTyht,
+      SystemFormXsht,
+      SystemFormCght, SystemFormPtgl, DrawerLayoutRight, MyServerDialog, MyElTree, DialogNormal},
     data(){
       return {
         defaultMenuActive: '',
@@ -359,6 +383,30 @@
           if (item.form_code == 'PTGL'){
             this.serverSysDetailData = item;
             this.formCreateSystemTitleData = this.$t("普通申请单");
+          }else if (item.form_code == 'CGHT'){
+            this.serverSysDetailData = item;
+            this.formCreateSystemTitleData = this.$t("采购合同单");
+          }else if (item.form_code == 'XSHT'){
+            this.serverSysDetailData = item;
+            this.formCreateSystemTitleData = this.$t("销售合同单");
+          }else if (item.form_code == 'TYHT'){
+            this.serverSysDetailData = item;
+            this.formCreateSystemTitleData = this.$t("通用合同单");
+          }else if (item.form_code == 'JKGL'){
+            this.serverSysDetailData = item;
+            this.formCreateSystemTitleData = this.$t("借款单");
+          }else if (item.form_code == 'SKD'){
+            this.serverSysDetailData = item;
+            this.formCreateSystemTitleData = this.$t("收款单");
+          }else if (item.form_code == 'HKD'){
+            this.serverSysDetailData = item;
+            this.formCreateSystemTitleData = this.$t("还款单");
+          }else if (item.form_code == 'BZBX'){
+            this.serverSysDetailData = item;
+            this.formCreateSystemTitleData = this.$t("报账报销");
+          }else if (item.form_code == 'DGDK'){
+            this.serverSysDetailData = item;
+            this.formCreateSystemTitleData = this.$t("对公打款");
           }
           this.dialogSystemServer = true;
         }
