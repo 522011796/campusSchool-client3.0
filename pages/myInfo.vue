@@ -131,6 +131,18 @@
 <!--              </el-table-column>-->
               <el-table-column
                 align="center"
+                :label="$t('单据编号')">
+                <template slot-scope="scope">
+                  <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                    <div class="text-center">{{scope.row.formApplyNo ? scope.row.formApplyNo : '--'}}</div>
+                    <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                        {{scope.row.formApplyNo ? scope.row.formApplyNo : '--'}}
+                    </span>
+                  </el-popover>
+                </template>
+              </el-table-column>
+              <el-table-column
+                align="center"
                 :label="$t('申请日期')">
                 <template slot-scope="scope">
                   <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
@@ -146,9 +158,9 @@
                 :label="$t('名称')">
                 <template slot-scope="scope">
                   <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                    <div class="text-center">{{scope.row.formName}}</div>
+                    <div class="text-center">{{scope.row.noticeName}}</div>
                     <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                      {{scope.row.formName}}
+                      {{scope.row.noticeName}}
                     </span>
                   </el-popover>
                 </template>
@@ -948,6 +960,90 @@
 
     <!--服务-->
     <my-server-dialog :visible="dialogServer" width-style="850px" :data="serverDetailData" @close="closeDialog" @detailClick="detailClick"></my-server-dialog>
+
+    <drawer-layout-right tabindex="0" @close="closeDialog" :visible="dialogTagsVisible" size="600px" :title="$t('详细查看')" @right-close="cancelDrawDialog">
+      <div slot="content" class="color-muted">
+        <form-system-tags-detail
+          :detail-type="detailType"
+          :data-detail-obj="dataDetailObj"
+          :data-main-detail-obj = "dataMainDetailObj"
+          :extra-data-list="tableTagsDetailData"
+          :detail-apply-audit-list="detailApplyAuditList"
+          :draw-height="drawHeight8.height"
+          @changeDetailType="changeDetailType">
+
+        </form-system-tags-detail>
+      </div>
+      <div slot="footer" class="padding-lr-10">
+        <!--        <audit-button v-if="detailType == 2" :sel-value="dataMainDetailObj" @ok="handleOk" @no="handleNo" @cancel="handleCancel"></audit-button>-->
+        <el-button size="small" @click="cancelDrawDialog">{{$t("取消")}}</el-button>
+      </div>
+    </drawer-layout-right>
+
+    <drawer-layout-right tabindex="0" @close="closeDialog" :visible="dialogObjServerDetail" size="600px" :title="$t('详细查看')" @right-close="cancelDrawDialog">
+      <div slot="content" class="color-muted">
+        <form-system-detail
+          :form-code="formCode"
+          :detail-type="detailType"
+          :data-main-detail-obj="dataMainDetailObj"
+          :data-detail-obj="dataDetailObj"
+          :extra-data-list="payableDataList"
+          :detail-apply-audit-list="detailApplyAuditList"
+          :table-order-detail-data="tableOrderDetailData"
+          :draw-height="tableHeight19.height"
+          :table-height="tableHeight.height"
+          @changeDetailType="changeDetailType"
+          @detailOrderInfo="detailOrderInfo">
+
+        </form-system-detail>
+      </div>
+      <div slot="footer">
+        <audit-button v-if="detailType == 2" :sel-value="dataMainDetailObj" @ok="handleSystemOk" @no="handleSystemNo" @cancel="handleSystemCancel"></audit-button>
+        <div class="padding-lr-10">
+          <el-button size="small" @click="cancelDrawDialog">{{$t("取消")}}</el-button>
+        </div>
+      </div>
+    </drawer-layout-right>
+
+    <drawer-layout-right tabindex="0" @close="closeDialog" :visible="dialogNormalVisible" size="600px" :title="$t('详细查看')" @right-close="cancelDrawDialog">
+      <div slot="content" class="color-muted">
+        <form-system-normal-detail
+          :detail-type="detailType"
+          :data-detail-obj="dataDetailObj"
+          :data-main-detail-obj = "dataMainDetailObj"
+          :extra-data-list="tableNormalDetailData"
+          :detail-apply-audit-list="detailApplyAuditList"
+          :draw-height="drawHeight8.height"
+          @changeDetailType="changeDetailType">
+
+        </form-system-normal-detail>
+      </div>
+      <div slot="footer">
+        <audit-button v-if="detailType == 2" :sel-value="dataMainDetailObj" @ok="handleSystemOk" @no="handleSystemNo" @cancel="handleSystemCancel"></audit-button>
+        <div class="padding-lr-10">
+          <el-button size="small" @click="cancelDrawDialog">{{$t("取消")}}</el-button>
+        </div>
+      </div>
+    </drawer-layout-right>
+
+    <drawer-layout-right tabindex="0" @changeDrawer="closeDrawerDetailDialog" :visible="dialogOrderDetailVisible" size="550px" :title="$t('详细信息')" @right-close="cancelDrawDetailDialog">
+      <div slot="content" class="color-muted">
+        <div class="detail-block" :style="{height: drawHeight9.height}">
+          <form-system-order-detail
+            :detail-type="detailOrderType"
+            :data-detail-obj="dataOrderDetailObj"
+            :data-main-detail-obj = "dataOrderMainDetailObj"
+            :extra-data-list="payableOrderDataList"
+            :detail-apply-audit-list="detailOrderApplyAuditList"
+            :table-order-detail-data="payableOrderDataList"
+            :draw-height="tableHeight19.height"
+            :table-height="tableHeight.height"
+            @changeDetailType="changeOrderDetailType">
+
+          </form-system-order-detail>
+        </div>
+      </div>
+    </drawer-layout-right>
   </div>
 </template>
 
@@ -957,12 +1053,27 @@
   import DialogNormal from "~/components/utils/dialog/DialogNormal";
   import {MessageError, MessageSuccess} from "~/utils/utils";
   import {ImagePreview} from "vant";
+  import FormSystemTagsDetail from "~/components/utils/formDetail/FormSystemTagsDetail.vue";
   export default {
     name: 'index',
     mixins: [mixins],
-    components: {DialogNormal},
+    components: {FormSystemTagsDetail, DialogNormal},
     data(){
       return {
+        formCode: '',
+        detailOrderApplyAuditList: [],
+        payableOrderDataList: [],
+        payableDataList: [],
+        tableOrderDetailData: [],
+        tableTagsDetailData: [],
+        tableNormalDetailData: [],
+        detailType: 1,
+        detailOrderType: 1,
+        detailInfoType: '',
+        dataDetailObj: {},
+        dataMainDetailObj: {},
+        dataOrderDetailObj: {},
+        dataOrderMainDetailObj: {},
         activeTab: 1,
         activeMenu: 1,
         auditStatus: 1,
@@ -970,6 +1081,10 @@
         dialogServerDetail: false,
         dialogServerCheckDetail: false,
         drawerPayVisible: false,
+        dialogTagsVisible: false,
+        dialogObjServerDetail: false,
+        dialogNormalVisible: false,
+        dialogOrderDetailVisible: false,
         testArea: '',
         collectionList: [],
         noticeList: [],
@@ -1010,6 +1125,18 @@
       async init(){
         await this.getSessionInfo();
       },
+      initReal(id){
+        let params = {
+          id: id,
+          page: 1,
+          num: 9999
+        };
+        this.$axios.get(common.object_xm_real_page, {params: params}).then(res=> {
+          if (res.data.code == 200) {
+            this.tableOrderDetailData = res.data.data.list;
+          }
+        });
+      },
       initAuditList(){
         let params = {
           page: this.page,
@@ -1027,7 +1154,7 @@
           }
         });
       },
-      initAuditDetailList(id, type){
+      initAuditDetailList(id, type, extra){
         let params = {
           id: id
         };
@@ -1037,7 +1164,7 @@
               //console.log(res.data.data.handleList);
               if (type == 'main'){
                 this.detailData = res.data.data;
-                this.detailApplyAuditList = res.data.data.handleList;
+                this.detailApplyAuditList = res.data.data.handleList && res.data.data.handleList.length > 0 ? res.data.data.handleList : [];
                 let orderIndex = res.data.data.orderIndex;
                 for (let i = 0; i < res.data.data.handleList.length; i++){
                   if (res.data.data.handleList[i].orderIndex == orderIndex){
@@ -1064,6 +1191,29 @@
                     };
                   }
                 }
+              }else if (type == 'detail'){
+                this.dataDetailObj = res.data.data['applyData'] ? res.data.data['applyData'] : {};
+                this.dataMainDetailObj = res.data.data;
+                this.detailApplyAuditList = res.data.data.handleList && res.data.data.handleList.length > 0 ? res.data.data.handleList : [];
+                this.payableDataList = res.data.data.payableDataList;
+                this.tableOrderDetailData = res.data.data.payableDataList;
+
+                if (res.data.data.formCode == 'XMGL'){
+                  this.initReal(id);
+                }else if (res.data.data.formCode == 'XSHT' || res.data.data.formCode == 'CGHT' || res.data.data.formCode == 'TYHT'){
+                  let ruleList = [];
+                  //let count = res.data.data.applyData['ht_stage20230501'] ? res.data.data.applyData['ht_stage20230501'].value : 0;
+                  for (let i = 0; i < res.data.data.payableDataList.length; i++){
+                    ruleList.push({
+                      stage: res.data.data.payableDataList[i].stage,
+                      rate: res.data.data.payableDataList[i].rate,
+                      amount: res.data.data.payableDataList[i].shouldAmount,
+                      time: res.data.data.payableDataList[i].time,
+                      des: res.data.data.payableDataList[i].des,
+                    });
+                  }
+                  this.tableTagsDetailData = ruleList;
+                }
               }
               //console.log(this.detailApplyAuditUserData);
             }
@@ -1080,13 +1230,38 @@
         this.serverDetailData = item;
         this.dialogServer = true;
       },
+      detailOrderInfo(item){
+        this.initAuditDetailList(item.id, 'detailOrder', 2);
+        this.dialogOrderDetailVisible = true;
+      },
+      changeDetailType(event, type){
+        this.detailType = type;
+      },
+      changeOrderDetailType(event, type){
+        this.detailOrderType = type;
+      },
+      cancelDrawDetailDialog(){
+        this.dialogOrderDetailVisible = false;
+      },
+      closeDrawerDetailDialog(){
+        this.dataOrderDetailObj = {};
+        this.dataOrderMainDetailObj = {};
+        this.payableOrderDataList = [];
+        this.detailOrderApplyAuditList = [];
+        this.detailOrderType = 1;
+        this.dialogOrderDetailVisible = false;
+      },
       closeDialog(event){
         this.detailData = '';
         this.detailApplyContentData = [];
         this.detailApplyAuditList = [];
+        this.detailType = 1;
         this.dialogServer = false;
         this.dialogServerDetail = false;
         this.drawerPayVisible = false;
+        this.dialogTagsVisible = false;
+        this.dialogObjServerDetail = false;
+        this.dialogNormalVisible = false;
       },
       closeCheckDialog(event){
         this.detailCheckData = '';
@@ -1099,6 +1274,9 @@
       },
       cancelDrawDialog(){
         this.dialogServerDetail = false;
+        this.dialogTagsVisible = false;
+        this.dialogObjServerDetail = false;
+        this.dialogNormalVisible = false;
       },
       cancelCheckDrawDialog(){
         this.dialogServerCheckDetail = false;
@@ -1118,11 +1296,24 @@
       },
       detailClick($event, item){
         this.detailData = item;
-        if (item.applyContent  && item.applyContent != "[]"){
-          this.detailApplyContentData = JSON.parse(item.applyContent);
+        console.log(item.formCode);
+        this.formCode = item.formCode;
+        if (item.formCode && item.formCode != ''){
+          this.initAuditDetailList(item._id, 'detail', item.formCode);
+
+          if (item.formCode == 'CGHT' || item.formCode == 'TYHT' || item.formCode == 'XSHT'){
+            this.dialogObjServerDetail = true;
+          }
+          if (item.formCode == 'DGDK' || item.formCode == 'PTGL' || item.formCode == 'BZBX' || item.formCode == 'JKGL' || item.formCode == 'HKD' || item.formCode == 'SKD'){
+            this.dialogNormalVisible = true;
+          }
+        }else {
+          if (item.applyContent  && item.applyContent != "[]"){
+            this.detailApplyContentData = JSON.parse(item.applyContent);
+          }
+          this.initAuditDetailList(item._id, 'main');
+          this.dialogServerDetail = true;
         }
-        this.initAuditDetailList(item._id, 'main');
-        this.dialogServerDetail = true;
       },
       detailCheckClick($event, id){
         console.log(id);
@@ -1135,7 +1326,11 @@
         this.initAuditList();
       },
       printManage(event, item){
-        window.open('/formPrint?serverId=' + item._id + "&title=" + item.formName + "&time=" + this.$moment().format("YYYY-MM-DD HH:mm:ss"), '_blank');
+        if (item.formCode && item.formCode != ''){
+          window.open('/formSystemPrint?serverId=' + item._id + "&title=" + item.noticeName + "&time=" + this.$moment().format("YYYY-MM-DD HH:mm:ss"), '_blank');
+        }else {
+          window.open('/formPrint?serverId=' + item._id + "&title=" + item.noticeName + "&time=" + this.$moment().format("YYYY-MM-DD HH:mm:ss"), '_blank');
+        }
       },
       readFile(file){//预览
         ImagePreview({
@@ -1168,6 +1363,57 @@
             MessageSuccess(res.data.desc);
           }else {
             MessageError(res.data.desc);
+          }
+        });
+      },
+      handleSystemOk(data,textarea){
+        let params = {
+          id: this.dataMainDetailObj.id ? this.dataMainDetailObj.id : this.dataMainDetailObj.id,
+          status: 1,
+          des: textarea
+        };
+        params = this.$qs.stringify(params);
+        this.$axios.post(common.server_form_audit_handle, params).then(res => {
+          if (res.data.code == 200){
+            this.initAuditList();
+            this.initAuditDetailList(this.dataMainDetailObj._id, 'detail', this.dataMainDetailObj.formCode);
+            MessageSuccess(res.data.desc);
+          }else{
+            MessageWarning(res.data.desc);
+          }
+        });
+      },
+      handleSystemNo(data,textarea){
+        let params = {
+          id: this.dataMainDetailObj.id ? this.dataMainDetailObj.id : this.dataMainDetailObj.id,
+          status: 2,
+          des: textarea
+        };
+        params = this.$qs.stringify(params);
+        this.$axios.post(common.server_form_audit_handle, params).then(res => {
+          if (res.data.code == 200){
+            this.initAuditList();
+            this.initAuditDetailList(this.dataMainDetailObj._id, 'detail', this.dataMainDetailObj.formCode);
+            MessageSuccess(res.data.desc);
+          }else{
+            MessageWarning(res.data.desc);
+          }
+        });
+      },
+      handleSystemCancel(data){
+        let params = {
+          id: this.dataMainDetailObj.id ? this.dataMainDetailObj.id : this.dataMainDetailObj.id,
+          status: -1
+        };
+        params = this.$qs.stringify(params);
+        this.$axios.post(common.server_form_audit_handle, params).then(res => {
+          if (res.data.code == 200){
+            this.initAuditList();
+            console.log(this.dataMainDetailObj);
+            this.initAuditDetailList(this.dataMainDetailObj._id, 'detail', this.dataMainDetailObj.formCode);
+            MessageSuccess(res.data.desc);
+          }else{
+            MessageWarning(res.data.desc);
           }
         });
       }

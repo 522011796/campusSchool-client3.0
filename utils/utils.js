@@ -674,7 +674,11 @@ export function auditStatusText(val){
     "2": "已驳回",
     "3": "已通过",
     "4": "已驳回",
-    "5": "",
+    "5": "不需要审批",
+    "6": "转交",
+    "8": "审批中",
+    "9": "加签",
+    "-1": "撤销",
   };
   return statusList[val];
 }
@@ -820,6 +824,70 @@ export function accountPayType(str, type){
   }
   if (!str && type == 'get'){
     return accountType;
+  }
+}
+export function auditStatusBgColor(val){
+  let statusList = {
+    "0": "bg-muted",
+    "1": "bg-success",
+    "2": "bg-danger",
+    "3": "bg-success",
+    "4": "bg-danger",
+    "5": "bg-muted",
+    "6": "bg-grand",
+    "7": "bg-warning",
+    "8": "bg-grand",
+    "9": "bg-grand",
+    "-1": "bg-muted"
+  };
+  return statusList[val];
+}
+
+export function formXmText(val, type){
+  let statusList = {
+    "XMGL": "项目管理",
+    "CGHT": "采购合同单",
+    "XSHT": "销售合同单",
+    "TYHT": "通用合同单",
+    "BZBX": "报账/报销单",
+    "DGDK": "对公打款单",
+    "PTGL": "普通申请单",
+    "JKGL": "借款单",
+    "SKD": "收款单",
+    "HKD": "还款单",
+    "YSYF": "应收应付",
+    "FPGL": "发票管理",
+    "JYLS": "交易流水"
+  };
+  return statusList[val];
+}
+export function objectStatus(type, str){
+  let objectStatus = {
+    "0": "待启动",
+    "1": "进行中",
+    "2": "已完成",
+    "3": "验收中",
+    "4": "已中断"
+  };
+  if (str != null && type == 'set') {
+    return objectStatus[str];
+  }
+  if (!str && type == 'get'){
+    return objectStatus;
+  }
+}
+
+export function objectType(type, str){
+  let objectType = {
+    "0": "默认",
+    "1": "建筑",
+    "2": "信息"
+  };
+  if (str != null && type == 'set') {
+    return objectType[str];
+  }
+  if (!str && type == 'get'){
+    return objectType;
   }
 }
 

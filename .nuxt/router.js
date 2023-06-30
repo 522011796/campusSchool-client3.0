@@ -4,6 +4,7 @@ import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
 const _1a6f63c8 = () => interopDefault(import('../pages/formPrint.vue' /* webpackChunkName: "pages/formPrint" */))
+const _228a0819 = () => interopDefault(import('../pages/formSystemPrint.vue' /* webpackChunkName: "pages/formSystemPrint" */))
 const _3251d12b = () => interopDefault(import('../pages/indexBak.vue' /* webpackChunkName: "pages/indexBak" */))
 const _54a90330 = () => interopDefault(import('../pages/login.vue' /* webpackChunkName: "pages/login" */))
 const _3b32a36e = () => interopDefault(import('../pages/loginApp.vue' /* webpackChunkName: "pages/loginApp" */))
@@ -66,6 +67,10 @@ export const routerOptions = {
     path: "/formPrint",
     component: _1a6f63c8,
     name: "formPrint"
+  }, {
+    path: "/formSystemPrint",
+    component: _228a0819,
+    name: "formSystemPrint"
   }, {
     path: "/indexBak",
     component: _3251d12b,

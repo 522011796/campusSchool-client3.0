@@ -278,10 +278,19 @@ export default {
       tableHeight: {
         'height': '',
       },
+      tableHeight19: {
+        'height': ''
+      },
       drawHeight: {
         'height': ''
       },
       drawHeight2: {
+        'height': ''
+      },
+      drawHeight8: {
+        'height': ''
+      },
+      drawHeight9: {
         'height': ''
       }
     }
@@ -567,8 +576,11 @@ export default {
         this.divHeight21.height = window.innerHeight - itemHeight - 400 - 45 + 'px';
         this.divHeight22.height = window.innerHeight - itemHeight - 50 - 20 + 'px';
         this.tableHeight.height = (window.innerHeight - 60) * 0.86 - 30;
+        this.tableHeight19.height = window.innerHeight - 180 + 'px';
         this.drawHeight.height = window.innerHeight - 80 + 'px';
         this.drawHeight2.height = window.innerHeight - 15 + 'px';
+        this.drawHeight8.height = window.innerHeight - 180 + 'px';
+        this.drawHeight9.height = window.innerHeight - 120 + 'px';
       }
     },
     async initVersionData(){

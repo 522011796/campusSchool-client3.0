@@ -401,7 +401,7 @@
       },
       processId: {
         default: '',
-        type: String
+        type: [String, Number]
       }
     },
     computed: {

@@ -7,6 +7,13 @@
     "_name": "_1a6f63c8"
   },
   {
+    "name": "formSystemPrint",
+    "path": "/formSystemPrint",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/formSystemPrint.vue",
+    "chunkName": "pages/formSystemPrint",
+    "_name": "_228a0819"
+  },
+  {
     "name": "indexBak",
     "path": "/indexBak",
     "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/indexBak.vue",
