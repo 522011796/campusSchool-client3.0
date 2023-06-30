@@ -231,7 +231,7 @@
       </div>
     </drawer-layout-right>
 
-    <system-form-ptgl v-if="serverSysDetailData.form_code == 'PTGL'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer" @changeDrawer="closeDetailDialog"></system-form-ptgl>
+    <system-form-ptgl v-if="serverSysDetailData.form_code == 'PTGL'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-ptgl>
   </div>
 </template>
 

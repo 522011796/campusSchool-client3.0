@@ -1,10 +1,10 @@
 <template>
   <div>
-    <drawer-layout-right tabindex="9999" v-bind="selectModel" @close="closeDialog" @changeDrawer="closeDetailDialog" :visible="dialogVisibleInner" size="600px" :title="title" @right-close="cancelDrawDialog">
+    <drawer-layout-right ref="sysFormRef" tabindex="9999" v-bind="selectModel" @close="closeDialog" @changeDrawer="closeDetailDialog" :visible="dialogVisibleInner" size="600px" :title="title" @right-close="cancelDrawDialog">
       <div slot="content" class="color-muted">
         <el-form ref="form" :model="form" :rules="rules" label-width="80px">
           <el-form-item :label="$t('标题')" prop="name">
-            <el-input size="small" v-model="form.name" class="width-415"></el-input>
+            <el-input size="small" v-model="form.title" class="width-415"></el-input>
           </el-form-item>
           <el-form-item :label="$t('申请人')" prop="userId">
             <div style="position: relative;width: 415px;">
@@ -47,7 +47,7 @@
               {{$t('单据明细')}}
             </span>
             <div>
-              <el-button size="small" type="primary">{{$t("添加单据")}}</el-button>
+              <el-button size="small" type="primary" @click="addDataInfo">{{$t("添加单据")}}</el-button>
             </div>
             <template v-if="form.orderInfoList.length > 0" class="margin-top-5">
               <div class="system-order-main-block">
@@ -59,7 +59,7 @@
                   <div class="margin-top-5 font-size-14">
                     <div class="system-order-info-item-block">
                       <span class="color-muted" style="position: relative;top: -10px">{{$t('费用')}}:</span>
-                      <div class="color-muted font-bold moon-content-text-ellipsis-class" style="max-width: 180px;position: relative;top:2px; display: inline-block">{{ item.typeStr }}</div>
+                      <div class="color-muted font-bold moon-content-text-ellipsis-class" style="max-width: 180px;position: relative;top:0px; display: inline-block">{{ item.typeStr }}</div>
                       <span class="color-success font-bold" style="position: relative;top: -10px">¥{{ item.amount }}</span>
                     </div>
                   </div>
@@ -102,10 +102,12 @@
       <div slot="footer">
         <div class="text-right padding-lr-10">
           <el-button size="small" @click="saveForm(1)">{{$t("暂存")}}</el-button>
-          <el-button type="primary" size="small" @click="saveForm(2)">{{$t("提交")}}</el-button>
+          <el-button type="primary" size="small" v-loading="btnLoading" @click="saveForm(2)">{{$t("提交")}}</el-button>
         </div>
       </div>
     </drawer-layout-right>
+
+    <system-form-data-info :title="$t('单据信息')" :dialog-visible="dialogChildVisible" :process-id="processId"></system-form-data-info>
   </div>
 </template>
 
@@ -116,13 +118,14 @@
   import mixins from "~/utils/mixins";
   import DrawerLayoutRight from "~/components/utils/dialog/DrawerLayoutRight.vue";
   import {Message} from "element-ui";
-  import {MessageWarning} from "~/utils/utils";
+  import {MessageError, MessageSuccess, MessageWarning} from "~/utils/utils";
   import systemServerValidater from "~/utils/validater/systemServerValidater";
+  import SystemFormDataInfo from "~/components/utils/serverForm/SystemFormDataInfo.vue";
 
   export default {
     name: 'systemFormPtgl',
     mixins: [mixins, systemServerValidater],
-    components: {DrawerLayoutRight, MySelect},
+    components: {SystemFormDataInfo, DrawerLayoutRight, MySelect},
     props: {
       dialogVisible: {
         default: false,
@@ -135,6 +138,12 @@
     },
     computed: {
       selectModel(){
+        if (this.dialogVisible == true){
+          this.initObject();
+          this.initTag();
+          this.init();
+          this.initDept();
+        }
         this.dialogVisibleInner = this.dialogVisible;
       }
     },
@@ -157,7 +166,9 @@
         loading: false,
         dialogVisibleInner: false,
         dialogChildVisible: false,
+        btnLoading: false,
         moneyTotal: 0.00,
+        processId: '',
         form: {
           title: '',
           user: '',
@@ -183,13 +194,10 @@
       }
     },
     mounted() {
-      this.initObject();
-      this.initTag();
-      this.init();
-      this.initDept();
+
     },
     created() {
-      console.log(this.dialogVisible);
+
     },
     methods: {
       async init(){
@@ -378,6 +386,10 @@
         this.$parent.dialogSystemServer = false
         this.dialogVisibleInner = false;
       },
+      addDataInfo(data){
+        this.processId = data.typeId;
+        this.dialogChildVisible = true;
+      },
       closeDetailDialog(){
         this.$parent.dialogSystemServer = false
         this.btnLoading = false;
@@ -449,10 +461,11 @@
           this.btnLoading = true;
           this.$axios.post(url, params, {loading: false}).then(res => {
             if (res.data.code == 200){
-              this.returnIndex();
-              Toast(res.data.desc);
+              this.dialogVisibleInner = false;
+              this.$parent.dialogSystemServer = false
+              MessageSuccess(res.data.desc);
             }else {
-              Toast(res.data.desc);
+              MessageError(res.data.desc);
             }
             this.btnLoading = false;
           });
@@ -472,5 +485,33 @@
 }
 .system-item-block{
 
+}
+.system-order-main-block{
+  padding: 5px 0px;
+  position: relative;
+}
+.system-order-item-block{
+  border-radius: 5px;
+  background: #FFFFFF;
+  padding: 0px 10px;
+  margin-bottom: 0px;
+  position: relative;
+  width: 415px;
+}
+.system-order-main-block::after {
+  position: absolute;
+  box-sizing: border-box;
+  content: ' ';
+  pointer-events: none;
+  right: 16px;
+  bottom: 0;
+  left: 16px;
+  border-bottom: 0px solid #ebedf0;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+.system-order-info-item-block{
+  height: 30px;
+  line-height: 30px;
 }
 </style>
