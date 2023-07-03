@@ -117,7 +117,7 @@
       <div slot="footer">
         <div class="text-right padding-lr-10">
           <el-button size="small" @click="saveForm(1)">{{$t("暂存")}}</el-button>
-          <el-button type="primary" size="small" v-loading="btnLoading" @click="saveForm(2)">{{$t("提交")}}</el-button>
+          <el-button type="primary" size="small" :loading="btnLoading" @click="saveForm(2)">{{$t("提交")}}</el-button>
         </div>
       </div>
     </drawer-layout-right>
