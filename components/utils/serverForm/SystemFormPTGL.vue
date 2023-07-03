@@ -149,38 +149,49 @@
     computed: {
       selectModel(){
         if (this.dialogVisible == true){
-          this.initObject();
-          this.initTag();
-          this.initDept();
-
+          let deptArray = [];
           if (JSON.stringify(this.formData) != "{}"){
-            console.log(1,this.formData,this.formData.applyData['fk_name20230501'].value);
+            let dept = this.formData.applyData['apply_dept20230501'] ? this.formData.applyData.apply_dept20230501.value : '';
+            deptArray = dept != '' ? dept.split(",") : [];
+
+            let coseInfo = this.formData.applyData['cost_info20230501'] ? this.formData.applyData.cost_info20230501.value : '';
+            let coseInfoArray = coseInfo;
+
+            let fils = this.formData.applyData['fk_files20230501'] ? this.formData.applyData.fk_files20230501.value : [];
+            let filsName = this.formData.applyData['fk_files20230501'] ? this.formData.applyData.fk_files20230501.name : [];
+
             let form = {
+              id: this.formData.id,
               title: this.formData.applyData['fk_name20230501'] ? this.formData.applyData.fk_name20230501.value : '',
               user: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.name : '',
               userId: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.value : '',
               dept: '',
-              deptId: '',
-              des: '',
+              deptId: dept,
+              des: this.formData.applyData['fk_des20230501'] ? this.formData.applyData.fk_des20230501.value : '',
               jkTime: '',
               orderInfo: '',
-              orderInfoList: [],
+              orderInfoList: coseInfoArray,
               hkTime: '',
               skAccount: '',
               skAccountName: '',
-              files: [],
-              fileNames: [],
+              files: fils,
+              fileNames: filsName,
               object: '',
-              objectId: '',
+              objectId: this.formData.applyData['xm_id20230501'] ? this.formData.applyData.xm_id20230501.value : '',
               order: '',
               orderId: '',
               tag: '',
-              tagId: ''
+              tagId: this.formData.applyData['tag_id20230501'] ? this.formData.applyData.tag_id20230501.value : '',
             };
+            this.dataModalList = deptArray;
+            this.deptStatusContent = deptArray.length;
             this.form = form;
           }
+          this.initObject();
+          this.initTag();
+          this.initDept(deptArray);
+          this.init();
         }
-        this.init();
         this.dialogVisibleInner = this.dialogVisible;
       }
     },
@@ -207,6 +218,7 @@
         moneyTotal: 0.00,
         processId: '',
         form: {
+          id: '',
           title: '',
           user: '',
           userId: '',
@@ -244,10 +256,13 @@
           this.form.userId = this.loginUserId;
         }
       },
-      async initDept(){
+      async initDept(deptArray){
         await this.getDeptInfo(0);
         this.dataTreeList = this.dataDept;
         this.dataModalList = this.dataModalBakList;
+        if (deptArray && deptArray.length > 0){
+          this.dataModalList = deptArray;
+        }
       },
       initObject(){
         let params = {
@@ -388,7 +403,6 @@
             deptPathStr += "/";
           }
         }
-
         this.form.dept = deptPathStr;
         this.form.deptId = deptPath.length > 0 ? JSON.parse(JSON.stringify(deptPath)).join() : '';
         this.dataModalList = deptPath.length > 0 ? JSON.parse(JSON.stringify(deptPath)) : [];
@@ -397,6 +411,7 @@
       },
       closeDialog(){
         this.form = {
+          id: '',
           title: '',
           user: '',
           userId: '',
@@ -424,13 +439,16 @@
         if (this.$refs['form']){
           this.$refs['form'].resetFields();
         }
+        this.$parent.dialogSystemServer = false
+        this.btnLoading = false;
+        this.dialogVisibleInner = false;
       },
       cancelDrawDialog(){
         this.$parent.dialogSystemServer = false
         this.dialogVisibleInner = false;
       },
       addDataInfo(data){
-        this.processId = data.typeId;
+        this.processId = this.form.orderInfoList.length > 0 ? this.form.orderInfoList[0].type: '';
         this.dialogChildVisible = true;
       },
       closeDetailDialog(){
@@ -501,12 +519,18 @@
             params['submit'] = true;
           }
           params['applyContent'] = JSON.stringify(contentJson);
+
+          if (this.form.id != ''){
+            params['id'] = this.form.id;
+          }
+
           params = this.$qs.stringify(params);
           this.btnLoading = true;
           this.$axios.post(url, params, {loading: false}).then(res => {
             if (res.data.code == 200){
               this.dialogVisibleInner = false;
               this.$parent.dialogSystemServer = false
+              this.$parent.initAuditList();
               MessageSuccess(res.data.desc);
             }else {
               MessageError(res.data.desc);
@@ -538,7 +562,7 @@
   border-radius: 5px;
   background: #FFFFFF;
   padding: 0px 10px;
-  margin-bottom: 0px;
+  margin-bottom: 5px;
   position: relative;
   width: 415px;
 }

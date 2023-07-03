@@ -235,50 +235,68 @@
     computed: {
       selectModel(){
         if (this.dialogVisible == true){
-          this.initObject();
-          this.initTag();
-          this.init();
-          this.initDept();
-          this.initGys();
+          let deptArray = [];
+          let form = {};
           if (JSON.stringify(this.formData) != "{}"){
-            console.log(1,this.formData);
-            let form = {
-              title: '',
-              user: '',
-              userId: '',
+            let dept = this.formData.applyData['apply_dept20230501'] ? this.formData.applyData.apply_dept20230501.value : '';
+            deptArray = dept != '' ? dept.split(",") : [];
+
+            let coseInfo = this.formData.applyData['cost_info20230501'] ? this.formData.applyData.cost_info20230501.value : '';
+            let coseInfoArray = coseInfo;
+
+            let fils = this.formData.applyData['ht_files20230501'] ? this.formData.applyData.ht_files20230501.value : [];
+            let filsName = this.formData.applyData['ht_files20230501'] ? this.formData.applyData.ht_files20230501.name : [];
+
+            let stage = this.formData.applyData['stage_id20230501'] ? this.formData.applyData.stage_id20230501.value : 0;
+            let stageArray = [];
+            for (let i = 0; i < stage; i++){
+              stageArray.push({
+                stage: this.formData.applyData['ht_payStage20230501_'+(i+1)].value,
+                rate: this.formData.applyData['ht_payRate20230501_'+(i+1)].value,
+                amount: this.formData.applyData['ht_payAmount20230501_'+(i+1)].value,
+                time: this.formData.applyData['ht_payTime20230501_'+(i+1)].value,
+                des: this.formData.applyData['ht_payDes20230501_'+(i+1)].value,
+              });
+            }
+
+            console.log(stageArray);
+
+            form = {
+              id: this.formData.id,
+              title: this.formData.applyData['ht_name20230501'] ? this.formData.applyData.ht_name20230501.value : '',
+              user: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.name : '',
+              userId: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.value : '',
               dept: '',
-              deptName: '',
-              deptId: '',
-              des: '',
+              deptId: dept,
+              des: this.formData.applyData['ht_des20230501'] ? this.formData.applyData.ht_des20230501.value : '',
               orderInfo: '',
               orderInfoList: [],
-              sqTime: '',
+              sqTime: this.formData.applyData['ht_time20230501'] ? this.formData.applyData.ht_time20230501.value : '',
               skAccount: '',
               skAccountName: '',
-              files: [],
-              fileNames: [],
+              files: fils,
+              fileNames: filsName,
               object: '',
-              objectId: '',
+              objectId: this.formData.applyData['xm_id20230501'] ? this.formData.applyData.xm_id20230501.value : '',
               order: '',
               orderId: '',
               tag: '',
-              tagId: '',
+              tagId: this.formData.applyData['tag_id20230501'] ? this.formData.applyData.tag_id20230501.value : '',
               gys: '',
-              gysId: '',
-              amount: 0,
+              gysId: this.formData.applyData['ht_supplierId20230501'] ? this.formData.applyData.ht_supplierId20230501.value : '',
+              amount: this.formData.applyData['ht_amount20230501'] ? this.formData.applyData.ht_amount20230501.value : 0,
               backMoneyIndex: '',
-              backMoney: [
-                {
-                  stage: 1,
-                  rate: 1,
-                  amount: 0,
-                  time: '',
-                  des: ''
-                }
-              ]
+              backMoney: stageArray
             };
+            this.dataModalList = deptArray;
+            this.deptStatusContent = deptArray.length;
             this.form = form;
           }
+          this.initObject();
+          this.initTag();
+          this.init();
+          this.initDept(deptArray);
+          this.initGys();
         }
         this.dialogVisibleInner = this.dialogVisible;
       }
@@ -311,6 +329,7 @@
         processId: '',
         backMoneyIndex: '',
         form: {
+          id: '',
           title: '',
           user: '',
           userId: '',
@@ -356,13 +375,19 @@
     methods: {
       async init(){
         await this.getSessionInfo();
-        this.form.user = this.realName;
-        this.form.userId = this.loginUserId;
+        if (JSON.stringify(this.formData) == "{}"){
+          this.form.user = this.realName;
+          this.form.userId = this.loginUserId;
+        }
       },
-      async initDept(){
+      async initDept(deptArray){
         await this.getDeptInfo(0);
         this.dataTreeList = this.dataDept;
         this.dataModalList = this.dataModalBakList;
+
+        if (deptArray && deptArray.length > 0){
+          this.dataModalList = deptArray;
+        }
       },
       initObject(){
         let params = {
@@ -552,6 +577,7 @@
       },
       closeDialog(){
         this.form = {
+          id: '',
           title: '',
           user: '',
           userId: '',
@@ -629,6 +655,7 @@
             {
               field: 'apply_user20230501',
               value: this.form.userId,
+              name: this.form.user,
             },
             {
               field: 'apply_dept20230501',
@@ -666,6 +693,10 @@
               field: 'tag_id20230501',
               value: this.form.tagId,
               name: this.form.tag
+            },
+            {
+              field: 'stage_id20230501',
+              value: this.form.backMoney.length
             }
           ];
 
@@ -686,7 +717,7 @@
 
             contentJson.push({
               field: 'ht_payStage20230501_' + (i+1),
-              value: this.form.backMoney[i].stage
+              value: (i+1)
             },{
               field: 'ht_payRate20230501_' + (i+1),
               value: this.form.backMoney[i].rate
@@ -704,7 +735,7 @@
 
           if (error > 0){
             this.dialogLoading = false;
-            MessageWarning(this.$t("支付计划未设置有误(比例:1-100),请检查!"));
+            MessageWarning(this.$t("支付比例或时间设置有误(比例:1-100),请检查!"));
             return;
           }
 
@@ -721,12 +752,18 @@
             params['submit'] = true;
           }
           params['applyContent'] = JSON.stringify(contentJson);
+
+          if (this.form.id != ''){
+            params['id'] = this.form.id;
+          }
+
           params = this.$qs.stringify(params);
           this.btnLoading = true;
           this.$axios.post(url, params, {loading: false}).then(res => {
             if (res.data.code == 200){
               this.dialogVisibleInner = false;
-              this.$parent.dialogSystemServer = false
+              this.$parent.dialogSystemServer = false;
+              this.$parent.initAuditList();
               MessageSuccess(res.data.desc);
             }else {
               MessageError(res.data.desc);

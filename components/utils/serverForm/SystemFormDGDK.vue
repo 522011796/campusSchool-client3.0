@@ -39,7 +39,7 @@
             </div>
           </el-form-item>
           <el-form-item :label="$t('付款日期')" prop="fkTime">
-            <my-date-picker size="small" width-style="415" :sel-value="form.skTime" @change="selBlockFun($event, 'fkTime')"></my-date-picker>
+            <my-date-picker size="small" width-style="415" :sel-value="form.fkTime" @change="selBlockFun($event, 'fkTime')"></my-date-picker>
           </el-form-item>
           <el-form-item :label="$t('打款事由')" class="custom-textarea-inner">
             <el-input size="small" type="textarea" v-model="form.des" class="width-415"></el-input>
@@ -161,16 +161,59 @@
     computed: {
       selectModel(){
         if (this.dialogVisible == true){
+          let deptArray = [];
+          let form = {};
+          if (JSON.stringify(this.formData) != "{}"){
+            let dept = this.formData.applyData['apply_dept20230501'] ? this.formData.applyData.apply_dept20230501.value : '';
+            deptArray = dept != '' ? dept.split(",") : [];
+
+            let coseInfo = this.formData.applyData['cost_info20230501'] ? this.formData.applyData.cost_info20230501.value : '';
+            let coseInfoArray = coseInfo;
+
+            let fils = this.formData.applyData['fk_files20230501'] ? this.formData.applyData.fk_files20230501.value : [];
+            let filsName = this.formData.applyData['fk_files20230501'] ? this.formData.applyData.fk_files20230501.name : [];
+
+            form = {
+              id: this.formData.id,
+              title: this.formData.applyData['fk_name20230501'] ? this.formData.applyData.fk_name20230501.value : '',
+              user: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.name : '',
+              userId: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.value : '',
+              dept: '',
+              deptId: dept,
+              des: this.formData.applyData['fk_des20230501'] ? this.formData.applyData.fk_des20230501.value : '',
+              fkTime: this.formData.applyData['fk_date20230501'] ? this.formData.applyData.fk_date20230501.value : '',
+              orderInfo: '',
+              orderInfoList: coseInfoArray,
+              hkTime: '',
+              skAccount: '',
+              skAccountName: '',
+              files: fils,
+              fileNames: filsName,
+              object: '',
+              objectId: this.formData.applyData['xm_id20230501'] ? this.formData.applyData.xm_id20230501.value : '',
+              order: '',
+              orderId: this.formData.applyData['ht_id20230501'] ? this.formData.applyData.ht_id20230501.value : '',
+              tag: '',
+              tagId: this.formData.applyData['tag_id20230501'] ? this.formData.applyData.tag_id20230501.value : '',
+              dj: '',
+              djId: this.formData.applyData['rela_apply20230501'] ? this.formData.applyData.rela_apply20230501.value : '',
+              gys: '',
+              gysId: this.formData.applyData['supplierId20230501'] ? this.formData.applyData.supplierId20230501.value : '',
+              kx: '',
+              kxId: this.formData.applyData['ht_pay20230501'] ? this.formData.applyData.ht_pay20230501.value : '',
+              kxList: []
+            };
+            this.dataModalList = deptArray;
+            this.deptStatusContent = deptArray.length;
+            this.form = form;
+          }
           this.initObject();
           this.initTag();
           this.init();
-          this.initDept();
+          this.initDept(deptArray);
           this.initGys();
           this.initTeacherAccount();
-          this.initHt();
-          if (JSON.stringify(this.formData) != "{}"){
-            this.form = this.formData;
-          }
+          this.initHt(form);
         }
         this.dialogVisibleInner = this.dialogVisible;
       }
@@ -205,6 +248,7 @@
         processId: '',
         backMoneyIndex: '',
         form: {
+          id: '',
           title: '',
           user: '',
           userId: '',
@@ -247,12 +291,16 @@
         this.form.user = this.realName;
         this.form.userId = this.loginUserId;
       },
-      async initDept(){
+      async initDept(deptArray){
         await this.getDeptInfo(0);
         this.dataTreeList = this.dataDept;
         this.dataModalList = this.dataModalBakList;
+
+        if (deptArray && deptArray.length > 0){
+          this.dataModalList = deptArray;
+        }
       },
-      initHt(){
+      initHt(form){
         let params = {
           page: 1,
           num: 9999
@@ -279,6 +327,14 @@
               });
             }
             this.tableHtData = array;
+
+            if (form && form.orderId && form.orderId != ''){
+              for(let i = 0; i < array.length; i++){
+                if (form.orderId == array[i].value){
+                  this.form.kxList = array[i].kxList;
+                }
+              }
+            }
           }
         });
       },
@@ -526,6 +582,7 @@
       },
       closeDialog(){
         this.form = {
+          id: '',
           title: '',
           user: '',
           userId: '',
@@ -669,12 +726,18 @@
             params['submit'] = true;
           }
           params['applyContent'] = JSON.stringify(contentJson);
+
+          if (this.form.id != ''){
+            params['id'] = this.form.id;
+          }
+
           params = this.$qs.stringify(params);
           this.btnLoading = true;
           this.$axios.post(url, params, {loading: false}).then(res => {
             if (res.data.code == 200){
               this.dialogVisibleInner = false;
-              this.$parent.dialogSystemServer = false
+              this.$parent.dialogSystemServer = false;
+              this.$parent.initAuditList();
               MessageSuccess(res.data.desc);
             }else {
               MessageError(res.data.desc);

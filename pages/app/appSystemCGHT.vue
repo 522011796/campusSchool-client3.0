@@ -941,7 +941,7 @@
 
           if (error > 0){
             this.dialogLoading = false;
-            MessageWarning(this.$t("支付计划未设置有误(比例:1-100),请检查!"));
+            Toast(this.$t("支付比例或时间设置有误(比例:1-100),请检查!"));
             return;
           }
 

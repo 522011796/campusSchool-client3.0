@@ -1209,7 +1209,6 @@
                   }
                 }
               }else if (type == 'edit'){
-                console.log(res.data.data.formCode);
                 this.serverSysDetailData = res.data.data;
               }else if (type == 'check'){
                 this.detailCheckData = res.data.data;

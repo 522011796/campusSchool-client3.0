@@ -50,32 +50,32 @@
           <el-form-item :label="$t('申请说明')" class="custom-textarea-inner">
             <el-input size="small" type="textarea" v-model="form.des" class="width-415"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('单据明细')">
-            <span slot="label">
-              <label class="color-danger">*</label>
-              {{$t('单据明细')}}
-            </span>
-            <div>
-              <el-button size="small" type="primary" @click="addDataInfo">{{$t("添加单据")}}</el-button>
-            </div>
-            <template v-if="form.orderInfoList.length > 0" class="margin-top-5">
-              <div class="system-order-main-block">
-                <div v-for="(item, index) in form.orderInfoList" :key="index" class="system-order-item-block">
-                  <i class="fa fa-times-circle" style="font-size: 20px;position: absolute;right: 5px;top: 3px" @click="removeOrderItem(index)"></i>
-                  <div>
-                    <span class="color-muted">{{ item.time }}</span>
-                  </div>
-                  <div class="margin-top-5 font-size-14">
-                    <div class="system-order-info-item-block">
-                      <span class="color-muted" style="position: relative;top: -10px">{{$t('费用')}}:</span>
-                      <div class="color-muted font-bold moon-content-text-ellipsis-class" style="max-width: 180px;position: relative;top:0px; display: inline-block">{{ item.typeStr }}</div>
-                      <span class="color-success font-bold" style="position: relative;top: -10px">¥{{ item.amount }}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </template>
-          </el-form-item>
+<!--          <el-form-item :label="$t('单据明细')">-->
+<!--            <span slot="label">-->
+<!--              <label class="color-danger">*</label>-->
+<!--              {{$t('单据明细')}}-->
+<!--            </span>-->
+<!--            <div>-->
+<!--              <el-button size="small" type="primary" @click="addDataInfo">{{$t("添加单据")}}</el-button>-->
+<!--            </div>-->
+<!--            <template v-if="form.orderInfoList.length > 0" class="margin-top-5">-->
+<!--              <div class="system-order-main-block">-->
+<!--                <div v-for="(item, index) in form.orderInfoList" :key="index" class="system-order-item-block">-->
+<!--                  <i class="fa fa-times-circle" style="font-size: 20px;position: absolute;right: 5px;top: 3px" @click="removeOrderItem(index)"></i>-->
+<!--                  <div>-->
+<!--                    <span class="color-muted">{{ item.time }}</span>-->
+<!--                  </div>-->
+<!--                  <div class="margin-top-5 font-size-14">-->
+<!--                    <div class="system-order-info-item-block">-->
+<!--                      <span class="color-muted" style="position: relative;top: -10px">{{$t('费用')}}:</span>-->
+<!--                      <div class="color-muted font-bold moon-content-text-ellipsis-class" style="max-width: 180px;position: relative;top:0px; display: inline-block">{{ item.typeStr }}</div>-->
+<!--                      <span class="color-success font-bold" style="position: relative;top: -10px">¥{{ item.amount }}</span>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </template>-->
+<!--          </el-form-item>-->
           <el-form-item :label="$t('关联项目')">
             <my-select size="small" :sel-value="form.objectId" :options="tableObjectData" width-style="415" @change="selBlockFun($event, 'object')"></my-select>
           </el-form-item>
@@ -235,14 +235,68 @@
     computed: {
       selectModel(){
         if (this.dialogVisible == true){
+          let deptArray = [];
+          let form = {};
+          if (JSON.stringify(this.formData) != "{}"){
+            let dept = this.formData.applyData['apply_dept20230501'] ? this.formData.applyData.apply_dept20230501.value : '';
+            deptArray = dept != '' ? dept.split(",") : [];
+
+            let coseInfo = this.formData.applyData['cost_info20230501'] ? this.formData.applyData.cost_info20230501.value : '';
+            let coseInfoArray = coseInfo;
+
+            let fils = this.formData.applyData['ht_files20230501'] ? this.formData.applyData.ht_files20230501.value : [];
+            let filsName = this.formData.applyData['ht_files20230501'] ? this.formData.applyData.ht_files20230501.name : [];
+
+            let stage = this.formData.applyData['stage_id20230501'] ? this.formData.applyData.stage_id20230501.value : 0;
+            let stageArray = [];
+            for (let i = 0; i < stage; i++){
+              stageArray.push({
+                stage: this.formData.applyData['ht_payStage20230501_'+(i+1)].value,
+                rate: this.formData.applyData['ht_payRate20230501_'+(i+1)].value,
+                amount: this.formData.applyData['ht_payAmount20230501_'+(i+1)].value,
+                time: this.formData.applyData['ht_payTime20230501_'+(i+1)].value,
+                des: this.formData.applyData['ht_payDes20230501_'+(i+1)].value,
+              });
+            }
+
+            console.log(stageArray);
+
+            form = {
+              id: this.formData.id,
+              title: this.formData.applyData['ht_name20230501'] ? this.formData.applyData.ht_name20230501.value : '',
+              user: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.name : '',
+              userId: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.value : '',
+              dept: '',
+              deptId: dept,
+              des: this.formData.applyData['ht_des20230501'] ? this.formData.applyData.ht_des20230501.value : '',
+              orderInfo: '',
+              orderInfoList: coseInfoArray,
+              sqTime: this.formData.applyData['ht_time20230501'] ? this.formData.applyData.ht_time20230501.value : '',
+              skAccount: '',
+              skAccountName: '',
+              files: fils,
+              fileNames: filsName,
+              object: '',
+              objectId: this.formData.applyData['xm_id20230501'] ? this.formData.applyData.xm_id20230501.value : '',
+              order: '',
+              orderId: '',
+              tag: '',
+              tagId: this.formData.applyData['tag_id20230501'] ? this.formData.applyData.tag_id20230501.value : '',
+              gys: '',
+              gysId: this.formData.applyData['ht_supplierId20230501'] ? this.formData.applyData.ht_supplierId20230501.value : '',
+              amount: this.formData.applyData['ht_amount20230501'] ? this.formData.applyData.ht_amount20230501.value : 0,
+              backMoneyIndex: '',
+              backMoney: stageArray
+            };
+            this.dataModalList = deptArray;
+            this.deptStatusContent = deptArray.length;
+            this.form = form;
+          }
           this.initObject();
           this.initTag();
           this.init();
-          this.initDept();
+          this.initDept(deptArray);
           this.initGys();
-          if (JSON.stringify(this.formData) != "{}"){
-            this.form = this.formData;
-          }
         }
         this.dialogVisibleInner = this.dialogVisible;
       }
@@ -320,13 +374,19 @@
     methods: {
       async init(){
         await this.getSessionInfo();
-        this.form.user = this.realName;
-        this.form.userId = this.loginUserId;
+        if (JSON.stringify(this.formData) == "{}"){
+          this.form.user = this.realName;
+          this.form.userId = this.loginUserId;
+        }
       },
-      async initDept(){
+      async initDept(deptArray){
         await this.getDeptInfo(0);
         this.dataTreeList = this.dataDept;
         this.dataModalList = this.dataModalBakList;
+
+        if (deptArray && deptArray.length > 0){
+          this.dataModalList = deptArray;
+        }
       },
       initObject(){
         let params = {
@@ -581,10 +641,10 @@
             MessageWarning(this.$t("请设置部门"));
             return;
           }
-          if (this.form.orderInfoList.length == 0){
-            MessageWarning(this.$t("请设置单据明细"));
-            return;
-          }
+          // if (this.form.orderInfoList.length == 0){
+          //   MessageWarning(this.$t("请设置单据明细"));
+          //   return;
+          // }
           let contentJson = [
             {
               field: 'ht_name20230501',
@@ -593,6 +653,7 @@
             {
               field: 'apply_user20230501',
               value: this.form.userId,
+              name: this.form.user,
             },
             {
               field: 'apply_dept20230501',
@@ -630,6 +691,10 @@
               field: 'tag_id20230501',
               value: this.form.tagId,
               name: this.form.tag
+            },
+            {
+              field: 'stage_id20230501',
+              value: this.form.backMoney.length
             }
           ];
 
@@ -650,7 +715,7 @@
 
             contentJson.push({
               field: 'ht_payStage20230501_' + (i+1),
-              value: this.form.backMoney[i].stage
+              value: (i+1)
             },{
               field: 'ht_payRate20230501_' + (i+1),
               value: this.form.backMoney[i].rate
@@ -668,7 +733,7 @@
 
           if (error > 0){
             this.dialogLoading = false;
-            MessageWarning(this.$t("支付计划未设置有误(比例:1-100),请检查!"));
+            MessageWarning(this.$t("支付比例或时间设置有误(比例:1-100),请检查!"));
             return;
           }
 
@@ -685,12 +750,18 @@
             params['submit'] = true;
           }
           params['applyContent'] = JSON.stringify(contentJson);
+
+          if (this.form.id != ''){
+            params['id'] = this.form.id;
+          }
+
           params = this.$qs.stringify(params);
           this.btnLoading = true;
           this.$axios.post(url, params, {loading: false}).then(res => {
             if (res.data.code == 200){
               this.dialogVisibleInner = false;
-              this.$parent.dialogSystemServer = false
+              this.$parent.dialogSystemServer = false;
+              this.$parent.initAuditList();
               MessageSuccess(res.data.desc);
             }else {
               MessageError(res.data.desc);
