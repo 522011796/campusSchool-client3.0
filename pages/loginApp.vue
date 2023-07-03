@@ -333,12 +333,6 @@
           account: this.form.username,
           password: getmd5(this.form.password),
         };
-        if (this.userSubType == 1){
-          //params['campusNo'] = this.form.campusNo;
-          params['accountType'] = 0;
-        }else if (this.userSubType == 2){
-          params['accountType'] = 3;
-        }
         // if (this.userType == 1){
         //   userType = 5;
         // }if (this.userType == 2){

@@ -1047,15 +1047,15 @@
       </div>
     </drawer-layout-right>
 
-    <system-form-ptgl v-if="serverSysDetailData.formCode == 'PTGL'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-ptgl>
-    <system-form-cght v-if="serverSysDetailData.formCode == 'CGHT'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-cght>
-    <system-form-xsht v-if="serverSysDetailData.formCode == 'XSHT'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-xsht>
-    <system-form-tyht v-if="serverSysDetailData.formCode == 'TYHT'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-tyht>
-    <system-form-jkgl v-if="serverSysDetailData.formCode == 'JKGL'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-jkgl>
-    <system-form-skd v-if="serverSysDetailData.formCode == 'SKD'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-skd>
-    <system-form-hkd v-if="serverSysDetailData.formCode == 'HKD'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-hkd>
-    <system-form-bzbx v-if="serverSysDetailData.formCode == 'BZBX'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-bzbx>
-    <system-form-dgdk v-if="serverSysDetailData.formCode == 'DGDK'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-dgdk>
+    <system-form-ptgl v-if="serverSysDetailData.formCode == 'PTGL'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer"></system-form-ptgl>
+    <system-form-cght v-if="serverSysDetailData.formCode == 'CGHT'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer"></system-form-cght>
+    <system-form-xsht v-if="serverSysDetailData.formCode == 'XSHT'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer"></system-form-xsht>
+    <system-form-tyht v-if="serverSysDetailData.formCode == 'TYHT'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer"></system-form-tyht>
+    <system-form-jkgl v-if="serverSysDetailData.formCode == 'JKGL'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer"></system-form-jkgl>
+    <system-form-skd v-if="serverSysDetailData.formCode == 'SKD'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer"></system-form-skd>
+    <system-form-hkd v-if="serverSysDetailData.formCode == 'HKD'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer"></system-form-hkd>
+    <system-form-bzbx v-if="serverSysDetailData.formCode == 'BZBX'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer"></system-form-bzbx>
+    <system-form-dgdk v-if="serverSysDetailData.formCode == 'DGDK'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer"></system-form-dgdk>
   </div>
 </template>
 
@@ -1209,7 +1209,7 @@
                   }
                 }
               }else if (type == 'edit'){
-                console.log(res.data.data);
+                console.log(res.data.data.formCode);
                 this.serverSysDetailData = res.data.data;
               }else if (type == 'check'){
                 this.detailCheckData = res.data.data;
@@ -1351,7 +1351,6 @@
         }else if (item.formCode == 'DGDK'){
           this.formCreateSystemTitleData = this.$t("对公打款");
         }
-        console.log(1111)
         this.initAuditDetailList(item._id, 'edit');
 
         this.dialogSystemServer = true;

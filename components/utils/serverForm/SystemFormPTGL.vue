@@ -151,15 +151,14 @@
         if (this.dialogVisible == true){
           this.initObject();
           this.initTag();
-          this.init();
           this.initDept();
 
           if (JSON.stringify(this.formData) != "{}"){
-            console.log(1,this.formData);
+            console.log(1,this.formData,this.formData.applyData['fk_name20230501'].value);
             let form = {
-              title: '',
-              user: '',
-              userId: '',
+              title: this.formData.applyData['fk_name20230501'] ? this.formData.applyData.fk_name20230501.value : '',
+              user: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.name : '',
+              userId: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.value : '',
               dept: '',
               deptId: '',
               des: '',
@@ -181,6 +180,7 @@
             this.form = form;
           }
         }
+        this.init();
         this.dialogVisibleInner = this.dialogVisible;
       }
     },
@@ -239,8 +239,10 @@
     methods: {
       async init(){
         await this.getSessionInfo();
-        this.form.user = this.realName;
-        this.form.userId = this.loginUserId;
+        if (JSON.stringify(this.formData) == "{}"){
+          this.form.user = this.realName;
+          this.form.userId = this.loginUserId;
+        }
       },
       async initDept(){
         await this.getDeptInfo(0);
@@ -468,6 +470,7 @@
             {
               field: 'apply_user20230501',
               value: this.form.userId,
+              name: this.form.user,
             },
             {
               field: 'xm_id20230501',
