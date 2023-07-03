@@ -83,7 +83,7 @@
         <table class="custom-table-black">
           <tr>
             <td style="width: 20%" class="font-size-12 font-bold">{{$t("单据名称")}}</td>
-            <td style="width: 30%" class="color-black font-size-12">{{detailData.applyData['rela_apply20230501'].value}}</td>
+            <td style="width: 30%" class="color-black font-size-12">{{detailData.applyData['rela_apply20230501'].name}}</td>
             <td style="width: 20%" class="font-size-12 font-bold">{{$t("单据编号")}}</td>
             <td style="width: 30%" class="color-black font-size-12">{{detailData._id}}</td>
           </tr>

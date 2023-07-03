@@ -176,11 +176,11 @@
               skAccountName: '',
               files: fils,
               fileNames: filsName,
-              object: '',
+              object: this.formData.applyData['xm_id20230501'] ? this.formData.applyData.xm_id20230501.name : '',
               objectId: this.formData.applyData['xm_id20230501'] ? this.formData.applyData.xm_id20230501.value : '',
               order: '',
               orderId: '',
-              tag: '',
+              tag: this.formData.applyData['tag_id20230501'] ? this.formData.applyData.tag_id20230501.name : '',
               tagId: this.formData.applyData['tag_id20230501'] ? this.formData.applyData.tag_id20230501.value : '',
             };
             this.dataModalList = deptArray;

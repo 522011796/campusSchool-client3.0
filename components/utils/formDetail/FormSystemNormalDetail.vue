@@ -364,6 +364,28 @@
               </div>
             </template>
           </div>
+
+          <div class="margin-top-20" v-if="dataMainDetailObj['invoiceDataList'] && dataMainDetailObj['invoiceDataList'].length > 0">
+            <div class="font-bold">{{$t("明细信息")}}:</div>
+            <template>
+              <div style="border: 1px solid #ebebeb">
+                <div class="info-item-block" v-for="(item, index) in dataMainDetailObj.invoiceDataList" :key="index" :class="index != dataMainDetailObj.invoiceDataList.length-1 ? 'border-bottom-1' : ''">
+                  <el-row>
+                    <el-col :span="8">
+                      <div class="text-center left-bg-block">
+                        <span>{{item.costName}}</span>
+                      </div>
+                    </el-col>
+                    <el-col :span="16">
+                      <div class="text-left padding-left-5">
+                        <span>{{item.totalAmount}}</span>
+                      </div>
+                    </el-col>
+                  </el-row>
+                </div>
+              </div>
+            </template>
+          </div>
         </div>
       </template>
 
@@ -863,5 +885,12 @@ export default {
   height: 50px;
   width: 50px;
   border: 1px solid #dddddd;
+}
+.info-item-block{
+  height: 35px;
+  line-height: 35px;
+}
+.left-bg-block{
+  background: #f5f5f5;
 }
 </style>

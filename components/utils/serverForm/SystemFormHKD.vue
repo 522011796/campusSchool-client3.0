@@ -182,11 +182,11 @@
               skAccountName: '',
               files: fils,
               fileNames: filsName,
-              object: '',
+              object: this.formData.applyData['rela_apply20230501'] ? this.formData.applyData.rela_apply20230501.name : '',
               objectId: this.formData.applyData['rela_apply20230501'] ? this.formData.applyData.rela_apply20230501.value : '',
-              order: '',
+              order: this.formData.applyData['borrow_apply20230501'] ? this.formData.applyData.borrow_apply20230501.name : '',
               orderId: this.formData.applyData['borrow_apply20230501'] ? this.formData.applyData.borrow_apply20230501.value : '',
-              tag: '',
+              tag: this.formData.applyData['tag_id20230501'] ? this.formData.applyData.tag_id20230501.name : '',
               tagId: this.formData.applyData['tag_id20230501'] ? this.formData.applyData.tag_id20230501.value : '',
             };
             this.dataModalList = deptArray;

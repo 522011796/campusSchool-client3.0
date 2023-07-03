@@ -1315,13 +1315,22 @@
       dataDetail(event, item, index){
         //this.detailData = item;
         this.detailIndex = index;
-        if (item.applyContent  && item.applyContent != "[]"){
-          this.detailApplyContentData = JSON.parse(item.applyContent);
+        console.log(item.formCode, item.status);
+        if (item.formCode && item.formCode != ''){
+          if (item.status ==  -1){
+
+          }else {
+
+          }
+        }else {
+          if (item.applyContent  && item.applyContent != "[]"){
+            this.detailApplyContentData = JSON.parse(item.applyContent);
+          }
+          this.initAuditDetailList(item._id, 'main');
+          this.isCollapse = false;
+          this.toggleLeftMenu();
+          this.popUpVisible = true;
         }
-        this.initAuditDetailList(item._id, 'main');
-        this.isCollapse = false;
-        this.toggleLeftMenu();
-        this.popUpVisible = true;
       },
       detailCheckClick($event, id){
         this.initAuditDetailList(id, 'check');
