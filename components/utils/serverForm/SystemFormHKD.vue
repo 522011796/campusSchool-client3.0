@@ -144,6 +144,12 @@
       title: {
         default: '',
         type: String
+      },
+      formData: {
+        default: function (){
+          return {};
+        },
+        type: Object
       }
     },
     computed: {
@@ -157,6 +163,9 @@
           this.initTeacherAccount();
           this.initHt();
           this.initJK();
+          if (JSON.stringify(this.formData) != "{}"){
+            this.form = this.formData;
+          }
         }
         this.dialogVisibleInner = this.dialogVisible;
       }
@@ -387,6 +396,7 @@
       },
       deleteRemoveImg(index){
         this.form.files.splice(index, 1);
+        this.form.fileNames.splice(index, 1);
       },
       removeOrderItem(index){
         this.form.orderInfoList.splice(index, 1);

@@ -224,6 +224,12 @@
       title: {
         default: '',
         type: String
+      },
+      formData: {
+        default: function (){
+          return {};
+        },
+        type: Object
       }
     },
     computed: {
@@ -234,6 +240,45 @@
           this.init();
           this.initDept();
           this.initGys();
+          if (JSON.stringify(this.formData) != "{}"){
+            console.log(1,this.formData);
+            let form = {
+              title: '',
+              user: '',
+              userId: '',
+              dept: '',
+              deptName: '',
+              deptId: '',
+              des: '',
+              orderInfo: '',
+              orderInfoList: [],
+              sqTime: '',
+              skAccount: '',
+              skAccountName: '',
+              files: [],
+              fileNames: [],
+              object: '',
+              objectId: '',
+              order: '',
+              orderId: '',
+              tag: '',
+              tagId: '',
+              gys: '',
+              gysId: '',
+              amount: 0,
+              backMoneyIndex: '',
+              backMoney: [
+                {
+                  stage: 1,
+                  rate: 1,
+                  amount: 0,
+                  time: '',
+                  des: ''
+                }
+              ]
+            };
+            this.form = form;
+          }
         }
         this.dialogVisibleInner = this.dialogVisible;
       }
@@ -408,6 +453,7 @@
       },
       deleteRemoveImg(index){
         this.form.files.splice(index, 1);
+        this.form.fileNames.splice(index, 1);
       },
       removeOrderItem(index){
         this.form.orderInfoList.splice(index, 1);

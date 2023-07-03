@@ -117,7 +117,7 @@
   import {Toast} from "vant";
   import mixins from "~/utils/mixins";
   import DrawerLayoutRight from "~/components/utils/dialog/DrawerLayoutRight.vue";
-  import {Message} from "element-ui";
+  import {formatDate, Message} from "element-ui";
   import {MessageError, MessageSuccess, MessageWarning} from "~/utils/utils";
   import systemServerValidater from "~/utils/validater/systemServerValidater";
   import SystemFormDataInfo from "~/components/utils/serverForm/SystemFormDataInfo.vue";
@@ -134,6 +134,16 @@
       title: {
         default: '',
         type: String
+      },
+      formData: {
+        default: function (){
+          return {};
+        },
+        type: Object
+      },
+      editStatus: {
+        default: '',
+        type: String
       }
     },
     computed: {
@@ -143,6 +153,33 @@
           this.initTag();
           this.init();
           this.initDept();
+
+          if (JSON.stringify(this.formData) != "{}"){
+            console.log(1,this.formData);
+            let form = {
+              title: '',
+              user: '',
+              userId: '',
+              dept: '',
+              deptId: '',
+              des: '',
+              jkTime: '',
+              orderInfo: '',
+              orderInfoList: [],
+              hkTime: '',
+              skAccount: '',
+              skAccountName: '',
+              files: [],
+              fileNames: [],
+              object: '',
+              objectId: '',
+              order: '',
+              orderId: '',
+              tag: '',
+              tagId: ''
+            };
+            this.form = form;
+          }
         }
         this.dialogVisibleInner = this.dialogVisible;
       }
@@ -280,6 +317,7 @@
       },
       deleteRemoveImg(index){
         this.form.files.splice(index, 1);
+        this.form.fileNames.splice(index, 1);
       },
       removeOrderItem(index){
         this.form.orderInfoList.splice(index, 1);

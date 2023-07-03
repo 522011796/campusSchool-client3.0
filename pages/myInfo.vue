@@ -158,9 +158,9 @@
                 :label="$t('名称')">
                 <template slot-scope="scope">
                   <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                    <div class="text-center">{{scope.row.noticeName}}</div>
+                    <div class="text-center">{{scope.row.noticeName ? scope.row.noticeName : '--'}}</div>
                     <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                      {{scope.row.noticeName}}
+                      {{scope.row.noticeName ? scope.row.noticeName : '--'}}
                     </span>
                   </el-popover>
                 </template>
@@ -222,8 +222,10 @@
                 width="100"
                 :label="$t('操作')">
                 <template slot-scope="scope">
-                  <a href="javascript:;" class="color-success" @click="detailClick($event, scope.row)">{{$t("详情")}}</a>
-                  <a href="javascript:;" class="color-grand margin-left-5" @click="printManage($event, scope.row)">{{$t("打印")}}</a>
+                  <a v-if="scope.row.formCode && scope.row.formCode != '' && scope.row.status ==  -1" href="javascript:;" class="color-grand" @click="editClick($event, scope.row)">{{$t("编辑")}}</a>
+                  <a v-else-if="(scope.row.formCode == null || scope.row.formCode == 'other') && scope.row.status !=  -1" href="javascript:;" class="color-success" @click="detailClick($event, scope.row)">{{$t("详情")}}</a>
+                  <a v-else href="javascript:;" class="color-success" @click="detailClick($event, scope.row)">{{$t("详情")}}</a>
+                  <a href="javascript:;" class="color-warning margin-left-5" @click="printManage($event, scope.row)">{{$t("打印")}}</a>
                 </template>
               </el-table-column>
             </el-table>
@@ -1044,6 +1046,16 @@
         </div>
       </div>
     </drawer-layout-right>
+
+    <system-form-ptgl v-if="serverSysDetailData.formCode == 'PTGL'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-ptgl>
+    <system-form-cght v-if="serverSysDetailData.formCode == 'CGHT'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-cght>
+    <system-form-xsht v-if="serverSysDetailData.formCode == 'XSHT'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-xsht>
+    <system-form-tyht v-if="serverSysDetailData.formCode == 'TYHT'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-tyht>
+    <system-form-jkgl v-if="serverSysDetailData.formCode == 'JKGL'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-jkgl>
+    <system-form-skd v-if="serverSysDetailData.formCode == 'SKD'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-skd>
+    <system-form-hkd v-if="serverSysDetailData.formCode == 'HKD'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-hkd>
+    <system-form-bzbx v-if="serverSysDetailData.formCode == 'BZBX'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-bzbx>
+    <system-form-dgdk v-if="serverSysDetailData.formCode == 'DGDK'" :title="formCreateSystemTitleData" :dialog-visible="dialogSystemServer"></system-form-dgdk>
   </div>
 </template>
 
@@ -1054,10 +1066,29 @@
   import {MessageError, MessageSuccess} from "~/utils/utils";
   import {ImagePreview} from "vant";
   import FormSystemTagsDetail from "~/components/utils/formDetail/FormSystemTagsDetail.vue";
+  import SystemFormBzbx from "~/components/utils/serverForm/SystemFormBZBX.vue";
+  import SystemFormCght from "~/components/utils/serverForm/SystemFormCGHT.vue";
+  import SystemFormTyht from "~/components/utils/serverForm/SystemFormTYHT.vue";
+  import SystemFormXsht from "~/components/utils/serverForm/SystemFormXSHT.vue";
+  import SystemFormJkgl from "~/components/utils/serverForm/SystemFormJKGL.vue";
+  import SystemFormSkd from "~/components/utils/serverForm/SystemFormSKD.vue";
+  import SystemFormPtgl from "~/components/utils/serverForm/SystemFormPTGL.vue";
+  import SystemFormDgdk from "~/components/utils/serverForm/SystemFormDGDK.vue";
+  import SystemFormHkd from "~/components/utils/serverForm/SystemFormHKD.vue";
   export default {
     name: 'index',
     mixins: [mixins],
-    components: {FormSystemTagsDetail, DialogNormal},
+    components: {
+      SystemFormHkd,
+      SystemFormDgdk,
+      SystemFormPtgl,
+      SystemFormSkd,
+      SystemFormJkgl,
+      SystemFormXsht,
+      SystemFormTyht,
+      SystemFormCght,
+      SystemFormBzbx,
+      FormSystemTagsDetail, DialogNormal},
     data(){
       return {
         formCode: '',
@@ -1085,6 +1116,7 @@
         dialogObjServerDetail: false,
         dialogNormalVisible: false,
         dialogOrderDetailVisible: false,
+        dialogSystemServer: false,
         testArea: '',
         collectionList: [],
         noticeList: [],
@@ -1105,7 +1137,9 @@
         show: false,
         index: 0,
         detailApplyAuditUserData: {},
-        detailCheckApplyAuditUserData: {}
+        detailCheckApplyAuditUserData: {},
+        serverSysDetailData: {},
+        formCreateSystemTitleData: ''
       }
     },
     mounted() {
@@ -1174,6 +1208,9 @@
                     };
                   }
                 }
+              }else if (type == 'edit'){
+                console.log(res.data.data);
+                this.serverSysDetailData = res.data.data;
               }else if (type == 'check'){
                 this.detailCheckData = res.data.data;
                 this.detailCheckApplyAuditList = res.data.data.handleList;
@@ -1294,9 +1331,34 @@
         this.page = data;
         this.initAuditList();
       },
+      editClick($event, item){
+        if (item.formCode == 'PTGL'){
+          this.formCreateSystemTitleData = this.$t("普通申请单");
+        }else if (item.formCode == 'CGHT'){
+          this.formCreateSystemTitleData = this.$t("采购合同单");
+        }else if (item.formCode == 'XSHT'){
+          this.formCreateSystemTitleData = this.$t("销售合同单");
+        }else if (item.formCode == 'TYHT'){
+          this.formCreateSystemTitleData = this.$t("通用合同单");
+        }else if (item.form_code == 'JKGL'){
+          this.formCreateSystemTitleData = this.$t("借款单");
+        }else if (item.formCode == 'SKD'){
+          this.formCreateSystemTitleData = this.$t("收款单");
+        }else if (item.formCode == 'HKD'){
+          this.formCreateSystemTitleData = this.$t("还款单");
+        }else if (item.formCode == 'BZBX'){
+          this.formCreateSystemTitleData = this.$t("报账报销");
+        }else if (item.formCode == 'DGDK'){
+          this.formCreateSystemTitleData = this.$t("对公打款");
+        }
+        console.log(1111)
+        this.initAuditDetailList(item._id, 'edit');
+
+        this.dialogSystemServer = true;
+      },
       detailClick($event, item){
         this.detailData = item;
-        console.log(item.formCode);
+        console.log(222,item.formCode);
         this.formCode = item.formCode;
         if (item.formCode && item.formCode != ''){
           this.initAuditDetailList(item._id, 'detail', item.formCode);

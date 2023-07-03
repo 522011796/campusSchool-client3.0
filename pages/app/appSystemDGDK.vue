@@ -717,6 +717,7 @@
       },
       deleteRemoveImg(index){
         this.form.files.splice(index, 1);
+        this.form.fileNames.splice(index, 1);
       },
       removeOrderItem(index){
         this.form.orderInfoList.splice(index, 1);
