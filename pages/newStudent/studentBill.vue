@@ -2,7 +2,7 @@
   <div class="container">
     <div :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' " :style="{height: navHeight+'px'}"></div>
     <div class="header-title-block" :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' ">
-      <van-col span="4">
+      <van-col span="6">
         <div class="text-left padding-lr-10 color-white">
             <span class="font-bold font-size-14" @click="returnIndex">
               <i class="fa fa-chevron-left"></i>
@@ -10,12 +10,12 @@
             </span>
         </div>
       </van-col>
-      <van-col span="16">
+      <van-col span="12" class="text-right padding-lr-10">
         <div class="text-center color-white font-size-16 font-bold">
           <span>{{$t('财务缴费')}}</span>
         </div>
       </van-col>
-      <van-col span="4">
+      <van-col span="6">
         <van-button v-if="!$route.query.sessionId" size="small" type="warning" plain native-type="button" @click="payManage($event, 1)">{{$t("去支付")}}</van-button>
         <span v-else>&nbsp;</span>
       </van-col>

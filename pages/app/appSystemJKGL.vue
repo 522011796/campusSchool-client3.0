@@ -371,6 +371,7 @@
         orderType: '',
         formObj: {},
         form: {
+          id: '',
           title: '',
           user: '',
           userId: '',
@@ -753,6 +754,7 @@
             {
               field: 'apply_user20230501',
               value: this.form.userId,
+              name: this.form.user,
             },
             {
               field: 'jk_date20230501',
@@ -801,6 +803,9 @@
             params['submit'] = true;
           }
           params['applyContent'] = JSON.stringify(contentJson);
+          if (this.form.id != ''){
+            params['id'] = this.form.id;
+          }
           params = this.$qs.stringify(params);
           this.btnLoading = true;
           this.$axios.post(url, params, {loading: false}).then(res => {

@@ -1122,6 +1122,7 @@
         popCheckUpVisible: false,
         refreshing: false,
         detailData: '',
+        detailPageData: {},
         detailCheckData: '',
         detailIndex: '',
         detailApplyContentData: [],
@@ -1315,10 +1316,9 @@
       dataDetail(event, item, index){
         //this.detailData = item;
         this.detailIndex = index;
-        console.log(item.formCode, item.status);
         if (item.formCode && item.formCode != ''){
           if (item.status ==  -1){
-
+            this.initAuditDetailList(item._id, 'edit', item.formCode);
           }else {
 
           }
@@ -1338,7 +1338,7 @@
         this.toggleLeftMenu();
         this.popCheckUpVisible = true;
       },
-      initAuditDetailList(id, type){
+      initAuditDetailList(id, type, formCode){
         let params = {
           id: id
         };
@@ -1356,6 +1356,62 @@
                       notagreed1: res.data.data.handleList[i].notagreed1
                     };
                   }
+                }
+              }else if (type == 'edit'){
+                if (formCode == 'JKGL'){
+                  let deptArray = [];
+                  let dataObj = res.data.data;
+                  let dept = dataObj.applyData['apply_dept20230501'] ? dataObj.applyData.apply_dept20230501.value : '';
+                  let deptName = dataObj.applyData['apply_dept20230501'] ? dataObj.applyData.apply_dept20230501.deptName : '';
+                  deptArray = dept != '' ? dept.split(",") : [];
+
+                  let coseInfo = dataObj.applyData['cost_info20230501'] ? dataObj.applyData.cost_info20230501.value : '';
+                  let coseInfoArray = coseInfo;
+
+                  let fils = dataObj.applyData['jk_files20230501'] ? dataObj.applyData.jk_files20230501.value : [];
+                  let filsName = dataObj.applyData['jk_files20230501'] ? dataObj.applyData.jk_files20230501.name : [];
+                  let formObj = {
+                    id: dataObj.id,
+                    title: dataObj.applyData['jk_name20230501'] ? dataObj.applyData.jk_name20230501.value : '',
+                    user: dataObj.applyData['apply_user20230501'] ? dataObj.applyData.apply_user20230501.name : '',
+                    userId: dataObj.applyData['apply_user20230501'] ? dataObj.applyData.apply_user20230501.value : '',
+                    dept: deptName,
+                    deptId: deptArray,
+                    des: dataObj.applyData['jk_des20230501'] ? dataObj.applyData.jk_des20230501.value : '',
+                    jkTime: dataObj.applyData['jk_date20230501'] ? dataObj.applyData.jk_date20230501.value : '',
+                    orderInfo: coseInfoArray.length > 0 ? '&nbsp;' : '',
+                    orderInfoList: coseInfoArray,
+                    hkTime: dataObj.applyData['hk_date20230501'] ? dataObj.applyData.hk_date20230501.value : '',
+                    skAccount: dataObj.applyData['jk_account20230501'] ? dataObj.applyData.jk_account20230501.value : '',
+                    skAccountName: dataObj.applyData['jk_account20230501'] ? dataObj.applyData.jk_account20230501.name : '',
+                    files: fils,
+                    fileNames: filsName,
+                    object: dataObj.applyData['xm_id20230501'] ? dataObj.applyData.xm_id20230501.name : '',
+                    objectId: dataObj.applyData['xm_id20230501'] ? dataObj.applyData.xm_id20230501.value : '',
+                    order: dataObj.applyData['ht_id20230501'] ? dataObj.applyData.ht_id20230501.name : '',
+                    orderId: dataObj.applyData['ht_id20230501'] ? dataObj.applyData.ht_id20230501.value : '',
+                    tag: dataObj.applyData['tag_id20230501'] ? dataObj.applyData.tag_id20230501.name : '',
+                    tagId: dataObj.applyData['tag_id20230501'] ? dataObj.applyData.tag_id20230501.value : ''
+                  };
+                  console.log(formObj);
+                  this.$router.push({
+                    name: 'app-appSystemJKGL',
+                    query: {
+                      id: '',
+                      process: '',
+                      activeType: this.active,
+                      userType: this.loginUserAppType,
+                      navH: this.navHeight,
+                      appType: this.globalAppShow,
+                      page: '/app/appMyNotice',
+                      pageParent: '/app/appMyNotice',
+                      name: 'app-appMyNotice'
+                    },
+                    params: {
+                      formObj: formObj,
+                      orderInfoList: coseInfoArray
+                    }
+                  });
                 }
               }else if (type == 'check'){
                 this.detailCheckData = res.data.data;

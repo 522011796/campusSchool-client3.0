@@ -2,7 +2,7 @@
   <div class="container">
     <div :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' " :style="{height: navHeight+'px'}"></div>
     <div class="header-title-block" :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' ">
-      <van-col span="3">
+      <van-col span="6">
         <div class="text-left padding-lr-10 color-white">
             <span class="font-bold font-size-14" @click="returnIndex">
               <i class="fa fa-chevron-left"></i>
@@ -10,13 +10,13 @@
             </span>
         </div>
       </van-col>
-      <van-col span="18">
+      <van-col span="12">
         <div class="text-center color-white font-size-16 font-bold">
           <span v-if="$route.query.title && $route.query.title != ''">{{$route.query.title}}</span>
           <span v-else>{{$t("报到单")}}</span>
         </div>
       </van-col>
-      <van-col span="3">
+      <van-col span="6">
         &nbsp;
       </van-col>
     </div>
