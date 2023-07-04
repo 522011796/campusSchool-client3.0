@@ -158,7 +158,7 @@
         <el-row style="margin-top: 8px" :gutter="16">
           <el-col :span="12">
             <div class="text-center padding-lr-10">
-              <van-button round size="small" block @click="saveForm(1)">{{$t("暂存")}}</van-button>
+              <van-button :loading="btnLoading" round size="small" block @click="saveForm(1)">{{$t("暂存")}}</van-button>
             </div>
           </el-col>
           <el-col :span="12">

@@ -130,16 +130,40 @@
         }
       },
       handleFormOk(){
-        this.fApi.submit((formData, fApi)=>{
+        if (this.fApi['submit']){
+          this.fApi.submit((formData, fApi)=>{
+            let url = "";
+            let ruleList = [];
+            let params = {
+              linkId: this.$route.query.linkId
+            }
+            let rule = fApi.rule;
+            let ruleObjList =  this.setRuleChild(rule, ruleList);
+            //console.log(ruleObjList);
+            params['linkFormDate'] = JSON.stringify(ruleObjList);
+
+            url = common.server_enroll_app_student_form_add;
+            params = this.$qs.stringify(params);
+            this.btnLoading = true;
+            this.$axios.post(url, params, {loading: false}).then(res => {
+              if (res.data.code == 200){
+                this.dialogForm = false;
+                let url = this.$route.query.subPage ? this.$route.query.subPage : '/newStudent/studentIndex'
+                this.returnGIndex(url);
+                Toast(res.data.desc);
+              }else {
+                Toast(res.data.desc);
+              }
+              this.btnLoading = false;
+            });
+          });
+        }else {
           let url = "";
           let ruleList = [];
           let params = {
             linkId: this.$route.query.linkId
           }
-          let rule = fApi.rule;
-          let ruleObjList =  this.setRuleChild(rule, ruleList);
-          //console.log(ruleObjList);
-          params['linkFormDate'] = JSON.stringify(ruleObjList);
+          params['linkFormDate'] = '';
 
           url = common.server_enroll_app_student_form_add;
           params = this.$qs.stringify(params);
@@ -155,7 +179,7 @@
             }
             this.btnLoading = false;
           });
-        });
+        }
       },
       returnIndex(){
         let url = this.$route.query.subPage ? this.$route.query.subPage : '/newStudent/studentIndex'

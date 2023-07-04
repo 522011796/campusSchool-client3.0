@@ -1361,9 +1361,10 @@
                 if (formCode == 'JKGL'){
                   let deptArray = [];
                   let dataObj = res.data.data;
+
                   let dept = dataObj.applyData['apply_dept20230501'] ? dataObj.applyData.apply_dept20230501.value : '';
                   let deptName = dataObj.applyData['apply_dept20230501'] ? dataObj.applyData.apply_dept20230501.deptName : '';
-                  deptArray = dept != '' ? dept.split(",") : [];
+                  //deptArray = dept != '' ? dept.split(",") : [];
 
                   let coseInfo = dataObj.applyData['cost_info20230501'] ? dataObj.applyData.cost_info20230501.value : '';
                   let coseInfoArray = coseInfo;
@@ -1376,7 +1377,7 @@
                     user: dataObj.applyData['apply_user20230501'] ? dataObj.applyData.apply_user20230501.name : '',
                     userId: dataObj.applyData['apply_user20230501'] ? dataObj.applyData.apply_user20230501.value : '',
                     dept: deptName,
-                    deptId: deptArray,
+                    deptId: dept,
                     des: dataObj.applyData['jk_des20230501'] ? dataObj.applyData.jk_des20230501.value : '',
                     jkTime: dataObj.applyData['jk_date20230501'] ? dataObj.applyData.jk_date20230501.value : '',
                     orderInfo: coseInfoArray.length > 0 ? '&nbsp;' : '',

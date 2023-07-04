@@ -1903,16 +1903,41 @@
         this.dialogForm = false;
       },
       handleFormOk(){
-        this.fApi.submit((formData, fApi)=>{
+        if (this.fApi['submit']){
+          this.fApi.submit((formData, fApi)=>{
+            let url = "";
+            let ruleList = [];
+            let params = {
+              linkId: this.detailData.id
+            }
+
+            let rule = fApi.rule;
+            console.log(fApi, fApi.rule);
+            let ruleObjList =  this.setRuleChild(rule, ruleList);
+            //console.log(ruleObjList);
+            params['linkFormDate'] = JSON.stringify(ruleObjList);
+
+            url = common.server_enroll_app_student_form_add;
+            params = this.$qs.stringify(params);
+            this.btnLoading = true;
+            this.$axios.post(url, params, {loading: false}).then(res => {
+              if (res.data.code == 200){
+                this.dialogForm = false;
+                this.initStudentEnroll();
+                MessageSuccess(res.data.desc);
+              }else {
+                MessageError(res.data.desc);
+              }
+              this.btnLoading = false;
+            });
+          });
+        }else {
           let url = "";
           let ruleList = [];
           let params = {
             linkId: this.detailData.id
           }
-          let rule = fApi.rule;
-          let ruleObjList =  this.setRuleChild(rule, ruleList);
-          //console.log(ruleObjList);
-          params['linkFormDate'] = JSON.stringify(ruleObjList);
+          params['linkFormDate'] = '';
 
           url = common.server_enroll_app_student_form_add;
           params = this.$qs.stringify(params);
@@ -1927,7 +1952,7 @@
             }
             this.btnLoading = false;
           });
-        });
+        }
       },
       setRuleChild(rule, ruleList){
         let obj = {};
