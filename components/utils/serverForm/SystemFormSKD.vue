@@ -157,57 +157,6 @@
     },
     computed: {
       selectModel(){
-        if (this.dialogVisible == true){
-          let deptArray = [];
-          let form = {};
-          if (JSON.stringify(this.formData) != "{}"){
-            let dept = this.formData.applyData['apply_dept20230501'] ? this.formData.applyData.apply_dept20230501.value : '';
-            let deptName = this.formData.applyData['apply_dept20230501'] ? this.formData.applyData.apply_dept20230501.deptName : '';
-            deptArray = dept != '' ? dept.split(",") : [];
-
-            let coseInfo = this.formData.applyData['cost_info20230501'] ? this.formData.applyData.cost_info20230501.value : '';
-            let coseInfoArray = coseInfo;
-
-            let fils = this.formData.applyData['jk_files20230501'] ? this.formData.applyData.jk_files20230501.value : [];
-            let filsName = this.formData.applyData['jk_files20230501'] ? this.formData.applyData.jk_files20230501.name : [];
-
-            form = {
-              id: this.formData.id,
-              title: this.formData.applyData['jk_name20230501'] ? this.formData.applyData.jk_name20230501.value : '',
-              user: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.name : '',
-              userId: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.value : '',
-              dept: deptName,
-              deptId: dept,
-              des: this.formData.applyData['jk_des20230501'] ? this.formData.applyData.jk_des20230501.value : '',
-              orderInfo: '',
-              orderInfoList: coseInfoArray,
-              skTime: this.formData.applyData['jk_date20230501'] ? this.formData.applyData.jk_date20230501.value : '',
-              skAccount: this.formData.applyData['jk_account20230501'] ? this.formData.applyData.jk_account20230501.value : '',
-              skAccountName: this.formData.applyData['jk_account20230501'] ? this.formData.applyData.jk_account20230501.name : '',
-              files: fils,
-              fileNames: filsName,
-              object: this.formData.applyData['rela_apply20230501'] ? this.formData.applyData.rela_apply20230501.name : '',
-              objectId: this.formData.applyData['rela_apply20230501'] ? this.formData.applyData.rela_apply20230501.value : '',
-              order: this.formData.applyData['ht_id20230501'] ? this.formData.applyData.ht_id20230501.name : '',
-              orderId: this.formData.applyData['ht_id20230501'] ? this.formData.applyData.ht_id20230501.value : '',
-              tag: this.formData.applyData['tag_id20230501'] ? this.formData.applyData.tag_id20230501.name : '',
-              tagId: this.formData.applyData['tag_id20230501'] ? this.formData.applyData.tag_id20230501.value : '',
-              kx: this.formData.applyData['ht_pay20230501'] ? this.formData.applyData.ht_pay20230501.name : '',
-              kxId: this.formData.applyData['ht_pay20230501'] ? this.formData.applyData.ht_pay20230501.value : '',
-              kxList: []
-            };
-            this.dataModalList = deptArray;
-            this.deptStatusContent = deptArray.length;
-            this.form = form;
-          }
-          this.initObject();
-          this.initTag();
-          this.init();
-          this.initDept(deptArray);
-          this.initGys();
-          this.initTeacherAccount();
-          this.initHt(form);
-        }
         this.dialogVisibleInner = this.dialogVisible;
       }
     },
@@ -713,6 +662,61 @@
             this.btnLoading = false;
           });
         });
+      }
+    },
+    watch: {
+      dialogVisibleInner: function (value) {
+        if (value == true){
+          let deptArray = [];
+          let form = {};
+          if (JSON.stringify(this.formData) != "{}"){
+            let dept = this.formData.applyData['apply_dept20230501'] ? this.formData.applyData.apply_dept20230501.value : '';
+            let deptName = this.formData.applyData['apply_dept20230501'] ? this.formData.applyData.apply_dept20230501.deptName : '';
+            deptArray = dept != '' ? dept.split(",") : [];
+
+            let coseInfo = this.formData.applyData['cost_info20230501'] ? this.formData.applyData.cost_info20230501.value : '';
+            let coseInfoArray = coseInfo;
+
+            let fils = this.formData.applyData['jk_files20230501'] ? this.formData.applyData.jk_files20230501.value : [];
+            let filsName = this.formData.applyData['jk_files20230501'] ? this.formData.applyData.jk_files20230501.name : [];
+
+            form = {
+              id: this.formData.id,
+              title: this.formData.applyData['jk_name20230501'] ? this.formData.applyData.jk_name20230501.value : '',
+              user: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.name : '',
+              userId: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.value : '',
+              dept: deptName,
+              deptId: dept,
+              des: this.formData.applyData['jk_des20230501'] ? this.formData.applyData.jk_des20230501.value : '',
+              orderInfo: '',
+              orderInfoList: coseInfoArray,
+              skTime: this.formData.applyData['jk_date20230501'] ? this.formData.applyData.jk_date20230501.value : '',
+              skAccount: this.formData.applyData['jk_account20230501'] ? this.formData.applyData.jk_account20230501.value : '',
+              skAccountName: this.formData.applyData['jk_account20230501'] ? this.formData.applyData.jk_account20230501.name : '',
+              files: fils,
+              fileNames: filsName,
+              object: this.formData.applyData['rela_apply20230501'] ? this.formData.applyData.rela_apply20230501.name : '',
+              objectId: this.formData.applyData['rela_apply20230501'] ? this.formData.applyData.rela_apply20230501.value : '',
+              order: this.formData.applyData['ht_id20230501'] ? this.formData.applyData.ht_id20230501.name : '',
+              orderId: this.formData.applyData['ht_id20230501'] ? this.formData.applyData.ht_id20230501.value : '',
+              tag: this.formData.applyData['tag_id20230501'] ? this.formData.applyData.tag_id20230501.name : '',
+              tagId: this.formData.applyData['tag_id20230501'] ? this.formData.applyData.tag_id20230501.value : '',
+              kx: this.formData.applyData['ht_pay20230501'] ? this.formData.applyData.ht_pay20230501.name : '',
+              kxId: this.formData.applyData['ht_pay20230501'] ? this.formData.applyData.ht_pay20230501.value : '',
+              kxList: []
+            };
+            this.dataModalList = deptArray;
+            this.deptStatusContent = deptArray.length;
+            this.form = form;
+          }
+          this.initObject();
+          this.initTag();
+          this.init();
+          this.initDept(deptArray);
+          this.initGys();
+          this.initTeacherAccount();
+          this.initHt(form);
+        }
       }
     }
   }

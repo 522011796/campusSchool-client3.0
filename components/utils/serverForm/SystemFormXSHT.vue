@@ -234,71 +234,6 @@
     },
     computed: {
       selectModel(){
-        if (this.dialogVisible == true){
-          let deptArray = [];
-          let form = {};
-          if (JSON.stringify(this.formData) != "{}"){
-            let dept = this.formData.applyData['apply_dept20230501'] ? this.formData.applyData.apply_dept20230501.value : '';
-            let deptName = this.formData.applyData['apply_dept20230501'] ? this.formData.applyData.apply_dept20230501.deptName : '';
-            deptArray = dept != '' ? dept.split(",") : [];
-
-            let coseInfo = this.formData.applyData['cost_info20230501'] ? this.formData.applyData.cost_info20230501.value : '';
-            let coseInfoArray = coseInfo;
-
-            let fils = this.formData.applyData['ht_files20230501'] ? this.formData.applyData.ht_files20230501.value : [];
-            let filsName = this.formData.applyData['ht_files20230501'] ? this.formData.applyData.ht_files20230501.name : [];
-
-            let stage = this.formData.applyData['stage_id20230501'] ? this.formData.applyData.stage_id20230501.value : 0;
-            let stageArray = [];
-            for (let i = 0; i < stage; i++){
-              stageArray.push({
-                stage: this.formData.applyData['ht_payStage20230501_'+(i+1)].value,
-                rate: this.formData.applyData['ht_payRate20230501_'+(i+1)].value,
-                amount: this.formData.applyData['ht_payAmount20230501_'+(i+1)].value,
-                time: this.formData.applyData['ht_payTime20230501_'+(i+1)].value,
-                des: this.formData.applyData['ht_payDes20230501_'+(i+1)].value,
-              });
-            }
-
-            console.log(stageArray);
-
-            form = {
-              id: this.formData.id,
-              title: this.formData.applyData['ht_name20230501'] ? this.formData.applyData.ht_name20230501.value : '',
-              user: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.name : '',
-              userId: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.value : '',
-              dept: deptName,
-              deptId: dept,
-              des: this.formData.applyData['ht_des20230501'] ? this.formData.applyData.ht_des20230501.value : '',
-              orderInfo: '',
-              orderInfoList: [],
-              sqTime: this.formData.applyData['ht_time20230501'] ? this.formData.applyData.ht_time20230501.value : '',
-              skAccount: '',
-              skAccountName: '',
-              files: fils,
-              fileNames: filsName,
-              object: this.formData.applyData['xm_id20230501'] ? this.formData.applyData.xm_id20230501.name : '',
-              objectId: this.formData.applyData['xm_id20230501'] ? this.formData.applyData.xm_id20230501.value : '',
-              order: '',
-              orderId: '',
-              tag: this.formData.applyData['tag_id20230501'] ? this.formData.applyData.tag_id20230501.name : '',
-              tagId: this.formData.applyData['tag_id20230501'] ? this.formData.applyData.tag_id20230501.value : '',
-              gys: this.formData.applyData['ht_supplierId20230501'] ? this.formData.applyData.ht_supplierId20230501.name : '',
-              gysId: this.formData.applyData['ht_supplierId20230501'] ? this.formData.applyData.ht_supplierId20230501.value : '',
-              amount: this.formData.applyData['ht_amount20230501'] ? this.formData.applyData.ht_amount20230501.value : 0,
-              backMoneyIndex: '',
-              backMoney: stageArray
-            };
-            this.dataModalList = deptArray;
-            this.deptStatusContent = deptArray.length;
-            this.form = form;
-          }
-          this.initObject();
-          this.initTag();
-          this.init();
-          this.initDept(deptArray);
-          this.initGys();
-        }
         this.dialogVisibleInner = this.dialogVisible;
       }
     },
@@ -740,7 +675,6 @@
             return;
           }
 
-          console.log(contentJson);
           let params = {
             formCode: 'XSHT',
             userId: this.form.userId,
@@ -772,6 +706,73 @@
             this.btnLoading = false;
           });
         });
+      }
+    },
+    watch: {
+      dialogVisibleInner: function (value) {
+        if (value == true){
+          let deptArray = [];
+          let form = {};
+          if (JSON.stringify(this.formData) != "{}"){
+            let dept = this.formData.applyData['apply_dept20230501'] ? this.formData.applyData.apply_dept20230501.value : '';
+            let deptName = this.formData.applyData['apply_dept20230501'] ? this.formData.applyData.apply_dept20230501.deptName : '';
+            deptArray = dept != '' ? dept.split(",") : [];
+
+            let coseInfo = this.formData.applyData['cost_info20230501'] ? this.formData.applyData.cost_info20230501.value : '';
+            let coseInfoArray = coseInfo;
+
+            let fils = this.formData.applyData['ht_files20230501'] ? this.formData.applyData.ht_files20230501.value : [];
+            let filsName = this.formData.applyData['ht_files20230501'] ? this.formData.applyData.ht_files20230501.name : [];
+
+            let stage = this.formData.applyData['stage_id20230501'] ? this.formData.applyData.stage_id20230501.value : 0;
+            let stageArray = [];
+            for (let i = 0; i < stage; i++){
+              stageArray.push({
+                stage: this.formData.applyData['ht_payStage20230501_'+(i+1)].value,
+                rate: this.formData.applyData['ht_payRate20230501_'+(i+1)].value,
+                amount: this.formData.applyData['ht_payAmount20230501_'+(i+1)].value,
+                time: this.formData.applyData['ht_payTime20230501_'+(i+1)].value,
+                des: this.formData.applyData['ht_payDes20230501_'+(i+1)].value,
+              });
+            }
+
+            form = {
+              id: this.formData.id,
+              title: this.formData.applyData['ht_name20230501'] ? this.formData.applyData.ht_name20230501.value : '',
+              user: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.name : '',
+              userId: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.value : '',
+              dept: deptName,
+              deptId: dept,
+              des: this.formData.applyData['ht_des20230501'] ? this.formData.applyData.ht_des20230501.value : '',
+              orderInfo: '',
+              orderInfoList: [],
+              sqTime: this.formData.applyData['ht_time20230501'] ? this.formData.applyData.ht_time20230501.value : '',
+              skAccount: '',
+              skAccountName: '',
+              files: fils,
+              fileNames: filsName,
+              object: this.formData.applyData['xm_id20230501'] ? this.formData.applyData.xm_id20230501.name : '',
+              objectId: this.formData.applyData['xm_id20230501'] ? this.formData.applyData.xm_id20230501.value : '',
+              order: '',
+              orderId: '',
+              tag: this.formData.applyData['tag_id20230501'] ? this.formData.applyData.tag_id20230501.name : '',
+              tagId: this.formData.applyData['tag_id20230501'] ? this.formData.applyData.tag_id20230501.value : '',
+              gys: this.formData.applyData['ht_supplierId20230501'] ? this.formData.applyData.ht_supplierId20230501.name : '',
+              gysId: this.formData.applyData['ht_supplierId20230501'] ? this.formData.applyData.ht_supplierId20230501.value : '',
+              amount: this.formData.applyData['ht_amount20230501'] ? this.formData.applyData.ht_amount20230501.value : 0,
+              backMoneyIndex: '',
+              backMoney: stageArray
+            };
+            this.dataModalList = deptArray;
+            this.deptStatusContent = deptArray.length;
+            this.form = form;
+          }
+          this.initObject();
+          this.initTag();
+          this.init();
+          this.initDept(deptArray);
+          this.initGys();
+        }
       }
     }
   }

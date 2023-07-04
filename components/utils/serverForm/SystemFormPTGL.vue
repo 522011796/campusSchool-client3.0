@@ -148,51 +148,6 @@
     },
     computed: {
       selectModel(){
-        if (this.dialogVisible == true){
-          let deptArray = [];
-          if (JSON.stringify(this.formData) != "{}"){
-            let dept = this.formData.applyData['apply_dept20230501'] ? this.formData.applyData.apply_dept20230501.value : '';
-            let deptName = this.formData.applyData['apply_dept20230501'] ? this.formData.applyData.apply_dept20230501.deptName : '';
-            deptArray = dept != '' ? dept.split(",") : [];
-
-            let coseInfo = this.formData.applyData['cost_info20230501'] ? this.formData.applyData.cost_info20230501.value : '';
-            let coseInfoArray = coseInfo;
-
-            let fils = this.formData.applyData['fk_files20230501'] ? this.formData.applyData.fk_files20230501.value : [];
-            let filsName = this.formData.applyData['fk_files20230501'] ? this.formData.applyData.fk_files20230501.name : [];
-
-            let form = {
-              id: this.formData.id,
-              title: this.formData.applyData['fk_name20230501'] ? this.formData.applyData.fk_name20230501.value : '',
-              user: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.name : '',
-              userId: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.value : '',
-              dept: deptName,
-              deptId: dept,
-              des: this.formData.applyData['fk_des20230501'] ? this.formData.applyData.fk_des20230501.value : '',
-              jkTime: '',
-              orderInfo: '',
-              orderInfoList: coseInfoArray,
-              hkTime: '',
-              skAccount: '',
-              skAccountName: '',
-              files: fils,
-              fileNames: filsName,
-              object: this.formData.applyData['xm_id20230501'] ? this.formData.applyData.xm_id20230501.name : '',
-              objectId: this.formData.applyData['xm_id20230501'] ? this.formData.applyData.xm_id20230501.value : '',
-              order: '',
-              orderId: '',
-              tag: this.formData.applyData['tag_id20230501'] ? this.formData.applyData.tag_id20230501.name : '',
-              tagId: this.formData.applyData['tag_id20230501'] ? this.formData.applyData.tag_id20230501.value : '',
-            };
-            this.dataModalList = deptArray;
-            this.deptStatusContent = deptArray.length;
-            this.form = form;
-          }
-          this.initObject();
-          this.initTag();
-          this.initDept(deptArray);
-          this.init();
-        }
         this.dialogVisibleInner = this.dialogVisible;
       }
     },
@@ -539,6 +494,55 @@
             this.btnLoading = false;
           });
         });
+      }
+    },
+    watch: {
+      dialogVisibleInner: function (value) {
+        if (value == true){
+          let deptArray = [];
+          if (JSON.stringify(this.formData) != "{}"){
+            let dept = this.formData.applyData['apply_dept20230501'] ? this.formData.applyData.apply_dept20230501.value : '';
+            let deptName = this.formData.applyData['apply_dept20230501'] ? this.formData.applyData.apply_dept20230501.deptName : '';
+            deptArray = dept != '' ? dept.split(",") : [];
+
+            let coseInfo = this.formData.applyData['cost_info20230501'] ? this.formData.applyData.cost_info20230501.value : '';
+            let coseInfoArray = coseInfo;
+
+            let fils = this.formData.applyData['fk_files20230501'] ? this.formData.applyData.fk_files20230501.value : [];
+            let filsName = this.formData.applyData['fk_files20230501'] ? this.formData.applyData.fk_files20230501.name : [];
+
+            let form = {
+              id: this.formData.id,
+              title: this.formData.applyData['fk_name20230501'] ? this.formData.applyData.fk_name20230501.value : '',
+              user: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.name : '',
+              userId: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.value : '',
+              dept: deptName,
+              deptId: dept,
+              des: this.formData.applyData['fk_des20230501'] ? this.formData.applyData.fk_des20230501.value : '',
+              jkTime: '',
+              orderInfo: '',
+              orderInfoList: coseInfoArray,
+              hkTime: '',
+              skAccount: '',
+              skAccountName: '',
+              files: fils,
+              fileNames: filsName,
+              object: this.formData.applyData['xm_id20230501'] ? this.formData.applyData.xm_id20230501.name : '',
+              objectId: this.formData.applyData['xm_id20230501'] ? this.formData.applyData.xm_id20230501.value : '',
+              order: '',
+              orderId: '',
+              tag: this.formData.applyData['tag_id20230501'] ? this.formData.applyData.tag_id20230501.name : '',
+              tagId: this.formData.applyData['tag_id20230501'] ? this.formData.applyData.tag_id20230501.value : '',
+            };
+            this.dataModalList = deptArray;
+            this.deptStatusContent = deptArray.length;
+            this.form = form;
+          }
+          this.initObject();
+          this.initTag();
+          this.initDept(deptArray);
+          this.init();
+        }
       }
     }
   }
