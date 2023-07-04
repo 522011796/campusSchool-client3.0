@@ -127,6 +127,7 @@
           let form = {};
           if (JSON.stringify(this.formData) != "{}"){
             let dept = this.formData.applyData['apply_dept20230501'] ? this.formData.applyData.apply_dept20230501.value : '';
+            let deptName = this.formData.applyData['apply_dept20230501'] ? this.formData.applyData.apply_dept20230501.deptName : '';
             deptArray = dept != '' ? dept.split(",") : [];
 
             let coseInfo = this.formData.applyData['cost_info20230501'] ? this.formData.applyData.cost_info20230501.value : '';
@@ -140,7 +141,7 @@
               title: this.formData.applyData['ht_name20230501'] ? this.formData.applyData.ht_name20230501.value : '',
               user: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.name : '',
               userId: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.value : '',
-              dept: '',
+              dept: deptName,
               deptId: dept,
               des: this.formData.applyData['ht_des20230501'] ? this.formData.applyData.ht_des20230501.value : '',
               hkTime: '',

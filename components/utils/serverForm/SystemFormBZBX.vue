@@ -162,6 +162,7 @@
           let form = {};
           if (JSON.stringify(this.formData) != "{}"){
             let dept = this.formData.applyData['apply_dept20230501'] ? this.formData.applyData.apply_dept20230501.value : '';
+            let deptName = this.formData.applyData['apply_dept20230501'] ? this.formData.applyData.apply_dept20230501.deptName : '';
             deptArray = dept != '' ? dept.split(",") : [];
 
             let coseInfo = this.formData.applyData['cost_info20230501'] ? this.formData.applyData.cost_info20230501.value : '';
@@ -175,7 +176,7 @@
               title: this.formData.applyData['bb_name20230501'] ? this.formData.applyData.bb_name20230501.value : '',
               user: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.name : '',
               userId: this.formData.applyData['apply_user20230501'] ? this.formData.applyData.apply_user20230501.value : '',
-              dept: '',
+              dept: deptName,
               deptId: dept,
               des: this.formData.applyData['bb_des20230501'] ? this.formData.applyData.bb_des20230501.value : '',
               bxTime: this.formData.applyData['jk_date20230501'] ? this.formData.applyData.jk_date20230501.value : '',
@@ -287,6 +288,7 @@
         this.dataModalList = this.dataModalBakList;
 
         if (deptArray && deptArray.length > 0){
+          console.log(deptArray);
           this.dataModalList = deptArray;
         }
       },
@@ -621,6 +623,10 @@
         if (this.$refs['form']){
           this.$refs['form'].resetFields();
         }
+        if (this.$refs['SelectorDept']){
+          console.log(1111);
+          this.$refs['SelectorDept'].clearCheckedNodes();
+        }
       },
       cancelDrawDialog(){
         this.$parent.dialogSystemServer = false
@@ -700,8 +706,8 @@
             },
             {
               field: 'xm_id20230501',
-              value: this.form.object,
-              name: this.form.objectId
+              value: this.form.objectId,
+              name: this.form.object
             },
             {
               field: 'cost_info20230501',

@@ -589,6 +589,7 @@
         }
       },
       jumpPage(id){
+        let page = this.$route.query.pageParent ? this.$route.query.pageParent : '/app/appSystemMoneyForm';
         this.$router.push({
           name: 'app-appSystemOrderInfo',
           query: {
@@ -599,7 +600,7 @@
             navH: this.navHeight,
             appType: this.globalAppShow,
             page: '/app/appSystemJKGL',
-            pageParent: '/app/appSystemMoneyForm',
+            pageParent: page,
             name: 'app-appSystemJKGL'
           },
           params: {
