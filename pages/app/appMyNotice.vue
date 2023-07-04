@@ -147,7 +147,7 @@
                     <div class="margin-top-5">
                       [<span class="color-warning">{{ item.applyUserName }}</span>]
                       <span>{{$t("提交的")}}</span>
-                      [<span class="color-warning moon-content-text-ellipsis-class" style="max-width: 120px;display: inline-block;position: relative; top: 3px">{{ item.formName }}</span>]
+                      [<span class="color-warning moon-content-text-ellipsis-class" style="max-width: 120px;display: inline-block;position: relative; top: 3px">{{ item.noticeName }}</span>]
                     </div>
                     <div class="color-muted margin-top-5">
                       <span class="font-size-12">{{ item.className ? item.className : item.departmentName }}</span>
@@ -1098,6 +1098,109 @@
         <el-cascader-panel ref="SelectorDept" :style="{ height: '350px' }" :props="{multiple: true,checkStrictly:false}" v-model="searchDept" :options="dataProcessList" @change="searchProcess"></el-cascader-panel>
       </div>
     </van-popup>
+
+    <van-popup v-model="dialogSysVisible" position="bottom" class="custom-cascader" :style="{ height: divHeight13.height }">
+      <div style="height: 40px;line-height: 40px;" :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' ">
+        <el-row>
+          <el-col :span="8">
+            <div class="text-left padding-left-5" @click="cancelSysPop">
+              <a href="javascript:;" class="color-white">
+                <i class="fa fa-chevron-left"></i>
+                {{$t("返回")}}
+              </a>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="text-center color-white font-bold">
+              {{dialogSysTitle}}
+            </div>
+          </el-col>
+          <el-col :span="8">
+            &nbsp;
+          </el-col>
+        </el-row>
+      </div>
+
+      <div :style="{height: divHeight13.height1-60+'px'}" style="overflow-y: auto;background: #f5f5f5;padding: 10px">
+        <div class="sys-top-block">
+          <div>
+            <el-row>
+              <el-col :span="12">
+                <div class="text-left">
+                  <span>{{$moment(dataMainDetailObj.applyTime).format("YYYY-MM-DD HH:mm:ss")}}</span>
+                </div>
+              </el-col>
+              <el-col :span="12">
+                <div class="text-right">
+                  <span :class="auditTextColorInfo(dataMainDetailObj.status)">{{auditStatusTextInfo(dataMainDetailObj.status)}}</span>
+                </div>
+              </el-col>
+            </el-row>
+          </div>
+          <div class="padding-lr-10">
+            <div class="margin-top-10">
+              <el-row>
+                <el-col :span="24">
+                  <div class="text-left font-bold">
+                    <span class="moon-content-text-ellipsis-class" style="display: inline-block;max-width: 150px">
+                      <label v-if="dataMainDetailObj.formCode == 'PTGL'">{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['fk_name20230501'].value : '--'}}</label>
+                      <label v-if="dataMainDetailObj.formCode == 'JKGL'">{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['jk_name20230501'].value : '--'}}</label>
+                      <label v-if="dataMainDetailObj.formCode == 'HKD'">{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['jk_name20230501'].value : '--'}}</label>
+                      <label v-if="dataMainDetailObj.formCode == 'SKD'">{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['jk_name20230501'].value : '--'}}</label>
+                      <label v-if="dataMainDetailObj.formCode == 'BZBX'">{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['bb_name20230501'].value : '--'}}</label>
+                      <label v-if="dataMainDetailObj.formCode == 'DGDK'">{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['fk_name20230501'].value : '--'}}</label>
+                      <label v-if="dataMainDetailObj.formCode == 'CGHT'">{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['ht_name20230501'].value : '--'}}</label>
+                      <label v-if="dataMainDetailObj.formCode == 'XSHT'">{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['ht_name20230501'].value : '--'}}</label>
+                      <label v-if="dataMainDetailObj.formCode == 'TYHT'">{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['ht_name20230501'].value : '--'}}</label>
+                    </span>
+                    <span class="moon-content-text-ellipsis-class color-success" style="position: relative;top: -5px">
+                      <label v-if="dataMainDetailObj.formCode == 'PTGL'">¥{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['cost_allAmount20230501'].value : '--'}}</label>
+                      <label v-if="dataMainDetailObj.formCode == 'JKGL'">¥{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['cost_allAmount20230501'].value : '--'}}</label>
+                      <label v-if="dataMainDetailObj.formCode == 'HKD'">¥{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['cost_allAmount20230501'].value : '--'}}</label>
+                      <label v-if="dataMainDetailObj.formCode == 'SKD'">¥{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['cost_allAmount20230501'].value : '--'}}</label>
+                      <label v-if="dataMainDetailObj.formCode == 'BZBX'">¥{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['cost_allAmount20230501'].value : '--'}}</label>
+                      <label v-if="dataMainDetailObj.formCode == 'DGDK'">¥{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['cost_allAmount20230501'].value : '--'}}</label>
+                      <label v-if="dataMainDetailObj.formCode == 'CGHT'">¥{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['ht_amount20230501'].value : '--'}}</label>
+                      <label v-if="dataMainDetailObj.formCode == 'XSHT'">¥{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['ht_amount20230501'].value : '--'}}</label>
+                      <label v-if="dataMainDetailObj.formCode == 'TYHT'">¥{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['ht_amount20230501'].value : '--'}}</label>
+                    </span>
+                  </div>
+                </el-col>
+              </el-row>
+            </div>
+            <div class="margin-top-10">
+              <el-row>
+                <el-col :span="24">
+                  <div class="text-left">
+                    <span>{{$t("当前审批环节")}}:</span>
+                    <span class="moon-content-text-ellipsis-class color-warning" style="display: inline-block;max-width: 100px;position: relative;top: 5px">
+                      {{dataMainDetailObj['handleList'] ? dataMainDetailObj.handleList[dataMainDetailObj.orderIndex-1].nodeName : ''}}
+                    </span>
+<!--                    <span class="color-success" style="position: relative;top: 0px">-->
+<!--                      {{auditStatusTextInfo(dataMainDetailObj.status)}}-->
+<!--                    </span>-->
+                  </div>
+                </el-col>
+              </el-row>
+            </div>
+          </div>
+        </div>
+
+        <div class="margin-top-20">
+          <form-system-h5-normal-detail
+            :detail-type="detailType"
+            :data-detail-obj="dataDetailObj"
+            :data-main-detail-obj = "dataMainDetailObj"
+            :extra-data-list="tableNormalDetailData"
+            :detail-apply-audit-list="detailApplyAuditList"
+            :table-order-detail-data="payableDataList"
+            :draw-height="divHeight13.height1-255+'px'"
+            @changeDetailType="changeDetailType">
+
+          </form-system-h5-normal-detail>
+        </div>
+      </div>
+    </van-popup>
   </div>
 </template>
 
@@ -1107,20 +1210,34 @@
   import { ImagePreview } from 'vant'
 
   import mixins from "~/utils/mixins";
-  import {MessageError, MessageSuccess} from "~/utils/utils";
+  import {auditStatusBgColor, auditStatusColor, auditStatusText, MessageError, MessageSuccess} from "~/utils/utils";
+  import FormSystemNormalDetail from "~/components/utils/formDetail/FormSystemNormalDetail.vue";
+  import FormSystemH5NormalDetail from "~/components/utils/formDetail/FormSystemH5NormalDetail.vue";
   export default {
     name: 'appServer',
+    components: {FormSystemH5NormalDetail, FormSystemNormalDetail},
     layout: 'defaultAppScreen',
     mixins: [mixins],
     data(){
       return {
+        detailType: 1,
+        detailOrderType: 1,
+        detailInfoType: '',
+        dataDetailObj: {},
+        dataMainDetailObj: {},
+        dataOrderDetailObj: {},
+        dataOrderMainDetailObj: {},
+        tableNormalDetailData: [],
+        payableDataList: [],
         active: 1,
         tableData: [],
         loading: false,
         finished: false,
         popUpVisible: false,
         popCheckUpVisible: false,
+        dialogSysVisible: false,
         refreshing: false,
+        dialogSysTitle: '',
         detailData: '',
         detailPageData: {},
         detailCheckData: '',
@@ -1340,6 +1457,9 @@
         this.type = "";
         this.init();
       },
+      changeDetailType(event, type){
+        this.detailType = type;
+      },
       returnIndex(){
         let page = this.$route.query.page ? this.$route.query.page : '/app/appIndex';
         this.$router.push({
@@ -1359,7 +1479,28 @@
           if (item.status ==  -1){
             this.initAuditDetailList(item._id, 'edit', item.formCode);
           }else {
+            if (item.formCode == 'PTGL'){
+              this.dialogSysTitle = this.$t("普通申请单");
+            }else if (item.formCode == 'CGHT'){
+              this.dialogSysTitle = this.$t("采购合同单");
+            }else if (item.formCode == 'XSHT'){
+              this.dialogSysTitle = this.$t("销售合同单");
+            }else if (item.formCode == 'TYHT'){
+              this.dialogSysTitle = this.$t("通用合同单");
+            }else if (item.formCode == 'JKGL'){
+              this.dialogSysTitle = this.$t("借款单");
+            }else if (item.formCode == 'SKD'){
+              this.dialogSysTitle = this.$t("收款单");
+            }else if (item.formCode == 'HKD'){
+              this.dialogSysTitle = this.$t("还款单");
+            }else if (item.formCode == 'BZBX'){
+              this.dialogSysTitle = this.$t("报账报销");
+            }else if (item.formCode == 'DGDK'){
+              this.dialogSysTitle = this.$t("对公打款");
+            }
 
+            this.initAuditDetailList(item._id, 'detail', item.formCode);
+            this.dialogSysVisible = true;
           }
         }else {
           if (item.applyContent  && item.applyContent != "[]"){
@@ -1795,8 +1936,43 @@
                     };
                   }
                 }
+              }else if (type == 'detail'){
+                this.dataDetailObj = res.data.data['applyData'] ? res.data.data['applyData'] : {};
+                this.dataMainDetailObj = res.data.data;
+                this.detailApplyAuditList = res.data.data.handleList && res.data.data.handleList.length > 0 ? res.data.data.handleList : [];
+                this.payableDataList = res.data.data.payableDataList;
+                this.tableOrderDetailData = res.data.data.payableDataList;
+
+                if (res.data.data.formCode == 'XMGL'){
+                  this.initReal(id);
+                }else if (res.data.data.formCode == 'XSHT' || res.data.data.formCode == 'CGHT' || res.data.data.formCode == 'TYHT'){
+                  let ruleList = [];
+                  //let count = res.data.data.applyData['ht_stage20230501'] ? res.data.data.applyData['ht_stage20230501'].value : 0;
+                  for (let i = 0; i < res.data.data.payableDataList.length; i++){
+                    ruleList.push({
+                      stage: res.data.data.payableDataList[i].stage,
+                      rate: res.data.data.payableDataList[i].rate,
+                      amount: res.data.data.payableDataList[i].shouldAmount,
+                      time: res.data.data.payableDataList[i].time,
+                      des: res.data.data.payableDataList[i].des,
+                    });
+                  }
+                  this.tableTagsDetailData = ruleList;
+                }
               }
             }
+          }
+        });
+      },
+      initReal(id){
+        let params = {
+          id: id,
+          page: 1,
+          num: 9999
+        };
+        this.$axios.get(common.object_xm_real_page, {params: params}).then(res=> {
+          if (res.data.code == 200) {
+            this.payableDataList = res.data.data.list;
           }
         });
       },
@@ -1819,6 +1995,15 @@
             orderInfoList: coseInfoArray
           }
         });
+      },
+      cancelSysPop(){
+        this.detailData = '';
+        this.detailApplyContentData = [];
+        this.detailApplyAuditList = [];
+        this.tableNormalDetailData = [];
+        this.payableDataList = [];
+        this.detailType = 1;
+        this.dialogSysVisible = false;
       },
       cancelPop(){
         this.textarea = '';
@@ -2054,6 +2239,15 @@
         this.processIds = event;
         this.searchDept = event;
         //this.init();
+      },
+      auditStatusTextInfo(str){
+        return auditStatusText(str);
+      },
+      auditColorInfo(val){
+        return auditStatusBgColor(val);
+      },
+      auditTextColorInfo(val){
+        return auditStatusColor(val);
       }
     }
   }
@@ -2195,5 +2389,11 @@
   text-align: center;
   border: 1px dashed #dddddd;
   font-size: 12px;
+}
+.sys-top-block{
+  padding: 10px;
+  border-radius: 5px;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 10px #909399;
 }
 </style>

@@ -301,7 +301,7 @@
           page: 1,
           num: 9999
         };
-        this.$axios.get(common.teacher_account_list, {params: params}).then(res => {
+        this.$axios.get(common.teacher_account_list, {params: params, loading:false}).then(res => {
           if (res.data.data){
             let array = [];
             for (let i = 0; i < res.data.data.length; i++){
@@ -542,6 +542,10 @@
         if (this.$refs['form']){
           this.$refs['form'].resetFields();
         }
+        //this.$parent.dialogSystemServer = false
+        this.btnLoading = false;
+        this.dialogVisibleInner = false;
+        this.$emit('closeSysDialog');
       },
       cancelDrawDialog(){
         this.$parent.dialogSystemServer = false

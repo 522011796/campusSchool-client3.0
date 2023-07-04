@@ -1157,6 +1157,12 @@ ul{
 .custom-textarea-inner .el-textarea__inner {
   resize: none !important;
 }
+.custom-form .el-form-item{
+  margin-bottom: 0px !important;
+}
+.custom-form .el-form-item__label{
+  color: #909399;
+}
 /***自定义radio组件颜色***/
 /*.el-radio__input.is-checked + .el-radio__label {
   color: #fd7624 !important;

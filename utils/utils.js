@@ -691,6 +691,10 @@ export function auditStatusColor(val){
     "3": "color-success",
     "4": "color-success",
     "5": "color-warning",
+    "6": "color-warning",
+    "8": "color-warning",
+    "9": "color-warning",
+    "-1": "color-danger",
   };
   return statusList[val];
 }

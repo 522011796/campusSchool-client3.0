@@ -1047,15 +1047,15 @@
       </div>
     </drawer-layout-right>
 
-    <system-form-ptgl v-if="serverSysDetailData.formCode == 'PTGL'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer"></system-form-ptgl>
-    <system-form-cght v-if="serverSysDetailData.formCode == 'CGHT'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer"></system-form-cght>
-    <system-form-xsht v-if="serverSysDetailData.formCode == 'XSHT'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer"></system-form-xsht>
-    <system-form-tyht v-if="serverSysDetailData.formCode == 'TYHT'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer"></system-form-tyht>
-    <system-form-jkgl v-if="serverSysDetailData.formCode == 'JKGL'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer"></system-form-jkgl>
-    <system-form-skd v-if="serverSysDetailData.formCode == 'SKD'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer"></system-form-skd>
-    <system-form-hkd v-if="serverSysDetailData.formCode == 'HKD'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer"></system-form-hkd>
-    <system-form-bzbx v-if="serverSysDetailData.formCode == 'BZBX'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer"></system-form-bzbx>
-    <system-form-dgdk v-if="serverSysDetailData.formCode == 'DGDK'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer"></system-form-dgdk>
+    <system-form-ptgl v-if="serverSysDetailData.formCode == 'PTGL'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer" @closeSysDialog="closeSysDialog"></system-form-ptgl>
+    <system-form-cght v-else-if="serverSysDetailData.formCode == 'CGHT'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer" @closeSysDialog="closeSysDialog"></system-form-cght>
+    <system-form-xsht v-else-if="serverSysDetailData.formCode == 'XSHT'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer" @closeSysDialog="closeSysDialog"></system-form-xsht>
+    <system-form-tyht v-else-if="serverSysDetailData.formCode == 'TYHT'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer" @closeSysDialog="closeSysDialog"></system-form-tyht>
+    <system-form-jkgl v-else-if="serverSysDetailData.formCode == 'JKGL'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer" @closeSysDialog="closeSysDialog"></system-form-jkgl>
+    <system-form-skd v-else-if="serverSysDetailData.formCode == 'SKD'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer" @closeSysDialog="closeSysDialog"></system-form-skd>
+    <system-form-hkd v-else-if="serverSysDetailData.formCode == 'HKD'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer" @closeSysDialog="closeSysDialog"></system-form-hkd>
+    <system-form-bzbx v-else-if="serverSysDetailData.formCode == 'BZBX'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer" @closeSysDialog="closeSysDialog"></system-form-bzbx>
+    <system-form-dgdk v-else-if="serverSysDetailData.formCode == 'DGDK'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer" @closeSysDialog="closeSysDialog"></system-form-dgdk>
   </div>
 </template>
 
@@ -1192,7 +1192,7 @@
         let params = {
           id: id
         };
-        this.$axios.get(common.server_form_audit_query, {params: params}).then(res=>{
+        this.$axios.get(common.server_form_audit_query, {params: params, loading: false}).then(res=>{
           if (res.data.code == 200){
             if (res.data.data){
               //console.log(res.data.data.handleList);
@@ -1287,6 +1287,9 @@
         this.detailOrderType = 1;
         this.dialogOrderDetailVisible = false;
       },
+      closeSysDialog(){
+        this.dialogSystemServer = false;
+      },
       closeDialog(event){
         this.detailData = '';
         this.detailApplyContentData = [];
@@ -1339,7 +1342,7 @@
           this.formCreateSystemTitleData = this.$t("销售合同单");
         }else if (item.formCode == 'TYHT'){
           this.formCreateSystemTitleData = this.$t("通用合同单");
-        }else if (item.form_code == 'JKGL'){
+        }else if (item.formCode == 'JKGL'){
           this.formCreateSystemTitleData = this.$t("借款单");
         }else if (item.formCode == 'SKD'){
           this.formCreateSystemTitleData = this.$t("收款单");
@@ -1351,7 +1354,6 @@
           this.formCreateSystemTitleData = this.$t("对公打款");
         }
         this.initAuditDetailList(item._id, 'edit');
-
         this.dialogSystemServer = true;
       },
       detailClick($event, item){
@@ -1366,6 +1368,9 @@
           }
           if (item.formCode == 'DGDK' || item.formCode == 'PTGL' || item.formCode == 'BZBX' || item.formCode == 'JKGL' || item.formCode == 'HKD' || item.formCode == 'SKD'){
             this.dialogNormalVisible = true;
+          }
+          if (item.formCode == 'XMGL'){
+            this.dialogObjServerDetail = true;
           }
         }else {
           if (item.applyContent  && item.applyContent != "[]"){

@@ -9,6 +9,7 @@
       :show-close="false"
       :modal-append-to-body="false"
       :size="size"
+      :modal="modal"
       @close="handleColse">
 
       <div slot="title" class="drawer-normal-title">
@@ -71,6 +72,10 @@ export default {
     size: {
       defalult: '30%',
       type: String
+    },
+    modal: {
+      default: true,
+      type: Boolean
     }
   },
   computed: {

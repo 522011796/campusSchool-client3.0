@@ -554,6 +554,10 @@
         if (this.$refs['form']){
           this.$refs['form'].resetFields();
         }
+        //this.$parent.dialogSystemServer = false
+        this.btnLoading = false;
+        this.dialogVisibleInner = false;
+        this.$emit('closeSysDialog');
       },
       cancelDrawDialog(){
         this.$parent.dialogSystemServer = false
