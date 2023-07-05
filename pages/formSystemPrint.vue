@@ -168,6 +168,42 @@
       </div>
     </div>
 
+    <div class="margin-top-10" v-if="detailData.applyData && detailData.applyData['jk_account20230501']  && detailData.applyData['jk_account20230501']['value']">
+      <div class="padding-tb-10 padding-lr-10">
+        <span class="title-block-tag"></span>
+        <span class="title-block-text color-black">{{$t("收款账户")}}</span>
+      </div>
+      <div>
+        <table class="custom-table-black">
+          <tr>
+            <td style="width: 20%" class="font-size-12 font-bold">{{$t("收款人")}}</td>
+            <td style="width: 30%" class="color-black font-size-12">
+              <div class="moon-content-text-ellipsis-class" style="width: 100%">{{detailData.applyData['jk_account20230501'].name}}</div>
+            </td>
+            <td style="width: 20%" class="font-size-12 font-bold">{{$t("账号")}}</td>
+            <td style="width: 30%" class="color-black font-size-12">{{detailData.applyData['jk_account20230501'].value}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="margin-top-10" v-if="detailData.applyData && detailData.applyData['supplierId20230501']  && detailData.applyData['supplierId20230501']['value']">
+      <div class="padding-tb-10 padding-lr-10">
+        <span class="title-block-tag"></span>
+        <span class="title-block-text color-black">{{$t("供应商/客户")}}</span>
+      </div>
+      <div>
+        <table class="custom-table-black">
+          <tr>
+            <td style="width: 20%" class="font-size-12 font-bold">{{$t("名称")}}</td>
+            <td style="width: 30%" class="color-black font-size-12">
+              <div class="moon-content-text-ellipsis-class" style="width: 100%">{{detailData.applyData['supplierId20230501'].name}}</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
     <div class="margin-top-10">
       <div class="padding-tb-10 padding-lr-10">
         <span class="title-block-tag"></span>

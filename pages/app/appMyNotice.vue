@@ -220,7 +220,7 @@
                   </div>
                   <el-button slot="reference" type="success" size="mini">{{$t("同意")}}</el-button>
                 </el-popover>
-                <el-button v-else size="mini" @click="handleCancel">取 消</el-button>
+                <el-button size="mini" @click="handleCancel">取 消</el-button>
                 <!--            <el-button size="mini" type="primary" @click="handleOk($event, detailData, 6)">转 交</el-button>-->
                 <!--            <el-button size="mini" type="primary" @click="handleOk($event, detailData, -1)">撤 销</el-button>-->
                 <el-popover
@@ -1121,7 +1121,7 @@
         </el-row>
       </div>
 
-      <div :style="{height: divHeight13.height1-60+'px'}" style="overflow-y: auto;background: #f5f5f5;padding: 10px">
+      <div :style="{height: detailType == 2 ? divHeight13.height1-100+'px' : divHeight13.height1-60+'px'}" style="overflow-y: auto;background: #f5f5f5;padding: 10px">
         <div class="sys-top-block">
           <div>
             <el-row>
@@ -1188,6 +1188,7 @@
 
         <div class="margin-top-20">
           <form-system-h5-normal-detail
+            :active-type="active"
             :detail-type="detailType"
             :data-detail-obj="dataDetailObj"
             :data-main-detail-obj = "dataMainDetailObj"
@@ -1250,6 +1251,8 @@
         images: [],
         visibleNo: false,
         visibleYes: false,
+        visibleSysNo: false,
+        visibleSysYes: false,
         detailApplyAuditUserData: {},
         detailCheckApplyAuditUserData: {},
         serchName: '',
@@ -2003,6 +2006,11 @@
         this.tableNormalDetailData = [];
         this.payableDataList = [];
         this.detailType = 1;
+        this.textarea = '';
+        this.images = [];
+        this.visibleOk = false;
+        this.visibleSysNo = false;
+        this.visibleSysYes = false;
         this.dialogSysVisible = false;
       },
       cancelPop(){
@@ -2011,6 +2019,9 @@
         this.visibleOk = false;
         this.visibleNo = false;
         this.visibleYes = false;
+        this.visibleSysOk = false;
+        this.visibleSysNo = false;
+        this.visibleSysYes = false;
       },
       handleCancel(){
         this.popUpVisible = false;
@@ -2039,6 +2050,9 @@
             //this.init();
             this.images = [];
             this.popUpVisible = false;
+            this.dialogSysVisible = false;
+            this.cancelSysPop();
+            this.cancelPop();
             Toast(res.data.desc);
           }else {
             Toast(res.data.desc);
