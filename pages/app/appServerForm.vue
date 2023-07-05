@@ -237,41 +237,65 @@
         }
       },
       serverSubBlock(){
-        this.fApi.submit((formData, fApi)=>{
+        if (this.fApi['submit']){
+          this.fApi.submit((formData, fApi)=>{
+            let url = "";
+            let ruleList = [];
+            if (this.auditSelUser.length == 0 && this.customUserStatus == true){
+              Toast(this.$t("请选择审批人！"));
+              return;
+            };
+            let params = {
+              appletFormId: this.$route.query.id,
+              userId: this.loginUserId,
+              //applyContent: JSON.stringify(formData),
+              customHandleUserIds: JSON.stringify(this.auditSelUser),
+            }
+
+            if (this.checkApply == true){
+              params['checkApplyId'] = this.applyCheckValue;
+            }
+
+            let rule = fApi.rule;
+            let ruleObjList =  this.setRuleChild(rule, ruleList);
+            params['applyContent'] = JSON.stringify(ruleObjList);
+
+            url = common.server_form_add;
+            params = this.$qs.stringify(params);
+            this.btnLoading = true;
+            this.$axios.post(url, params, {loading: false}).then(res => {
+              if (res.data.code == 200){
+                this.returnBlock();
+                Toast(res.data.desc);
+              }else {
+                Toast(res.data.desc);
+              }
+              this.btnLoading = false;
+            });
+          });
+        }else {
           let url = "";
           let ruleList = [];
-          if (this.auditSelUser.length == 0 && this.customUserStatus == true){
-            Toast(this.$t("请选择审批人！"));
-            return;
-          };
           let params = {
-            appletFormId: this.$route.query.id,
-            userId: this.loginUserId,
-            //applyContent: JSON.stringify(formData),
-            customHandleUserIds: JSON.stringify(this.auditSelUser),
+            linkId: this.$route.query.id
           }
+          params['linkFormDate'] = '';
 
-          if (this.checkApply == true){
-            params['checkApplyId'] = this.applyCheckValue;
-          }
-
-          let rule = fApi.rule;
-          let ruleObjList =  this.setRuleChild(rule, ruleList);
-          params['applyContent'] = JSON.stringify(ruleObjList);
-
-          url = common.server_form_add;
+          url = common.server_enroll_app_student_form_add;
           params = this.$qs.stringify(params);
           this.btnLoading = true;
           this.$axios.post(url, params, {loading: false}).then(res => {
             if (res.data.code == 200){
-              this.returnBlock();
+              this.dialogForm = false;
+              let url = this.$route.query.subPage ? this.$route.query.subPage : '/newStudent/studentIndex'
+              this.returnGIndex(url);
               Toast(res.data.desc);
             }else {
               Toast(res.data.desc);
             }
             this.btnLoading = false;
           });
-        });
+        }
       },
       returnBlock(){
         let page = this.$route.query.page ? this.$route.query.page : '/app/appIndex';
