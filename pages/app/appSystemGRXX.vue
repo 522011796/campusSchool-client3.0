@@ -117,12 +117,12 @@
       </div>
       <div class="bottom-pop-class">
         <el-row>
-          <el-col :span="12" class="padding-lr-10">
+          <el-col v-if="form.id && form.id != ''" :span="12" class="padding-lr-10">
             <van-button block type="danger" size="small" style="position: relative;top: 10px" @click="cancelPop">
               <span>{{$t("删除")}}</span>
             </van-button>
           </el-col>
-          <el-col :span="12" class="padding-lr-10">
+          <el-col :span="form.id && form.id != '' ? 12 : 24" class="padding-lr-10">
             <van-button block type="info" size="small" style="position: relative;top: 10px" @click="okPop">
               <span>{{$t("保存")}}</span>
             </van-button>
