@@ -96,7 +96,8 @@
     </div>
 
     <van-popup v-model="showFormPicker" position="bottom" :style="{ height: divHeight13.height }" @close="closePop">
-      <div style="height: 40px;line-height: 40px;" class="bg-app-success">
+      <div :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' " :style="{height: navHeight+'px'}"></div>
+      <div style="height: 40px;line-height: 40px;" :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' ">
         <el-row>
           <el-col :span="6">
             <div class="text-left">
@@ -235,6 +236,7 @@
                 :data="{path: 'appFormFile'}"
                 :auto-upload="true"
                 :show-file-list="false"
+                :on-progress="handleAvatarFpOcrProcess"
                 :on-success="handleAvatarFpOcrSuccess"
                 :on-error="handleAvatarFpOcrError"
               >
@@ -556,6 +558,7 @@
         btnLoading: false,
         showOprPicker: false,
         showDetailPicker: false,
+        uploadLoading: '',
         active: 6,
         tableData: [],
         searchType: '0',
@@ -702,8 +705,18 @@
           Toast(res.desc);
         }
       },
+      handleAvatarFpOcrProcess(event, file, fileList){
+        this.uploadLoading = this.$loading({
+          lock: true,
+          text: '上传识别中...',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
+        //this.uploadLoading = true;
+      },
       handleAvatarError(res, file){
-
+        //this.uploadLoading = false;
+        this.uploadLoading.close();
       },
       handleAvatarFpOcrSuccess(res, file){
         // 如果上传成功
@@ -713,9 +726,11 @@
         } else {
           Toast(res.desc);
         }
+        //this.uploadLoading = false;
+        this.uploadLoading.close();
       },
       handleAvatarFpOcrError(res, file){
-
+        this.uploadLoading.close();
       },
       deleteRemoveImg(index){
         this.form.files.splice(index, 1);

@@ -17,25 +17,36 @@
           </el-form-item>
           <el-form-item :label="$t('发票')">
             <template>
-              <div class="layout-inline">
-                <div class="layout-item">
-                  <el-upload
-                    v-if="form.fp.length == 0"
-                    class="avatar-uploader-quill"
-                    :action="uploadFpOcrAction"
-                    multiple
-                    :data="{path: 'appFpFile'}"
-                    :auto-upload="true"
-                    :show-file-list="false"
-                    :on-success="handleAvatarFpOcrSuccess"
-                    :on-error="handleAvatarFpOcrError"
-                  >
-                    <a href="javascript:;" class="margin-right-10 color-success">{{$t('上传')}}</a>
-                  </el-upload>
+              <template v-if="uploadLoading == false">
+                <div class="layout-inline">
+                  <div class="layout-item">
+                    <el-upload
+                      v-if="form.fp.length == 0"
+                      class="avatar-uploader-quill"
+                      :action="uploadFpOcrAction"
+                      multiple
+                      :data="{path: 'appFpFile'}"
+                      :auto-upload="true"
+                      :show-file-list="false"
+                      :on-progress="handleAvatarFpOcrProcess"
+                      :on-success="handleAvatarFpOcrSuccess"
+                      :on-error="handleAvatarFpOcrError"
+                    >
+                      <a href="javascript:;" class="margin-right-10 color-success">{{$t('上传')}}</a>
+                    </el-upload>
+                  </div>
+                  <a href="javascript:;" v-if="form.fp.length == 0" class="color-grand margin-right-10 layout-item" @click="selFpList">{{$t('选择')}}</a>
+                  <a href="javascript:;" v-if="(form.fp.length > 0 && form.fp[0].real == false) || form.fp.length == 0" class="color-success layout-item" @click="checkFpInfo">{{$t('验真')}}</a>
                 </div>
-                <a href="javascript:;" v-if="form.fp.length == 0" class="color-grand margin-right-10 layout-item" @click="selFpList">{{$t('选择')}}</a>
-                <a href="javascript:;" v-if="(form.fp.length > 0 && form.fp[0].real == false) || form.fp.length == 0" class="color-success layout-item" @click="checkFpInfo">{{$t('验真')}}</a>
-              </div>
+              </template>
+
+              <template v-if="uploadLoading == true" style="position: relative">
+                  <span>
+                    <a href="javascript:;" class="color-muted margin-right-10">{{$t('上传')}}</a>
+                    <a href="javascript:;" v-if="form.fp.length == 0" class="color-muted margin-right-10">{{$t('选择')}}</a>
+                    <a href="javascript:;" v-if="(form.fp.length > 0 && form.fp[0].real == false) || form.fp.length == 0" class="color-muted">{{$t('验真')}}</a>
+                  </span>
+              </template>
             </template>
 
             <template v-if="form.fp.length > 0">
@@ -438,6 +449,7 @@
         dialogVisibleInner: false,
         dialogChildVisible: false,
         modalVisible: false,
+        uploadLoading: false,
         moneyTotal: 0.00,
         orderInfoList: [],
         form: {
@@ -507,6 +519,9 @@
       handleAvatarError(res, file){
 
       },
+      handleAvatarFpOcrProcess(event, file, fileList){
+        this.uploadLoading = true;
+      },
       handleAvatarFpOcrSuccess(res, file){
         // 如果上传成功
         if (res.code == '200') {
@@ -514,9 +529,10 @@
         } else {
           MessageWarning(res.desc);
         }
+        this.uploadLoading = false;
       },
       handleAvatarFpOcrError(res, file){
-
+        this.uploadLoading = false;
       },
       setBackShowData(data){
         console.log(data);

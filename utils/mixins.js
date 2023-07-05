@@ -572,7 +572,7 @@ export default {
         this.divHeight17.height = window.innerHeight - itemHeight - 100 + 'px';
         this.divHeight18.height = window.innerHeight - itemHeight - 400 - 25 + 'px';
         this.divHeight19.height = window.innerHeight - itemHeight - 90 + 'px';
-        this.divHeight20.height = window.innerHeight - itemHeight - 60 + 'px';
+        this.divHeight20.height = window.innerHeight - itemHeight - 60 - 10 + 'px';
         this.divHeight21.height = window.innerHeight - itemHeight - 400 - 45 + 'px';
         this.divHeight22.height = window.innerHeight - itemHeight - 50 - 20 + 'px';
         this.tableHeight.height = (window.innerHeight - 60) * 0.86 - 30;

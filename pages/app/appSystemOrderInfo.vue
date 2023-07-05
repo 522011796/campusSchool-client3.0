@@ -53,21 +53,32 @@
           <template>
             <van-field v-model="form.money" :name="$t('发票')" :label="`${$t('发票')}(${form.fp.length}${$t('张')})`">
               <template #input>
-                <el-upload
-                  v-if="form.fp.length == 0"
-                  class="avatar-uploader-quill"
-                  :action="uploadFpOcrAction"
-                  multiple
-                  :data="{path: 'appFpFile'}"
-                  :auto-upload="true"
-                  :show-file-list="false"
-                  :on-success="handleAvatarFpOcrSuccess"
-                  :on-error="handleAvatarFpOcrError"
-                >
-                  <a href="javascript:;" class="margin-right-10 color-success">{{$t('上传')}}</a>
-                </el-upload>
-                <a href="javascript:;" v-if="form.fp.length == 0" class="color-grand margin-right-10" @click="selFpList">{{$t('选择')}}</a>
-                <a href="javascript:;" v-if="(form.fp.length > 0 && form.fp[0].real == false) || form.fp.length == 0" class="color-success" @click="checkFpInfo">{{$t('验真')}}</a>
+                <template v-if="uploadLoading == false">
+                  <el-upload
+                    v-if="form.fp.length == 0"
+                    class="avatar-uploader-quill"
+                    :action="uploadFpOcrAction"
+                    multiple
+                    :data="{path: 'appFpFile'}"
+                    :auto-upload="true"
+                    :show-file-list="false"
+                    :on-progress="handleAvatarFpOcrProcess"
+                    :on-success="handleAvatarFpOcrSuccess"
+                    :on-error="handleAvatarFpOcrError"
+                  >
+                    <a href="javascript:;" class="margin-right-10 color-success">{{$t('上传')}}</a>
+                  </el-upload>
+                  <a href="javascript:;" v-if="form.fp.length == 0" class="color-grand margin-right-10" @click="selFpList">{{$t('选择')}}</a>
+                  <a href="javascript:;" v-if="(form.fp.length > 0 && form.fp[0].real == false) || form.fp.length == 0" class="color-success" @click="checkFpInfo">{{$t('验真')}}</a>
+                </template>
+
+                <template v-if="uploadLoading == true" style="position: relative">
+                  <span>
+                    <a href="javascript:;" class="color-muted margin-right-10">{{$t('上传')}}</a>
+                    <a href="javascript:;" v-if="form.fp.length == 0" class="color-muted margin-right-10">{{$t('选择')}}</a>
+                    <a href="javascript:;" v-if="(form.fp.length > 0 && form.fp[0].real == false) || form.fp.length == 0" class="color-muted">{{$t('验真')}}</a>
+                  </span>
+                </template>
               </template>
             </van-field>
 
@@ -588,6 +599,7 @@
         showTimePicker: false,
         showFpPicker: false,
         showFpDetailPicker: false,
+        uploadLoading: false,
         departmentPath: '',
         pageType: '',
         pageTypeStr: '',
@@ -904,6 +916,9 @@
       handleAvatarFpCheckError(res, file){
 
       },
+      handleAvatarFpOcrProcess(event, file, fileList){
+        this.uploadLoading = true;
+      },
       handleAvatarFpOcrSuccess(res, file){
         // 如果上传成功
         if (res.code == '200') {
@@ -912,9 +927,10 @@
         } else {
           Toast(res.desc);
         }
+        this.uploadLoading = false;
       },
       handleAvatarFpOcrError(res, file){
-
+        this.uploadLoading = false;
       },
       checkFpInfo(){
         if (this.form.fp.length == 0 && (this.form.fpNo == "" || this.form.fpCode == "" || this.form.fpVerCode == "" || this.form.fpTime == "")){
@@ -1121,8 +1137,8 @@
   max-width: 200px;
 }
 .content-botton-block{
-  height: 45px;
-  line-height: 45px;
+  height: 55px;
+  line-height: 55px;
   position: fixed;
   bottom: 0;
   width: 100%;

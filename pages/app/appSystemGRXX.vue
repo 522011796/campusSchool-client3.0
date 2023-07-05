@@ -81,7 +81,7 @@
       </div>
     </div>
 
-    <van-popup round v-model="showBottomPicker" position="bottom" :style="{ height: '300px' }" @close="closePop">
+    <van-popup round v-model="showBottomPicker" position="bottom" :style="{ height: '310px' }" @close="closePop">
       <div style="height: 40px;line-height: 40px;background: #f5f5f5">
         <el-row>
           <el-col :span="24">
@@ -347,8 +347,8 @@
   max-width: 200px;
 }
 .content-botton-block{
-  height: 45px;
-  line-height: 45px;
+  height: 55px;
+  line-height: 55px;
   position: fixed;
   bottom: 0;
   width: 100%;

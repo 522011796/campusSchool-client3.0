@@ -905,8 +905,8 @@
   max-width: 200px;
 }
 .content-botton-block{
-  height: 45px;
-  line-height: 45px;
+  height: 55px;
+  line-height: 55px;
   position: fixed;
   bottom: 0;
   width: 100%;
