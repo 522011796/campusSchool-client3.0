@@ -87,7 +87,7 @@
                 <el-option label="全部" value=""></el-option>
                 <el-option label="通过" value="3"></el-option>
                 <el-option label="未通过" value="4"></el-option>
-                <el-option label="撤销" value="-1"></el-option>
+                <el-option label="待提交" value="-1"></el-option>
               </el-select>
               <el-button v-if="active == 1" style="margin-top: 11px;margin-right: 2px;width: 70px" class="layout-item moon-content-text-ellipsis-class" size="small" type="default" plain native-type="button" @click="urgeDetial">{{urgeName != "" && urgeName != null ? urgeName : $t('环节')}}</el-button>
               <el-button style="margin-top: 11px;margin-right: 2px;width: 70px" :style="active == 4 ? {width: '70px'} : {width: '80px'}" class="layout-item moon-content-text-ellipsis-class" size="small" type="default" plain native-type="button" @click="isCollapse == true ? toggleLeftMenu($event) : toggleRightMenu($event)">{{departmentName != "" && departmentName != null ? departmentName : $t('部门')}}</el-button>
@@ -172,7 +172,7 @@
                     <div class="margin-top-5 font-size-12">
                       <span class="color-muted">{{$t("审核状态")}}</span>
                       <span>
-                      <label v-if="item.status === -1" class="color-danger">{{$t("撤销")}}</label>
+                      <label v-if="item.status === -1" class="color-danger">{{$t("待提交")}}</label>
                       <label v-if="item.status === 0" class="color-warning">{{$t("待审核")}}</label>
                       <label v-if="item.status === 3" class="color-success">{{$t("通过")}}</label>
                       <label v-if="item.status === 4" class="color-danger">{{$t("未通过")}}</label>
@@ -293,7 +293,7 @@
               <div class="text-right">
                 <el-tag type="primary" size="small" v-if="detailData.status == 5" class="text-center color-white">无需审批</el-tag>
                 <el-tag type="warning" size="small" v-if="detailData.status == 8" class="text-center color-white">审批中</el-tag>
-                <el-tag type="warning" size="small" v-if="detailData.status == -1" class="text-center color-white">已撤销</el-tag>
+                <el-tag type="warning" size="small" v-if="detailData.status == -1" class="text-center color-white">待提交</el-tag>
                 <el-tag type="success" size="small" v-if="detailData.status == 3" class="text-center color-white">已通过</el-tag>
                 <el-tag type="danger" size="small" v-if="detailData.status == 4" class="text-center color-white">未通过</el-tag>
                 <el-tag type="danger" size="small" v-if="detailData.status == 2" class="text-center color-white">已驳回</el-tag>
@@ -566,7 +566,7 @@
                       <div v-for="(itemUser, indexUser) in item.handleUserList" :key="indexUser">
                         <span class="color-grand"> <i class="fa fa-user"></i> {{ itemUser.userName }} </span>
                         <span class="margin-left-10">
-                          <label v-if="itemUser.status === -1" class="color-warning">{{$t("撤销")}}</label>
+                          <label v-if="itemUser.status === -1" class="color-warning">{{$t("待提交")}}</label>
                           <label v-if="itemUser.status === 0" class="color-warning">{{$t("待审核")}}</label>
                           <label v-if="itemUser.status === 3" class="color-success">
                             {{$t("已通过")}}
@@ -1011,7 +1011,7 @@
                       <div v-for="(itemUser, indexUser) in item.handleUserList" :key="indexUser">
                         <span class="color-grand"> <i class="fa fa-user"></i> {{ itemUser.userName }} </span>
                         <span class="margin-left-10">
-                          <label v-if="itemUser.status === -1" class="color-warning">{{$t("撤销")}}</label>
+                          <label v-if="itemUser.status === -1" class="color-warning">{{$t("待提交")}}</label>
                           <label v-if="itemUser.status === 0" class="color-warning">{{$t("待审核")}}</label>
                           <label v-if="itemUser.status === 3" class="color-success">
                             {{$t("已通过")}}

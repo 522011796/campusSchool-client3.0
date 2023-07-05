@@ -720,7 +720,7 @@
                     <div v-for="(itemUser, indexUser) in item.handleUserList" :key="indexUser">
                       <span class="color-grand"> <i class="fa fa-user"></i> {{ itemUser.userName }} </span>
                       <span class="margin-left-10">
-                          <label v-if="itemUser.status === -1" class="color-warning">{{$t("撤销")}}</label>
+                          <label v-if="itemUser.status === -1" class="color-warning">{{$t("待提交")}}</label>
                           <label v-if="itemUser.status === 0" class="color-warning">{{$t("待审核")}}</label>
                           <label v-if="itemUser.status === 3" class="color-success">
                             {{$t("已通过")}}
@@ -885,7 +885,7 @@
               <div class="text-right margin-top-5">
                 <van-button block type="default" size="small" v-if="dataMainDetailObj.status == 5" class="text-center color-white">无需审批</van-button>
                 <van-button block type="warning" size="small" v-if="dataMainDetailObj.status == 8" class="text-center color-white">审批中</van-button>
-                <van-button block type="warning" size="small" v-if="dataMainDetailObj.status == -1" class="text-center color-white">已撤销</van-button>
+                <van-button block type="warning" size="small" v-if="dataMainDetailObj.status == -1" class="text-center color-white">待提交</van-button>
                 <van-button block type="primary" size="small" v-if="dataMainDetailObj.status == 3" class="text-center color-white">已通过</van-button>
                 <van-button block type="danger" size="small" v-if="dataMainDetailObj.status == 4" class="text-center color-white">未通过</van-button>
                 <van-button block type="danger" size="small" v-if="dataMainDetailObj.status == 2" class="text-center color-white">已驳回</van-button>

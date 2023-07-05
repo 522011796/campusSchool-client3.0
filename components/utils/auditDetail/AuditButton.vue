@@ -55,7 +55,7 @@
         <span>{{$t("已驳回")}}</span>
       </div>
       <div v-if="value.status == -1" class="bg-muted color-white text-center">
-        <span>{{$t("已撤销")}}</span>
+        <span>{{$t("待提交")}}</span>
       </div>
     </div>
   </div>

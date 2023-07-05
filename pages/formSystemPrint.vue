@@ -35,7 +35,7 @@
           </td>
           <td class="font-size-12 font-bold">{{$t("审批状态")}}</td>
           <td class="color-black font-size-12">
-            <label v-if="detailData.status === -1">{{$t("撤销")}}</label>
+            <label v-if="detailData.status === -1">{{$t("待提交")}}</label>
             <label v-if="detailData.status === 0">{{$t("待审核")}}</label>
             <label v-if="detailData.status === 3">{{$t("通过")}}</label>
             <label v-if="detailData.status === 4">{{$t("未通过")}}</label>
@@ -217,7 +217,7 @@
           </td>
           <td style="width: 15%" class="font-size-12 font-bold">{{$t("审核状态")}}</td>
           <td style="width: 15%" class="color-black font-size-12">
-            <label v-if="itemUser.status === -1">{{$t("撤销")}}</label>
+            <label v-if="itemUser.status === -1">{{$t("待提交")}}</label>
             <label v-if="itemUser.status === 0">{{$t("待审核")}}</label>
             <label v-if="itemUser.status === 3">{{$t("通过")}}</label>
             <label v-if="itemUser.status === 4">{{$t("未通过")}}</label>

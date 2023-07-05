@@ -235,7 +235,7 @@
 
               <el-col v-if="dormSelType == 1" :span="12" class="text-right">
                 <label class="color-warning" v-if="item.order_status == true">{{$t("成功")}}</label>
-                <label class="color-warning" v-if="item.order_status == false">{{$t("撤销")}}</label>
+                <label class="color-warning" v-if="item.order_status == false">{{$t("待提交")}}</label>
               </el-col>
             </el-row>
             <el-row class="margin-top-5">

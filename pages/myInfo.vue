@@ -187,13 +187,13 @@
                 <template slot-scope="scope">
                   <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
                     <div class="text-center">
-                      <label v-if="scope.row.status === -1" class="color-warning">{{$t("撤销")}}</label>
+                      <label v-if="scope.row.status === -1" class="color-warning">{{$t("待提交")}}</label>
                       <label v-if="scope.row.status === 0" class="color-warning">{{$t("待审核")}}</label>
                       <label v-if="scope.row.status === 3" class="color-success">{{$t("通过")}}</label>
                       <label v-if="scope.row.status === 4" class="color-danger">{{$t("未通过")}}</label>
                     </div>
                     <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                      <label v-if="scope.row.status === -1" class="color-warning">{{$t("撤销")}}</label>
+                      <label v-if="scope.row.status === -1" class="color-warning">{{$t("待提交")}}</label>
                       <label v-if="scope.row.status === 0" class="color-warning">{{$t("待审核")}}</label>
                       <label v-if="scope.row.status === 3" class="color-success">{{$t("通过")}}</label>
                       <label v-if="scope.row.status === 4" class="color-danger">{{$t("未通过")}}</label>
@@ -455,7 +455,7 @@
                       <div v-for="(itemUser, indexUser) in item.handleUserList" :key="indexUser">
                         <span class="color-grand"> <i class="fa fa-user"></i> {{ itemUser.userName }} </span>
                         <span class="margin-left-10">
-                          <label v-if="itemUser.status === -1" class="color-warning">{{$t("撤销")}}</label>
+                          <label v-if="itemUser.status === -1" class="color-warning">{{$t("待提交")}}</label>
                           <label v-if="itemUser.status === 0" class="color-warning">{{$t("待审核")}}</label>
                           <label v-if="itemUser.status === 3" class="color-success">{{$t("通过")}}</label>
                           <label v-if="itemUser.status === 4" class="color-danger">{{$t("未通过")}}</label>
@@ -549,7 +549,7 @@
         <template v-if="activeMenu == 4">
           <div v-if="detailData.status == 5" class="text-center bg-warning color-white" @click="handleCancel">无需审批</div>
           <div v-if="detailData.status == 8" class="text-center bg-warning color-white" @click="handleCancel">审批中</div>
-          <div v-if="detailData.status == -1" class="text-center bg-warning color-white" @click="handleCancel">已撤销</div>
+          <div v-if="detailData.status == -1" class="text-center bg-warning color-white" @click="handleCancel">待提交</div>
           <div v-if="detailData.status == 3" class="text-center bg-success color-white" @click="handleCancel">通过</div>
           <div v-if="detailData.status == 4" class="text-center bg-danger color-white" @click="handleCancel">未通过</div>
         </template>
@@ -771,7 +771,7 @@
                       <div v-for="(itemUser, indexUser) in item.handleUserList" :key="indexUser">
                         <span class="color-grand"> <i class="fa fa-user"></i> {{ itemUser.userName }} </span>
                         <span class="margin-left-10">
-                          <label v-if="itemUser.status === -1" class="color-warning">{{$t("撤销")}}</label>
+                          <label v-if="itemUser.status === -1" class="color-warning">{{$t("待提交")}}</label>
                           <label v-if="itemUser.status === 0" class="color-warning">{{$t("待审核")}}</label>
                           <label v-if="itemUser.status === 3" class="color-success">{{$t("通过")}}</label>
                           <label v-if="itemUser.status === 4" class="color-danger">{{$t("未通过")}}</label>

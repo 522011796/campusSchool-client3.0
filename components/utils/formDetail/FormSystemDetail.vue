@@ -643,7 +643,7 @@
                     <div v-for="(itemUser, indexUser) in item.handleUserList" :key="indexUser">
                       <span class="color-grand"> <i class="fa fa-user"></i> {{ itemUser.userName }} </span>
                       <span class="margin-left-10">
-                          <label v-if="itemUser.status === -1" class="color-warning">{{$t("撤销")}}</label>
+                          <label v-if="itemUser.status === -1" class="color-warning">{{$t("待提交")}}</label>
                           <label v-if="itemUser.status === 0" class="color-warning">{{$t("待审核")}}</label>
                           <label v-if="itemUser.status === 3" class="color-success">
                             {{$t("已通过")}}
