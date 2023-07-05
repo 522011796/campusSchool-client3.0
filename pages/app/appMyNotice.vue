@@ -141,10 +141,17 @@
                             <el-tag v-if="item.urge == true" size="small" effect="dark" type="danger">{{$t("催办")}}</el-tag>
                             <template v-else>
                               <div v-if="item.formCode && item.formCode != '' && item.status ==  -1">
-                                <i class="fa fa-edit color-success"></i>
+                                <span class="fa fa-edit color-success"></span>
+                                <label class="color-success">{{$t("编辑")}}</label>
                               </div>
-                              <i v-else-if="(item.formCode == null || item.formCode == 'other') && scope.row.status !=  -1" href="javascript:;" class="fa fa-file color-muted"></i>
-                              <i v-else class="fa fa-file color-muted"></i>
+                              <div v-else-if="(item.formCode == null || item.formCode == 'other') && scope.row.status !=  -1">
+                                <i class="fa fa-file color-muted"></i>
+                                <label class="color-muted">{{$t("查看")}}</label>
+                              </div>
+                              <div v-else>
+                                <i class="fa fa-file color-muted"></i>
+                                <label class="color-muted">{{$t("查看")}}</label>
+                              </div>
                             </template>
                           </div>
                         </el-col>
