@@ -41,7 +41,7 @@
               </template>
 
               <template v-if="uploadLoading == true" style="position: relative">
-                  <span>
+                  <span v-loading = "uploadLoading">
                     <a href="javascript:;" class="color-muted margin-right-10">{{$t('上传')}}</a>
                     <a href="javascript:;" v-if="form.fp.length == 0" class="color-muted margin-right-10">{{$t('选择')}}</a>
                     <a href="javascript:;" v-if="(form.fp.length > 0 && form.fp[0].real == false) || form.fp.length == 0" class="color-muted">{{$t('验真')}}</a>
