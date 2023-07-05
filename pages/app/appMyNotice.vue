@@ -139,6 +139,13 @@
                         <el-col :span="12">
                           <div class="text-right" style="height: 20px;line-height: 20px">
                             <el-tag v-if="item.urge == true" size="small" effect="dark" type="danger">{{$t("催办")}}</el-tag>
+                            <template v-else>
+                              <div v-if="item.formCode && item.formCode != '' && item.status ==  -1">
+                                <i class="fa fa-edit color-success"></i>
+                              </div>
+                              <i v-else-if="(item.formCode == null || item.formCode == 'other') && scope.row.status !=  -1" href="javascript:;" class="fa fa-file color-muted"></i>
+                              <i v-else class="fa fa-file color-muted"></i>
+                            </template>
                           </div>
                         </el-col>
                       </el-row>
