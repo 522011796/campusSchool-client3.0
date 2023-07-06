@@ -122,7 +122,8 @@
             }, 1000);
           }else {
             me.isDisabled = false;
-            MessageWarning(this.$t("请检查信息是否有误！"));
+            //MessageWarning(this.$t("请检查信息是否有误！"));
+            MessageSuccess(res.data.desc);
           }
         });
       }
