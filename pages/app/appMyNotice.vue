@@ -144,7 +144,7 @@
                                 <span class="fa fa-edit color-success"></span>
                                 <label class="color-success">{{$t("编辑")}}</label>
                               </div>
-                              <div v-else-if="(item.formCode == null || item.formCode == 'other') && item.status !=  -1">
+                              <div v-else-if="(item.formCode == null || item.formCode == 'OTHER') && item.status !=  -1">
                                 <i class="fa fa-file color-muted"></i>
                                 <label class="color-muted">{{$t("查看")}}</label>
                               </div>
@@ -1492,7 +1492,7 @@
       dataDetail(event, item, index){
         //this.detailData = item;
         this.detailIndex = index;
-        if (item.formCode && item.formCode != ''){
+        if (item.formCode && item.formCode != '' && item.formCode != 'OTHER'){
           if (item.status ==  -1){
             this.initAuditDetailList(item._id, 'edit', item.formCode);
           }else {

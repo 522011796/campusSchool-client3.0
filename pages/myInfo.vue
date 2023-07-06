@@ -223,7 +223,7 @@
                 :label="$t('操作')">
                 <template slot-scope="scope">
                   <a v-if="scope.row.formCode && scope.row.formCode != '' && scope.row.status ==  -1" href="javascript:;" class="color-grand" @click="editClick($event, scope.row)">{{$t("编辑")}}</a>
-                  <a v-else-if="(scope.row.formCode == null || scope.row.formCode == 'other') && scope.row.status !=  -1" href="javascript:;" class="color-success" @click="detailClick($event, scope.row)">{{$t("详情")}}</a>
+                  <a v-else-if="(scope.row.formCode == null || scope.row.formCode == 'OTHER') && scope.row.status !=  -1" href="javascript:;" class="color-success" @click="detailClick($event, scope.row)">{{$t("详情")}}</a>
                   <a v-else href="javascript:;" class="color-success" @click="detailClick($event, scope.row)">{{$t("详情")}}</a>
                   <a href="javascript:;" class="color-warning margin-left-5" @click="printManage($event, scope.row)">{{$t("打印")}}</a>
                 </template>
@@ -1360,7 +1360,7 @@
         this.detailData = item;
         console.log(222,item.formCode);
         this.formCode = item.formCode;
-        if (item.formCode && item.formCode != ''){
+        if (item.formCode && item.formCode != '' && item.formCode != 'OTHER'){
           this.initAuditDetailList(item._id, 'detail', item.formCode);
 
           if (item.formCode == 'CGHT' || item.formCode == 'TYHT' || item.formCode == 'XSHT'){
