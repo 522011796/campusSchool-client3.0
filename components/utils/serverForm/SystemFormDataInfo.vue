@@ -752,7 +752,7 @@
         this.$refs.form.validate().then(() => {
           let orderInfoList = {
             oprType: this.form.oprType,
-            type: this.form.type,
+            type: parseInt(this.form.type),
             typeStr: this.form.typeStr,
             processId: this.form.processId,
             time: this.form.time,

@@ -224,7 +224,7 @@
               <el-table-column align="center" :label="$t('总金额(元)')">
                 <template slot-scope="scope">
                   <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                    <div class="text-center">{{scope.row.delay_amount}}</div>
+                    <div class="text-center">{{scope.row.totalAmount}}</div>
                     <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
                       {{scope.row.totalAmount}}
                     </span>
@@ -234,9 +234,9 @@
               <el-table-column align="center" :label="$t('已完成(元)')">
                 <template slot-scope="scope">
                   <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                    <div class="text-center">{{scope.row.delay_amount}}</div>
+                    <div class="text-center">{{scope.row.successAmount}}</div>
                     <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                      {{scope.row.delay_amount ? scope.row.delay_amount : '--'}}
+                      {{scope.row.successAmount ? scope.row.successAmount : '--'}}
                     </span>
                   </el-popover>
                 </template>

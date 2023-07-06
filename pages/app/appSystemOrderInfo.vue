@@ -1071,7 +1071,7 @@
           let pageParent = this.$route.query.pageParent ? this.$route.query.pageParent : 'app-appIndex';
           this.orderInfoList.push({
             oprType: this.form.oprType,
-            type: this.form.type,
+            type: parseInt(this.form.type),
             typeStr: this.form.typeStr,
             processId: this.form.processId,
             time: this.form.time,
