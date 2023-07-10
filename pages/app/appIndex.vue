@@ -228,8 +228,8 @@
       }else{
         this.pageType = this.$route.query.type ? this.$route.query.type : 'server';
         if (process.browser) {
-          let pageType = localStorage.getItem("pageType");
-          localStorage.setItem("pageType", this.pageType);
+          //let pageType = localStorage.getItem("pageType") ? localStorage.getItem("pageType") : '';
+          //localStorage.setItem("pageType", this.pageType);
         }
 
         if (this.active == 6){
