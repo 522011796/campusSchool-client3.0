@@ -1074,6 +1074,7 @@
             type: parseInt(this.form.type),
             typeStr: this.form.typeStr,
             processId: this.form.processId,
+            fpType: this.form.fpType,
             time: this.form.time,
             amount: this.form.money,
             xfDes: this.form.xfInfo,

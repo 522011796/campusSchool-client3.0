@@ -1065,7 +1065,7 @@
                     </el-col>
                     <el-col :span="16">
                       <div class="text-left font-bold system-order-item-right-block">
-                        {{item.name ? item.name: '--'}}
+                        {{item.typeStr ? item.typeStr: '--'}}
                       </div>
                     </el-col>
                   </el-row>
@@ -1074,12 +1074,12 @@
                   <el-row>
                     <el-col :span="8">
                       <div class="system-order-item-left-block">
-                        <span>{{$t("账户")}}</span>
+                        <span>{{$t("发票日期")}}</span>
                       </div>
                     </el-col>
                     <el-col :span="16">
                       <div class="text-left font-bold system-order-item-right-block">
-                        {{item.accName ? item.accName : '--'}}
+                        {{item.fpTime ? item.fpTime : '--'}}
                       </div>
                     </el-col>
                   </el-row>
@@ -1088,12 +1088,40 @@
                   <el-row>
                     <el-col :span="8">
                       <div class="system-order-item-left-block">
-                        <span>{{$t("账号")}}</span>
+                        <span>{{$t("发票号码")}}</span>
                       </div>
                     </el-col>
                     <el-col :span="16">
                       <div class="text-left font-bold system-order-item-right-block">
-                        {{item.accNo ? item.accNo : '--'}}
+                        {{item.fpNo ? item.fpNo : '--'}}
+                      </div>
+                    </el-col>
+                  </el-row>
+                </div>
+                <div class="border-bottom-1">
+                  <el-row>
+                    <el-col :span="8">
+                      <div class="system-order-item-left-block">
+                        <span>{{$t("发票代码")}}</span>
+                      </div>
+                    </el-col>
+                    <el-col :span="16">
+                      <div class="text-left font-bold system-order-item-right-block">
+                        {{item.fpCode ? item.fpCode : '--'}}
+                      </div>
+                    </el-col>
+                  </el-row>
+                </div>
+                <div class="border-bottom-1">
+                  <el-row>
+                    <el-col :span="8">
+                      <div class="system-order-item-left-block">
+                        <span>{{$t("发票验证码")}}</span>
+                      </div>
+                    </el-col>
+                    <el-col :span="16">
+                      <div class="text-left font-bold system-order-item-right-block">
+                        {{item.fpCheckCode ? item.fpCheckCode : '--'}}
                       </div>
                     </el-col>
                   </el-row>
@@ -1107,7 +1135,7 @@
                     </el-col>
                     <el-col :span="16">
                       <div class="text-left font-bold system-order-item-right-block">
-                        {{item.amount ? item.amount : '--'}}
+                        <span>{{item.fp.length > 0 ? item.fp[0].totalAmount : (item.amount ? item.amount : '--')}}</span>
                       </div>
                     </el-col>
                   </el-row>
@@ -1121,7 +1149,7 @@
                     </el-col>
                     <el-col :span="16">
                       <div class="text-left font-bold system-order-item-right-block">
-                        {{item.useTo ? item.useTo : '--'}}
+                        {{item.fp.length > 0 ? item.fp[0].invoiceType : (item.fpType ? item.fpType : '--')}}
                       </div>
                     </el-col>
                   </el-row>

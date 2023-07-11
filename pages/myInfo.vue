@@ -1237,7 +1237,7 @@
                 this.dataMainDetailObj = res.data.data;
                 this.detailApplyAuditList = res.data.data.handleList && res.data.data.handleList.length > 0 ? res.data.data.handleList : [];
                 this.payableDataList = res.data.data.payableDataList;
-                this.serialDataList = res.data.data.serialDataList;
+                this.serialDataList = res.data.data.applyData && res.data.data.applyData['cost_info20230501'] ? res.data.data.applyData['cost_info20230501'].value : [];
                 this.tableOrderDetailData = res.data.data.payableDataList;
 
                 if (res.data.data.formCode == 'XMGL'){

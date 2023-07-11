@@ -873,38 +873,66 @@
                   <template slot-scope="scope">
                     <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
                       <div class="text-center">
-                        {{scope.row.name ? scope.row.name: '--'}}
+                        {{scope.row.typeStr ? scope.row.typeStr: '--'}}
                       </div>
                       <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                        <span>{{scope.row.name ? scope.row.name: '--'}}</span>
+                        <span>{{scope.row.typeStr ? scope.row.typeStr: '--'}}</span>
                       </div>
                     </el-popover>
                   </template>
                 </el-table-column>
                 <el-table-column
                     align="center"
-                    :label="$t('账户')">
+                    :label="$t('发票日期')">
                   <template slot-scope="scope">
                     <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
                       <div class="text-center">
-                        <span>{{scope.row.accName ? scope.row.accName : '--'}}</span>
+                        <span>{{scope.row.fpTime ? scope.row.fpTime : '--'}}</span>
                       </div>
                       <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                        <span>{{scope.row.accName ? scope.row.accName : '--'}}</span>
+                        <span>{{scope.row.fpTime ? scope.row.fpTime : '--'}}</span>
                       </div>
                     </el-popover>
                   </template>
                 </el-table-column>
                 <el-table-column
                     align="center"
-                    :label="$t('账号')">
+                    :label="$t('发票号码')">
                   <template slot-scope="scope">
                     <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
                       <div class="text-center">
-                        <span>{{scope.row.accNo ? scope.row.accNo : '--'}}</span>
+                        <span>{{scope.row.fpNo ? scope.row.fpNo : '--'}}</span>
                       </div>
                       <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                        <span>{{scope.row.accNo ? scope.row.accNo : '--'}}</span>
+                        <span>{{scope.row.fpNo ? scope.row.fpNo : '--'}}</span>
+                      </div>
+                    </el-popover>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                    align="center"
+                    :label="$t('发票代码')">
+                  <template slot-scope="scope">
+                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                      <div class="text-center">
+                        <span>{{scope.row.fpCode ? scope.row.fpCode : '--'}}</span>
+                      </div>
+                      <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                        <span>{{scope.row.fpCode ? scope.row.fpCode : '--'}}</span>
+                      </div>
+                    </el-popover>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                    align="center"
+                    :label="$t('发票验证码')">
+                  <template slot-scope="scope">
+                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                      <div class="text-center">
+                        <span>{{scope.row.fpCheckCode ? scope.row.fpCheckCode : '--'}}</span>
+                      </div>
+                      <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                        <span>{{scope.row.fpCheckCode ? scope.row.fpCheckCode : '--'}}</span>
                       </div>
                     </el-popover>
                   </template>
@@ -915,10 +943,10 @@
                   <template slot-scope="scope">
                     <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
                       <div class="text-center">
-                        <span>{{scope.row.amount ? scope.row.amount : '--'}}</span>
+                        <span>{{scope.row.fp.length > 0 ? scope.row.fp[0].totalAmount : (scope.row.amount ? scope.row.amount : '--')}}</span>
                       </div>
                       <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                        <span>{{scope.row.amount ? scope.row.amount : '--'}}</span>
+                        <span>{{scope.row.fp.length > 0 ? scope.row.fp[0].totalAmount : (scope.row.amount ? scope.row.amount : '--')}}</span>
                       </div>
                     </el-popover>
                   </template>
@@ -929,10 +957,10 @@
                   <template slot-scope="scope">
                     <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
                       <div class="text-center">
-                        <span>{{scope.row.useTo ? scope.row.useTo : '--'}}</span>
+                        <span>{{scope.row.fp.length > 0 ? scope.row.fp[0].invoiceType : (scope.row.fpType ? scope.row.fpType : '--')}}</span>
                       </div>
                       <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                        <span>{{scope.row.useTo ? scope.row.useTo : '--'}}</span>
+                        <span>{{scope.row.fp.length > 0 ? scope.row.fp[0].invoiceType : (scope.row.fpType ? scope.row.fpType : '--')}}</span>
                       </div>
                     </el-popover>
                   </template>
