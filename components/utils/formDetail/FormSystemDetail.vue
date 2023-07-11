@@ -900,7 +900,7 @@
               <!--              </el-table-column>-->
             </el-table>
 
-            <template v-else>
+            <template v-else-if="serialDataList.length > 0">
               <div class="margin-top-10">
                 <el-table
                     :data="serialDataList"
