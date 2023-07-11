@@ -1207,6 +1207,7 @@
             :data-detail-obj="dataDetailObj"
             :data-main-detail-obj = "dataMainDetailObj"
             :extra-data-list="tableNormalDetailData"
+            :serial-data-list="serialDataList"
             :detail-apply-audit-list="detailApplyAuditList"
             :table-order-detail-data="payableDataList"
             :draw-height="divHeight13.height1-255+'px'"
@@ -1244,6 +1245,7 @@
         dataOrderMainDetailObj: {},
         tableNormalDetailData: [],
         payableDataList: [],
+        serialDataList: [],
         active: 1,
         tableData: [],
         loading: false,
@@ -1958,6 +1960,7 @@
                 this.dataMainDetailObj = res.data.data;
                 this.detailApplyAuditList = res.data.data.handleList && res.data.data.handleList.length > 0 ? res.data.data.handleList : [];
                 this.payableDataList = res.data.data.payableDataList;
+                this.serialDataList = res.data.data.serialDataList;
                 this.tableOrderDetailData = res.data.data.payableDataList;
 
                 if (res.data.data.formCode == 'XMGL'){
@@ -2018,6 +2021,7 @@
         this.detailApplyContentData = [];
         this.detailApplyAuditList = [];
         this.tableNormalDetailData = [];
+        this.serialDataList = [];
         this.payableDataList = [];
         this.detailType = 1;
         this.textarea = '';

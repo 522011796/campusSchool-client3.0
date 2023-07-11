@@ -970,6 +970,7 @@
           :data-detail-obj="dataDetailObj"
           :data-main-detail-obj = "dataMainDetailObj"
           :extra-data-list="tableTagsDetailData"
+          :serial-data-list="serialDataList"
           :detail-apply-audit-list="detailApplyAuditList"
           :draw-height="drawHeight8.height"
           @changeDetailType="changeDetailType">
@@ -990,6 +991,7 @@
           :data-main-detail-obj="dataMainDetailObj"
           :data-detail-obj="dataDetailObj"
           :extra-data-list="payableDataList"
+          :serial-data-list="serialDataList"
           :detail-apply-audit-list="detailApplyAuditList"
           :table-order-detail-data="tableOrderDetailData"
           :draw-height="tableHeight19.height"
@@ -1014,6 +1016,7 @@
           :data-detail-obj="dataDetailObj"
           :data-main-detail-obj = "dataMainDetailObj"
           :extra-data-list="tableNormalDetailData"
+          :serial-data-list="serialDataList"
           :detail-apply-audit-list="detailApplyAuditList"
           :draw-height="drawHeight8.height"
           @changeDetailType="changeDetailType">
@@ -1036,6 +1039,7 @@
             :data-detail-obj="dataOrderDetailObj"
             :data-main-detail-obj = "dataOrderMainDetailObj"
             :extra-data-list="payableOrderDataList"
+            :serial-data-list="serialDataList"
             :detail-apply-audit-list="detailOrderApplyAuditList"
             :table-order-detail-data="payableOrderDataList"
             :draw-height="tableHeight19.height"
@@ -1095,6 +1099,7 @@
         detailOrderApplyAuditList: [],
         payableOrderDataList: [],
         payableDataList: [],
+        serialDataList: [],
         tableOrderDetailData: [],
         tableTagsDetailData: [],
         tableNormalDetailData: [],
@@ -1232,6 +1237,7 @@
                 this.dataMainDetailObj = res.data.data;
                 this.detailApplyAuditList = res.data.data.handleList && res.data.data.handleList.length > 0 ? res.data.data.handleList : [];
                 this.payableDataList = res.data.data.payableDataList;
+                this.serialDataList = res.data.data.serialDataList;
                 this.tableOrderDetailData = res.data.data.payableDataList;
 
                 if (res.data.data.formCode == 'XMGL'){

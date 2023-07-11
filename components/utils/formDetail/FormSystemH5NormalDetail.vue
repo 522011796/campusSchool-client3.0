@@ -4,7 +4,7 @@
       <el-button-group>
         <el-button size="small" :type="detailDataType == 1 ? 'primary' : 'default'" @click="changeDetailType($event ,1)">{{ $t("单据信息") }}</el-button>
         <el-button size="small" :type="detailDataType == 2 ? 'primary' : 'default'" @click="changeDetailType($event ,2)">{{ $t("审批详情") }}</el-button>
-        <el-button v-if="extraDataList && extraDataList.length > 0" size="small" :type="detailDataType == 3 ? 'primary' : 'default'" @click="changeDetailType($event ,3)">{{ $t("单据列表") }}</el-button>
+        <el-button v-if="(extraDataList && extraDataList.length > 0) || (serialDataList && serialDataList.length > 0)" size="small" :type="detailDataType == 3 ? 'primary' : 'default'" @click="changeDetailType($event ,3)">{{ $t("单据列表") }}</el-button>
         <el-button v-if="dataMainDetailObj.formCode == 'XSHT' || dataMainDetailObj.formCode == 'CGHT'" size="small" :type="detailDataType == 3 ? 'primary' : 'default'" @click="changeDetailType($event ,3)">{{ $t("合同单据") }}</el-button>
       </el-button-group>
     </div>
@@ -639,6 +639,7 @@
       </template>
 
       <template v-if="detailDataType == 2">
+
 <!--        <div class="detail-top-block" style="overflow-x: auto;padding: 20px 0px;white-space:nowrap;">-->
 <!--          <div :style="{width: (detailApplyAuditList.length+2) * (600/4)+'px'}">-->
 <!--            <div class="pull-left text-center" :style="{width: 600/4+'px'}">-->
@@ -897,7 +898,7 @@
       </template>
 
       <template v-if="detailDataType == 3">
-        <div class="detail-block">
+        <div class="detail-block" v-if="serialDataList.length <= 0">
           <template v-if="dataMainDetailObj.formCode == 'XMGL'">
             <div class="margin-top-10">
               <el-table
@@ -975,7 +976,7 @@
               </el-table>
             </div>
           </template>
-          <template v-if="dataMainDetailObj.formCode == 'XSHT' || dataMainDetailObj.formCode == 'CGHT'">
+          <template v-else-if="dataMainDetailObj.formCode == 'XSHT' || dataMainDetailObj.formCode == 'CGHT'">
             <div class="margin-top-10">
               <el-table
                 :data="tableOrderDetailData"
@@ -1051,6 +1052,84 @@
             </div>
           </template>
         </div>
+        <template class="detail-other-block" v-else-if="serialDataList.length > 0">
+          <div class="margin-top-10">
+            <div class="system-order-main-block">
+              <div v-for="(item, index) in serialDataList" :key="index" class="system-order-item-block margin-bottom-5">
+                <div class="border-bottom-1">
+                  <el-row>
+                    <el-col :span="8">
+                      <div class="system-order-item-left-block">
+                        <span>{{$t("名称")}}</span>
+                      </div>
+                    </el-col>
+                    <el-col :span="16">
+                      <div class="text-left font-bold system-order-item-right-block">
+                        {{item.name ? item.name: '--'}}
+                      </div>
+                    </el-col>
+                  </el-row>
+                </div>
+                <div class="border-bottom-1">
+                  <el-row>
+                    <el-col :span="8">
+                      <div class="system-order-item-left-block">
+                        <span>{{$t("账户")}}</span>
+                      </div>
+                    </el-col>
+                    <el-col :span="16">
+                      <div class="text-left font-bold system-order-item-right-block">
+                        {{item.accName ? item.accName : '--'}}
+                      </div>
+                    </el-col>
+                  </el-row>
+                </div>
+                <div class="border-bottom-1">
+                  <el-row>
+                    <el-col :span="8">
+                      <div class="system-order-item-left-block">
+                        <span>{{$t("账号")}}</span>
+                      </div>
+                    </el-col>
+                    <el-col :span="16">
+                      <div class="text-left font-bold system-order-item-right-block">
+                        {{item.accNo ? item.accNo : '--'}}
+                      </div>
+                    </el-col>
+                  </el-row>
+                </div>
+                <div class="border-bottom-1">
+                  <el-row>
+                    <el-col :span="8">
+                      <div class="system-order-item-left-block">
+                        <span>{{$t("金额")}}</span>
+                      </div>
+                    </el-col>
+                    <el-col :span="16">
+                      <div class="text-left font-bold system-order-item-right-block">
+                        {{item.amount ? item.amount : '--'}}
+                      </div>
+                    </el-col>
+                  </el-row>
+                </div>
+                <div>
+                  <el-row>
+                    <el-col :span="8">
+                      <div class="system-order-item-left-block">
+                        <span>{{$t("类型")}}</span>
+                      </div>
+                    </el-col>
+                    <el-col :span="16">
+                      <div class="text-left font-bold system-order-item-right-block">
+                        {{item.useTo ? item.useTo : '--'}}
+                      </div>
+                    </el-col>
+                  </el-row>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
       </template>
     </div>
   </div>
@@ -1092,6 +1171,12 @@ export default {
         type: Object
       },
       extraDataList: {
+        default: function (){
+          return [];
+        },
+        type: Array
+      },
+      serialDataList: {
         default: function (){
           return [];
         },
@@ -1279,6 +1364,11 @@ export default {
   background: #ffffff;
   padding: 10px 10px;
 }
+.detail-other-block{
+  border-radius: 5px;
+  background: #ffffff;
+  padding: 0px 0px;
+}
 .detail-top-item-green-block{
   border-radius: 50%;
   width: 50px;
@@ -1336,5 +1426,21 @@ export default {
 }
 .label-item-time-block{
   max-width: 180px;
+}
+.system-order-main-block{
+  padding: 0px 0px;
+  position: relative;
+}
+.system-order-item-left-block{
+  background: #EBEBEB;
+  text-align: center;
+  padding: 10px 16px;
+  line-height: 24px;
+}
+.system-order-item-right-block{
+  padding: 10px 16px;
+  line-height: 24px;
+  position: relative;
+  background: #FFFFFF;
 }
 </style>

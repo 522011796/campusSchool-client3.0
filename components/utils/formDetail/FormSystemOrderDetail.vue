@@ -4,7 +4,7 @@
       <el-button-group>
         <el-button size="small" :type="detailDataType == 1 ? 'primary' : 'default'" @click="changeDetailType($event ,1)">{{ formCode == 'TYHT' || formCode == 'XSHT' || formCode == 'CGHT' ? $t("合同信息") : $t("详细信息") }}</el-button>
         <el-button size="small" :type="detailDataType == 2 ? 'primary' : 'default'" @click="changeDetailType($event ,2)">{{ $t("审批详情") }}</el-button>
-        <el-button v-if="formCode != 'TYHT' && formCode != 'XSHT' && formCode != 'CGHT'" size="small" :type="detailDataType == 3 ? 'primary' : 'default'" @click="changeDetailType($event ,3)">{{ $t("合同单据") }}</el-button>
+        <el-button v-if="(formCode != 'TYHT' && formCode != 'XSHT' && formCode != 'CGHT')  || (serialDataList && serialDataList.length > 0)" size="small" :type="detailDataType == 3 ? 'primary' : 'default'" @click="changeDetailType($event ,3)">{{ $t("合同单据") }}</el-button>
       </el-button-group>
     </div>
 
@@ -295,6 +295,7 @@
 <!--          </div>-->
           <div class="margin-top-10">
             <el-table
+              v-if="tableOrderDetailData.length > 0"
               :data="tableOrderDetailData"
               header-cell-class-name="custom-table-cell-bg"
               size="small"
@@ -387,6 +388,91 @@
 <!--                </template>-->
 <!--              </el-table-column>-->
             </el-table>
+
+            <template v-else>
+              <div class="margin-top-10">
+                <el-table
+                    v-if="serialDataList.length > 0"
+                    :data="serialDataList"
+                    header-cell-class-name="custom-table-cell-bg"
+                    size="small"
+                    row-key="id"
+                    border
+                    :max-height="drawHeight"
+                    style="width: 100%">
+                  <el-table-column
+                      align="center"
+                      :label="$t('名称')">
+                    <template slot-scope="scope">
+                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                        <div class="text-center">
+                          {{scope.row.name ? scope.row.name: '--'}}
+                        </div>
+                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                          <span>{{scope.row.name ? scope.row.name: '--'}}</span>
+                        </div>
+                      </el-popover>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                      align="center"
+                      :label="$t('账户')">
+                    <template slot-scope="scope">
+                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                        <div class="text-center">
+                          <span>{{scope.row.accName ? scope.row.accName : '--'}}</span>
+                        </div>
+                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                          <span>{{scope.row.accName ? scope.row.accName : '--'}}</span>
+                        </div>
+                      </el-popover>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                      align="center"
+                      :label="$t('账号')">
+                    <template slot-scope="scope">
+                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                        <div class="text-center">
+                          <span>{{scope.row.accNo ? scope.row.accNo : '--'}}</span>
+                        </div>
+                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                          <span>{{scope.row.accNo ? scope.row.accNo : '--'}}</span>
+                        </div>
+                      </el-popover>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                      align="center"
+                      :label="$t('金额')">
+                    <template slot-scope="scope">
+                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                        <div class="text-center">
+                          <span>{{scope.row.amount ? scope.row.amount : '--'}}</span>
+                        </div>
+                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                          <span>{{scope.row.amount ? scope.row.amount : '--'}}</span>
+                        </div>
+                      </el-popover>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                      align="center"
+                      :label="$t('类型')">
+                    <template slot-scope="scope">
+                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                        <div class="text-center">
+                          <span>{{scope.row.useTo ? scope.row.useTo : '--'}}</span>
+                        </div>
+                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                          <span>{{scope.row.useTo ? scope.row.useTo : '--'}}</span>
+                        </div>
+                      </el-popover>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+            </template>
           </div>
         </div>
       </template>
@@ -428,6 +514,12 @@ export default {
         type: Object
       },
       extraDataList: {
+        default: function (){
+          return [];
+        },
+        type: Array
+      },
+      serialDataList: {
         default: function (){
           return [];
         },
