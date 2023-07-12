@@ -1030,6 +1030,8 @@
         drawerRoom: false,
         drawerBill: false,
         billBtnShow: false,
+        payAllowLink: false,
+        payAllowLinkDes: false,
         uploadFile: common.upload_file,
         uploadResult: {},
         uploadProcess: '',
@@ -1254,11 +1256,11 @@
           }
         });
       },
-      initStudentInfo(){
+      async initStudentInfo(){
         let params = {
           userId: this.loginUserId,
         };
-        this.$axios.get(common.server_enroll_app_student_info, {params: params}).then(res => {
+        await this.$axios.get(common.server_enroll_app_student_info, {params: params}).then(res => {
           if (res.data.data){
             console.log(res.data.data);
             this.deductionAmount = res.data.data.deductionAmount;
@@ -1270,6 +1272,8 @@
             this.itemUserList = res.data.data.itemUserList;
             this.paidQrcode = res.data.data.enrollPayCode;
             this.billBtnShow = res.data.data.payAllow;
+            this.payAllowLink = res.data.data.payAllowLink;
+            this.payAllowLinkDes = res.data.data.payAllowLinkDes;
           }
         });
       },
@@ -1999,11 +2003,18 @@
           return obj;
         }
       },
-      payManage(event, data){
-        if(this.billBtnShow == false){
-          MessageWarning(this.$t("未到缴费时间！"));
+      async payManage(event, data){
+        // if(this.billBtnShow == false){
+        //   MessageWarning(this.$t("未到缴费时间！"));
+        //   return;
+        // }
+
+        await this.initStudentInfo();
+        if (this.billBtnShow == false && this.payAllowLink == false){
+          MessageWarning(this.payAllowLinkDes);
           return;
         }
+
         this.drCode = '';
         this.getPayInfo();
         this.dialogPayDrCode = true;
@@ -2028,11 +2039,17 @@
         }
         return province;
       },
-      okPayDialog(event, type){
-        if(this.billBtnShow == false){
-          MessageWarning(this.$t("未到缴费时间！"));
+      async okPayDialog(event, type){
+        // if(this.billBtnShow == false){
+        //   MessageWarning(this.$t("未到缴费时间！"));
+        //   return;
+        // }
+        await this.initStudentInfo();
+        if (this.billBtnShow == false && this.payAllowLink == false){
+          MessageWarning(this.payAllowLinkDes);
           return;
         }
+
         let params = {};
         params = this.$qs.stringify(params);
         this.btnLoading = true;

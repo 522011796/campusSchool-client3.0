@@ -499,7 +499,9 @@
                   <td style="text-align: left;padding-left: 15px">
                     <el-tooltip class="item" effect="dark" :content="item.value" placement="top">
                     <span class="moon-content-text-ellipsis-class">
-                      <label class="font-size-12">{{ item.value }}</label>
+                      <label v-if="item.type == 'el-transfer' && item.value && item.value.length > 0" class="font-size-12">{{ item.value.join() }}</label>
+                      <label v-else-if="item.type == 'el-transfer' && item.value && item.value.length <= 0" class="font-size-12"></label>
+                      <label v-else class="font-size-12">{{ item.value }}</label>
                     </span>
                     </el-tooltip>
                   </td>
@@ -938,7 +940,9 @@
                 <template  v-if="item.type != 'fc-editor' && item.type != 'upload'">
                   <td style="width: 30%;text-align: right;padding-right: 15px">
                     <span class="color-muted moon-content-text-ellipsis-class">
-                      <label class="font-size-12">{{item.title}}</label>
+                      <label v-if="item.type == 'el-transfer' && item.value && item.value.length > 0" class="font-size-12">{{ item.value.join() }}</label>
+                      <label v-else-if="item.type == 'el-transfer' && item.value && item.value.length <= 0" class="font-size-12"></label>
+                      <label v-else class="font-size-12">{{ item.value }}</label>
                     </span>
                   </td>
                   <td style="text-align: left;padding-left: 15px">

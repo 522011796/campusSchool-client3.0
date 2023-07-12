@@ -91,9 +91,11 @@
                     </td>
                     <td style="text-align: left;padding-left: 15px">
                       <el-tooltip class="item" effect="dark" :content="item.value" placement="top">
-                    <span class="moon-content-text-ellipsis-class">
-                      <label class="font-size-12">{{ item.value }}</label>
-                    </span>
+                        <span class="moon-content-text-ellipsis-class">
+                          <label v-if="item.type == 'el-transfer' && item.value && item.value.length > 0" class="font-size-12">{{ item.value.join() }}</label>
+                          <label v-else-if="item.type == 'el-transfer' && item.value && item.value.length <= 0" class="font-size-12"></label>
+                          <label v-else class="font-size-12">{{ item.value }}</label>
+                        </span>
                       </el-tooltip>
                     </td>
                   </template>

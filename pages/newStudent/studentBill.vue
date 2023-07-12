@@ -205,6 +205,8 @@
         billDetail: '',
         drCode: '',
         billBtnShow: false,
+        payAllowLink: false,
+        payAllowLinkDes: false,
       }
     },
     mounted() {
@@ -234,11 +236,11 @@
           }
         });
       },
-      initStudentInfo(){
+      async initStudentInfo(){
         let params = {
           userId: this.loginUserId,
         };
-        this.$axios.get(common.server_enroll_app_student_info, {params: params}).then(res => {
+        await this.$axios.get(common.server_enroll_app_student_info, {params: params}).then(res => {
           if (res.data.data){
             console.log(res.data.data);
             this.deductionAmount = res.data.data.deductionAmount;
@@ -250,6 +252,8 @@
             this.itemUserList = res.data.data.itemUserList;
             this.paidQrcode = res.data.data.enrollPayCode;
             this.billBtnShow = res.data.data.payAllow;
+            this.payAllowLink = res.data.data.payAllowLink;
+            this.payAllowLinkDes = res.data.data.payAllowLinkDes;
           }
         });
       },
@@ -282,20 +286,32 @@
         this.billDetail = data;
         this.showDetail = true;
       },
-      payManage(event, data){
-        if(this.billBtnShow == false){
-          Toast(this.$t("未到缴费时间！"));
+      async payManage(event, data){
+        // if(this.billBtnShow == false){
+        //   Toast(this.$t("未到缴费时间！"));
+        //   return;
+        // }
+        await this.initStudentInfo();
+        if (this.billBtnShow == false && this.payAllowLink == false){
+          MessageWarning(this.payAllowLinkDes);
           return;
         }
+
         this.drCode = '';
         this.getPayInfo();
         this.dialogPayDrCode = true;
       },
-      okPayDialog(event){
-        if(this.billBtnShow == false){
-          Toast(this.$t("未到缴费时间！"));
+      async okPayDialog(event){
+        // if(this.billBtnShow == false){
+        //   Toast(this.$t("未到缴费时间！"));
+        //   return;
+        // }
+        await this.initStudentInfo();
+        if (this.billBtnShow == false && this.payAllowLink == false){
+          Toast(this.payAllowLinkDes);
           return;
         }
+
         let params = {};
         params = this.$qs.stringify(params);
         this.$axios.post(common.enroll_pay_item_pay, params, {loading: false}).then(res => {
