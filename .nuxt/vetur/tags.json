@@ -227,30 +227,6 @@
   "LazyMyUserType": {
     "description": "Auto imported from components/utils/MyUserType.vue"
   },
-  "AuditStatusButton": {
-    "description": "Auto imported from components/utils/button/AuditStatusButton.vue"
-  },
-  "LazyAuditStatusButton": {
-    "description": "Auto imported from components/utils/button/AuditStatusButton.vue"
-  },
-  "DormAttendStatusButtonGroup": {
-    "description": "Auto imported from components/utils/button/DormAttendStatusButtonGroup.vue"
-  },
-  "LazyDormAttendStatusButtonGroup": {
-    "description": "Auto imported from components/utils/button/DormAttendStatusButtonGroup.vue"
-  },
-  "TabGroupButton": {
-    "description": "Auto imported from components/utils/button/TabGroupButton.vue"
-  },
-  "LazyTabGroupButton": {
-    "description": "Auto imported from components/utils/button/TabGroupButton.vue"
-  },
-  "TimeoutButton": {
-    "description": "Auto imported from components/utils/button/TimeoutButton.vue"
-  },
-  "LazyTimeoutButton": {
-    "description": "Auto imported from components/utils/button/TimeoutButton.vue"
-  },
   "AuditButton": {
     "description": "Auto imported from components/utils/auditDetail/AuditButton.vue"
   },
@@ -305,6 +281,30 @@
   "LazyTerleaveDetail": {
     "description": "Auto imported from components/utils/auditDetail/TerleaveDetail.vue"
   },
+  "AuditStatusButton": {
+    "description": "Auto imported from components/utils/button/AuditStatusButton.vue"
+  },
+  "LazyAuditStatusButton": {
+    "description": "Auto imported from components/utils/button/AuditStatusButton.vue"
+  },
+  "DormAttendStatusButtonGroup": {
+    "description": "Auto imported from components/utils/button/DormAttendStatusButtonGroup.vue"
+  },
+  "LazyDormAttendStatusButtonGroup": {
+    "description": "Auto imported from components/utils/button/DormAttendStatusButtonGroup.vue"
+  },
+  "TabGroupButton": {
+    "description": "Auto imported from components/utils/button/TabGroupButton.vue"
+  },
+  "LazyTabGroupButton": {
+    "description": "Auto imported from components/utils/button/TabGroupButton.vue"
+  },
+  "TimeoutButton": {
+    "description": "Auto imported from components/utils/button/TimeoutButton.vue"
+  },
+  "LazyTimeoutButton": {
+    "description": "Auto imported from components/utils/button/TimeoutButton.vue"
+  },
   "MyHeadImg": {
     "description": "Auto imported from components/utils/common/MyHeadImg.vue"
   },
@@ -340,36 +340,6 @@
   },
   "LazyMyNormalDialog": {
     "description": "Auto imported from components/utils/dialog/MyNormalDialog.vue"
-  },
-  "FormSystemDetail": {
-    "description": "Auto imported from components/utils/formDetail/FormSystemDetail.vue"
-  },
-  "LazyFormSystemDetail": {
-    "description": "Auto imported from components/utils/formDetail/FormSystemDetail.vue"
-  },
-  "FormSystemH5NormalDetail": {
-    "description": "Auto imported from components/utils/formDetail/FormSystemH5NormalDetail.vue"
-  },
-  "LazyFormSystemH5NormalDetail": {
-    "description": "Auto imported from components/utils/formDetail/FormSystemH5NormalDetail.vue"
-  },
-  "FormSystemNormalDetail": {
-    "description": "Auto imported from components/utils/formDetail/FormSystemNormalDetail.vue"
-  },
-  "LazyFormSystemNormalDetail": {
-    "description": "Auto imported from components/utils/formDetail/FormSystemNormalDetail.vue"
-  },
-  "FormSystemOrderDetail": {
-    "description": "Auto imported from components/utils/formDetail/FormSystemOrderDetail.vue"
-  },
-  "LazyFormSystemOrderDetail": {
-    "description": "Auto imported from components/utils/formDetail/FormSystemOrderDetail.vue"
-  },
-  "FormSystemTagsDetail": {
-    "description": "Auto imported from components/utils/formDetail/FormSystemTagsDetail.vue"
-  },
-  "LazyFormSystemTagsDetail": {
-    "description": "Auto imported from components/utils/formDetail/FormSystemTagsDetail.vue"
   },
   "MyCascader": {
     "description": "Auto imported from components/utils/select/MyCascader.vue"
@@ -580,5 +550,35 @@
   },
   "LazyUploadSquare": {
     "description": "Auto imported from components/utils/upload/UploadSquare.vue"
+  },
+  "FormSystemDetail": {
+    "description": "Auto imported from components/utils/formDetail/FormSystemDetail.vue"
+  },
+  "LazyFormSystemDetail": {
+    "description": "Auto imported from components/utils/formDetail/FormSystemDetail.vue"
+  },
+  "FormSystemH5NormalDetail": {
+    "description": "Auto imported from components/utils/formDetail/FormSystemH5NormalDetail.vue"
+  },
+  "LazyFormSystemH5NormalDetail": {
+    "description": "Auto imported from components/utils/formDetail/FormSystemH5NormalDetail.vue"
+  },
+  "FormSystemNormalDetail": {
+    "description": "Auto imported from components/utils/formDetail/FormSystemNormalDetail.vue"
+  },
+  "LazyFormSystemNormalDetail": {
+    "description": "Auto imported from components/utils/formDetail/FormSystemNormalDetail.vue"
+  },
+  "FormSystemOrderDetail": {
+    "description": "Auto imported from components/utils/formDetail/FormSystemOrderDetail.vue"
+  },
+  "LazyFormSystemOrderDetail": {
+    "description": "Auto imported from components/utils/formDetail/FormSystemOrderDetail.vue"
+  },
+  "FormSystemTagsDetail": {
+    "description": "Auto imported from components/utils/formDetail/FormSystemTagsDetail.vue"
+  },
+  "LazyFormSystemTagsDetail": {
+    "description": "Auto imported from components/utils/formDetail/FormSystemTagsDetail.vue"
   }
 }
