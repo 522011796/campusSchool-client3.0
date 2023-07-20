@@ -1249,14 +1249,16 @@
                 }else if (res.data.data.formCode == 'XSHT' || res.data.data.formCode == 'CGHT' || res.data.data.formCode == 'TYHT'){
                   let ruleList = [];
                   //let count = res.data.data.applyData['ht_stage20230501'] ? res.data.data.applyData['ht_stage20230501'].value : 0;
-                  for (let i = 0; i < res.data.data.payableDataList.length; i++){
-                    ruleList.push({
-                      stage: res.data.data.payableDataList[i].stage,
-                      rate: res.data.data.payableDataList[i].rate,
-                      amount: res.data.data.payableDataList[i].shouldAmount,
-                      time: res.data.data.payableDataList[i].time,
-                      des: res.data.data.payableDataList[i].des,
-                    });
+                  if (res.data.data['payableDataList']){
+                    for (let i = 0; i < res.data.data.payableDataList.length; i++){
+                      ruleList.push({
+                        stage: res.data.data.payableDataList[i].stage,
+                        rate: res.data.data.payableDataList[i].rate,
+                        amount: res.data.data.payableDataList[i].shouldAmount,
+                        time: res.data.data.payableDataList[i].time,
+                        des: res.data.data.payableDataList[i].des,
+                      });
+                    }
                   }
                   this.tableTagsDetailData = ruleList;
                 }

@@ -1167,9 +1167,9 @@
                       <label v-if="dataMainDetailObj.formCode == 'SKD'">{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['jk_name20230501'].value : '--'}}</label>
                       <label v-if="dataMainDetailObj.formCode == 'BZBX'">{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['bb_name20230501'].value : '--'}}</label>
                       <label v-if="dataMainDetailObj.formCode == 'DGDK'">{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['fk_name20230501'].value : '--'}}</label>
-                      <label v-if="dataMainDetailObj.formCode == 'CGHT'">{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['ht_name20230501'].value : '--'}}</label>
-                      <label v-if="dataMainDetailObj.formCode == 'XSHT'">{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['ht_name20230501'].value : '--'}}</label>
-                      <label v-if="dataMainDetailObj.formCode == 'TYHT'">{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['ht_name20230501'].value : '--'}}</label>
+                      <label v-if="dataMainDetailObj.formCode == 'CGHT'">{{dataMainDetailObj['applyData'] ? (dataMainDetailObj['applyData']['ht_amount20230501'] ? dataMainDetailObj['applyData']['ht_amount20230501']['value'] : '--') : '--'}}</label>
+                      <label v-if="dataMainDetailObj.formCode == 'XSHT'">{{dataMainDetailObj['applyData'] ? (dataMainDetailObj['applyData']['ht_amount20230501'] ? dataMainDetailObj['applyData']['ht_amount20230501']['value'] : '--') : '--'}}</label>
+                      <label v-if="dataMainDetailObj.formCode == 'TYHT'">{{dataMainDetailObj['applyData'] ? (dataMainDetailObj['applyData']['ht_amount20230501'] ? dataMainDetailObj['applyData']['ht_amount20230501']['value'] : '--') : '--'}}</label>
                     </span>
                     <span class="moon-content-text-ellipsis-class color-success" style="position: relative;top: -5px">
                       <label v-if="dataMainDetailObj.formCode == 'PTGL'">¥{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['cost_allAmount20230501'].value : '--'}}</label>
@@ -1178,9 +1178,9 @@
                       <label v-if="dataMainDetailObj.formCode == 'SKD'">¥{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['cost_allAmount20230501'].value : '--'}}</label>
                       <label v-if="dataMainDetailObj.formCode == 'BZBX'">¥{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['cost_allAmount20230501'].value : '--'}}</label>
                       <label v-if="dataMainDetailObj.formCode == 'DGDK'">¥{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['cost_allAmount20230501'].value : '--'}}</label>
-                      <label v-if="dataMainDetailObj.formCode == 'CGHT'">¥{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['ht_amount20230501'].value : '--'}}</label>
-                      <label v-if="dataMainDetailObj.formCode == 'XSHT'">¥{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['ht_amount20230501'].value : '--'}}</label>
-                      <label v-if="dataMainDetailObj.formCode == 'TYHT'">¥{{dataMainDetailObj['applyData'] ? dataMainDetailObj['applyData']['ht_amount20230501'].value : '--'}}</label>
+                      <label v-if="dataMainDetailObj.formCode == 'CGHT'">¥{{dataMainDetailObj['applyData'] ? (dataMainDetailObj['applyData']['ht_amount20230501'] ? dataMainDetailObj['applyData']['ht_amount20230501']['value'] : '--') : '--'}}</label>
+                      <label v-if="dataMainDetailObj.formCode == 'XSHT'">¥{{dataMainDetailObj['applyData'] ? (dataMainDetailObj['applyData']['ht_amount20230501'] ? dataMainDetailObj['applyData']['ht_amount20230501']['value'] : '--') : '--'}}</label>
+                      <label v-if="dataMainDetailObj.formCode == 'TYHT'">¥{{dataMainDetailObj['applyData'] ? (dataMainDetailObj['applyData']['ht_amount20230501'] ? dataMainDetailObj['applyData']['ht_amount20230501']['value'] : '--') : '--'}}</label>
                     </span>
                   </div>
                 </el-col>
@@ -1191,7 +1191,7 @@
                 <el-col :span="24">
                   <div class="text-left">
                     <span>{{$t("当前审批环节")}}:</span>
-                    <span class="moon-content-text-ellipsis-class color-warning" style="display: inline-block;max-width: 100px;position: relative;top: 5px">
+                    <span class="moon-content-text-ellipsis-class color-warning" style="display: inline-block;max-width: 200px;position: relative;top: 5px">
                       {{dataMainDetailObj['handleList'] ? dataMainDetailObj.handleList[dataMainDetailObj.orderIndex-1].nodeName : ''}}
                     </span>
 <!--                    <span class="color-success" style="position: relative;top: 0px">-->
@@ -1972,14 +1972,16 @@
                 }else if (res.data.data.formCode == 'XSHT' || res.data.data.formCode == 'CGHT' || res.data.data.formCode == 'TYHT'){
                   let ruleList = [];
                   //let count = res.data.data.applyData['ht_stage20230501'] ? res.data.data.applyData['ht_stage20230501'].value : 0;
-                  for (let i = 0; i < res.data.data.payableDataList.length; i++){
-                    ruleList.push({
-                      stage: res.data.data.payableDataList[i].stage,
-                      rate: res.data.data.payableDataList[i].rate,
-                      amount: res.data.data.payableDataList[i].shouldAmount,
-                      time: res.data.data.payableDataList[i].time,
-                      des: res.data.data.payableDataList[i].des,
-                    });
+                  if (res.data.data['payableDataList']){
+                    for (let i = 0; i < res.data.data.payableDataList.length; i++){
+                      ruleList.push({
+                        stage: res.data.data.payableDataList[i].stage,
+                        rate: res.data.data.payableDataList[i].rate,
+                        amount: res.data.data.payableDataList[i].shouldAmount,
+                        time: res.data.data.payableDataList[i].time,
+                        des: res.data.data.payableDataList[i].des,
+                      });
+                    }
                   }
                   this.tableTagsDetailData = ruleList;
                 }

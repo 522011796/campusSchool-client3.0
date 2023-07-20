@@ -5,7 +5,7 @@
         <el-button size="small" :type="detailDataType == 1 ? 'primary' : 'default'" @click="changeDetailType($event ,1)">{{ $t("单据信息") }}</el-button>
         <el-button size="small" :type="detailDataType == 2 ? 'primary' : 'default'" @click="changeDetailType($event ,2)">{{ $t("审批详情") }}</el-button>
         <el-button v-if="dataMainDetailObj.formCode == 'XSHT' || dataMainDetailObj.formCode == 'CGHT'" size="small" :type="detailDataType == 3 ? 'primary' : 'default'" @click="changeDetailType($event ,3)">{{ $t("合同单据") }}</el-button>
-        <el-button v-else size="small" :type="detailDataType == 3 ? 'primary' : 'default'" @click="changeDetailType($event ,3)">{{ $t("预算列表") }}</el-button>
+        <el-button v-if="(extraDataList && extraDataList.length > 0) || (serialDataList && serialDataList.length > 0)" size="small" :type="detailDataType == 3 ? 'primary' : 'default'" @click="changeDetailType($event ,3)">{{ $t("预算列表") }}</el-button>
       </el-button-group>
     </div>
 
@@ -626,7 +626,7 @@
                       </div>
                     </el-col>
                     <el-col :span="16">
-                      <div class="text-left padding-left-5">
+                      <div class="text-left padding-left-5 right-bg-block">
                         <span>{{item.totalAmount}}</span>
                       </div>
                     </el-col>
@@ -715,82 +715,82 @@
                 </el-table>
               </div>
             </template>
-            <template v-else-if="dataMainDetailObj.formCode == 'XSHT' || dataMainDetailObj.formCode == 'CGHT'">
-              <div class="font-bold">{{$t("单据信息")}}:</div>
-              <div class="margin-top-10">
-                <el-table
-                    :data="extraDataList"
-                    header-cell-class-name="custom-table-cell-bg"
-                    size="small"
-                    row-key="id"
-                    border
-                    :max-height="drawHeight"
-                    style="width: 100%">
-                  <el-table-column
-                      align="center"
-                      :label="$t('期数')">
-                    <template slot-scope="scope">
-                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                        <div class="text-center">{{scope.row.stage}}</div>
-                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                          <span>{{scope.row.stage}}</span>
-                        </div>
-                      </el-popover>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                      align="center"
-                      :label="$t('比例')">
-                    <template slot-scope="scope">
-                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                        <div class="text-center">{{scope.row.rate}}%</div>
-                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                          <span>{{scope.row.rate}}%</span>
-                        </div>
-                      </el-popover>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                      align="center"
-                      :label="$t('金额')">
-                    <template slot-scope="scope">
-                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                        <div class="text-center">{{scope.row.amount}}</div>
-                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                          <span>{{scope.row.amount}}</span>
-                        </div>
-                      </el-popover>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                      align="center"
-                      :label="$t('日期')">
-                    <template slot-scope="scope">
-                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                        <div class="text-center">{{scope.row.time}}</div>
-                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                          <span>{{scope.row.time}}</span>
-                        </div>
-                      </el-popover>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                      align="center"
-                      :label="$t('备注')">
-                    <template slot-scope="scope">
-                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                        <div class="text-center">
-                          <div>{{scope.row.des ? scope.row.des : '--'}}</div>
-                        </div>
-                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                          <div class="moon-content-text-ellipsis-class" style="max-width: 200px">{{scope.row.des ? scope.row.des : '--'}}</div>
-                        </div>
-                      </el-popover>
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </div>
-            </template>
+<!--            <template v-else-if="dataMainDetailObj.formCode == 'XSHT' || dataMainDetailObj.formCode == 'CGHT'">-->
+<!--              <div class="font-bold">{{$t("单据信息")}}:</div>-->
+<!--              <div class="margin-top-10">-->
+<!--                <el-table-->
+<!--                    :data="extraDataList"-->
+<!--                    header-cell-class-name="custom-table-cell-bg"-->
+<!--                    size="small"-->
+<!--                    row-key="id"-->
+<!--                    border-->
+<!--                    :max-height="drawHeight"-->
+<!--                    style="width: 100%">-->
+<!--                  <el-table-column-->
+<!--                      align="center"-->
+<!--                      :label="$t('期数')">-->
+<!--                    <template slot-scope="scope">-->
+<!--                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">-->
+<!--                        <div class="text-center">{{scope.row.stage}}</div>-->
+<!--                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">-->
+<!--                          <span>{{scope.row.stage}}</span>-->
+<!--                        </div>-->
+<!--                      </el-popover>-->
+<!--                    </template>-->
+<!--                  </el-table-column>-->
+<!--                  <el-table-column-->
+<!--                      align="center"-->
+<!--                      :label="$t('比例')">-->
+<!--                    <template slot-scope="scope">-->
+<!--                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">-->
+<!--                        <div class="text-center">{{scope.row.rate}}%</div>-->
+<!--                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">-->
+<!--                          <span>{{scope.row.rate}}%</span>-->
+<!--                        </div>-->
+<!--                      </el-popover>-->
+<!--                    </template>-->
+<!--                  </el-table-column>-->
+<!--                  <el-table-column-->
+<!--                      align="center"-->
+<!--                      :label="$t('金额')">-->
+<!--                    <template slot-scope="scope">-->
+<!--                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">-->
+<!--                        <div class="text-center">{{scope.row.amount}}</div>-->
+<!--                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">-->
+<!--                          <span>{{scope.row.amount}}</span>-->
+<!--                        </div>-->
+<!--                      </el-popover>-->
+<!--                    </template>-->
+<!--                  </el-table-column>-->
+<!--                  <el-table-column-->
+<!--                      align="center"-->
+<!--                      :label="$t('日期')">-->
+<!--                    <template slot-scope="scope">-->
+<!--                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">-->
+<!--                        <div class="text-center">{{scope.row.time}}</div>-->
+<!--                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">-->
+<!--                          <span>{{scope.row.time}}</span>-->
+<!--                        </div>-->
+<!--                      </el-popover>-->
+<!--                    </template>-->
+<!--                  </el-table-column>-->
+<!--                  <el-table-column-->
+<!--                      align="center"-->
+<!--                      :label="$t('备注')">-->
+<!--                    <template slot-scope="scope">-->
+<!--                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">-->
+<!--                        <div class="text-center">-->
+<!--                          <div>{{scope.row.des ? scope.row.des : '&#45;&#45;'}}</div>-->
+<!--                        </div>-->
+<!--                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">-->
+<!--                          <div class="moon-content-text-ellipsis-class" style="max-width: 200px">{{scope.row.des ? scope.row.des : '&#45;&#45;'}}</div>-->
+<!--                        </div>-->
+<!--                      </el-popover>-->
+<!--                    </template>-->
+<!--                  </el-table-column>-->
+<!--                </el-table>-->
+<!--              </div>-->
+<!--            </template>-->
             <template v-else-if="serialDataList.length > 0">
               <div class="font-bold">{{$t("单据信息")}}:</div>
               <div class="margin-top-10">
@@ -802,7 +802,7 @@
                       </div>
                     </el-col>
                     <el-col :span="16">
-                      <div class="text-left padding-left-5">
+                      <div class="text-left padding-left-5 right-bg-block">
                         <span>{{item.typeStr ? item.typeStr : '--'}}</span>
                       </div>
                     </el-col>
@@ -814,7 +814,7 @@
                       </div>
                     </el-col>
                     <el-col :span="16">
-                      <div class="text-left padding-left-5">
+                      <div class="text-left padding-left-5 right-bg-block">
                         <span>{{item.fpTime ? item.fpTime : '--'}}</span>
                       </div>
                     </el-col>
@@ -826,7 +826,7 @@
                       </div>
                     </el-col>
                     <el-col :span="16">
-                      <div class="text-left padding-left-5">
+                      <div class="text-left padding-left-5 right-bg-block">
                         <span>{{item.fpNo ? item.fpNo : '--'}}</span>
                       </div>
                     </el-col>
@@ -838,7 +838,7 @@
                       </div>
                     </el-col>
                     <el-col :span="16">
-                      <div class="text-left padding-left-5">
+                      <div class="text-left padding-left-5 right-bg-block">
                         <span>{{item.fpCode ? item.fpCode : '--'}}</span>
                       </div>
                     </el-col>
@@ -850,7 +850,7 @@
                       </div>
                     </el-col>
                     <el-col :span="16">
-                      <div class="text-left padding-left-5">
+                      <div class="text-left padding-left-5 right-bg-block">
                         <span>{{item.fpCheckCode ? item.fpCheckCode : '--'}}</span>
                       </div>
                     </el-col>
@@ -862,7 +862,7 @@
                       </div>
                     </el-col>
                     <el-col :span="16">
-                      <div class="text-left padding-left-5">
+                      <div class="text-left padding-left-5 right-bg-block">
                         <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
                           <div class="text-center">
                             <span>{{item.fp.length > 0 ? item.fp[0].totalAmount : (item.amount ? item.amount : '--')}}</span>
@@ -881,7 +881,7 @@
                       </div>
                     </el-col>
                     <el-col :span="16">
-                      <div class="text-left padding-left-5">
+                      <div class="text-left padding-left-5 right-bg-block">
                         <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
                           <div class="text-center">
                             <span>{{item.fp.length > 0 ? item.fp[0].invoiceType : (item.fpType ? item.fpType : '--')}}</span>
@@ -1163,162 +1163,196 @@
         <div class="detail-block" v-if="serialDataList.length <= 0">
           <template v-if="dataMainDetailObj.formCode == 'XMGL'">
             <div class="margin-top-10">
-              <el-table
-                :data="tableOrderDetailData"
-                header-cell-class-name="custom-table-cell-bg"
-                size="small"
-                row-key="id"
-                border
-                :max-height="drawHeight"
-                style="width: 100%">
-                <el-table-column
-                  align="center"
-                  :label="$t('类型')">
-                  <template slot-scope="scope">
-                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                      <div class="text-center"><span>{{formXmTextInfo(scope.row.formCode, 'set')}}</span></div>
-                      <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                        <span>{{formXmTextInfo(scope.row.formCode, 'set')}}</span>
-                      </div>
-                    </el-popover>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  align="center"
-                  :label="$t('名称')">
-                  <template slot-scope="scope">
-                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                      <div class="text-center"><span>{{scope.row.applyData['ht_name20230501'] ? scope.row.applyData['ht_name20230501'].value : '--'}}</span></div>
-                      <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                        <span>{{scope.row.applyData['ht_name20230501'] ? scope.row.applyData['ht_name20230501'].value : '--'}}</span>
-                      </div>
-                    </el-popover>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  align="center"
-                  :label="$t('编号')">
-                  <template slot-scope="scope">
-                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                      <div class="text-center">
-                        <span>{{scope.row.formApplyNo}}</span>
-                      </div>
-                      <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                        <span>{{scope.row.formApplyNo}}</span>
-                      </div>
-                    </el-popover>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  align="center"
-                  :label="$t('金额')">
-                  <template slot-scope="scope">
-                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                      <div class="text-center"><span>{{scope.row.applyData['ht_amount20230501'] ? scope.row.applyData['ht_amount20230501'].value: '--'}}</span></div>
-                      <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                        <span>{{scope.row.applyData['ht_amount20230501'] ? scope.row.applyData['ht_amount20230501'].value: '--'}}</span>
-                      </div>
-                    </el-popover>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  align="center"
-                  :label="$t('状态')">
-                  <template slot-scope="scope">
-                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                      <div class="text-center">
-                        <span>{{auditStatusTextInfo(scope.row.status)}}</span>
-                      </div>
-                      <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                        <span>{{auditStatusTextInfo(scope.row.status)}}</span>
-                      </div>
-                    </el-popover>
-                  </template>
-                </el-table-column>
-              </el-table>
+              <div class="system-order-main-block margin-bottom-10"  v-for="(item, index) in tableOrderDetailData" :key="index">
+                <el-row>
+                  <el-col :span="8">
+                    <div class="system-order-item-left-block">
+                      <span>{{$t("类型")}}</span>
+                    </div>
+                  </el-col>
+                  <el-col :span="16">
+                    <div class="text-left font-bold system-order-item-right-block">
+                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                        <div class="text-center"><span>{{formXmTextInfo(item.formCode, 'set')}}</span></div>
+                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                          <span>{{formXmTextInfo(item.formCode, 'set')}}</span>
+                        </div>
+                      </el-popover>
+                    </div>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="8">
+                    <div class="system-order-item-left-block">
+                      <span>{{$t("名称")}}</span>
+                    </div>
+                  </el-col>
+                  <el-col :span="16">
+                    <div class="text-left font-bold system-order-item-right-block">
+                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                        <div class="text-center"><span>{{item.applyData['ht_name20230501'] ? item.applyData['ht_name20230501'].value : '--'}}</span></div>
+                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                          <span>{{item.applyData['ht_name20230501'] ? item.applyData['ht_name20230501'].value : '--'}}</span>
+                        </div>
+                      </el-popover>
+                    </div>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="8">
+                    <div class="system-order-item-left-block">
+                      <span>{{$t("编号")}}</span>
+                    </div>
+                  </el-col>
+                  <el-col :span="16">
+                    <div class="text-left font-bold system-order-item-right-block">
+                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                        <div class="text-center">
+                          <span>{{item.formApplyNo}}</span>
+                        </div>
+                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                          <span>{{item.formApplyNo}}</span>
+                        </div>
+                      </el-popover>
+                    </div>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="8">
+                    <div class="system-order-item-left-block">
+                      <span>{{$t("金额")}}</span>
+                    </div>
+                  </el-col>
+                  <el-col :span="16">
+                    <div class="text-left font-bold system-order-item-right-block">
+                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                        <div class="text-center"><span>{{item.applyData['ht_amount20230501'] ? item.applyData['ht_amount20230501'].value: '--'}}</span></div>
+                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                          <span>{{item.applyData['ht_amount20230501'] ? item.applyData['ht_amount20230501'].value: '--'}}</span>
+                        </div>
+                      </el-popover>
+                    </div>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="8">
+                    <div class="system-order-item-left-block">
+                      <span>{{$t("状态")}}</span>
+                    </div>
+                  </el-col>
+                  <el-col :span="16">
+                    <div class="text-left font-bold system-order-item-right-block">
+                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                        <div class="text-center">
+                          <span>{{auditStatusTextInfo(item.status)}}</span>
+                        </div>
+                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                          <span>{{auditStatusTextInfo(item.status)}}</span>
+                        </div>
+                      </el-popover>
+                    </div>
+                  </el-col>
+                </el-row>
+              </div>
             </div>
           </template>
           <template v-else-if="dataMainDetailObj.formCode == 'XSHT' || dataMainDetailObj.formCode == 'CGHT'">
             <div class="margin-top-10">
-              <el-table
-                :data="tableOrderDetailData"
-                header-cell-class-name="custom-table-cell-bg"
-                size="small"
-                row-key="id"
-                border
-                :max-height="drawHeight"
-                style="width: 100%">
-                <el-table-column
-                  align="center"
-                  :label="$t('期数')">
-                  <template slot-scope="scope">
-                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                      <div class="text-center">{{scope.row.stage}}</div>
-                      <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                        <span>{{scope.row.stage}}</span>
-                      </div>
-                    </el-popover>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  align="center"
-                  :label="$t('比例')">
-                  <template slot-scope="scope">
-                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                      <div class="text-center">{{scope.row.rate}}%</div>
-                      <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                        <span>{{scope.row.rate}}%</span>
-                      </div>
-                    </el-popover>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  align="center"
-                  :label="$t('金额')">
-                  <template slot-scope="scope">
-                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                      <div class="text-center">{{scope.row.shouldAmount}}</div>
-                      <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                        <span>{{scope.row.shouldAmount}}</span>
-                      </div>
-                    </el-popover>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  align="center"
-                  :label="$t('日期')">
-                  <template slot-scope="scope">
-                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                      <div class="text-center">{{scope.row.time}}</div>
-                      <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                        <span>{{scope.row.time}}</span>
-                      </div>
-                    </el-popover>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  align="center"
-                  :label="$t('备注')">
-                  <template slot-scope="scope">
-                    <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
-                      <div class="text-center">
-                        <div>{{scope.row.des ? scope.row.des : '--'}}</div>
-                      </div>
-                      <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
-                        <div class="moon-content-text-ellipsis-class" style="max-width: 200px">{{scope.row.des ? scope.row.des : '--'}}</div>
-                      </div>
-                    </el-popover>
-                  </template>
-                </el-table-column>
-              </el-table>
+              <div class="system-order-main-block margin-bottom-10"  v-for="(item, index) in tableOrderDetailData" :key="index">
+                <el-row>
+                  <el-col :span="8">
+                    <div class="system-order-item-left-block">
+                      <span>{{$t("期数")}}</span>
+                    </div>
+                  </el-col>
+                  <el-col :span="16">
+                    <div class="text-left font-bold system-order-item-right-block">
+                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                        <div class="text-center">{{item.stage}}</div>
+                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                          <span>{{item.stage}}</span>
+                        </div>
+                      </el-popover>
+                    </div>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="8">
+                    <div class="system-order-item-left-block">
+                      <span>{{$t("比例")}}</span>
+                    </div>
+                  </el-col>
+                  <el-col :span="16">
+                    <div class="text-left font-bold system-order-item-right-block">
+                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                        <div class="text-center">{{item.rate}}%</div>
+                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                          <span>{{item.rate}}%</span>
+                        </div>
+                      </el-popover>
+                    </div>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="8">
+                    <div class="system-order-item-left-block">
+                      <span>{{$t("金额")}}</span>
+                    </div>
+                  </el-col>
+                  <el-col :span="16">
+                    <div class="text-left font-bold system-order-item-right-block">
+                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                        <div class="text-center">{{item.shouldAmount}}</div>
+                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                          <span>{{item.shouldAmount}}</span>
+                        </div>
+                      </el-popover>
+                    </div>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="8">
+                    <div class="system-order-item-left-block">
+                      <span>{{$t("日期")}}</span>
+                    </div>
+                  </el-col>
+                  <el-col :span="16">
+                    <div class="text-left font-bold system-order-item-right-block">
+                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                        <div class="text-center">{{item.time}}</div>
+                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                          <span>{{item.time}}</span>
+                        </div>
+                      </el-popover>
+                    </div>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="8">
+                    <div class="system-order-item-left-block">
+                      <span>{{$t("备注")}}</span>
+                    </div>
+                  </el-col>
+                  <el-col :span="16">
+                    <div class="text-left font-bold system-order-item-right-block">
+                      <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                        <div class="text-center">{{item.des ? item.des : '--'}}</div>
+                        <div slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                          <span>{{item.des ? item.des : '--'}}</span>
+                        </div>
+                      </el-popover>
+                    </div>
+                  </el-col>
+                </el-row>
+              </div>
             </div>
           </template>
         </div>
-        <template class="detail-other-block" v-else-if="budgetList.length > 0">
+        <template class="detail-other-block" v-else>
           <div class="margin-top-10">
             <div class="system-order-main-block">
-              <div v-if="budgetList.length == 0" class="text-center">
-                <span>{{$t("暂无数据")}}</span>
+              <div v-if="budgetList.length == 0" class="text-center bg-white padding-tb-10">
+                <span class="font-size-12">{{$t("暂无数据")}}</span>
               </div>
               <div v-if="budgetList.length > 0" class="system-order-border-block margin-bottom-10" v-for="(item, index) in budgetList" :key="index">
                 <el-row>
@@ -1667,8 +1701,8 @@ export default {
 }
 .detail-block{
   border-radius: 5px;
-  background: #ffffff;
-  padding: 10px 10px;
+  //background: #ffffff;
+  //padding: 10px 10px;
 }
 .detail-other-block{
   border-radius: 5px;
@@ -1725,7 +1759,12 @@ export default {
   line-height: 35px;
 }
 .left-bg-block{
-  background: #f5f5f5;
+  background: #EBEBEB;
+  height: 35px;
+}
+.right-bg-block{
+  background: #FFFFFF;
+  height: 35px;
 }
 .label-item-block{
   max-width: 100px;
