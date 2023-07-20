@@ -658,5 +658,6 @@ export const common = {
   cost_my_sub_list: '/proxy/school/applet/fk/apply/my-cost/sum1',//财务首页我提交
   cost_my_check_list: '/proxy/school/applet/fk/apply/my-cost/sum2',//财务首页我审批
   cost_my_budget_list: '/proxy/school/applet/budget/list',//财务首页看预算
+  budget_list: '/proxy/school/applet/budget/list1',//预算列表
 
 };

@@ -11,6 +11,7 @@ export { default as MyTree } from '../../components/MyTree.vue'
 export { default as LayoutLr } from '../../components/Layout/LayoutLr.vue'
 export { default as LayoutLrBefore } from '../../components/Layout/LayoutLrBefore.vue'
 export { default as LayoutTb } from '../../components/Layout/LayoutTb.vue'
+export { default as MyServerDialog } from '../../components/dialog/MyServerDialog.vue'
 export { default as BarChart } from '../../components/charts/BarChart.vue'
 export { default as CircleChart } from '../../components/charts/CircleChart.vue'
 export { default as HBarChart } from '../../components/charts/HBarChart.vue'
@@ -23,7 +24,6 @@ export { default as RadarDormChart } from '../../components/charts/RadarDormChar
 export { default as SexPieChart } from '../../components/charts/SexPieChart.vue'
 export { default as SexPieMoreChart } from '../../components/charts/SexPieMoreChart.vue'
 export { default as TableBarChart } from '../../components/charts/TableBarChart.vue'
-export { default as MyServerDialog } from '../../components/dialog/MyServerDialog.vue'
 export { default as MyInputButton } from '../../components/search/MyInputButton.vue'
 export { default as MySearchOfDate } from '../../components/search/MySearchOfDate.vue'
 export { default as MySearchOfDateGroup } from '../../components/search/MySearchOfDateGroup.vue'
@@ -55,6 +55,11 @@ export { default as DialogNormal } from '../../components/utils/dialog/DialogNor
 export { default as DrawerLayoutRight } from '../../components/utils/dialog/DrawerLayoutRight.vue'
 export { default as DrawerRight } from '../../components/utils/dialog/DrawerRight.vue'
 export { default as MyNormalDialog } from '../../components/utils/dialog/MyNormalDialog.vue'
+export { default as FormSystemDetail } from '../../components/utils/formDetail/FormSystemDetail.vue'
+export { default as FormSystemH5NormalDetail } from '../../components/utils/formDetail/FormSystemH5NormalDetail.vue'
+export { default as FormSystemNormalDetail } from '../../components/utils/formDetail/FormSystemNormalDetail.vue'
+export { default as FormSystemOrderDetail } from '../../components/utils/formDetail/FormSystemOrderDetail.vue'
+export { default as FormSystemTagsDetail } from '../../components/utils/formDetail/FormSystemTagsDetail.vue'
 export { default as MyCascader } from '../../components/utils/select/MyCascader.vue'
 export { default as SystemFormBzbx } from '../../components/utils/serverForm/SystemFormBZBX.vue'
 export { default as SystemFormCght } from '../../components/utils/serverForm/SystemFormCGHT.vue'
@@ -90,11 +95,6 @@ export { default as TeacherTreeAndListBak } from '../../components/utils/treeAnd
 export { default as TeacherTreeAndListNoPage } from '../../components/utils/treeAndList/TeacherTreeAndListNoPage.vue'
 export { default as QuillBlock } from '../../components/utils/upload/QuillBlock.vue'
 export { default as UploadSquare } from '../../components/utils/upload/UploadSquare.vue'
-export { default as FormSystemDetail } from '../../components/utils/formDetail/FormSystemDetail.vue'
-export { default as FormSystemH5NormalDetail } from '../../components/utils/formDetail/FormSystemH5NormalDetail.vue'
-export { default as FormSystemNormalDetail } from '../../components/utils/formDetail/FormSystemNormalDetail.vue'
-export { default as FormSystemOrderDetail } from '../../components/utils/formDetail/FormSystemOrderDetail.vue'
-export { default as FormSystemTagsDetail } from '../../components/utils/formDetail/FormSystemTagsDetail.vue'
 
 export const LazyLogo = import('../../components/Logo.vue' /* webpackChunkName: "components/Logo" */).then(c => c.default || c)
 export const LazyMyBlockTree = import('../../components/MyBlockTree.vue' /* webpackChunkName: "components/MyBlockTree" */).then(c => c.default || c)
@@ -109,6 +109,7 @@ export const LazyMyTree = import('../../components/MyTree.vue' /* webpackChunkNa
 export const LazyLayoutLr = import('../../components/Layout/LayoutLr.vue' /* webpackChunkName: "components/Layout/LayoutLr" */).then(c => c.default || c)
 export const LazyLayoutLrBefore = import('../../components/Layout/LayoutLrBefore.vue' /* webpackChunkName: "components/Layout/LayoutLrBefore" */).then(c => c.default || c)
 export const LazyLayoutTb = import('../../components/Layout/LayoutTb.vue' /* webpackChunkName: "components/Layout/LayoutTb" */).then(c => c.default || c)
+export const LazyMyServerDialog = import('../../components/dialog/MyServerDialog.vue' /* webpackChunkName: "components/dialog/MyServerDialog" */).then(c => c.default || c)
 export const LazyBarChart = import('../../components/charts/BarChart.vue' /* webpackChunkName: "components/charts/BarChart" */).then(c => c.default || c)
 export const LazyCircleChart = import('../../components/charts/CircleChart.vue' /* webpackChunkName: "components/charts/CircleChart" */).then(c => c.default || c)
 export const LazyHBarChart = import('../../components/charts/HBarChart.vue' /* webpackChunkName: "components/charts/HBarChart" */).then(c => c.default || c)
@@ -121,7 +122,6 @@ export const LazyRadarDormChart = import('../../components/charts/RadarDormChart
 export const LazySexPieChart = import('../../components/charts/SexPieChart.vue' /* webpackChunkName: "components/charts/SexPieChart" */).then(c => c.default || c)
 export const LazySexPieMoreChart = import('../../components/charts/SexPieMoreChart.vue' /* webpackChunkName: "components/charts/SexPieMoreChart" */).then(c => c.default || c)
 export const LazyTableBarChart = import('../../components/charts/TableBarChart.vue' /* webpackChunkName: "components/charts/TableBarChart" */).then(c => c.default || c)
-export const LazyMyServerDialog = import('../../components/dialog/MyServerDialog.vue' /* webpackChunkName: "components/dialog/MyServerDialog" */).then(c => c.default || c)
 export const LazyMyInputButton = import('../../components/search/MyInputButton.vue' /* webpackChunkName: "components/search/MyInputButton" */).then(c => c.default || c)
 export const LazyMySearchOfDate = import('../../components/search/MySearchOfDate.vue' /* webpackChunkName: "components/search/MySearchOfDate" */).then(c => c.default || c)
 export const LazyMySearchOfDateGroup = import('../../components/search/MySearchOfDateGroup.vue' /* webpackChunkName: "components/search/MySearchOfDateGroup" */).then(c => c.default || c)
@@ -153,6 +153,11 @@ export const LazyDialogNormal = import('../../components/utils/dialog/DialogNorm
 export const LazyDrawerLayoutRight = import('../../components/utils/dialog/DrawerLayoutRight.vue' /* webpackChunkName: "components/utils/dialog/DrawerLayoutRight" */).then(c => c.default || c)
 export const LazyDrawerRight = import('../../components/utils/dialog/DrawerRight.vue' /* webpackChunkName: "components/utils/dialog/DrawerRight" */).then(c => c.default || c)
 export const LazyMyNormalDialog = import('../../components/utils/dialog/MyNormalDialog.vue' /* webpackChunkName: "components/utils/dialog/MyNormalDialog" */).then(c => c.default || c)
+export const LazyFormSystemDetail = import('../../components/utils/formDetail/FormSystemDetail.vue' /* webpackChunkName: "components/utils/formDetail/FormSystemDetail" */).then(c => c.default || c)
+export const LazyFormSystemH5NormalDetail = import('../../components/utils/formDetail/FormSystemH5NormalDetail.vue' /* webpackChunkName: "components/utils/formDetail/FormSystemH5NormalDetail" */).then(c => c.default || c)
+export const LazyFormSystemNormalDetail = import('../../components/utils/formDetail/FormSystemNormalDetail.vue' /* webpackChunkName: "components/utils/formDetail/FormSystemNormalDetail" */).then(c => c.default || c)
+export const LazyFormSystemOrderDetail = import('../../components/utils/formDetail/FormSystemOrderDetail.vue' /* webpackChunkName: "components/utils/formDetail/FormSystemOrderDetail" */).then(c => c.default || c)
+export const LazyFormSystemTagsDetail = import('../../components/utils/formDetail/FormSystemTagsDetail.vue' /* webpackChunkName: "components/utils/formDetail/FormSystemTagsDetail" */).then(c => c.default || c)
 export const LazyMyCascader = import('../../components/utils/select/MyCascader.vue' /* webpackChunkName: "components/utils/select/MyCascader" */).then(c => c.default || c)
 export const LazySystemFormBzbx = import('../../components/utils/serverForm/SystemFormBZBX.vue' /* webpackChunkName: "components/utils/serverForm/SystemFormBZBX" */).then(c => c.default || c)
 export const LazySystemFormCght = import('../../components/utils/serverForm/SystemFormCGHT.vue' /* webpackChunkName: "components/utils/serverForm/SystemFormCGHT" */).then(c => c.default || c)
@@ -188,8 +193,3 @@ export const LazyTeacherTreeAndListBak = import('../../components/utils/treeAndL
 export const LazyTeacherTreeAndListNoPage = import('../../components/utils/treeAndList/TeacherTreeAndListNoPage.vue' /* webpackChunkName: "components/utils/treeAndList/TeacherTreeAndListNoPage" */).then(c => c.default || c)
 export const LazyQuillBlock = import('../../components/utils/upload/QuillBlock.vue' /* webpackChunkName: "components/utils/upload/QuillBlock" */).then(c => c.default || c)
 export const LazyUploadSquare = import('../../components/utils/upload/UploadSquare.vue' /* webpackChunkName: "components/utils/upload/UploadSquare" */).then(c => c.default || c)
-export const LazyFormSystemDetail = import('../../components/utils/formDetail/FormSystemDetail.vue' /* webpackChunkName: "components/utils/formDetail/FormSystemDetail" */).then(c => c.default || c)
-export const LazyFormSystemH5NormalDetail = import('../../components/utils/formDetail/FormSystemH5NormalDetail.vue' /* webpackChunkName: "components/utils/formDetail/FormSystemH5NormalDetail" */).then(c => c.default || c)
-export const LazyFormSystemNormalDetail = import('../../components/utils/formDetail/FormSystemNormalDetail.vue' /* webpackChunkName: "components/utils/formDetail/FormSystemNormalDetail" */).then(c => c.default || c)
-export const LazyFormSystemOrderDetail = import('../../components/utils/formDetail/FormSystemOrderDetail.vue' /* webpackChunkName: "components/utils/formDetail/FormSystemOrderDetail" */).then(c => c.default || c)
-export const LazyFormSystemTagsDetail = import('../../components/utils/formDetail/FormSystemTagsDetail.vue' /* webpackChunkName: "components/utils/formDetail/FormSystemTagsDetail" */).then(c => c.default || c)
