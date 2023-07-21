@@ -206,8 +206,9 @@
                 <div>
                   <template v-if="item.nodeType == 'handle'">
                     <div v-for="(itemUser, indexUser) in item.handleUserList" :key="indexUser">
-                      <span class="color-grand"> <i class="fa fa-user"></i> {{ itemUser.userName }} </span>
-                      <span class="margin-left-10">
+                      <div>
+                        <span class="color-grand"> <i class="fa fa-user"></i> {{ itemUser.userName }} </span>
+                        <span class="margin-left-10">
                           <label v-if="itemUser.status === -1" class="color-warning">{{$t("待提交")}}</label>
                           <label v-if="itemUser.status === 0" class="color-warning">{{$t("待审核")}}</label>
                           <label v-if="itemUser.status === 3" class="color-success">
@@ -247,9 +248,23 @@
                           <label v-if="itemUser.status === 5" class="color-warning">{{$t("无需审批")}}</label>
                           <label v-if="itemUser.status === 8" class="color-warning">{{$t("审批中")}}</label>
                         </span>
-                      <span class="margin-left-10" v-if="itemUser.handleTime">
+                        <span class="margin-left-10" v-if="itemUser.handleTime">
                           <label class="color-muted">{{$moment(itemUser.handleTime).format("YYYY-MM-DD HH:mm:ss")}}</label>
                         </span>
+                      </div>
+                      <div class="margin-top-5" v-if="itemUser.signStr && itemUser.signStr != ''">
+                        <span style="position: relative;top: -3px" class="color-muted">
+                          <i class="fa fa-pencil"></i>
+                          <label>{{$t("手写签名")}}</label>
+                        </span>
+                        <span>
+                          <el-image
+                              style="width: 40px; height: 15px"
+                              :src="itemUser.signStr"
+                              :preview-src-list="[itemUser.signStr]">
+                          </el-image>
+                        </span>
+                      </div>
                     </div>
                   </template>
                   <template v-if="item.nodeType == 'cc'">

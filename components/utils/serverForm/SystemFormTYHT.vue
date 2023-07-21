@@ -473,7 +473,8 @@
             {
               field: 'ht_files20230501',
               value: this.form.files,
-              name: this.form.files
+              filename: this.form.fileNames,
+              name: this.form.fileNames
             },
             {
               field: 'tag_id20230501',

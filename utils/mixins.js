@@ -292,6 +292,10 @@ export default {
       },
       drawHeight9: {
         'height': ''
+      },
+      screenWidth: {
+        'width': '',
+        'width1': ''
       }
     }
   },
@@ -581,6 +585,8 @@ export default {
         this.drawHeight2.height = window.innerHeight - 15 + 'px';
         this.drawHeight8.height = window.innerHeight - 180 + 'px';
         this.drawHeight9.height = window.innerHeight - 120 + 'px';
+        this.screenWidth.width = window.innerWidth + 'px';
+        this.screenWidth.width1 = window.innerWidth;
       }
     },
     async initVersionData(){

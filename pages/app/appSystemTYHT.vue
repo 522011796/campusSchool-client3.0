@@ -476,7 +476,8 @@
               array.push({
                 label: res.data.data[i].noticeName,
                 text: res.data.data[i].noticeName,
-                value: res.data.data[i]._id
+                value: res.data.data[i]._id,
+                money: res.data.data[i].applyData['cost_notAmount'].value,
               });
             }
             this.tableJKData = array;
@@ -713,7 +714,8 @@
             {
               field: 'ht_files20230501',
               value: this.form.files,
-              name: this.form.files
+              filename: this.form.fileNames,
+              name: this.form.fileNames
             },
             {
               field: 'tag_id20230501',

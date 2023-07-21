@@ -11,7 +11,7 @@
 
     <div class="margin-top-10 custom-form">
       <template v-if="detailDataType == 1">
-        <div class="detail-block" :style="{minHeight: drawHeight}">
+        <div class="detail-block" :style="{minHeight: drawH5Height}">
           <div class="margin-top-10">
             <div class="font-bold">{{$t("基础信息")}}:</div>
             <template>
@@ -646,7 +646,7 @@
                     size="small"
                     row-key="id"
                     border
-                    :max-height="drawHeight"
+                    :max-height="drawH5Height"
                     style="width: 100%">
                   <el-table-column
                       align="center"
@@ -724,7 +724,7 @@
 <!--                    size="small"-->
 <!--                    row-key="id"-->
 <!--                    border-->
-<!--                    :max-height="drawHeight"-->
+<!--                    :max-height="drawH5Height"-->
 <!--                    style="width: 100%">-->
 <!--                  <el-table-column-->
 <!--                      align="center"-->
@@ -981,8 +981,9 @@
                 <div>
                   <template v-if="item.nodeType == 'handle'">
                     <div v-for="(itemUser, indexUser) in item.handleUserList" :key="indexUser">
-                      <span class="color-grand"> <i class="fa fa-user"></i> {{ itemUser.userName }} </span>
-                      <span class="margin-left-10">
+                      <div>
+                        <span class="color-grand"> <i class="fa fa-user"></i> {{ itemUser.userName }} </span>
+                        <span class="margin-left-10">
                           <label v-if="itemUser.status === -1" class="color-warning">{{$t("待提交")}}</label>
                           <label v-if="itemUser.status === 0" class="color-warning">{{$t("待审核")}}</label>
                           <label v-if="itemUser.status === 3" class="color-success">
@@ -1022,9 +1023,19 @@
                           <label v-if="itemUser.status === 5" class="color-warning">{{$t("无需审批")}}</label>
                           <label v-if="itemUser.status === 8" class="color-warning">{{$t("审批中")}}</label>
                         </span>
-                      <span class="margin-left-10" v-if="itemUser.handleTime">
+                        <span class="margin-left-10" v-if="itemUser.handleTime">
                           <label class="color-muted">{{$moment(itemUser.handleTime).format("YYYY-MM-DD HH:mm:ss")}}</label>
                         </span>
+                      </div>
+                      <div class="margin-top-5" v-if="itemUser.signStr && itemUser.signStr != ''">
+                        <span style="position: relative;top: -3px" class="color-muted">
+                          <i class="fa fa-pencil"></i>
+                          <label>{{$t("手写签名")}}</label>
+                        </span>
+                        <span>
+                          <img :src="itemUser.signStr" style="position: relative;top:-3px;height: 15px;width:40px;" @click="readFile(itemUser.signStr)"></img>
+                        </span>
+                      </div>
                     </div>
                   </template>
                   <template v-if="item.nodeType == 'cc'">
@@ -1062,16 +1073,27 @@
           </el-steps>
         </div>
 
-        <div class="text-right" style="height: 40px;line-height: 40px;position: fixed;left:0;bottom: 0px;width: 100%;background: #f5f5f5;">
+        <div class="text-right" style="height: 50px;line-height: 50px;position: fixed;left:0;bottom: 10px;width: 100%;background: #f5f5f5;">
           <div class="margin-left-10 margin-right-10">
             <template  v-if="activeType == 1">
               <el-popover
                 :tabindex="99999"
                 placement="bottom"
-                width="300"
+                :width="screenWidth.width1-35"
                 @hide="cancelPop"
                 v-model="visibleSysYes">
                 <div class="margin-bottom-10">
+                  <template v-if="dataMainDetailObj.agreeType == 'pay'">
+                    <div class="margin-bottom-10">
+                      <my-select placeholder="请选择账户" :width-style="screenWidth.width1-35" :sel-value="account" :options="schoolAccountIdList" @change="handleAccountChange($event)"></my-select>
+                    </div>
+                    <div class="margin-bottom-10">
+                      <el-input
+                          placeholder="请输入金额"
+                          v-model="amount">
+                      </el-input>
+                    </div>
+                  </template>
                   <div>
                     <el-input
                       type="textarea"
@@ -1100,7 +1122,7 @@
                   <el-button size="mini" type="text" @click="cancelPop">取消</el-button>
                   <el-button type="primary" size="mini" @click="handleOk($event, dataMainDetailObj, 1)">确定</el-button>
                 </div>
-                <el-button slot="reference" type="success" size="mini">{{$t("同意")}}</el-button>
+                <van-button slot="reference" type="primary" size="small">{{dataMainDetailObj.agreedName}}</van-button>
               </el-popover>
               <!--        <el-button size="mini" @click="handleCancel">取 消</el-button>-->
               <!--            <el-button size="mini" type="primary" @click="handleOk($event, detailData, 6)">转 交</el-button>-->
@@ -1108,7 +1130,7 @@
               <el-popover
                 :tabindex="99999"
                 placement="bottom"
-                width="300"
+                :width="screenWidth.width1-35"
                 @hide="cancelPop"
                 v-model="visibleSysNo">
                 <div class="margin-bottom-10">
@@ -1140,7 +1162,7 @@
                   <el-button size="mini" type="text" @click="cancelPop">取消</el-button>
                   <el-button type="primary" size="mini" @click="handleOk($event, dataMainDetailObj, 2)">确定</el-button>
                 </div>
-                <el-button slot="reference" type="warning" size="mini">{{$t("驳回")}}</el-button>
+                <van-button slot="reference" type="warning" size="small">{{$t("驳回")}}</van-button>
               </el-popover>
             </template>
 
@@ -1453,6 +1475,20 @@
         </template>
       </template>
     </div>
+
+    <van-dialog v-model="dialogWrite" title="签名" width="380" show-cancel-button @confirm="okDialog" @cancel="dialogWrite = false" @close="closeDialog" :before-close="onBeforeClose">
+      <vue-esign
+          ref="esign"
+          :width="screenWidth.width1-15"
+          :height="450"
+          :isCrop="isCrop"
+          :lineWidth="lineWidth"
+          :lineColor="lineColor"
+          :bgColor.sync="bgColor"
+          :quality="quality">
+
+      </vue-esign>
+    </van-dialog>
   </div>
 </template>
 
@@ -1467,9 +1503,14 @@ import {
 } from "~/utils/utils";
 import {ImagePreview, Toast} from "vant";
 import {common} from "~/utils/api/url";
+import vueEsign from 'vue-esign/src/index.vue'
+import dialogNormal from "~/components/utils/dialog/DialogNormal.vue";
+import mixins from "~/utils/mixins";
 
 export default {
     name: 'FormSystemH5NormalDetail',
+    mixins: [mixins],
+    components: {vueEsign},
     props: {
       detailType: {
         default: '1',
@@ -1515,13 +1556,9 @@ export default {
         },
         type: Array
       },
-      drawHeight: {
+      drawH5Height: {
         default: '',
         type: String
-      },
-      tableHeight: {
-        default: '',
-        type: [String, Number]
       },
       activeType: {
         default: '',
@@ -1531,6 +1568,7 @@ export default {
     computed: {
       selectDetailType(){
         this.detailDataType = this.detailType;
+        this.cancelPop();
       }
     },
     data() {
@@ -1541,10 +1579,21 @@ export default {
         visibleYes: false,
         visibleSysNo: false,
         visibleSysYes: false,
+        dialogWrite: false,
         textarea: '',
+        amount: '',
+        account: '',
+        schoolAccountIdList: [],
         images: [],
         uploadFileListUrl: common.upload_file,
         budgetList: [],
+        lineWidth: 6,
+        lineColor: '#000000',
+        bgColor: '#F5f5f5',
+        resultImg: '',
+        isCrop: false,
+        quality: 1,
+        params: {}
       }
     },
     methods: {
@@ -1563,11 +1612,35 @@ export default {
           }
         });
       },
+      async initSchoolAccount(){
+        let params = {};
+        await this.$axios.get(common.school_account_list).then(res=> {
+          if (res.data.code == 200) {
+            if (res.data.data) {
+              let array = [];
+              for(let i = 0; i < res.data.data.length; i++){
+                array.push({
+                  label: res.data.data[i].account_name,
+                  text: res.data.data[i].account_name,
+                  value: res.data.data[i].account_num
+                });
+              }
+              this.schoolAccountIdList = array;
+            }
+          }
+        });
+      },
+      handleAccountChange(event){
+        this.account = event;
+      },
       changeDetailType(event, type){
         this.detailDataType = type;
         this.$emit('changeDetailType', event, type);
         if (type == 3){
           this.initBudget();
+        }
+        if (type == 2){
+          this.initSchoolAccount();
         }
       },
       objectTypeInfo(str, type){
@@ -1626,6 +1699,56 @@ export default {
           MessageError(res.desc);
         }
       },
+      onBeforeClose(action, done) {
+        // 点击了确定按钮
+        if (action === "confirm") {
+          let _self = this;
+          this.$refs.esign.generate().then(res => {
+            _self.params['signStr'] = res;
+            _self.params['schoolAccountId'] = this.account;
+            _self.params['amount'] = this.amount;
+
+            _self.handleConfirm(_self.params, done);
+
+            if (this.$refs['esign']){
+              this.$refs.esign.reset()
+            }
+          }).catch(err => {
+            Toast(this.$t("签名错误"));
+            return done(false);
+          })
+        }
+        // 点击了取消按钮
+        else {
+          if (this.$refs['esign']){
+            this.$refs.esign.reset()
+          }
+          done(true);
+        }
+      },
+      closeDialog(){
+        this.params = {};
+        if (this.$refs['esign']){
+          this.$refs.esign.reset()
+        }
+      },
+      okDialog(data){
+        // let _self = this;
+        // this.$refs.esign.generate().then(res => {
+        //   _self.params['signStr'] = res;
+        //   _self.params['schoolAccountId'] = this.account;
+        //   _self.params['amount'] = this.amount;
+        //
+        //   _self.handleConfirm(_self.params);
+        //
+        //   if (this.$refs['esign']){
+        //     this.$refs.esign.reset()
+        //   }
+        // }).catch(err => {
+        //   Toast(this.$t("签名错误,请稍后重试"));
+        //   return;
+        // })
+      },
       handleOk(event, data, type){
         let params = {
           id: data._id,
@@ -1641,21 +1764,56 @@ export default {
           params['url'] = images.join();
         }
 
-        params = this.$qs.stringify(params);
-        this.$axios.post(common.server_form_audit_handle, params).then(res => {
+        let req = /^([\+]?(([1-9]\d*)|(0)))([.]\d{0,2})?$/;
+        if (data.agreeType == 'pay'){
+          if (this.amount != '' && !req.test(this.amount)){
+            Toast(this.$t("正整数或者两位小数！"));
+            return;
+          }
+        }
+
+        if (data.sign == true && type == 1){
+          this.lineWidth = 6;
+          this.lineColor = '#000000';
+          this.bgColor = '#F5f5f5';
+          this.resultImg = '';
+          this.isCrop = false;
+          this.quality = 1;
+          this.params = params;
+          this.visibleSysYes = false;
+          this.dialogWrite = true;
+          return;
+        }
+
+        this.handleConfirm(params);
+      },
+      handleConfirm(params, done){
+        let paramsTemp = this.$qs.stringify(params);
+        this.$axios.post(common.server_form_audit_handle, paramsTemp, {loading: false}).then(res => {
           if (res.data.code == 200){
-            this.tableData.splice(this.detailIndex, 1);
-            let page = Math.ceil(this.tableData.length / 20);
-            this.page = page;
+            //this.tableData.splice(this.detailIndex, 1);
+            //let page = Math.ceil(this.tableData.length / 20);
+            //this.page = page;
             //this.init();
             this.images = [];
             this.popUpVisible = false;
             this.dialogSysVisible = false;
-            this.cancelSysPop();
+            this.dialogWrite = false;
+            this.$parent.$parent.dialogSysVisible = false;
+            //this.cancelSysPop();
             this.cancelPop();
             Toast(res.data.desc);
+            console.log(1111222);
+            if (done){
+              console.log(1111);
+              return done(true);
+            }
           }else {
+            console.log(1111222333);
             Toast(res.data.desc);
+            if (done){
+              return done(false);
+            }
           }
         });
       },

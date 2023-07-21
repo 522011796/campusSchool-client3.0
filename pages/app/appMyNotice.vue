@@ -1118,6 +1118,7 @@
     </van-popup>
 
     <van-popup v-model="dialogSysVisible" position="bottom" class="custom-cascader" :style="{ height: divHeight13.height }">
+      <div :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' " :style="{height: navHeight+'px'}"></div>
       <div style="height: 40px;line-height: 40px;" :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' ">
         <el-row>
           <el-col :span="8">
@@ -1206,6 +1207,7 @@
 
         <div class="margin-top-20">
           <form-system-h5-normal-detail
+            ref="h5DialogRef"
             :active-type="active"
             :detail-type="detailType"
             :data-detail-obj="dataDetailObj"
@@ -1214,7 +1216,7 @@
             :serial-data-list="serialDataList"
             :detail-apply-audit-list="detailApplyAuditList"
             :table-order-detail-data="payableDataList"
-            :draw-height="divHeight13.height1-255+'px'"
+            :draw-h5-height="divHeight13.height1-255+'px'"
             @changeDetailType="changeDetailType">
 
           </form-system-h5-normal-detail>
@@ -2036,6 +2038,9 @@
         this.visibleSysNo = false;
         this.visibleSysYes = false;
         this.dialogSysVisible = false;
+        if (this.$refs['h5DialogRef']){
+          this.$refs['h5DialogRef'].cancelPop();
+        }
       },
       cancelPop(){
         this.textarea = '';
@@ -2066,7 +2071,7 @@
         }
 
         params = this.$qs.stringify(params);
-        this.$axios.post(common.server_form_audit_handle, params).then(res => {
+        this.$axios.post(common.server_form_audit_handle, params, {loading: false}).then(res => {
           if (res.data.code == 200){
             this.tableData.splice(this.detailIndex, 1);
             let page = Math.ceil(this.tableData.length / 20);

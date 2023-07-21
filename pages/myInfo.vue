@@ -1071,7 +1071,7 @@
   import mixins from "../utils/mixins";
   import {common} from "../utils/api/url";
   import DialogNormal from "~/components/utils/dialog/DialogNormal";
-  import {MessageError, MessageSuccess} from "~/utils/utils";
+  import {MessageError, MessageSuccess, MessageWarning} from "~/utils/utils";
   import {ImagePreview} from "vant";
   import FormSystemTagsDetail from "~/components/utils/formDetail/FormSystemTagsDetail.vue";
   import SystemFormBzbx from "~/components/utils/serverForm/SystemFormBZBX.vue";
@@ -1443,11 +1443,14 @@
           }
         });
       },
-      handleSystemOk(data,textarea){
+      handleSystemOk(data, textarea, amount, account, sign, type){
         let params = {
           id: this.dataMainDetailObj.id ? this.dataMainDetailObj.id : this.dataMainDetailObj.id,
           status: 1,
-          des: textarea
+          des: textarea,
+          signStr:sign,
+          schoolAccountId: account,
+          amount: amount
         };
         params = this.$qs.stringify(params);
         this.$axios.post(common.server_form_audit_handle, params).then(res => {

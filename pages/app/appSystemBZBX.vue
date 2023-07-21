@@ -571,7 +571,7 @@
                 label: res.data.data[i].noticeName,
                 text: res.data.data[i].noticeName,
                 value: res.data.data[i]._id,
-                money: res.data.data[i].applyData['cost_allAmount20230501'].value,
+                money: res.data.data[i].applyData['cost_notAmount'].value,
               });
             }
             this.tableJKData = array;

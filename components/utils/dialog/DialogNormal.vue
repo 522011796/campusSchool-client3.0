@@ -8,6 +8,7 @@
       :show-close="false"
       :modal="true"
       :modal-append-to-body="false"
+      :append-to-body="appendToBody"
       :before-close="handleBeforeClose"
       @close="closeDialog">
 
@@ -77,6 +78,10 @@ export default {
     dialogBodyClass: {
       type: String,
       default: 'dialog-normal-body'
+    },
+    appendToBody: {
+      default: false,
+      type: Boolean
     },
     customDialogClass: {
       type: String,

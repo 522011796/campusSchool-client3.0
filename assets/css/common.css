@@ -1169,6 +1169,9 @@ ul{
 .custom-form .el-form-item__label{
   color: #909399;
 }
+.custom-popper-class{
+  background: #fefefe;
+}
 /***自定义radio组件颜色***/
 /*.el-radio__input.is-checked + .el-radio__label {
   color: #fd7624 !important;
