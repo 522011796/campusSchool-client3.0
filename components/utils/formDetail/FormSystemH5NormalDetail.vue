@@ -1032,9 +1032,12 @@
                           <i class="fa fa-pencil"></i>
                           <label>{{$t("手写签名")}}</label>
                         </span>
-                        <span>
-                          <img :src="itemUser.signStr" style="position: relative;top:-3px;height: 15px;width:40px;" @click="readFile(itemUser.signStr)"></img>
-                        </span>
+<!--                        <img :src="itemUser.signStr" style="position: relative;top:-3px;height: 15px;width:40px;" @click="readFile(itemUser.signStr)"></img>-->
+                        <el-image
+                            style="width: 40px; height: 15px"
+                            :src="itemUser.signStr"
+                            :preview-src-list="[itemUser.signStr]">
+                        </el-image>
                       </div>
                     </div>
                   </template>
@@ -1476,11 +1479,15 @@
       </template>
     </div>
 
-    <van-dialog v-model="dialogWrite" title="签名" width="380" show-cancel-button @confirm="okDialog" @cancel="dialogWrite = false" @close="closeDialog" :before-close="onBeforeClose">
+<!--    <van-dialog v-model="dialogWrite" title="签名" style="top:50%;" :width="screenWidth.width1-15" show-cancel-button @confirm="okDialog" @cancel="dialogWrite = false" @close="closeDialog" :before-close="onBeforeClose">-->
+    <van-dialog v-model="dialogWrite" title="签名" style="top:50%;" :width="screenWidth.width1-15" :show-confirm-button="false" @close="closeDialog" :before-close="onBeforeClose">
+      <div slot="title" class="write-header-block">
+        <div>{{$t("签名")}}</div>
+      </div>
       <vue-esign
           ref="esign"
           :width="screenWidth.width1-15"
-          :height="450"
+          :height="divHeight10.height1 - 200"
           :isCrop="isCrop"
           :lineWidth="lineWidth"
           :lineColor="lineColor"
@@ -1488,6 +1495,21 @@
           :quality="quality">
 
       </vue-esign>
+
+      <div style="height: 50px;line-height: 50px;background: #FFFFFF">
+        <el-row>
+          <el-col :span="12">
+            <div class="write-item-block write-item-left-block" @click="dialogWrite = false">
+              <span>{{$t("取消")}}</span>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div class="write-item-block" v-loading="btnLoading" @click="btnLoading == true ? '' : okDialog()">
+              <span>{{$t("确定")}}</span>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
     </van-dialog>
   </div>
 </template>
@@ -1580,6 +1602,7 @@ export default {
         visibleSysNo: false,
         visibleSysYes: false,
         dialogWrite: false,
+        btnLoading: false,
         textarea: '',
         amount: '',
         account: '',
@@ -1733,21 +1756,20 @@ export default {
         }
       },
       okDialog(data){
-        // let _self = this;
-        // this.$refs.esign.generate().then(res => {
-        //   _self.params['signStr'] = res;
-        //   _self.params['schoolAccountId'] = this.account;
-        //   _self.params['amount'] = this.amount;
-        //
-        //   _self.handleConfirm(_self.params);
-        //
-        //   if (this.$refs['esign']){
-        //     this.$refs.esign.reset()
-        //   }
-        // }).catch(err => {
-        //   Toast(this.$t("签名错误,请稍后重试"));
-        //   return;
-        // })
+        let _self = this;
+        this.$refs.esign.generate().then(res => {
+          _self.params['signStr'] = res;
+          _self.params['schoolAccountId'] = this.account;
+          _self.params['amount'] = this.amount;
+
+          _self.handleConfirm(_self.params);
+
+          if (this.$refs['esign']){
+            this.$refs.esign.reset()
+          }
+        }).catch(err => {
+          Toast(this.$t("签名错误"));
+        })
       },
       handleOk(event, data, type){
         let params = {
@@ -1788,6 +1810,7 @@ export default {
         this.handleConfirm(params);
       },
       handleConfirm(params, done){
+        this.btnLoading = true;
         let paramsTemp = this.$qs.stringify(params);
         this.$axios.post(common.server_form_audit_handle, paramsTemp, {loading: false}).then(res => {
           if (res.data.code == 200){
@@ -1815,6 +1838,7 @@ export default {
               return done(false);
             }
           }
+          this.btnLoading = false;
         });
       },
       handleUrge(event, data){
@@ -1837,6 +1861,78 @@ export default {
             Toast(res.data.desc);
           }
         });
+      },
+      rotateBase64Img(src, edg){
+        var canvas = document.createElement("canvas");
+        var ctx = canvas.getContext("2d");
+
+        var imgW;//图片宽度
+        var imgH;//图片高度
+        var size;//canvas初始大小
+
+        if (edg % 90 != 0) {
+          console.error("旋转角度必须是90的倍数!");
+          throw '旋转角度必须是90的倍数!';
+        }
+        (edg < 0) && (edg = (edg % 360) + 360)
+        const quadrant = (edg / 90) % 4; //旋转象限
+        const cutCoor = {sx: 0, sy: 0, ex: 0, ey: 0}; //裁剪坐标
+
+        var image = new Image();
+        image.crossOrigin = "anonymous"
+        image.src = src;
+
+        image.onload = function () {
+
+          imgW = image.width;
+          imgH = image.height;
+          size = imgW > imgH ? imgW : imgH;
+
+          canvas.width = size * 2;
+          canvas.height = size * 2;
+          switch (quadrant) {
+            case 0:
+              cutCoor.sx = size;
+              cutCoor.sy = size;
+              cutCoor.ex = size + imgW;
+              cutCoor.ey = size + imgH;
+              break;
+            case 1:
+              cutCoor.sx = size - imgH;
+              cutCoor.sy = size;
+              cutCoor.ex = size;
+              cutCoor.ey = size + imgW;
+              break;
+            case 2:
+              cutCoor.sx = size - imgW;
+              cutCoor.sy = size - imgH;
+              cutCoor.ex = size;
+              cutCoor.ey = size;
+              break;
+            case 3:
+              cutCoor.sx = size;
+              cutCoor.sy = size - imgW;
+              cutCoor.ex = size + imgH;
+              cutCoor.ey = size + imgW;
+              break;
+          }
+
+
+          ctx.translate(size, size);
+          ctx.rotate(edg * Math.PI / 180);
+          ctx.drawImage(image, 0, 0);
+
+          var imgData = ctx.getImageData(cutCoor.sx, cutCoor.sy, cutCoor.ex, cutCoor.ey);
+          if (quadrant % 2 == 0) {
+            canvas.width = imgW;
+            canvas.height = imgH;
+          } else {
+            canvas.width = imgH;
+            canvas.height = imgW;
+          }
+          ctx.putImageData(imgData, 0, 0);
+        };
+        return canvas.toDataURL();
       }
     }
   }
@@ -1945,5 +2041,19 @@ export default {
   line-height: 24px;
   position: relative;
   background: #FFFFFF;
+}
+.write-header-block{
+  height: 30px;
+  position: relative;
+  top: -10px;
+  text-align: center
+}
+.write-item-block{
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+.write-item-left-block{
+  border-right: 1px solid #ebebeb;
 }
 </style>
