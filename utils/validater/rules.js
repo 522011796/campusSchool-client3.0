@@ -36,6 +36,8 @@ let n0_100f2_Reg = /^(\d|[1-9]\d|100)(\.\d{1,2})?$/;
 let n0_999_Reg = /^([0-9]{1,3}|999)$/;
 //ip
 let ip_Reg = /^((([01]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))[.]){3}(([0-1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))$/;
+//邮编
+let posterCodeReg = /^[1-9]\d{5}$/;
 
 let FormValidate = (function () {
   function FormValidate() {
@@ -56,6 +58,14 @@ let FormValidate = (function () {
       validate_ip (rule, value, callback) {
         if (value && value != ""){
           ip_Reg.test(value) ? callback() : callback(new Error('IP地址格式错误'))
+        }else {
+          callback();
+        }
+      },
+      // 邮编验证
+      validate_posterCode (rule, value, callback) {
+        if (value && value != ""){
+          posterCodeReg.test(value) ? callback() : callback(new Error('邮政编码为6位数字'))
         }else {
           callback();
         }

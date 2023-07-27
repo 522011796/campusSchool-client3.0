@@ -212,7 +212,7 @@
             <van-field v-model="form.graduationSchool"
                        :name="$t('毕业学校')"
                        :label="$t('毕业学校')"
-                       :placeholder="$t('请输入信息')"
+                       :placeholder="$t('请填写学校全称')"
                        autocomplete="off"
                        :rules="[{ required: true, message: '请输入信息' }]">
             </van-field>
@@ -238,6 +238,13 @@
                        :placeholder="$t('请选择')"
                        @click="showAdProvince = true"
                        :rules="[{ required: true, message: '请选择信息' }]">
+            </van-field>
+            <van-field v-model="form.postalCode"
+                       :name="$t('邮政编码')"
+                       :label="$t('邮政编码')"
+                       :placeholder="$t('请填写邮政编码')"
+                       autocomplete="off"
+                       :rules="postalCodeRules">
             </van-field>
             <van-field v-model="form.politicsLabel"
                        :name="$t('政治面貌')"
@@ -361,6 +368,7 @@
         showAdProvince: false,
         emailReg: /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/,
         phoneReg: /^[1][3,4,5,6,7,8,9][0-9]{9}$/,
+        posterCodeReg: /^[1][3,4,5,6,7,8,9][0-9]{9}$/,
         telRules: [{
           required: true,
           message: '请填写正确的手机号',
@@ -397,6 +405,20 @@
           message: '请填写正确的邮箱',
           trigger: 'onBlur'
         }],
+        postalCodeRules: [{
+          required: true,
+          message: '邮政编码为6位数字',
+          trigger: 'onBlur'
+        }, {
+          // 自定义校验规则
+          validator: value => {
+            if (value != ''){
+              return /^[1-9]\d{5}$/.test(value)
+            }
+          },
+          message: '邮政编码为6位数字',
+          trigger: 'onBlur'
+        }],
         detailData: '',
         connType: [],
         form: {
@@ -424,7 +446,8 @@
           adProvince: [],
           adProvinceLabel: '',
           bzrName: '',
-          bzrPhone: ''
+          bzrPhone: '',
+          postalCode: ''
         }
       }
     },
@@ -522,7 +545,8 @@
               adCity: res.data.data.enroll_city+'',
               adProvinceLabel: res.data.data.enroll_province+","+res.data.data.enroll_city,
               bzrName: res.data.data.master_name,
-              bzrPhone: res.data.data.master_phone
+              bzrPhone: res.data.data.master_phone,
+              postalCode: res.data.data.postal_code,
             };
             if (!res.data.data.enroll_province || !res.data.data.enroll_city){
               this.form.adProvince = [];
@@ -569,6 +593,7 @@
             enrollCity: this.form.adProvince.length > 0 ? this.form.adProvince[1] : '',
             masterName: this.form.bzrName,
             masterPhone: this.form.bzrPhone,
+            postalCode: this.form.postalCode
           };
           params = this.$qs.stringify(params);
           this.$axios.post(url, params).then(res => {

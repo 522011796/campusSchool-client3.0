@@ -324,7 +324,7 @@
                 </el-col>
                 <el-col :span="12">
                   <el-form-item :label="$t('毕业学校')" prop="graduationSchool">
-                    <el-input :disabled="form.id != '' && oprType == 'detail'" v-model="form.graduationSchool" size="small" class="width-150"></el-input>
+                    <el-input :disabled="form.id != '' && oprType == 'detail'" v-model="form.graduationSchool" size="small" :placeholder="$t('请填写学校全称')" class="width-150"></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -365,9 +365,16 @@
                 </el-col>
               </el-row>
               <el-row>
+                <el-col :span="12">
+                  <el-form-item :label="$t('邮政编码')" prop="postalCode">
+                    <el-input v-model="form.postalCode" size="small" class="width-415" :placeholder="$t('请填写邮政编码')"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
                 <el-col :span="24">
                   <el-form-item :label="$t('详细地址')" prop="address">
-                    <el-input v-model="form.address" size="small" class="width-415"></el-input>
+                    <el-input v-model="form.address" size="small" class="width-415" :placeholder="$t('请填写详细地址至楼号门牌号')"></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -1110,7 +1117,8 @@
           connType: [],
           adProvince: [],
           bzrName: '',
-          bzrPhone: ''
+          bzrPhone: '',
+          postalCode: ''
         },
         formStation: {
           id: '',
@@ -1434,7 +1442,8 @@
               adProvince: [res.data.data.enroll_province,res.data.data.enroll_city],
               adCity: res.data.data.enroll_city+'',
               bzrName: res.data.data.master_name,
-              bzrPhone: res.data.data.master_phone
+              bzrPhone: res.data.data.master_phone,
+              postalCode: res.data.data.postal_code
             };
             if (!res.data.data.enroll_province || !res.data.data.enroll_city){
               this.form.adProvince = [];
@@ -1641,7 +1650,8 @@
           connType: [],
           adProvince: [],
           bzrName: '',
-          bzrPhone: ''
+          bzrPhone: '',
+          postalCode: ''
         };
         this.formStation = {
           id: '',
@@ -1787,6 +1797,7 @@
               enrollCity: this.form.adProvince.length > 0 ? this.form.adProvince[1] : '',
               masterName: this.form.bzrName,
               masterPhone: this.form.bzrPhone,
+              postalCode: this.form.postalCode
             };
             params = this.$qs.stringify(params);
             this.$axios.post(url, params).then(res => {
