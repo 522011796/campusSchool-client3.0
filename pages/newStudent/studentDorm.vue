@@ -647,7 +647,7 @@
           bedId: ''
         };
         this.btnLoading = false;
-        this.btnLoading2 = fasle;
+        this.btnLoading2 = false;
       },
       returnIndex(){
         let url = this.$route.query.subPage ? this.$route.query.subPage : '/newStudent/studentIndex'

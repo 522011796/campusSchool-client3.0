@@ -1666,7 +1666,7 @@
           des: ''
         };
         this.btnLoading = false;
-        this.btnLoading2 = fasle;
+        this.btnLoading2 = false;
         if (this.$refs['form']){
           this.$refs['form'].resetFields();
         }
@@ -1761,10 +1761,8 @@
             this.drawerRoom = false;
             MessageSuccess(res.data.desc);
             this.dialogInfo = false;
-            this.btnLoading = false;
           }else {
             MessageError(res.data.desc);
-            this.btnLoading = false;
           }
           this.btnLoading = false;
         });
@@ -1914,7 +1912,7 @@
           }else {
             MessageError(res.data.desc);
           }
-          this.btnLoading2 = false;
+          //this.btnLoading2 = false;
         });
       },
       handleFormCancel(){
