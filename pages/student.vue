@@ -930,8 +930,8 @@
               </el-row>
               <el-row class="margin-top-5">
                 <el-col :span="24" class="text-right">
-                  <el-button size="mini" type="success" v-loading="btnLoading2 == true"  v-if="dormSelType == 0 && (!detailData.status || detailData.check_cancel == true) && item.status == 1" @click="setBillStatus($event, item)">{{$t("立即撤销")}}</el-button>
-                  <el-button size="mini" type="success" v-loading="btnLoading2 == true"  v-if="dormSelType == 1 && (!detailData.status || detailData.check_cancel == true) && item.order_status == 1" @click="setBillStatus($event, item)">{{$t("立即撤销")}}</el-button>
+                  <el-button size="mini" type="success" :loading="btnLoading2 == true"  v-if="dormSelType == 0 && (!detailData.status || detailData.check_cancel == true) && item.status == 1" @click="setBillStatus($event, item)">{{$t("立即撤销")}}</el-button>
+                  <el-button size="mini" type="success" :loading="btnLoading2 == true"  v-if="dormSelType == 1 && (!detailData.status || detailData.check_cancel == true) && item.order_status == 1" @click="setBillStatus($event, item)">{{$t("立即撤销")}}</el-button>
                 </el-col>
               </el-row>
             </div>
@@ -1666,6 +1666,7 @@
           des: ''
         };
         this.btnLoading = false;
+        this.btnLoading2 = fasle;
         if (this.$refs['form']){
           this.$refs['form'].resetFields();
         }
@@ -1735,7 +1736,6 @@
         this.dialogForm = false;
       },
       okDrawDialog(){
-        this.btnLoading = true;
         let url = common.server_enroll_app_dorm_chose;
         let params = {};
         if (this.dormSelType == 0){
@@ -1752,7 +1752,7 @@
             packageId: this.formDorm.id
           }
         }
-
+        this.btnLoading = true;
         params = this.$qs.stringify(params);
         this.$axios.post(url, params).then(res => {
           if (res.data.code == 200){
@@ -1766,6 +1766,7 @@
             MessageError(res.data.desc);
             this.btnLoading = false;
           }
+          this.btnLoading = false;
         });
       },
       okDialog(){
