@@ -274,8 +274,8 @@
             </el-row>
             <el-row class="margin-top-5">
               <el-col :span="24" class="text-right">
-                <el-button size="mini" type="success" v-loading="btnLoading == true"  v-if="dormSelType == 0 && (!detailData.status || detailData.check_cancel == true) && item.status == 1" @click="setBillStatus($event, item)">{{$t("立即撤销")}}</el-button>
-                <el-button size="mini" type="success" v-loading="btnLoading == true"  v-if="dormSelType == 1 && (!detailData.status || detailData.check_cancel == true) && item.order_status == 1" @click="setBillStatus($event, item)">{{$t("立即撤销")}}</el-button>
+                <el-button size="mini" type="success" v-loading="btnLoading2 == true"  v-if="dormSelType == 0 && (!detailData.status || detailData.check_cancel == true) && item.status == 1" @click="setBillStatus($event, item)">{{$t("立即撤销")}}</el-button>
+                <el-button size="mini" type="success" v-loading="btnLoading2 == true"  v-if="dormSelType == 1 && (!detailData.status || detailData.check_cancel == true) && item.order_status == 1" @click="setBillStatus($event, item)">{{$t("立即撤销")}}</el-button>
               </el-col>
             </el-row>
           </div>
@@ -327,7 +327,7 @@
         commSearchPackage: '',
         showDorm: false,
         showBill: false,
-        btnLoading: false,
+        btnLoading2: false,
         billList: [],
         detailData: {},
         dormSelTitle: this.$t("床位选择"),
@@ -553,7 +553,7 @@
             id: item.id
           }
         }
-        this.btnLoading = true;
+        this.btnLoading2 = true;
         params = this.$qs.stringify(params);
         this.$axios.post(url, params).then(res => {
           if (res.data.code == 200){
@@ -562,7 +562,7 @@
           }else {
             Toast(res.data.desc);
           }
-          this.btnLoading = false;
+          this.btnLoading2 = false;
         });
       },
       selRoomItem(event, item){
