@@ -1403,7 +1403,7 @@
         this.initAuditList();
       },
       printManage(event, item){
-        if (item.formCode && item.formCode != ''){
+        if (item.formCode && item.formCode != '' && item.formCode != 'OTHER' && item.formCode != null){
           window.open('/formSystemPrint?serverId=' + item._id + "&title=" + item.noticeName + "&time=" + this.$moment().format("YYYY-MM-DD HH:mm:ss"), '_blank');
         }else {
           window.open('/formPrint?serverId=' + item._id + "&title=" + item.noticeName + "&time=" + this.$moment().format("YYYY-MM-DD HH:mm:ss"), '_blank');
