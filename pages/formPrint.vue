@@ -158,8 +158,8 @@
       </div>
       <table class="custom-table-black">
         <tr v-for="(itemUser, indexUser) in detailApplyAuditList" :key="indexUser">
-          <td style="width: 20%" class="font-size-12 font-bold">{{$t("审核人")}}</td>
-          <td style="width: 20%" class="color-black font-size-12">
+          <td style="width: 10%" class="font-size-12 font-bold">{{$t("审核人")}}</td>
+          <td style="width: 15%" class="color-black font-size-12">
             {{ itemUser.userName }}
 
             <span>
@@ -170,8 +170,8 @@
               </el-image>
             </span>
           </td>
-          <td style="width: 15%" class="font-size-12 font-bold">{{$t("审核状态")}}</td>
-          <td style="width: 15%" class="color-black font-size-12">
+          <td style="width: 10%" class="font-size-12 font-bold">{{$t("审核状态")}}</td>
+          <td style="width: 10%" class="color-black font-size-12">
             <label v-if="itemUser.status === -1">{{$t("待提交")}}</label>
             <label v-if="itemUser.status === 0">{{$t("待审核")}}</label>
             <label v-if="itemUser.status === 3">{{$t("通过")}}</label>
@@ -182,11 +182,18 @@
             <label v-if="itemUser.status === 8">{{$t("审批中")}}</label>
           </td>
           <td style="width: 10%" class="font-size-12 font-bold">{{$t("审核时间")}}</td>
-          <td style="width: 20%" class="color-black font-size-12">
+          <td style="width: 10%" class="color-black font-size-12">
             <label v-if="itemUser.handleTime">
               {{$moment(itemUser.handleTime).format("YYYY-MM-DD HH:mm:ss")}}
             </label>
             <label v-else class="color-black">--</label>
+          </td>
+          <td style="width: 10%" class="font-size-12 font-bold">{{$t("意见")}}</td>
+          <td style="width: 25%" class="font-size-12">
+            <div v-if="itemUser.des" style="word-break:break-all;word-wrap:break-word;">
+              {{itemUser.des}}
+            </div>
+            <span v-else>--</span>
           </td>
         </tr>
       </table>
