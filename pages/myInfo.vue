@@ -441,14 +441,14 @@
                 </div>
                 <div slot="title" class="font-size-12">
                   <span v-if="item.nodeType == 'handle'" class="color-success">
-                    <label v-if="item.nodeName">【{{item.nodeName}}】</label>
-                    <label>{{ $t("审批") }}</label>
+                    <label v-if="item.nodeName">{{item.nodeName}}</label>
+<!--                    <label>{{ $t("审批") }}</label>-->
                     <label v-if="item.andor == 'and'"> ({{ $t("与签") }}) </label>
                     <label v-if="item.andor == 'or'"> ({{ $t("或签") }}) </label>
                   </span>
                   <span v-if="item.nodeType == 'cc'" class="color-warning">
-                    <label v-if="item.nodeName">【{{item.nodeName}}】</label>
-                    <label>{{ $t("抄送") }}</label>
+                    <label v-if="item.nodeName">{{item.nodeName}}</label>
+<!--                    <label>{{ $t("抄送") }}</label>-->
                   </span>
                 </div>
                 <div slot="description" class="font-size-12 color-sub-title">
@@ -461,12 +461,27 @@
                           <label v-if="itemUser.status === 0" class="color-warning">{{$t("待审核")}}</label>
                           <label v-if="itemUser.status === 3" class="color-success">{{$t("通过")}}</label>
                           <label v-if="itemUser.status === 4" class="color-danger">{{$t("未通过")}}</label>
-                          <label v-if="itemUser.status === 1" class="color-warning">{{$t("已通过")}}</label>
+                          <label v-if="itemUser.status === 1" class="color-warning">
+                            {{$t("已通过")}}
+                            <el-tooltip v-if="itemUser.des" class="item" effect="dark" :content="itemUser.des" placement="top">
+                              <i class="fa fa-warning color-warning"></i>
+                            </el-tooltip>
+                            <span v-if="itemUser.url && itemUser.url.length > 0">
+                              <el-image v-for="(itemImg, indexImg) in itemUser.url" :key="indexImg" :src="itemImg" style="width: 20px; height: 20px;position: relative; top: 5px;margin-left: 5px"
+                                        :preview-src-list="[itemImg]">
+                              </el-image>
+                            </span>
+                          </label>
                           <label v-if="itemUser.status === 2" class="color-warning">
                             {{$t("已驳回")}}
                             <el-tooltip v-if="itemUser.des" class="item" effect="dark" :content="itemUser.des" placement="top">
                               <i class="fa fa-warning color-warning"></i>
                             </el-tooltip>
+                            <span v-if="itemUser.url && itemUser.url.length > 0">
+                              <el-image v-for="(itemImg, indexImg) in itemUser.url" :key="indexImg" :src="itemImg" style="width: 20px; height: 20px;position: relative; top: 5px;margin-left: 5px"
+                                        :preview-src-list="[itemImg]">
+                              </el-image>
+                            </span>
                           </label>
                           <label v-if="itemUser.status === 5" class="color-warning">{{$t("无需审批")}}</label>
                           <label v-if="itemUser.status === 8" class="color-warning">{{$t("审批中")}}</label>
@@ -474,6 +489,20 @@
                         <span class="margin-left-10" v-if="itemUser.handleTime">
                           <label class="color-muted">{{$moment(itemUser.handleTime).format("YYYY-MM-DD HH:mm:ss")}}</label>
                         </span>
+
+                        <div class="margin-top-5" v-if="itemUser.signStr && itemUser.signStr != ''">
+                          <span style="position: relative;top: -3px" class="color-muted">
+                            <i class="fa fa-pencil"></i>
+                            <label>{{$t("手写签名")}}</label>
+                          </span>
+                          <span>
+                            <el-image
+                                style="width: 40px; height: 15px"
+                                :src="itemUser.signStr"
+                                :preview-src-list="[itemUser.signStr]">
+                            </el-image>
+                          </span>
+                        </div>
                       </div>
                     </template>
                     <template v-if="item.nodeType == 'cc'">
@@ -769,14 +798,14 @@
                 </div>
                 <div slot="title" class="font-size-12">
                   <span v-if="item.nodeType == 'handle'" class="color-success">
-                    <label v-if="item.nodeName">【{{item.nodeName}}】</label>
-                    <label>{{ $t("审批") }}</label>
+                    <label v-if="item.nodeName">{{item.nodeName}}</label>
+<!--                    <label>{{ $t("审批") }}</label>-->
                     <label v-if="item.andor == 'and'"> ({{ $t("与签") }}) </label>
                     <label v-if="item.andor == 'or'"> ({{ $t("或签") }}) </label>
                   </span>
                   <span v-if="item.nodeType == 'cc'" class="color-warning">
-                    <label v-if="item.nodeName">【{{item.nodeName}}】</label>
-                    <label>{{ $t("抄送") }}</label>
+                    <label v-if="item.nodeName">{{item.nodeName}}</label>
+<!--                    <label>{{ $t("抄送") }}</label>-->
                   </span>
                 </div>
                 <div slot="description" class="font-size-12 color-sub-title">
@@ -789,12 +818,27 @@
                           <label v-if="itemUser.status === 0" class="color-warning">{{$t("待审核")}}</label>
                           <label v-if="itemUser.status === 3" class="color-success">{{$t("通过")}}</label>
                           <label v-if="itemUser.status === 4" class="color-danger">{{$t("未通过")}}</label>
-                          <label v-if="itemUser.status === 1" class="color-warning">{{$t("已通过")}}</label>
+                          <label v-if="itemUser.status === 1" class="color-warning">
+                            {{$t("已通过")}}
+                            <el-tooltip v-if="itemUser.des" class="item" effect="dark" :content="itemUser.des" placement="top">
+                              <i class="fa fa-warning color-warning"></i>
+                            </el-tooltip>
+                            <span v-if="itemUser.url && itemUser.url.length > 0">
+                              <el-image v-for="(itemImg, indexImg) in itemUser.url" :key="indexImg" :src="itemImg" style="width: 20px; height: 20px;position: relative; top: 5px;margin-left: 5px"
+                                        :preview-src-list="[itemImg]">
+                              </el-image>
+                            </span>
+                          </label>
                           <label v-if="itemUser.status === 2" class="color-warning">
                             {{$t("已驳回")}}
                             <el-tooltip v-if="itemUser.des" class="item" effect="dark" :content="itemUser.des" placement="top">
                               <i class="fa fa-warning color-warning"></i>
                             </el-tooltip>
+                            <span v-if="itemUser.url && itemUser.url.length > 0">
+                              <el-image v-for="(itemImg, indexImg) in itemUser.url" :key="indexImg" :src="itemImg" style="width: 20px; height: 20px;position: relative; top: 5px;margin-left: 5px"
+                                        :preview-src-list="[itemImg]">
+                              </el-image>
+                            </span>
                           </label>
                           <label v-if="itemUser.status === 5" class="color-warning">{{$t("无需审批")}}</label>
                           <label v-if="itemUser.status === 8" class="color-warning">{{$t("审批中")}}</label>
@@ -802,6 +846,20 @@
                         <span class="margin-left-10" v-if="itemUser.handleTime">
                           <label class="color-muted">{{$moment(itemUser.handleTime).format("YYYY-MM-DD HH:mm:ss")}}</label>
                         </span>
+
+                        <div class="margin-top-5" v-if="itemUser.signStr && itemUser.signStr != ''">
+                          <span style="position: relative;top: -3px" class="color-muted">
+                            <i class="fa fa-pencil"></i>
+                            <label>{{$t("手写签名")}}</label>
+                          </span>
+                          <span>
+                            <el-image
+                                style="width: 40px; height: 15px"
+                                :src="itemUser.signStr"
+                                :preview-src-list="[itemUser.signStr]">
+                            </el-image>
+                          </span>
+                        </div>
                       </div>
                     </template>
                     <template v-if="item.nodeType == 'cc'">

@@ -554,14 +554,14 @@
                 </div>
                 <div slot="title" class="font-size-12">
                   <span v-if="item.nodeType == 'handle'" class="color-success">
-                    <label v-if="item.nodeName">【{{item.nodeName}}】</label>
-                    <label>{{ $t("审批") }}</label>
+                    <label v-if="item.nodeName">{{item.nodeName}}</label>
+<!--                    <label>{{ $t("审批") }}</label>-->
                     <label v-if="item.andor == 'and'"> ({{ $t("与签") }}) </label>
                     <label v-if="item.andor == 'or'"> ({{ $t("或签") }}) </label>
                   </span>
                   <span v-if="item.nodeType == 'cc'" class="color-warning">
-                    <label v-if="item.nodeName">【{{item.nodeName}}】</label>
-                    <label>{{ $t("抄送") }}</label>
+                    <label v-if="item.nodeName">{{item.nodeName}}</label>
+<!--                    <label>{{ $t("抄送") }}</label>-->
                   </span>
                 </div>
                 <div slot="description" class="font-size-12 color-sub-title">
@@ -606,6 +606,20 @@
                         <span class="margin-left-10" v-if="itemUser.handleTime">
                           <label class="color-muted">{{$moment(itemUser.handleTime).format("YYYY-MM-DD HH:mm:ss")}}</label>
                         </span>
+
+                        <div class="margin-top-5" v-if="itemUser.signStr && itemUser.signStr != ''">
+                          <span style="position: relative;top: -3px" class="color-muted">
+                            <i class="fa fa-pencil"></i>
+                            <label>{{$t("手写签名")}}</label>
+                          </span>
+                            <span>
+                            <el-image
+                                style="width: 40px; height: 15px"
+                                :src="itemUser.signStr"
+                                :preview-src-list="[itemUser.signStr]">
+                            </el-image>
+                          </span>
+                        </div>
                       </div>
                     </template>
                     <template v-if="item.nodeType == 'cc'">
@@ -1001,14 +1015,14 @@
                 </div>
                 <div slot="title" class="font-size-12">
                   <span v-if="item.nodeType == 'handle'" class="color-success">
-                    <label v-if="item.nodeName">【{{item.nodeName}}】</label>
-                    <label>{{ $t("审批") }}</label>
+                    <label v-if="item.nodeName">{{item.nodeName}}</label>
+<!--                    <label>{{ $t("审批") }}</label>-->
                     <label v-if="item.andor == 'and'"> ({{ $t("与签") }}) </label>
                     <label v-if="item.andor == 'or'"> ({{ $t("或签") }}) </label>
                   </span>
                   <span v-if="item.nodeType == 'cc'" class="color-warning">
-                    <label v-if="item.nodeName">【{{item.nodeName}}】</label>
-                    <label>{{ $t("抄送") }}</label>
+                    <label v-if="item.nodeName">{{item.nodeName}}</label>
+<!--                    <label>{{ $t("抄送") }}</label>-->
                   </span>
                 </div>
                 <div slot="description" class="font-size-12 color-sub-title">
@@ -1053,6 +1067,20 @@
                         <span class="margin-left-10" v-if="itemUser.handleTime">
                           <label class="color-muted">{{$moment(itemUser.handleTime).format("YYYY-MM-DD HH:mm:ss")}}</label>
                         </span>
+
+                        <div class="margin-top-5" v-if="itemUser.signStr && itemUser.signStr != ''">
+                          <span style="position: relative;top: -3px" class="color-muted">
+                            <i class="fa fa-pencil"></i>
+                            <label>{{$t("手写签名")}}</label>
+                          </span>
+                            <span>
+                            <el-image
+                                style="width: 40px; height: 15px"
+                                :src="itemUser.signStr"
+                                :preview-src-list="[itemUser.signStr]">
+                            </el-image>
+                          </span>
+                        </div>
                       </div>
                     </template>
                     <template v-if="item.nodeType == 'cc'">
@@ -2185,6 +2213,7 @@
             this.images = [];
             this.popUpVisible = false;
             this.dialogSysVisible = false;
+            this.dialogWrite = false;
             this.cancelSysPop();
             this.cancelPop();
             Toast(res.data.desc);
@@ -2454,6 +2483,22 @@
         }
         this.sianClick();
         this.dialogRangeDetail = false;
+      },
+      okDialog(data){
+        let _self = this;
+        this.$refs.esign.generate().then(res => {
+          _self.params['signStr'] = res;
+          _self.params['schoolAccountId'] = this.account;
+          _self.params['amount'] = this.amount;
+
+          _self.handleConfirm(_self.params);
+
+          if (this.$refs['esign']){
+            this.$refs.esign.reset()
+          }
+        }).catch(err => {
+          Toast(this.$t("签名错误"));
+        })
       }
     }
   }

@@ -161,6 +161,14 @@
           <td style="width: 20%" class="font-size-12 font-bold">{{$t("审核人")}}</td>
           <td style="width: 20%" class="color-black font-size-12">
             {{ itemUser.userName }}
+
+            <span>
+              <el-image
+                style="width: 40px; height: 15px"
+                :src="itemUser.signStr"
+                :preview-src-list="[itemUser.signStr]">
+              </el-image>
+            </span>
           </td>
           <td style="width: 15%" class="font-size-12 font-bold">{{$t("审核状态")}}</td>
           <td style="width: 15%" class="color-black font-size-12">
