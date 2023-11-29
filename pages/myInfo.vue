@@ -517,7 +517,15 @@
         <template v-if="activeMenu == 1">
           <div class="text-right padding-lr-10">
             <el-button size="small" @click="handleCancel">取 消</el-button>
-            <el-button v-if="detailApplyAuditUserData.agreen1 == true" size="small" type="success" @click="handleOk($event, detailData, 1)">同 意</el-button>
+            <el-button size="small" type="success" v-if="detailData.join == true" @click="sianRange($event, 7)">
+              {{detailData.joinName != undefined && detailData.joinName != '' ? detailData.joinName : '加 签'}}
+            </el-button>
+            <el-button size="small" type="danger" v-if="detailData.trans == true" @click="sianRange($event, 6)">
+              {{detailData.transName != undefined && detailData.transName != '' ? detailData.transName : '转 签'}}
+            </el-button>
+            <el-button v-if="detailApplyAuditUserData.agreen1 == true" size="small" type="success" @click="handleOk($event, detailData, 1)">
+                {{detailData.agreedName != undefined && detailData.agreedName != '' ? detailData.agreedName : '同 意'}}
+            </el-button>
 <!--            <el-button size="small" type="primary" @click="handleOk($event, detailData, 6)">转 交</el-button>-->
 <!--            <el-button size="small" type="primary" @click="handleOk($event, detailData, -1)">撤 销</el-button>-->
             <el-popover
@@ -538,7 +546,9 @@
                 <el-button size="mini" type="text" @click="cancelPop">取消</el-button>
                 <el-button type="primary" size="mini" @click="handleOk($event, detailData, 2)">确定</el-button>
               </div>
-              <el-button slot="reference" type="warning" size="small">{{$t("驳回")}}</el-button>
+              <el-button slot="reference" type="warning" size="small">
+                  {{detailData.notagreeName != undefined && detailData.notagreeName != '' ? detailData.notagreeName : $t("驳回")}}
+              </el-button>
             </el-popover>
           </div>
         </template>
@@ -1055,6 +1065,84 @@
       </div>
     </drawer-layout-right>
 
+    <dialog-normal
+        width-style="450px"
+        :visible.sync="dialogWrite"
+        :show-close="false"
+        :modal-append-to-body="false"
+        :show-footer="false"
+        :before-close="onBeforeClose"
+        @close="closeEsignDialog">
+      <div slot="title">
+        <div class="header-block padding-lr-10">
+          <span class="tab-class font-bold">
+            <i class="fa fa-file"></i>
+            {{$t('签名')}}
+          </span>
+        </div>
+      </div>
+      <vue-esign
+          ref="esign"
+          :width="450"
+          :height="200"
+          :isCrop="isCrop"
+          :lineWidth="lineWidth"
+          :lineColor="lineColor"
+          :bgColor.sync="bgColor"
+          :quality="quality">
+
+      </vue-esign>
+
+      <div style="height: 50px;line-height: 50px;background: #FFFFFF">
+        <el-row>
+          <el-col :span="12">
+            <div class="write-item-block write-item-left-block text-center" @click="dialogWrite = false">
+              <span>{{$t("取消")}}</span>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div class="write-item-block text-center" v-loading="btnLoading" @click="btnLoading == true ? '' : okDialog()">
+              <span>{{$t("确定")}}</span>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+    </dialog-normal>
+
+    <drawer-layout-right tabindex="0" @close="closeRangeDialog" :visible="dialogRangeDetail" size="500px" :title="$t('选择范围')" @right-close="cancelDrawDialog">
+          <div slot="content" class="color-muted">
+              <el-table
+                      ref="refTable"
+                      :data="signType == 6 ? detailData.transRange : detailData.joinRange"
+                      header-cell-class-name="custom-table-cell-bg"
+                      size="medium"
+                      :max-height="tableHeight.height"
+                      style="width: 100%">
+                <el-table-column align="center" width="80">
+                  <template slot-scope="scope">
+                    <el-radio v-model="transUserId" :label="scope.row.userId" @change="handleSelRange($event, scope.row.userId)">&nbsp;</el-radio>
+                  </template>
+                </el-table-column>
+                  <el-table-column align="center" :label="$t('姓名')">
+                      <template slot-scope="scope">
+                        <el-popover trigger="hover" placement="top" popper-class="custom-table-popover">
+                          <div class="text-center">{{scope.row.realName ? scope.row.realName : '--'}}</div>
+                          <span slot="reference" class="name-wrapper moon-content-text-ellipsis-class">
+                            {{scope.row.realName ? scope.row.realName : '--'}}
+                          </span>
+                        </el-popover>
+                    </template>
+                  </el-table-column>
+              </el-table>
+          </div>
+          <div slot="footer">
+              <div class="padding-lr-10">
+                  <el-button size="small" type="success" @click="okRangeDialog">{{$t("确定")}}</el-button>
+                  <el-button size="small" @click="cancelRangeDialog">{{$t("取消")}}</el-button>
+              </div>
+          </div>
+    </drawer-layout-right>
+
     <system-form-ptgl v-if="serverSysDetailData.formCode == 'PTGL'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer" @closeSysDialog="closeSysDialog"></system-form-ptgl>
     <system-form-cght v-else-if="serverSysDetailData.formCode == 'CGHT'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer" @closeSysDialog="closeSysDialog"></system-form-cght>
     <system-form-xsht v-else-if="serverSysDetailData.formCode == 'XSHT'" :title="formCreateSystemTitleData" :form-data="serverSysDetailData" :dialog-visible="dialogSystemServer" @closeSysDialog="closeSysDialog"></system-form-xsht>
@@ -1072,7 +1160,7 @@
   import {common} from "../utils/api/url";
   import DialogNormal from "~/components/utils/dialog/DialogNormal";
   import {MessageError, MessageSuccess, MessageWarning} from "~/utils/utils";
-  import {ImagePreview} from "vant";
+  import {ImagePreview, Toast} from "vant";
   import FormSystemTagsDetail from "~/components/utils/formDetail/FormSystemTagsDetail.vue";
   import SystemFormBzbx from "~/components/utils/serverForm/SystemFormBZBX.vue";
   import SystemFormCght from "~/components/utils/serverForm/SystemFormCGHT.vue";
@@ -1083,6 +1171,7 @@
   import SystemFormPtgl from "~/components/utils/serverForm/SystemFormPTGL.vue";
   import SystemFormDgdk from "~/components/utils/serverForm/SystemFormDGDK.vue";
   import SystemFormHkd from "~/components/utils/serverForm/SystemFormHKD.vue";
+  import vueEsign from "vue-esign/src/index.vue";
   export default {
     name: 'index',
     mixins: [mixins],
@@ -1096,7 +1185,7 @@
       SystemFormTyht,
       SystemFormCght,
       SystemFormBzbx,
-      FormSystemTagsDetail, DialogNormal},
+      FormSystemTagsDetail, DialogNormal,vueEsign},
     data(){
       return {
         formCode: '',
@@ -1107,6 +1196,7 @@
         tableOrderDetailData: [],
         tableTagsDetailData: [],
         tableNormalDetailData: [],
+        tableRangeData: [],
         detailType: 1,
         detailOrderType: 1,
         detailInfoType: '',
@@ -1126,6 +1216,9 @@
         dialogNormalVisible: false,
         dialogOrderDetailVisible: false,
         dialogSystemServer: false,
+        dialogWrite: false,
+        btnLoading: false,
+        dialogRangeDetail: false,
         testArea: '',
         collectionList: [],
         noticeList: [],
@@ -1148,7 +1241,17 @@
         detailApplyAuditUserData: {},
         detailCheckApplyAuditUserData: {},
         serverSysDetailData: {},
-        formCreateSystemTitleData: ''
+        formCreateSystemTitleData: '',
+        lineWidth: 6,
+        lineColor: '#000000',
+        bgColor: '#F5f5f5',
+        resultImg: '',
+        isCrop: false,
+        quality: 1,
+        params: {},
+        transUserId: '',
+        transUserIdObj: {},
+        signType: ''
       }
     },
     mounted() {
@@ -1302,7 +1405,14 @@
       closeSysDialog(){
         this.dialogSystemServer = false;
       },
+      closeRangeDialog(){
+        this.transUserId = '';
+        this.dialogRangeDetail = false;
+      },
       closeDialog(event){
+        if (this.$refs['esign']){
+          this.$refs.esign.reset()
+        }
         this.detailData = '';
         this.detailApplyContentData = [];
         this.detailApplyAuditList = [];
@@ -1313,6 +1423,12 @@
         this.dialogTagsVisible = false;
         this.dialogObjServerDetail = false;
         this.dialogNormalVisible = false;
+      },
+      closeEsignDialog(event){
+        if (this.$refs['esign']){
+          this.$refs.esign.reset()
+        }
+        this.dialogWrite = false;
       },
       closeCheckDialog(event){
         this.detailCheckData = '';
@@ -1329,8 +1445,19 @@
         this.dialogObjServerDetail = false;
         this.dialogNormalVisible = false;
       },
+      cancelRangeDialog(){
+        this.dialogRangeDetail = false;
+      },
       cancelCheckDrawDialog(){
         this.dialogServerCheckDetail = false;
+      },
+      okRangeDialog(){
+        if (this.transUserId == ''){
+          MessageWarning(this.$t("请选择人员!"));
+          return;
+        }
+        this.sianClick();
+        this.dialogRangeDetail = false;
       },
       sizeChange(event){
         this.page = 1;
@@ -1432,11 +1559,38 @@
           status: type,
           des: this.textarea
         };
-        params = this.$qs.stringify(params);
-        this.$axios.post(common.server_form_audit_handle, params).then(res => {
+
+        // if (this.images.length > 0){
+        //   let images = [];
+        //   for (let i = 0; i < this.images.length; i++){
+        //     images.push(this.images[i].picture_url);
+        //   }
+        //
+        //   params['url'] = images.join();
+        // }
+
+        if (data.sign == true && type == 1){
+          this.lineWidth = 6;
+          this.lineColor = '#000000';
+          this.bgColor = '#F5f5f5';
+          this.resultImg = '';
+          this.isCrop = false;
+          this.quality = 1;
+          this.params = params;
+          this.visibleSysYes = false;
+          this.dialogWrite = true;
+          return;
+        }
+
+        this.handleConfirm(params);
+      },
+      handleConfirm(params, done){
+        let paramsTemp = this.$qs.stringify(params);
+        this.$axios.post(common.server_form_audit_handle, paramsTemp).then(res => {
           if (res.data.code == 200){
             this.initAuditList();
             this.dialogServerDetail = false;
+            this.dialogWrite = false;
             MessageSuccess(res.data.desc);
           }else {
             MessageError(res.data.desc);
@@ -1496,6 +1650,65 @@
             MessageWarning(res.data.desc);
           }
         });
+      },
+      onBeforeClose(action, done) {
+        // 点击了确定按钮
+        if (action === "confirm") {
+          let _self = this;
+          this.$refs.esign.generate().then(res => {
+            _self.params['signStr'] = res;
+            _self.params['schoolAccountId'] = this.account;
+            _self.params['amount'] = this.amount;
+
+            _self.handleConfirm(_self.params, done);
+
+            if (this.$refs['esign']){
+              this.$refs.esign.reset()
+            }
+          }).catch(err => {
+            Toast(this.$t("签名错误"));
+            return done(false);
+          })
+        }
+        // 点击了取消按钮
+        else {
+          if (this.$refs['esign']){
+            this.$refs.esign.reset()
+          }
+          done(true);
+        }
+      },
+      okDialog(data){
+        let _self = this;
+        this.$refs.esign.generate().then(res => {
+          _self.params['signStr'] = res;
+          _self.params['schoolAccountId'] = this.account;
+          _self.params['amount'] = this.amount;
+
+          _self.handleConfirm(_self.params);
+
+          if (this.$refs['esign']){
+            this.$refs.esign.reset()
+          }
+        }).catch(err => {
+          Toast(this.$t("签名错误"));
+        })
+      },
+      handleSelRange(event, data){
+        this.transUserId = data;
+      },
+      sianRange(event, type){
+        this.signType = type;
+        this.dialogRangeDetail = true;
+      },
+      sianClick(event){
+        let params = {
+          id: this.detailData.id ? this.detailData.id : this.detailData.id,
+          status: this.signType,
+          transUserId: this.transUserId,
+          des: ''
+        };
+        this.handleConfirm(params);
       }
     }
   }

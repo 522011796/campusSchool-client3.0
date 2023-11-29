@@ -195,6 +195,8 @@
             <template v-if="active == 1">
               <div class="text-right padding-lr-10">
                 <!--            <el-button v-if="detailApplyAuditUserData.agreen1 == true" size="mini" type="success" @click="handleOk($event, detailData, 1)">同 意</el-button>-->
+                <el-button size="mini" type="success" v-if="detailData.join == true" @click="sianRange($event, 7)">{{ $t('加签') }}</el-button>
+                <el-button size="mini" type="danger" v-if="detailData.trans == true" @click="sianRange($event, 6)" style="margin-left: 0 !important;">{{ $t('转签') }}</el-button>
                 <el-button v-if="detailData.urge == true" type="danger" size="mini" @click="handleUrge($event, detailData)">{{$t("催办")}}</el-button>
                 <el-popover
                   :tabindex="99999"
@@ -1223,6 +1225,72 @@
         </div>
       </div>
     </van-popup>
+
+    <van-dialog v-model="dialogWrite" title="签名" style="top:50%;" :width="screenWidth.width1-15" :show-confirm-button="false" @close="closeDialog" :before-close="onBeforeClose">
+      <div slot="title" class="write-header-block">
+        <div>{{$t("签名")}}</div>
+      </div>
+
+      <vue-esign
+          ref="esign"
+          :width="screenWidth.width1-15"
+          :height="divHeight10.height1 - 200"
+          :isCrop="isCrop"
+          :lineWidth="lineWidth"
+          :lineColor="lineColor"
+          :bgColor.sync="bgColor"
+          :quality="quality">
+
+      </vue-esign>
+
+      <div style="height: 50px;line-height: 50px;background: #FFFFFF">
+        <el-row>
+          <el-col :span="12">
+            <div class="write-item-block write-item-left-block" @click="dialogWrite = false">
+              <span>{{$t("取消")}}</span>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div class="write-item-block" v-loading="btnLoading" @click="btnLoading == true ? '' : okDialog()">
+              <span>{{$t("确定")}}</span>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+    </van-dialog>
+
+    <van-popup v-model="dialogRangeDetail" round position="bottom" :style="{ height: '400px' }" @close="closeRangeDialog">
+      <div style="height: 40px;line-height: 40px;background: #f5f5f5">
+        <el-row>
+          <el-col :span="6">
+            <div class="text-center" @click="closeRangeDialog">
+              <a href="javascript:;" class="color-warning">{{$t("取消")}}</a>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div class="text-center">
+              {{$t("选择人员")}}
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="text-center" @click="okRangeDialog">
+              <a href="javascript:;" class="color-success">{{$t("确认")}}</a>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+      <div style="height: 360px;overflow-y: auto">
+        <van-radio-group v-model="transUserId" v-for="(item,index) in signType == 6 ? detailData.transRange : detailData.joinRange" :key="index">
+          <van-cell-group>
+            <van-cell :title="item.realName" clickable @click="transUserId = item.userId">
+              <template #right-icon>
+                <van-radio :name="item.userId" />
+              </template>
+            </van-cell>
+          </van-cell-group>
+        </van-radio-group>
+      </div>
+    </van-popup>
   </div>
 </template>
 
@@ -1232,12 +1300,20 @@
   import { ImagePreview } from 'vant'
 
   import mixins from "~/utils/mixins";
-  import {auditStatusBgColor, auditStatusColor, auditStatusText, MessageError, MessageSuccess} from "~/utils/utils";
+  import {
+    auditStatusBgColor,
+    auditStatusColor,
+    auditStatusText,
+    MessageError,
+    MessageSuccess,
+    MessageWarning
+  } from "~/utils/utils";
   import FormSystemNormalDetail from "~/components/utils/formDetail/FormSystemNormalDetail.vue";
   import FormSystemH5NormalDetail from "~/components/utils/formDetail/FormSystemH5NormalDetail.vue";
+  import vueEsign from "vue-esign/src/index.vue";
   export default {
     name: 'appServer',
-    components: {FormSystemH5NormalDetail, FormSystemNormalDetail},
+    components: {FormSystemH5NormalDetail, FormSystemNormalDetail,vueEsign},
     layout: 'defaultAppScreen',
     mixins: [mixins],
     data(){
@@ -1275,6 +1351,8 @@
         visibleYes: false,
         visibleSysNo: false,
         visibleSysYes: false,
+        dialogWrite: false,
+        dialogRangeDetail: false,
         detailApplyAuditUserData: {},
         detailCheckApplyAuditUserData: {},
         serchName: '',
@@ -1282,6 +1360,7 @@
         endTime: '',
         showCalendar: false,
         urgeDialog: false,
+        btnLoading: false,
         dateTime: '',
         minDate: new Date(2020, 0, 1),
         maxDate: new Date(2030, 12, 1),
@@ -1298,6 +1377,16 @@
         processIds: [],
         orderIndex: '',
         cascaderIndex: 1,
+        lineWidth: 6,
+        lineColor: '#000000',
+        bgColor: '#F5f5f5',
+        resultImg: '',
+        isCrop: false,
+        quality: 1,
+        params: {},
+        transUserId: '',
+        transUserIdObj: {},
+        signType: '',
         leftHeight: {
           'height': '100%',
           'width': '0%'
@@ -2070,8 +2159,24 @@
           params['url'] = images.join();
         }
 
-        params = this.$qs.stringify(params);
-        this.$axios.post(common.server_form_audit_handle, params, {loading: false}).then(res => {
+        if (data.sign == true && type == 1){
+          this.lineWidth = 6;
+          this.lineColor = '#000000';
+          this.bgColor = '#F5f5f5';
+          this.resultImg = '';
+          this.isCrop = false;
+          this.quality = 1;
+          this.params = params;
+          this.visibleYes = false;
+          this.dialogWrite = true;
+          return;
+        }
+
+        this.handleConfirm(params);
+      },
+      handleConfirm(params, done){
+        let paramsTemp = this.$qs.stringify(params);
+        this.$axios.post(common.server_form_audit_handle, paramsTemp, {loading: false}).then(res => {
           if (res.data.code == 200){
             this.tableData.splice(this.detailIndex, 1);
             let page = Math.ceil(this.tableData.length / 20);
@@ -2291,6 +2396,64 @@
       },
       auditTextColorInfo(val){
         return auditStatusColor(val);
+      },
+      closeDialog(){
+        this.params = {};
+        if (this.$refs['esign']){
+          this.$refs.esign.reset()
+        }
+      },
+      closeRangeDialog(){
+        this.transUserId = '';
+        this.dialogRangeDetail = false;
+      },
+      onBeforeClose(action, done) {
+        // 点击了确定按钮
+        if (action === "confirm") {
+          let _self = this;
+          this.$refs.esign.generate().then(res => {
+            _self.params['signStr'] = res;
+            _self.params['schoolAccountId'] = this.account;
+            _self.params['amount'] = this.amount;
+
+            _self.handleConfirm(_self.params, done);
+
+            if (this.$refs['esign']){
+              this.$refs.esign.reset()
+            }
+          }).catch(err => {
+            Toast(this.$t("签名错误"));
+            return done(false);
+          })
+        }
+        // 点击了取消按钮
+        else {
+          if (this.$refs['esign']){
+            this.$refs.esign.reset()
+          }
+          done(true);
+        }
+      },
+      sianRange(event, type){
+        this.signType = type;
+        this.dialogRangeDetail = true;
+      },
+      sianClick(event){
+        let params = {
+          id: this.detailData.id ? this.detailData.id : this.detailData.id,
+          status: this.signType,
+          transUserId: this.transUserId,
+          des: ''
+        };
+        this.handleConfirm(params);
+      },
+      okRangeDialog(){
+        if (this.transUserId == ''){
+          Toast(this.$t("请选择人员!"));
+          return;
+        }
+        this.sianClick();
+        this.dialogRangeDetail = false;
       }
     }
   }
@@ -2438,5 +2601,19 @@
   border-radius: 5px;
   background: #FFFFFF;
   box-shadow: 0px 0px 10px #909399;
+}
+.write-header-block{
+  height: 30px;
+  position: relative;
+  top: -10px;
+  text-align: center
+}
+.write-item-block{
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+.write-item-left-block{
+  border-right: 1px solid #ebebeb;
 }
 </style>
