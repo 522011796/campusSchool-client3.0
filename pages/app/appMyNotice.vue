@@ -195,8 +195,12 @@
             <template v-if="active == 1">
               <div class="text-right padding-lr-10">
                 <!--            <el-button v-if="detailApplyAuditUserData.agreen1 == true" size="mini" type="success" @click="handleOk($event, detailData, 1)">同 意</el-button>-->
-                <el-button size="mini" type="success" v-if="detailData.join == true" @click="sianRange($event, 7)">{{ $t('加签') }}</el-button>
-                <el-button size="mini" type="danger" v-if="detailData.trans == true" @click="sianRange($event, 6)" style="margin-left: 0 !important;">{{ $t('转签') }}</el-button>
+                <el-button size="mini" type="success" v-if="detailData.join == true" @click="sianRange($event, 7)">
+                  {{detailData.joinName != undefined && detailData.joinName != '' ? detailData.joinName : $t('加签')}}
+                </el-button>
+                <el-button size="mini" type="danger" v-if="detailData.trans == true" @click="sianRange($event, 6)" style="margin-left: 0 !important;">
+                  {{detailData.transName != undefined && detailData.transName != '' ? detailData.transName : $t('转签')}}
+                </el-button>
                 <el-button v-if="detailData.urge == true" type="danger" size="mini" @click="handleUrge($event, detailData)">{{$t("催办")}}</el-button>
                 <el-popover
                   :tabindex="99999"
@@ -234,7 +238,9 @@
                     <el-button size="mini" type="text" @click="cancelPop">取消</el-button>
                     <el-button type="primary" size="mini" @click="handleOk($event, detailData, 1)">确定</el-button>
                   </div>
-                  <el-button slot="reference" type="success" size="mini">{{$t("同意")}}</el-button>
+                  <el-button slot="reference" type="success" size="mini">
+                    {{detailData.agreedName != undefined && detailData.agreedName != '' ? detailData.agreedName : $t("同意")}}
+                  </el-button>
                 </el-popover>
                 <el-button size="mini" @click="handleCancel">取 消</el-button>
                 <!--            <el-button size="mini" type="primary" @click="handleOk($event, detailData, 6)">转 交</el-button>-->
