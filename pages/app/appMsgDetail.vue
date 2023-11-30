@@ -237,10 +237,17 @@
 
         <div style="height: 60px;line-height: 60px;text-align: center;background: #f5f5f5">
           <div v-if="detailData.cancel == true">
-            <el-button style="width: 100px" size="small" type="primary" @click="handleOk($event, detailData, -1)">撤 销</el-button>
+            <el-button size="small" type="primary" @click="handleOk($event, detailData, -1)">撤 销</el-button>
           </div>
 
           <div v-if="detailData.handle == true">
+            <el-button size="mini" type="success" v-if="detailData.join == true" @click="sianRange($event, 7)">
+              {{detailData.joinName != undefined && detailData.joinName != '' ? detailData.joinName : $t('加签')}}
+            </el-button>
+            <el-button size="mini" type="danger" v-if="detailData.trans == true" @click="sianRange($event, 6)" style="margin-left: 0 !important;">
+              {{detailData.transName != undefined && detailData.transName != '' ? detailData.transName : $t('转签')}}
+            </el-button>
+
             <el-popover
               :tabindex="99999"
               placement="top"
@@ -277,7 +284,7 @@
                 <el-button size="mini" type="text" @click="cancelPop">取消</el-button>
                 <el-button type="primary" size="small" @click="handleOk($event, detailData, 1)">确定</el-button>
               </div>
-              <el-button slot="reference" style="width: 100px" type="success" size="small">{{$t("同意")}}</el-button>
+              <el-button slot="reference" type="success" size="small">{{$t("同意")}}</el-button>
             </el-popover>
 
             <el-popover
@@ -316,7 +323,7 @@
                 <el-button size="mini" type="text" @click="cancelPop">取消</el-button>
                 <el-button type="primary" size="small" @click="handleOk($event, detailData, 2)">确定</el-button>
               </div>
-              <el-button slot="reference" style="width: 100px" type="warning" size="small">{{$t("驳回")}}</el-button>
+              <el-button slot="reference" type="warning" size="small">{{$t("驳回")}}</el-button>
             </el-popover>
           </div>
 
@@ -327,6 +334,73 @@
         </div>
       </div>
     </div>
+
+    <van-dialog v-model="dialogWrite" title="签名" style="top:50%;" :width="screenWidth.width1-15" :show-confirm-button="false" @close="closeDialog" :before-close="onBeforeClose">
+      <div slot="title" class="write-header-block">
+        <div>{{$t("签名")}}</div>
+      </div>
+
+      <vue-esign
+        ref="esign"
+        :width="screenWidth.width1-15"
+        :height="divHeight10.height1 - 200"
+        :isCrop="isCrop"
+        :lineWidth="lineWidth"
+        :lineColor="lineColor"
+        :bgColor.sync="bgColor"
+        :quality="quality">
+
+      </vue-esign>
+
+      <div style="height: 50px;line-height: 50px;background: #FFFFFF">
+        <el-row>
+          <el-col :span="12">
+            <div class="write-item-block write-item-left-block" @click="dialogWrite = false">
+              <span>{{$t("取消")}}</span>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div class="write-item-block" v-loading="btnLoading" @click="btnLoading == true ? '' : okDialog()">
+              <span>{{$t("确定")}}</span>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+    </van-dialog>
+
+    <van-popup v-model="dialogRangeDetail" round position="bottom" :style="{ height: '400px' }" @close="closeRangeDialog">
+      <div style="height: 40px;line-height: 40px;background: #f5f5f5">
+        <el-row>
+          <el-col :span="6">
+            <div class="text-center" @click="closeRangeDialog">
+              <a href="javascript:;" class="color-warning">{{$t("取消")}}</a>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div class="text-center">
+              {{$t("选择人员")}}
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="text-center" @click="okRangeDialog">
+              <a href="javascript:;" class="color-success">{{$t("确认")}}</a>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+      <div style="height: 360px;overflow-y: auto">
+        <van-radio-group v-model="transUserId" v-for="(item,index) in signType == 6 ? detailData.transRange : detailData.joinRange" :key="index">
+          <van-cell-group>
+            <van-cell :title="item.realName" clickable @click="transUserId = item.userId">
+              <template #right-icon>
+                <van-radio :name="item.userId" />
+              </template>
+            </van-cell>
+          </van-cell-group>
+        </van-radio-group>
+      </div>
+    </van-popup>
+
   </div>
 </template>
 
@@ -337,10 +411,12 @@
   import mixinsBridge from "~/utils/mixinsBridge";
   import {ImagePreview, Toast} from "vant";
   import {MessageError} from "~/utils/utils";
+  import vueEsign from "vue-esign/src/index.vue";
   export default {
     name: 'appMsgDetail',
     layout: 'defaultAppScreen',
     mixins: [mixins,mixinsBridge],
+    components: {vueEsign},
     data(){
       return {
         active: 6,
@@ -358,6 +434,19 @@
         textarea: '',
         images: [],
         uploadFileListUrl: common.upload_file,
+        lineWidth: 6,
+        lineColor: '#000000',
+        bgColor: '#F5f5f5',
+        resultImg: '',
+        isCrop: false,
+        quality: 1,
+        params: {},
+        transUserId: '',
+        transUserIdObj: {},
+        signType: '',
+        dialogRangeDetail: false,
+        dialogWrite: false,
+        btnLoading: false
       }
     },
     mounted() {
@@ -428,16 +517,34 @@
           params['url'] = images.join();
         }
 
-        params = this.$qs.stringify(params);
-        this.$axios.post(common.server_form_audit_handle, params).then(res => {
+        if (data.sign == true && type == 1){
+          this.lineWidth = 6;
+          this.lineColor = '#000000';
+          this.bgColor = '#F5f5f5';
+          this.resultImg = '';
+          this.isCrop = false;
+          this.quality = 1;
+          this.params = params;
+          this.visibleYes = false;
+          this.dialogWrite = true;
+          return;
+        }
+
+        this.handleConfirm(params);
+      },
+      handleConfirm(params, done){
+        let paramsTemp = this.$qs.stringify(params);
+        this.$axios.post(common.server_form_audit_handle, paramsTemp, {loading: false}).then(res => {
           if (res.data.code == 200){
-            //this.tableData.splice(this.detailIndex, 1);
-            //let page = Math.ceil(this.tableData.length / 20);
-            //this.page = page;
-            //this.init();
+            this.images = [];
+            this.popUpVisible = false;
+            this.dialogSysVisible = false;
             this.initAppRecommend(this.$route.query.msgId);
             this.cancelPop();
             this.popUpVisible = false;
+            this.dialogWrite = false;
+            this.dialogRangeDetail = false;
+
             Toast(res.data.desc);
           }else {
             Toast(res.data.desc);
@@ -470,6 +577,80 @@
       },
       clearImage(event, index){
         this.images.splice(index, 1);
+      },
+      closeDialog(){
+        this.params = {};
+        if (this.$refs['esign']){
+          this.$refs.esign.reset()
+        }
+      },
+      closeRangeDialog(){
+        this.transUserId = '';
+        this.dialogRangeDetail = false;
+      },
+      onBeforeClose(action, done) {
+        // 点击了确定按钮
+        if (action === "confirm") {
+          let _self = this;
+          this.$refs.esign.generate().then(res => {
+            _self.params['signStr'] = res;
+            _self.params['schoolAccountId'] = this.account;
+            _self.params['amount'] = this.amount;
+
+            _self.handleConfirm(_self.params, done);
+
+            if (this.$refs['esign']){
+              this.$refs.esign.reset()
+            }
+          }).catch(err => {
+            Toast(this.$t("签名错误"));
+            return done(false);
+          })
+        }
+        // 点击了取消按钮
+        else {
+          if (this.$refs['esign']){
+            this.$refs.esign.reset()
+          }
+          done(true);
+        }
+      },
+      sianRange(event, type){
+        this.signType = type;
+        this.dialogRangeDetail = true;
+      },
+      sianClick(event){
+        let params = {
+          id: this.detailData.id ? this.detailData.id : this.detailData.id,
+          status: this.signType,
+          transUserId: this.transUserId,
+          des: ''
+        };
+        this.handleConfirm(params);
+      },
+      okRangeDialog(){
+        if (this.transUserId == ''){
+          Toast(this.$t("请选择人员!"));
+          return;
+        }
+        this.sianClick();
+        this.dialogRangeDetail = false;
+      },
+      okDialog(data){
+        let _self = this;
+        this.$refs.esign.generate().then(res => {
+          _self.params['signStr'] = res;
+          _self.params['schoolAccountId'] = this.account;
+          _self.params['amount'] = this.amount;
+
+          _self.handleConfirm(_self.params);
+
+          if (this.$refs['esign']){
+            this.$refs.esign.reset()
+          }
+        }).catch(err => {
+          Toast(this.$t("签名错误"));
+        })
       }
     }
   }
@@ -517,5 +698,19 @@
   text-align: center;
   border: 1px dashed #dddddd;
   font-size: 12px;
+}
+.write-header-block{
+  height: 30px;
+  position: relative;
+  top: -10px;
+  text-align: center
+}
+.write-item-block{
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+.write-item-left-block{
+  border-right: 1px solid #ebebeb;
 }
 </style>
