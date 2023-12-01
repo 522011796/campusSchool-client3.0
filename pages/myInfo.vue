@@ -546,6 +546,9 @@
         <template v-if="activeMenu == 1">
           <div class="text-right padding-lr-10">
             <el-button size="small" @click="handleCancel">取 消</el-button>
+            <el-button size="small" type="warning" v-if="detailData.fallback == true" @click="handleOk($event, detailData, 9)">
+              {{detailData.fallbackName != undefined && detailData.fallbackName != '' ? detailData.fallbackName : '返 回'}}
+            </el-button>
             <el-button size="small" type="success" v-if="detailData.join == true" @click="sianRange($event, 7)">
               {{detailData.joinName != undefined && detailData.joinName != '' ? detailData.joinName : '加 签'}}
             </el-button>

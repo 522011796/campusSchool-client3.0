@@ -195,6 +195,9 @@
             <template v-if="active == 1">
               <div class="text-right padding-lr-10">
                 <!--            <el-button v-if="detailApplyAuditUserData.agreen1 == true" size="mini" type="success" @click="handleOk($event, detailData, 1)">同 意</el-button>-->
+                <el-button size="mini" type="warning" v-if="detailData.fallback == true" @click="handleOk($event, detailData, 9)">
+                  {{detailData.fallbackName != undefined && detailData.fallbackName != '' ? detailData.fallbackName : '返回'}}
+                </el-button>
                 <el-button size="mini" type="success" v-if="detailData.join == true" @click="sianRange($event, 7)">
                   {{detailData.joinName != undefined && detailData.joinName != '' ? detailData.joinName : $t('加签')}}
                 </el-button>

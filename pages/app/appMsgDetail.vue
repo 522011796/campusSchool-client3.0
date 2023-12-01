@@ -255,6 +255,9 @@
           </div>
 
           <div v-if="detailData.handle == true">
+            <el-button size="mini" type="warning" v-if="detailData.fallback == true" @click="handleOk($event, detailData, 9)">
+              {{detailData.fallbackName != undefined && detailData.fallbackName != '' ? detailData.fallbackName : '返回'}}
+            </el-button>
             <el-button size="mini" type="success" v-if="detailData.join == true" @click="sianRange($event, 7)">
               {{detailData.joinName != undefined && detailData.joinName != '' ? detailData.joinName : $t('加签')}}
             </el-button>
