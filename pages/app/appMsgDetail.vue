@@ -192,10 +192,24 @@
                           </label>
                           <label v-if="itemUser.status === 5" class="color-warning">{{$t("无需审批")}}</label>
                           <label v-if="itemUser.status === 8" class="color-warning">{{$t("审批中")}}</label>
-                        </span>
-                          <span class="margin-left-10" v-if="itemUser.handleTime">
-                          <label class="color-muted">{{$moment(itemUser.handleTime).format("YYYY-MM-DD HH:mm:ss")}}</label>
-                        </span>
+                          </span>
+                            <span class="margin-left-10" v-if="itemUser.handleTime">
+                            <label class="color-muted">{{$moment(itemUser.handleTime).format("YYYY-MM-DD HH:mm:ss")}}</label>
+                          </span>
+
+                          <div class="margin-top-5" v-if="itemUser.signStr && itemUser.signStr != ''">
+                            <span style="position: relative;top: -3px" class="color-muted">
+                              <i class="fa fa-pencil"></i>
+                              <label>{{$t("手写签名")}}</label>
+                            </span>
+                              <span>
+                              <el-image
+                                style="width: 40px; height: 15px"
+                                :src="itemUser.signStr"
+                                :preview-src-list="[itemUser.signStr]">
+                              </el-image>
+                            </span>
+                          </div>
                         </div>
                       </template>
                       <template v-if="item.nodeType == 'cc'">
