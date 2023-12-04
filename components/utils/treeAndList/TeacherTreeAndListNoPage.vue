@@ -142,7 +142,7 @@
         //this.commSelUserArr = [];
         //this.commSelUserNameArr = [];
         this.commLoading = true;
-        this.$axios.get(common.dormaccess_teacher_select_status_page, {params: params}).then(res => {
+        this.$axios.post(common.dormaccess_teacher_select_status_page, JSON.stringify(params),{dataType: 'stringfy'}).then(res => {
           if (res.data.data){
             //this.$refs.commTableRef.clearSelection();
             for (let i = 0; i < res.data.data.page.list.length; i++){
