@@ -128,7 +128,7 @@
 
       <template v-if="detailDataType == 2">
         <div class="detail-top-block" style="overflow-x: auto;padding: 20px 0px;white-space:nowrap;">
-          <div :style="{width: (detailApplyAuditList.length+2) * (600/4)+'px'}">
+          <div :style="{width: (detailApplyAuditList.length+2) * (600/4) + (detailApplyAuditList.length+1) * 50 +'px'}">
             <div class="pull-left text-center" :style="{width: 600/4+'px'}">
               <div class="text-center margin-bottom-5">
                 <span class="font-size-12"> &nbsp; </span>
@@ -140,37 +140,43 @@
                 <span class="font-size-12">{{$t("提交")}}</span>
               </div>
             </div>
-
-            <div :style="{width: 600/4+'px'}" class="pull-left text-center" v-for="(item, index) in detailApplyAuditList" :key="index">
-              <template>
-                <div class="text-center margin-bottom-5">
-                      <span class="font-size-12">
-                        <label>{{ auditStatusTextInfo(item.status) }}</label>
-                      </span>
-                </div>
-                <div class="detail-top-item-warning-block" :class="auditColorInfo(item.status)">
-                  <el-popover
-                    placement="left"
-                    width="150"
-                    trigger="hover">
-                    <div style="max-height: 100px;overflow-y: auto">
-                      <div v-for="(itemUser, indexUser) in item.handleUserNameList" :key="indexUser">
-                        <div class="font-size-12 padding-tb-5 text-center">
-                          <el-tag type="success" size="mini">{{itemUser}}</el-tag>
+            <div class="pull-left text-center" :style="{width: 50+'px'}" style="line-height: 93px;">
+              <i class="el-icon-right" style="font-size: 30px;"></i>
+            </div>
+            <div v-for="(item, index) in detailApplyAuditList" :key="index">
+              <div :style="{width: 600/4+'px'}" class="pull-left text-center">
+                <template>
+                  <div class="text-center margin-bottom-5">
+                        <span class="font-size-12">
+                          <label>{{ auditStatusTextInfo(item.status) }}</label>
+                        </span>
+                  </div>
+                  <div class="detail-top-item-warning-block" :class="auditColorInfo(item.status)">
+                    <el-popover
+                      placement="left"
+                      width="150"
+                      trigger="hover">
+                      <div style="max-height: 100px;overflow-y: auto">
+                        <div v-for="(itemUser, indexUser) in item.handleUserNameList" :key="indexUser">
+                          <div class="font-size-12 padding-tb-5 text-center">
+                            <el-tag type="success" size="mini">{{itemUser}}</el-tag>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div slot="reference" class="font-size-12 color-white moon-content-text-ellipsis-class text-center">
-                      {{ item.handleUserNameList.join() }}
-                    </div>
-                  </el-popover>
-                </div>
-                <div class="text-center margin-top-5">
-                  <span class="font-size-12">{{ item.nodeName }}</span>
-                </div>
-              </template>
+                      <div slot="reference" class="font-size-12 color-white moon-content-text-ellipsis-class text-center">
+                        {{ item.handleUserNameList.join() }}
+                      </div>
+                    </el-popover>
+                  </div>
+                  <div class="text-center margin-top-5">
+                    <span class="font-size-12">{{ item.nodeName }}</span>
+                  </div>
+                </template>
+              </div>
+              <div class="pull-left text-center" :style="{width: 50+'px'}" style="line-height: 93px;">
+                <i class="el-icon-right" style="font-size: 30px;"></i>
+              </div>
             </div>
-
             <div class="pull-left text-center" :style="{width: 600/4+'px'}">
               <div class="text-center margin-bottom-5">
                 <span class="font-size-12"> &nbsp; </span>

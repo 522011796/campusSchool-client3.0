@@ -21,18 +21,18 @@
           <div class="margin-top-20">
             <div class="font-bold">{{$t("基础信息")}}:</div>
             <template>
-              <div class="margin-top-5">
+              <div class="margin-top-5 margin-left-20">
                 <template>
                   <el-row>
                     <el-col :span="12">
-                      <el-form label-width="100px">
+                      <el-form label-width="100px" :label-position="labelPosition">
                         <el-form-item :label="$t('申请人')">
                           <label>{{dataMainDetailObj.applyUserName}}</label>
                         </el-form-item>
                       </el-form>
                     </el-col>
                     <el-col :span="12">
-                      <el-form label-width="100px">
+                      <el-form label-width="100px" :label-position="labelPosition">
                         <el-form-item :label="$t('工号')">
                           <label>{{dataMainDetailObj.userNo}}</label>
                         </el-form-item>
@@ -42,14 +42,14 @@
                   <template>
                     <el-row>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('提交日期')">
                             <label>{{$moment(dataMainDetailObj.applyTime).format("YYYY-MM-DD HH:mm:ss")}}</label>
                           </el-form-item>
                         </el-form>
                       </el-col>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item v-if="dataMainDetailObj.formCode =='JKGL'" :label="$t('借款日期')">
                             <label v-if="dataDetailObj['jk_date20230501'] && dataDetailObj['jk_date20230501']['value']">{{dataDetailObj['jk_date20230501']['value']}}</label>
                             <label v-else>--</label>
@@ -65,14 +65,14 @@
                   <template v-if="dataMainDetailObj.formCode == 'JKGL'">
                     <el-row>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联项目')">
                             <label>{{ dataDetailObj['xm_id20230501'] ? (dataDetailObj.xm_id20230501.name ? dataDetailObj.xm_id20230501.name : '--') : '--' }}</label>
                           </el-form-item>
                         </el-form>
                       </el-col>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联合同')">
                             <label>{{ dataDetailObj['ht_id20230501'] ? (dataDetailObj.xm_id20230501.name ? dataDetailObj.xm_id20230501.name : '--') : '--' }}</label>
                           </el-form-item>
@@ -81,14 +81,14 @@
                     </el-row>
                     <el-row>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联标签')">
                             <label>{{ dataDetailObj['tag_id20230501'] ? (dataDetailObj.tag_id20230501.name ? dataDetailObj.tag_id20230501.name : '--') : '--' }}</label>
                           </el-form-item>
                         </el-form>
                       </el-col>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('金额')">
                             <label>{{ dataDetailObj['cost_allAmount20230501'] ? (dataDetailObj.cost_allAmount20230501.value ? dataDetailObj.cost_allAmount20230501.value : '--') : '--' }}</label>
                           </el-form-item>
@@ -97,7 +97,7 @@
                     </el-row>
                     <el-row>
                       <el-col :span="24">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('借款账户')">
                             <label>{{ dataDetailObj['jk_account20230501'] ? (dataDetailObj.jk_account20230501.name ? dataDetailObj.jk_account20230501.name : '--') : '--' }}</label>
                           </el-form-item>
@@ -108,14 +108,14 @@
                   <template v-if="dataMainDetailObj.formCode == 'HKD'">
                     <el-row>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联标签')">
                             <label>{{ dataDetailObj['tag_id20230501'] ? (dataDetailObj.tag_id20230501.name ? dataDetailObj.tag_id20230501.name : '--') : '--' }}</label>
                           </el-form-item>
                         </el-form>
                       </el-col>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('核销借款')">
                             <label>{{ dataDetailObj['borrow_apply20230501'] ? (dataDetailObj.borrow_apply20230501.name ? dataDetailObj.borrow_apply20230501.name : '--') : '--' }}</label>
                           </el-form-item>
@@ -124,14 +124,14 @@
                     </el-row>
                     <el-row>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联单据')">
                             <label>{{ dataDetailObj['rela_apply20230501'] ? (dataDetailObj.rela_apply20230501.name ? dataDetailObj.rela_apply20230501.name : '--') : '--' }}</label>
                           </el-form-item>
                         </el-form>
                       </el-col>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('金额')">
                             <label>{{ dataDetailObj['cost_allAmount20230501'] ? (dataDetailObj.cost_allAmount20230501.value ? dataDetailObj.cost_allAmount20230501.value : '--') : '--' }}</label>
                           </el-form-item>
@@ -140,7 +140,7 @@
                     </el-row>
                     <el-row>
                       <el-col :span="24">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('还款账户')">
                             <label>{{ dataDetailObj['jk_account20230501'] ? (dataDetailObj.jk_account20230501.name ? dataDetailObj.jk_account20230501.name : '--') : '--' }}</label>
                           </el-form-item>
@@ -152,14 +152,14 @@
                   <template v-if="dataMainDetailObj.formCode == 'SKD'">
                     <el-row>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联标签')">
                             <label>{{ dataDetailObj['tag_id20230501'] ? (dataDetailObj.tag_id20230501.name ? dataDetailObj.tag_id20230501.name : '--') : '--' }}</label>
                           </el-form-item>
                         </el-form>
                       </el-col>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联单据')">
                             <label>{{ dataDetailObj['rela_apply20230501'] ? (dataDetailObj.rela_apply20230501.name ? dataDetailObj.rela_apply20230501.name : '--') : '--' }}</label>
                           </el-form-item>
@@ -168,14 +168,14 @@
                     </el-row>
                     <el-row>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('收款账户')">
                             <label>{{ dataDetailObj['jk_account20230501'] ? (dataDetailObj.jk_account20230501.name ? dataDetailObj.jk_account20230501.name : '--') : '--' }}</label>
                           </el-form-item>
                         </el-form>
                       </el-col>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('金额')">
                             <label>{{ dataDetailObj['cost_allAmount20230501'] ? (dataDetailObj.cost_allAmount20230501.value ? dataDetailObj.cost_allAmount20230501.value : '--') : '--' }}</label>
                           </el-form-item>
@@ -187,14 +187,14 @@
                   <template v-if="dataMainDetailObj.formCode == 'BZBX'">
                     <el-row>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联标签')">
                             <label>{{ dataDetailObj['tag_id20230501'] ? (dataDetailObj.tag_id20230501.name ? dataDetailObj.tag_id20230501.name : '--') : '--' }}</label>
                           </el-form-item>
                         </el-form>
                       </el-col>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('核销借款')">
                             <label>{{ dataDetailObj['borrow_apply20230501'] ? (dataDetailObj.borrow_apply20230501.name ? dataDetailObj.borrow_apply20230501.name : '--') : '--' }}</label>
                           </el-form-item>
@@ -203,14 +203,14 @@
                     </el-row>
                     <el-row>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联单据')">
                             <label>{{ dataDetailObj['rela_apply20230501'] ? (dataDetailObj.rela_apply20230501.name ? dataDetailObj.rela_apply20230501.name : '--') : '--' }}</label>
                           </el-form-item>
                         </el-form>
                       </el-col>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('报销金额')">
                             <label>{{ dataDetailObj['cost_allAmount20230501'] ? (dataDetailObj.cost_allAmount20230501.value ? dataDetailObj.cost_allAmount20230501.value : '--') : '--' }}</label>
                           </el-form-item>
@@ -219,7 +219,7 @@
                     </el-row>
                     <el-row>
                       <el-col :span="24">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('报销账户')">
                             <label>{{ dataDetailObj['my_account20230501'] ? (dataDetailObj.my_account20230501.name ? dataDetailObj.my_account20230501.name : '--') : '--' }}</label>
                           </el-form-item>
@@ -231,14 +231,14 @@
                   <template v-if="dataMainDetailObj.formCode == 'PTGL'">
                     <el-row>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联项目')">
                             <label>{{ dataDetailObj['xm_id20230501'] ? (dataDetailObj.xm_id20230501.name ? dataDetailObj.xm_id20230501.name : '--') : '--' }}</label>
                           </el-form-item>
                         </el-form>
                       </el-col>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联标签')">
                             <label>{{ dataDetailObj['tag_id20230501'] ? (dataDetailObj.tag_id20230501.name ? dataDetailObj.tag_id20230501.name : '--') : '--' }}</label>
                           </el-form-item>
@@ -247,7 +247,7 @@
                     </el-row>
                     <el-row>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('金额')">
                             <label>{{ dataDetailObj['cost_allAmount20230501'] ? (dataDetailObj.cost_allAmount20230501.value ? dataDetailObj.cost_allAmount20230501.value : '--') : '--' }}</label>
                           </el-form-item>
@@ -259,14 +259,14 @@
                   <template v-if="dataMainDetailObj.formCode == 'DGDK'">
                     <el-row>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联项目')">
                             <label>{{ dataDetailObj['xm_id20230501'] ? (dataDetailObj.xm_id20230501.name ? dataDetailObj.xm_id20230501.name : '--') : '--' }}</label>
                           </el-form-item>
                         </el-form>
                       </el-col>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联合同')">
                             <label>{{ dataDetailObj['ht_id20230501'] ? (dataDetailObj.xm_id20230501.name ? dataDetailObj.xm_id20230501.name : '--') : '--' }}</label>
                           </el-form-item>
@@ -275,14 +275,14 @@
                     </el-row>
                     <el-row>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联标签')">
                             <label>{{ dataDetailObj['tag_id20230501'] ? (dataDetailObj.tag_id20230501.name ? dataDetailObj.tag_id20230501.name : '--') : '--' }}</label>
                           </el-form-item>
                         </el-form>
                       </el-col>
                       <el-col :span="12">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('管理单据')">
                             <label>{{ dataDetailObj['rela_apply20230501'] ? (dataDetailObj.rela_apply20230501.name ? dataDetailObj.rela_apply20230501.name : '--') : '--' }}</label>
                           </el-form-item>
@@ -291,7 +291,7 @@
                     </el-row>
                     <el-row>
                       <el-col :span="24">
-                        <el-form label-width="100px">
+                        <el-form label-width="100px" :label-position="labelPosition">
                           <el-form-item :label="$t('金额')">
                             <label>{{ dataDetailObj['cost_allAmount20230501'] ? (dataDetailObj.cost_allAmount20230501.value ? dataDetailObj.cost_allAmount20230501.value : '--') : '--' }}</label>
                           </el-form-item>
@@ -300,7 +300,7 @@
                     </el-row>
                   </template>
 
-                  <el-form label-width="100px">
+                  <el-form label-width="100px" :label-position="labelPosition">
                     <el-form-item :label="$t('附件')">
                       <div v-if="(dataMainDetailObj.formCode == 'JKGL' || dataMainDetailObj.formCode == 'HKD' || dataMainDetailObj.formCode == 'SKD') && dataDetailObj['jk_files20230501']">
                         <div v-if="dataDetailObj['jk_files20230501']['value'].length > 0" v-for="(item, index) in dataDetailObj['jk_files20230501']['value']" :key="index" class="pull-left" style="position: relative;margin-right:10px;top: 10px">
@@ -660,7 +660,7 @@
 
       <template v-if="detailDataType == 2">
         <div class="detail-top-block" style="overflow-x: auto;padding: 20px 0px;white-space:nowrap;">
-          <div :style="{width: (detailApplyAuditList.length+2) * (600/4)+'px'}">
+          <div :style="{width: (detailApplyAuditList.length+2) * (600/4) + (detailApplyAuditList.length+1) * 50 +'px'}">
             <div class="pull-left text-center" :style="{width: 600/4+'px'}">
               <div class="text-center margin-bottom-5">
                 <span class="font-size-12"> &nbsp; </span>
@@ -673,36 +673,44 @@
               </div>
             </div>
 
-            <div :style="{width: 600/4+'px'}" class="pull-left text-center" v-for="(item, index) in detailApplyAuditList" :key="index">
-              <template>
-                <div class="text-center margin-bottom-5">
+            <div class="pull-left text-center" :style="{width: 50+'px'}" style="line-height: 93px;">
+              <i class="el-icon-right" style="font-size: 30px;"></i>
+            </div>
+
+            <div v-for="(item, index) in detailApplyAuditList" :key="index">
+              <div :style="{width: 600/4+'px'}" class="pull-left text-center">
+                <template>
+                  <div class="text-center margin-bottom-5">
                       <span class="font-size-12">
                         <label>{{ auditStatusTextInfo(item.status) }}</label>
                       </span>
-                </div>
-                <div class="detail-top-item-warning-block" :class="auditColorInfo(item.status)">
-                  <el-popover
-                    placement="left"
-                    width="150"
-                    trigger="hover">
-                    <div style="max-height: 100px;overflow-y: auto">
-                      <div v-for="(itemUser, indexUser) in item.handleUserNameList" :key="indexUser">
-                        <div class="font-size-12 padding-tb-5 text-center">
-                          <el-tag type="success" size="mini">{{itemUser}}</el-tag>
+                  </div>
+                  <div class="detail-top-item-warning-block" :class="auditColorInfo(item.status)">
+                    <el-popover
+                      placement="left"
+                      width="150"
+                      trigger="hover">
+                      <div style="max-height: 100px;overflow-y: auto">
+                        <div v-for="(itemUser, indexUser) in item.handleUserNameList" :key="indexUser">
+                          <div class="font-size-12 padding-tb-5 text-center">
+                            <el-tag type="success" size="mini">{{itemUser}}</el-tag>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div slot="reference" class="font-size-12 color-white moon-content-text-ellipsis-class text-center">
-                      {{ item.handleUserNameList.join() }}
-                    </div>
-                  </el-popover>
-                </div>
-                <div class="text-center margin-top-5">
-                  <span class="font-size-12">{{ item.nodeName }}</span>
-                </div>
-              </template>
+                      <div slot="reference" class="font-size-12 color-white moon-content-text-ellipsis-class text-center">
+                        {{ item.handleUserNameList.join() }}
+                      </div>
+                    </el-popover>
+                  </div>
+                  <div class="text-center margin-top-5">
+                    <span class="font-size-12">{{ item.nodeName }}</span>
+                  </div>
+                </template>
+              </div>
+              <div class="pull-left text-center" :style="{width: 50+'px'}" style="line-height: 93px;">
+                <i class="el-icon-right" style="font-size: 30px;"></i>
+              </div>
             </div>
-
             <div class="pull-left text-center" :style="{width: 600/4+'px'}">
               <div class="text-center margin-bottom-5">
                 <span class="font-size-12"> &nbsp; </span>
@@ -1019,6 +1027,7 @@ export default {
     data() {
       return {
         value: '',
+        labelPosition: 'left',
         detailDataType: this.detailType,
         budgetList: []
       }

@@ -307,10 +307,23 @@
       />
     </van-popup>
 
-    <van-popup round v-model="showTopOprPicker" position="bottom"  :style="{ height: '70%' }">
+    <van-popup round v-model="showTopOprPicker" position="bottom"  :style="{ height: '35%' }">
       <div class="padding-lr-30 padding-top-20">
-        <div v-for="(item, index) in serverAppList" class="system-app-item-block border-bottom-1" @click="selAppFun(index+1, item.form_code)">
-          <el-row>
+        <el-row>
+          <el-col :span="8" v-for="(item, index) in serverAppList"  >
+            <div class="text-center form-type" @click="selAppFun(index+1, item.form_code)">
+                <img
+                  src="~static/img/pick_write_file_icon.png"
+                  class="system-img-list-block"
+                  fit="fit" />
+              <p>{{item.form_name}}</p>
+            </div>
+          </el-col>
+
+        </el-row>
+
+
+<!--          <el-row>
             <el-col :span="12">
               <div class="text-left">
                 <span>
@@ -329,8 +342,7 @@
                 <el-button type="success" size="mini" @click="selAppFun(index+1, item.form_code)">{{ $t("申请") }}</el-button>
               </div>
             </el-col>
-          </el-row>
-        </div>
+          </el-row>-->
       </div>
     </van-popup>
 
@@ -942,5 +954,11 @@
   top: 5px;
   height: 20px;
   width: 20px;
+}
+.form-type{
+  background: rgba(208, 208, 208, 0.5);
+  margin: 2px;
+  padding: 10px;
+  border-radius: 5px;
 }
 </style>

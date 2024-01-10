@@ -5,26 +5,26 @@ import NuxtError from './components/nuxt-error.vue'
 
 import NuxtBuildIndicator from './components/nuxt-build-indicator'
 
-import '../assets/css/animate.min.css'
+import '..\\assets\\css\\animate.min.css'
 
-import '../node_modules/element-ui/lib/theme-chalk/index.css'
+import '..\\node_modules\\element-ui\\lib\\theme-chalk\\index.css'
 
-import '../assets/css/common.css'
+import '..\\assets\\css\\common.css'
 
-import '../assets/font-awesome-4.7.0/css/font-awesome.min.css'
+import '..\\assets\\font-awesome-4.7.0\\css\\font-awesome.min.css'
 
-import '../node_modules/quill/dist/quill.snow.css'
+import '..\\node_modules\\quill\\dist\\quill.snow.css'
 
-import '../node_modules/quill/dist/quill.bubble.css'
+import '..\\node_modules\\quill\\dist\\quill.bubble.css'
 
-import '../node_modules/quill/dist/quill.core.css'
+import '..\\node_modules\\quill\\dist\\quill.core.css'
 
-import '../node_modules/vant/lib/index.less'
+import '..\\node_modules\\vant\\lib\\index.less'
 
-import _6f6c098b from '../layouts/default.vue'
-import _32d6eca2 from '../layouts/defaultAppScreen.vue'
-import _4d6b8a81 from '../layouts/defaultBak.vue'
-import _41a81bc6 from '../layouts/defaultFullScreen.vue'
+import _6f6c098b from '..\\layouts\\default.vue'
+import _32d6eca2 from '..\\layouts\\defaultAppScreen.vue'
+import _4d6b8a81 from '..\\layouts\\defaultBak.vue'
+import _41a81bc6 from '..\\layouts\\defaultFullScreen.vue'
 
 const layouts = { "_default": sanitizeComponent(_6f6c098b),"_defaultAppScreen": sanitizeComponent(_32d6eca2),"_defaultBak": sanitizeComponent(_4d6b8a81),"_defaultFullScreen": sanitizeComponent(_41a81bc6) }
 

@@ -12,31 +12,42 @@
     <div class="margin-top-10 custom-form">
       <template v-if="detailDataType == 1">
         <div class="detail-block" :style="{minHeight: drawH5Height}">
-          <div class="margin-top-10">
+          <div class="margin-top-10 white-radius-shadow">
             <div class="font-bold">{{$t("基础信息")}}:</div>
             <template>
               <div class="margin-top-5">
                 <template v-if="dataMainDetailObj.formCode != 'CGHT' && dataMainDetailObj.formCode != 'XSHT' && dataMainDetailObj.formCode != 'TYHT'">
-                  <el-row>
-                    <el-col :span="12">
-                      <el-form label-width="80px">
+                  <el-row v-if="dataMainDetailObj.applyUserName">
+                    <el-col :span="24">
+                      <el-form label-width="80px" :label-position="labelPosition">
                         <el-form-item :label="$t('申请人')">
                           <div class="moon-content-text-ellipsis-class label-item-block" @click="toastInfo(dataMainDetailObj.applyUserName)">{{dataMainDetailObj.applyUserName}}</div>
                         </el-form-item>
                       </el-form>
                     </el-col>
-                    <el-col :span="12">
-                      <el-form label-width="80px">
+                  </el-row>
+                  <el-row v-if="dataMainDetailObj.userNo">
+                    <el-col :span="24">
+                      <el-form label-width="80px" :label-position="labelPosition">
                         <el-form-item :label="$t('工号')">
                           <div class="moon-content-text-ellipsis-class label-item-block" @click="toastInfo(dataMainDetailObj.userNo)">{{dataMainDetailObj.userNo}}</div>
                         </el-form-item>
                       </el-form>
                     </el-col>
                   </el-row>
+                  <el-row v-if="dataMainDetailObj.departmentName">
+                    <el-col :span="24">
+                      <el-form label-width="90px" :label-position="labelPosition">
+                        <el-form-item :label="$t('申请人部门')">
+                          <div class="moon-content-text-ellipsis-class label-item-block" @click="toastInfo(dataMainDetailObj.departmentName)">{{dataMainDetailObj.departmentName}}</div>
+                        </el-form-item>
+                      </el-form>
+                    </el-col>
+                  </el-row>
                   <template>
-                    <el-row>
+                    <el-row v-if="dataMainDetailObj.applyTime">
                       <el-col :span="24">
-                        <el-form label-width="80px">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('提交日期')">
                             <div class="moon-content-text-ellipsis-class label-item-time-block" @click="toastInfo($moment(dataMainDetailObj.applyTime).format('YYYY-MM-DD HH:mm:ss'))">{{$moment(dataMainDetailObj.applyTime).format("YYYY-MM-DD HH:mm:ss")}}</div>
                           </el-form-item>
@@ -47,7 +58,7 @@
                   <template>
                     <el-row>
                       <el-col :span="24">
-                        <el-form label-width="80px">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item v-if="dataMainDetailObj.formCode =='JKGL'" :label="$t('借款日期')">
                             <div v-if="dataDetailObj['jk_date20230501'] && dataDetailObj['jk_date20230501']['value']" class="moon-content-text-ellipsis-class label-item-block" @click="toastInfo(dataDetailObj['jk_date20230501']['value'])">{{dataDetailObj['jk_date20230501']['value']}}</div>
                             <label v-else>--</label>
@@ -61,41 +72,45 @@
                     </el-row>
                   </template>
                   <template v-if="dataMainDetailObj.formCode == 'JKGL'">
-                    <el-row>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    <el-row v-if="dataDetailObj && dataDetailObj['xm_id20230501'] && dataDetailObj.xm_id20230501.name">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联项目')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastInfo(dataDetailObj['xm_id20230501'] ? (dataDetailObj.xm_id20230501.name ? dataDetailObj.xm_id20230501.name : '--') : '--')">{{ dataDetailObj['xm_id20230501'] ? (dataDetailObj.xm_id20230501.name ? dataDetailObj.xm_id20230501.name : '--') : '--' }}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    </el-row>
+                    <el-row v-if="dataDetailObj && dataDetailObj['ht_id20230501'] && dataDetailObj.ht_id20230501.name">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联合同')">
-                            <div class="moon-content-text-ellipsis-class label-item-block" @click="toastInfo(dataDetailObj['ht_id20230501'] ? (dataDetailObj.xm_id20230501.name ? dataDetailObj.xm_id20230501.name : '--') : '--')">{{ dataDetailObj['ht_id20230501'] ? (dataDetailObj.xm_id20230501.name ? dataDetailObj.xm_id20230501.name : '--') : '--' }}</div>
+                            <div class="moon-content-text-ellipsis-class label-item-block" @click="toastInfo(dataDetailObj['ht_id20230501'] ? (dataDetailObj.ht_id20230501.name ? dataDetailObj.ht_id20230501.name : '--') : '--')">{{ dataDetailObj['ht_id20230501'] ? (dataDetailObj.ht_id20230501.name ? dataDetailObj.ht_id20230501.name : '--') : '--' }}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
                     </el-row>
-                    <el-row>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    <el-row v-if="dataDetailObj && dataDetailObj['tag_id20230501'] && dataDetailObj.tag_id20230501.name">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联标签')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastInfo(dataDetailObj['tag_id20230501'] ? (dataDetailObj.tag_id20230501.name ? dataDetailObj.tag_id20230501.name : '--') : '--')">{{ dataDetailObj['tag_id20230501'] ? (dataDetailObj.tag_id20230501.name ? dataDetailObj.tag_id20230501.name : '--') : '--' }}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    </el-row>
+                    <el-row v-if="dataDetailObj && dataDetailObj['cost_allAmount20230501'] && dataDetailObj.cost_allAmount20230501.value">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('金额')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastInfo(dataDetailObj['cost_allAmount20230501'] ? (dataDetailObj.cost_allAmount20230501.value ? dataDetailObj.cost_allAmount20230501.value : '--') : '--')">{{ dataDetailObj['cost_allAmount20230501'] ? (dataDetailObj.cost_allAmount20230501.value ? dataDetailObj.cost_allAmount20230501.value : '--') : '--' }}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
                     </el-row>
-                    <el-row>
+                    <el-row v-if="dataDetailObj && dataDetailObj['jk_account20230501'] && dataDetailObj.jk_account20230501.name">
                       <el-col :span="24">
-                        <el-form label-width="80px">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('借款账户')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastInfo(dataDetailObj['jk_account20230501'] ? (dataDetailObj.jk_account20230501.name ? dataDetailObj.jk_account20230501.name : '--') : '--')">{{ dataDetailObj['jk_account20230501'] ? (dataDetailObj.jk_account20230501.name ? dataDetailObj.jk_account20230501.name : '--') : '--' }}</div>
                           </el-form-item>
@@ -104,41 +119,45 @@
                     </el-row>
                   </template>
                   <template v-if="dataMainDetailObj.formCode == 'HKD'">
-                    <el-row>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    <el-row v-if="dataDetailObj && dataDetailObj['jk_account20230501'] && dataDetailObj.jk_account20230501.name">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联标签')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastInfo(dataDetailObj['tag_id20230501'] ? (dataDetailObj.tag_id20230501.name ? dataDetailObj.tag_id20230501.name : '--') : '--')">{{ dataDetailObj['tag_id20230501'] ? (dataDetailObj.tag_id20230501.name ? dataDetailObj.tag_id20230501.name : '--') : '--' }}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    </el-row>
+                    <el-row v-if="dataDetailObj && dataDetailObj['borrow_apply20230501'] && dataDetailObj.borrow_apply20230501.name">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('核销借款')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastInfo(dataDetailObj['borrow_apply20230501'] ? (dataDetailObj.borrow_apply20230501.name ? dataDetailObj.borrow_apply20230501.name : '--') : '--')">{{ dataDetailObj['borrow_apply20230501'] ? (dataDetailObj.borrow_apply20230501.name ? dataDetailObj.borrow_apply20230501.name : '--') : '--' }}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
                     </el-row>
-                    <el-row>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    <el-row v-if="dataDetailObj && dataDetailObj['rela_apply20230501'] && dataDetailObj.rela_apply20230501.name">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联单据')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastInfo(dataDetailObj['rela_apply20230501'] ? (dataDetailObj.rela_apply20230501.name ? dataDetailObj.rela_apply20230501.name : '--') : '--')">{{ dataDetailObj['rela_apply20230501'] ? (dataDetailObj.rela_apply20230501.name ? dataDetailObj.rela_apply20230501.name : '--') : '--' }}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    </el-row>
+                    <el-row v-if="dataDetailObj && dataDetailObj['cost_allAmount20230501'] && dataDetailObj.cost_allAmount20230501.value">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('金额')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastInfo(dataDetailObj['cost_allAmount20230501'] ? (dataDetailObj.cost_allAmount20230501.value ? dataDetailObj.cost_allAmount20230501.value : '--') : '--')">{{ dataDetailObj['cost_allAmount20230501'] ? (dataDetailObj.cost_allAmount20230501.value ? dataDetailObj.cost_allAmount20230501.value : '--') : '--' }}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
                     </el-row>
-                    <el-row>
+                    <el-row v-if="dataDetailObj && dataDetailObj['jk_account20230501'] && dataDetailObj.jk_account20230501.name">
                       <el-col :span="24">
-                        <el-form label-width="80px">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('还款账户')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastInfo(dataDetailObj['jk_account20230501'] ? (dataDetailObj.jk_account20230501.name ? dataDetailObj.jk_account20230501.name : '--') : '--')">{{ dataDetailObj['jk_account20230501'] ? (dataDetailObj.jk_account20230501.name ? dataDetailObj.jk_account20230501.name : '--') : '--' }}</div>
                           </el-form-item>
@@ -148,32 +167,36 @@
                   </template>
 
                   <template v-if="dataMainDetailObj.formCode == 'SKD'">
-                    <el-row>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    <el-row v-if="dataDetailObj && dataDetailObj['tag_id20230501'] && dataDetailObj.tag_id20230501.name">
+                      <el-col :span="24" :label-position="labelPosition">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联标签')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastInfo(dataDetailObj['tag_id20230501'] ? (dataDetailObj.tag_id20230501.name ? dataDetailObj.tag_id20230501.name : '--') : '--')">{{ dataDetailObj['tag_id20230501'] ? (dataDetailObj.tag_id20230501.name ? dataDetailObj.tag_id20230501.name : '--') : '--' }}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    </el-row>
+                    <el-row v-if="dataDetailObj && dataDetailObj['rela_apply20230501'] && dataDetailObj.rela_apply20230501.name">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联单据')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastInfo(dataDetailObj['rela_apply20230501'] ? (dataDetailObj.rela_apply20230501.name ? dataDetailObj.rela_apply20230501.name : '--') : '--')">{{ dataDetailObj['rela_apply20230501'] ? (dataDetailObj.rela_apply20230501.name ? dataDetailObj.rela_apply20230501.name : '--') : '--' }}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
                     </el-row>
-                    <el-row>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    <el-row v-if="dataDetailObj && dataDetailObj['jk_account20230501'] && dataDetailObj.jk_account20230501.name">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('收款账户')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastInfo(dataDetailObj['jk_account20230501'] ? (dataDetailObj.jk_account20230501.name ? dataDetailObj.jk_account20230501.name : '--') : '--')">{{ dataDetailObj['jk_account20230501'] ? (dataDetailObj.jk_account20230501.name ? dataDetailObj.jk_account20230501.name : '--') : '--' }}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    </el-row>
+                    <el-row v-if="dataDetailObj && dataDetailObj['cost_allAmount20230501'] && dataDetailObj.cost_allAmount20230501.value">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('金额')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastInfo(dataDetailObj['cost_allAmount20230501'] ? (dataDetailObj.cost_allAmount20230501.value ? dataDetailObj.cost_allAmount20230501.value : '--') : '--')">{{ dataDetailObj['cost_allAmount20230501'] ? (dataDetailObj.cost_allAmount20230501.value ? dataDetailObj.cost_allAmount20230501.value : '--') : '--' }}</div>
                           </el-form-item>
@@ -183,41 +206,45 @@
                   </template>
 
                   <template v-if="dataMainDetailObj.formCode == 'BZBX'">
-                    <el-row>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    <el-row v-if="dataDetailObj && dataDetailObj['tag_id20230501'] && dataDetailObj.tag_id20230501.name">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联标签')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastInfo(dataDetailObj['tag_id20230501'] ? (dataDetailObj.tag_id20230501.name ? dataDetailObj.tag_id20230501.name : '--') : '--')">{{ dataDetailObj['tag_id20230501'] ? (dataDetailObj.tag_id20230501.name ? dataDetailObj.tag_id20230501.name : '--') : '--' }}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    </el-row>
+                    <el-row v-if="dataDetailObj && dataDetailObj['borrow_apply20230501'] && dataDetailObj.borrow_apply20230501.name">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('核销借款')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastInfo(dataDetailObj['borrow_apply20230501'] ? (dataDetailObj.borrow_apply20230501.name ? dataDetailObj.borrow_apply20230501.name : '--') : '--')">{{ dataDetailObj['borrow_apply20230501'] ? (dataDetailObj.borrow_apply20230501.name ? dataDetailObj.borrow_apply20230501.name : '--') : '--' }}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
                     </el-row>
-                    <el-row>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    <el-row v-if="dataDetailObj && dataDetailObj['rela_apply20230501'] && dataDetailObj.rela_apply20230501.name">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联单据')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{ dataDetailObj['rela_apply20230501'] ? (dataDetailObj.rela_apply20230501.name ? dataDetailObj.rela_apply20230501.name : '--') : '--' }}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    </el-row>
+                    <el-row v-if="dataDetailObj && dataDetailObj['cost_allAmount20230501'] && dataDetailObj.cost_allAmount20230501.value">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('报销金额')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{ dataDetailObj['cost_allAmount20230501'] ? (dataDetailObj.cost_allAmount20230501.value ? dataDetailObj.cost_allAmount20230501.value : '--') : '--' }}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
                     </el-row>
-                    <el-row>
+                    <el-row v-if="dataDetailObj && dataDetailObj['my_account20230501'] && dataDetailObj.my_account20230501.name">
                       <el-col :span="24">
-                        <el-form label-width="80px">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('报销账户')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{ dataDetailObj['my_account20230501'] ? (dataDetailObj.my_account20230501.name ? dataDetailObj.my_account20230501.name : '--') : '--' }}</div>
                           </el-form-item>
@@ -227,25 +254,27 @@
                   </template>
 
                   <template v-if="dataMainDetailObj.formCode == 'PTGL'">
-                    <el-row>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    <el-row v-if="dataDetailObj && dataDetailObj['xm_id20230501'] && dataDetailObj.xm_id20230501.name">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联项目')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{ dataDetailObj['xm_id20230501'] ? (dataDetailObj.xm_id20230501.name ? dataDetailObj.xm_id20230501.name : '--') : '--' }}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    </el-row>
+                    <el-row v-if="dataDetailObj && dataDetailObj['tag_id20230501'] && dataDetailObj.tag_id20230501.name">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联标签')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{ dataDetailObj['tag_id20230501'] ? (dataDetailObj.tag_id20230501.name ? dataDetailObj.tag_id20230501.name : '--') : '--' }}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
                     </el-row>
-                    <el-row>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    <el-row v-if="dataDetailObj && dataDetailObj['cost_allAmount20230501'] && dataDetailObj.cost_allAmount20230501.value">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('金额')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{ dataDetailObj['cost_allAmount20230501'] ? (dataDetailObj.cost_allAmount20230501.value ? dataDetailObj.cost_allAmount20230501.value : '--') : '--' }}</div>
                           </el-form-item>
@@ -255,41 +284,45 @@
                   </template>
 
                   <template v-if="dataMainDetailObj.formCode == 'DGDK'">
-                    <el-row>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    <el-row v-if="dataDetailObj && dataDetailObj['xm_id20230501'] && dataDetailObj.xm_id20230501.name">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联项目')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{ dataDetailObj['xm_id20230501'] ? (dataDetailObj.xm_id20230501.name ? dataDetailObj.xm_id20230501.name : '--') : '--' }}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    </el-row>
+                    <el-row v-if="dataDetailObj && dataDetailObj['ht_id20230501'] && dataDetailObj.ht_id20230501.name">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联合同')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{ dataDetailObj['ht_id20230501'] ? (dataDetailObj.xm_id20230501.name ? dataDetailObj.xm_id20230501.name : '--') : '--' }}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
                     </el-row>
-                    <el-row>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    <el-row v-if="dataDetailObj && dataDetailObj['tag_id20230501'] && dataDetailObj.tag_id20230501.name">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联标签')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{ dataDetailObj['tag_id20230501'] ? (dataDetailObj.tag_id20230501.name ? dataDetailObj.tag_id20230501.name : '--') : '--' }}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    </el-row>
+                    <el-row v-if="dataDetailObj && dataDetailObj['rela_apply20230501'] && dataDetailObj.rela_apply20230501.name">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('管理单据')">
-                            <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{ dataDetailObj['rela_apply20230501'] ? (dataDetailObj.rela_apply20230501.name ? dataDetailObj.rela_apply20230501.name : '--') : '--' }}</div>
+                            <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{ dataDetailObj['c'] ? (dataDetailObj.rela_apply20230501.name ? dataDetailObj.rela_apply20230501.name : '--') : '--' }}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
                     </el-row>
-                    <el-row>
+                    <el-row v-if="dataDetailObj && dataDetailObj['cost_allAmount20230501'] && dataDetailObj.cost_allAmount20230501.value">
                       <el-col :span="24">
-                        <el-form label-width="80px">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('金额')">
                             <div class="moon-content-text-ellipsis-class label-item-block2" @click="toastExtraInfo($event)">{{ dataDetailObj['cost_allAmount20230501'] ? (dataDetailObj.cost_allAmount20230501.value ? dataDetailObj.cost_allAmount20230501.value : '--') : '--' }}</div>
                           </el-form-item>
@@ -299,16 +332,18 @@
                   </template>
 
                   <template v-else-if="dataMainDetailObj.formCode == 'XMGL'">
-                    <el-row>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    <el-row v-if="dataDetailObj && dataDetailObj['xm_name20230501'] && dataDetailObj.xm_name20230501.value">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('项目名称')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{dataDetailObj['xm_name20230501'] ? dataDetailObj['xm_name20230501']['value'] : '--'}}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    </el-row>
+                    <el-row v-if="dataDetailObj && dataDetailObj['xm_no20230501'] && dataDetailObj.xm_no20230501.value">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('项目编号')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{dataDetailObj['xm_no20230501'] ? dataDetailObj['xm_no20230501']['value'] : '--'}}</div>
                           </el-form-item>
@@ -316,16 +351,18 @@
                       </el-col>
                     </el-row>
                     <template>
-                      <el-row>
-                        <el-col :span="12">
-                          <el-form label-width="80px">
+                      <el-row v-if="dataDetailObj && dataDetailObj['xm_type20230501']">
+                        <el-col :span="24">
+                          <el-form label-width="80px" :label-position="labelPosition">
                             <el-form-item :label="$t('项目类型')">
                               <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{dataDetailObj['xm_type20230501'] ? objectTypeInfo(dataDetailObj['xm_type20230501']['value'], 'set') : '--'}}</div>
                             </el-form-item>
                           </el-form>
                         </el-col>
-                        <el-col :span="12">
-                          <el-form label-width="80px">
+                      </el-row>
+                      <el-row>
+                        <el-col :span="24">
+                          <el-form label-width="80px" :label-position="labelPosition">
                             <el-form-item :label="$t('项目预算')">
                               <label>--</label>
                             </el-form-item>
@@ -334,16 +371,18 @@
                       </el-row>
                     </template>
                     <template>
-                      <el-row>
-                        <el-col :span="12">
-                          <el-form label-width="80px">
+                      <el-row v-if="dataDetailObj && dataDetailObj['xm_status20230501'] && dataDetailObj.xm_status20230501.value">
+                        <el-col :span="24">
+                          <el-form label-width="80px" :label-position="labelPosition">
                             <el-form-item :label="$t('项目状态')">
                               <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{dataDetailObj['xm_status20230501'] ? (dataDetailObj['xm_status20230501']['value'] ? objectStatusInfo(dataDetailObj['xm_status20230501']['value'], 'set')  : '--') : '--'}}</div>
                             </el-form-item>
                           </el-form>
                         </el-col>
-                        <el-col :span="12">
-                          <el-form label-width="80px">
+                      </el-row>
+                      <el-row v-if="dataMainDetailObj.status || dataMainDetailObj.status === 0">
+                        <el-col :span="24">
+                          <el-form label-width="80px" :label-position="labelPosition">
                             <el-form-item :label="$t('审批状态')">
                               <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{dataMainDetailObj.status || dataMainDetailObj.status === 0   ? auditStatusTextInfo(dataMainDetailObj.status, 'set') : '--'}}</div>
                             </el-form-item>
@@ -352,16 +391,18 @@
                       </el-row>
                     </template>
                     <template>
-                      <el-row>
-                        <el-col :span="12">
-                          <el-form label-width="80px">
+                      <el-row v-if="dataDetailObj && dataDetailObj['xm_beginTime20230501'] && dataDetailObj.xm_beginTime20230501.value">
+                        <el-col :span="24">
+                          <el-form label-width="80px" :label-position="labelPosition">
                             <el-form-item :label="$t('开始时间')">
                               <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{dataDetailObj['xm_beginTime20230501'] ? (dataDetailObj['xm_beginTime20230501']['value'] ? dataDetailObj['xm_beginTime20230501']['value'] : '--') : '--'}}</div>
                             </el-form-item>
                           </el-form>
                         </el-col>
-                        <el-col :span="12">
-                          <el-form label-width="80px">
+                      </el-row>
+                      <el-row v-if="dataDetailObj && dataDetailObj['xm_endTime20230501'] && dataDetailObj.xm_endTime20230501.value">
+                        <el-col :span="24">
+                          <el-form label-width="80px" :label-position="labelPosition">
                             <el-form-item :label="$t('结束时间')">
                               <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{dataDetailObj['xm_endTime20230501'] ? (dataDetailObj['xm_endTime20230501']['value'] ? dataDetailObj['xm_endTime20230501']['value'] : '--') : '--'}}</div>
                             </el-form-item>
@@ -370,9 +411,9 @@
                       </el-row>
                     </template>
                     <template>
-                      <el-row>
-                        <el-col :span="12">
-                          <el-form label-width="80px">
+                      <el-row v-if="dataDetailObj && dataDetailObj['xm_superId20230501'] && dataDetailObj.xm_superId20230501.value">
+                        <el-col :span="24">
+                          <el-form label-width="80px" :label-position="labelPosition">
                             <el-form-item :label="$t('父级项目')">
                               <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)" v-if="dataDetailObj['xm_superId20230501']">
                                 <template v-if="dataDetailObj['xm_superId20230501']['value'] == ''">
@@ -385,8 +426,10 @@
                             </el-form-item>
                           </el-form>
                         </el-col>
-                        <el-col :span="12">
-                          <el-form label-width="80px">
+                      </el-row>
+                      <el-row v-if="dataDetailObj && dataDetailObj['xm_personId20230501'] && dataDetailObj.xm_personId20230501.userName">
+                        <el-col :span="24">
+                          <el-form label-width="80px" :label-position="labelPosition">
                             <el-form-item :label="$t('负责人')">
                               <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{dataDetailObj['xm_personId20230501'] ? (dataDetailObj['xm_personId20230501']['userName'] ? dataDetailObj['xm_personId20230501']['userName'] : '--') : '--'}}</div>
                             </el-form-item>
@@ -394,14 +437,20 @@
                         </el-col>
                       </el-row>
                     </template>
-                    <el-form label-width="80px">
-                      <el-form-item :label="$t('其他描述')">
-                        <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{dataDetailObj['xm_des20230501'] ? dataDetailObj['xm_des20230501']['value'] : '--'}}</div>
-                      </el-form-item>
-                    </el-form>
+                    <template>
+                      <el-row v-if="dataDetailObj && dataDetailObj['xm_des20230501'] && dataDetailObj.xm_des20230501.value">
+                        <el-col :span="24">
+                          <el-form label-width="80px" :label-position="labelPosition">
+                            <el-form-item :label="$t('其他描述')">
+                              <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{dataDetailObj['xm_des20230501'] ? dataDetailObj['xm_des20230501']['value'] : '--'}}</div>
+                            </el-form-item>
+                          </el-form>
+                        </el-col>
+                      </el-row>
+                    </template>
                   </template>
 
-                  <el-form label-width="80px">
+                  <el-form label-width="80px" :label-position="labelPosition">
                     <el-form-item :label="$t('附件')">
                       <div v-if="(dataMainDetailObj.formCode == 'JKGL' || dataMainDetailObj.formCode == 'HKD' || dataMainDetailObj.formCode == 'SKD') && dataDetailObj['jk_files20230501']">
                         <div v-if="dataDetailObj['jk_files20230501']['value'].length > 0" v-for="(item, index) in dataDetailObj['jk_files20230501']['value']" :key="index" class="pull-left" style="position: relative;margin-right:10px;top: 10px">
@@ -483,7 +532,7 @@
                       </div>
                     </el-form-item>
                   </el-form>
-                  <el-form label-width="80px">
+                  <el-form label-width="80px" :label-position="labelPosition">
                     <el-form-item :label="$t('借款说明')" v-if="dataMainDetailObj.formCode == 'JKGL'">
                       <div style="word-wrap:break-word;word-break:break-all;overflow: hidden;">{{dataDetailObj['jk_des20230501'] ? (dataDetailObj['jk_des20230501']['value'] ? dataDetailObj['jk_des20230501']['value'] : '--') : '--'}}</div>
                     </el-form-item>
@@ -494,33 +543,37 @@
                 </template>
 
                 <template v-else>
-                  <el-row>
-                    <el-col :span="12">
-                      <el-form label-width="80px">
-                        <el-form-item :label="$t('合同名称')">
+                  <el-row v-if="dataDetailObj && dataDetailObj.ht_name20230501 && dataDetailObj.ht_name20230501.value">
+                    <el-col :span="24">
+                      <el-form label-width="80px" :label-position="labelPosition">
+                        <el-form-item :label="$t('合同名称')" :label-position="labelPosition">
                           <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{dataDetailObj['ht_name20230501'] ? dataDetailObj['ht_name20230501']['value'] : '--'}}</div>
                         </el-form-item>
                       </el-form>
                     </el-col>
-                    <el-col :span="12">
-                      <el-form label-width="80px">
-                        <el-form-item :label="$t('合同编号')">
+                  </el-row>
+                  <el-row v-if="dataDetailObj && dataDetailObj.ht_no20230501 && dataDetailObj.ht_no20230501.value">
+                    <el-col :span="24">
+                      <el-form label-width="80px" :label-position="labelPosition">
+                        <el-form-item :label="$t('合同编号')" :label-position="labelPosition">
                           <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{dataDetailObj['ht_no20230501'] ? dataDetailObj['ht_no20230501']['value'] : '--'}}</div>
                         </el-form-item>
                       </el-form>
                     </el-col>
                   </el-row>
                   <template>
-                    <el-row>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
-                          <el-form-item :label="$t('关联单据')">
+                    <el-row v-if="dataDetailObj && dataDetailObj.tag_ids20230501 && dataDetailObj.tag_ids20230501.name">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
+                          <el-form-item :label="$t('关联单据')" :label-position="labelPosition">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{dataDetailObj['tag_ids20230501'] ? dataDetailObj['tag_ids20230501']['name'] : '--'}}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    </el-row>
+                    <el-row v-if="dataDetailObj && dataDetailObj.ht_amount20230501 && dataDetailObj.ht_amount20230501.value">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('合同金额')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{dataDetailObj['ht_amount20230501'] ? dataDetailObj['ht_amount20230501']['value'] : '--'}}</div>
                           </el-form-item>
@@ -529,16 +582,18 @@
                     </el-row>
                   </template>
                   <template>
-                    <el-row>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    <el-row v-if="dataDetailObj && dataDetailObj.xm_id20230501 && dataDetailObj.xm_id20230501.name">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('关联项目')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{dataDetailObj['xm_id20230501'] ? (dataDetailObj['xm_id20230501']['name'] ? dataDetailObj['xm_id20230501']['name'] : '--') : '--'}}</div>
                           </el-form-item>
                         </el-form>
                       </el-col>
-                      <el-col :span="12">
-                        <el-form label-width="80px">
+                    </el-row>
+                    <el-row v-if="dataDetailObj && dataDetailObj.ht_duty20230501 && dataDetailObj.ht_duty20230501.userName">
+                      <el-col :span="24">
+                        <el-form label-width="80px" :label-position="labelPosition">
                           <el-form-item :label="$t('责任人')">
                             <div class="moon-content-text-ellipsis-class label-item-block" @click="toastExtraInfo($event)">{{dataDetailObj['ht_duty20230501'] ? (dataDetailObj['ht_duty20230501']['userName'] ? dataDetailObj['ht_duty20230501']['userName'] : '--') : '--'}}</div>
                           </el-form-item>
@@ -546,7 +601,7 @@
                       </el-col>
                     </el-row>
                   </template>
-                  <el-form label-width="80px">
+                  <el-form label-width="80px" :label-position="labelPosition">
                     <el-form-item :label="$t('附件')">
                       <div v-if="dataDetailObj['ht_files20230501']">
                         <div v-if="dataDetailObj['ht_files20230501']['value'].length > 0" v-for="(item, index) in dataDetailObj['ht_files20230501']['value']" :key="index" class="pull-left" style="position: relative;margin-right:10px;top: 10px">
@@ -568,7 +623,7 @@
                       </div>
                     </el-form-item>
                   </el-form>
-                  <el-form label-width="80px">
+                  <el-form label-width="80px" :label-position="labelPosition">
                     <el-form-item :label="$t('其他描述')">
                       <div style="word-wrap:break-word;word-break:break-all;overflow: hidden;">{{dataDetailObj['ht_des20230501'] ? (dataDetailObj['ht_des20230501']['value'] ? dataDetailObj['ht_des20230501']['value'] : '--') : '--'}}</div>
                     </el-form-item>
@@ -614,7 +669,7 @@
             </template>
           </div>
 
-          <div class="margin-top-20" v-if="dataMainDetailObj['invoiceDataList'] && dataMainDetailObj['invoiceDataList'].length > 0">
+          <div class="margin-top-20 white-radius-shadow" v-if="dataMainDetailObj['invoiceDataList'] && dataMainDetailObj['invoiceDataList'].length > 0">
             <div class="font-bold">{{$t("明细信息")}}:</div>
             <template>
               <div style="border: 1px solid #ebebeb">
@@ -636,7 +691,7 @@
             </template>
           </div>
 
-          <div class="margin-top-20">
+          <div class="margin-top-20 white-radius-shadow">
             <template v-if="dataMainDetailObj.formCode == 'XMGL'">
               <div class="font-bold">{{$t("单据信息")}}:</div>
               <div class="margin-top-10">
@@ -795,7 +850,7 @@
               <div class="font-bold">{{$t("单据信息")}}:</div>
               <div class="margin-top-10">
                 <div class="info-item-block margin-bottom-5" v-for="(item, index) in serialDataList" :key="index" :class="index != serialDataList.length-1 ? 'border-bottom-1' : ''">
-                  <el-row>
+                  <el-row v-if="item.typeStr">
                     <el-col :span="8">
                       <div class="text-center left-bg-block">
                         <span>{{$t('名称')}}</span>
@@ -807,7 +862,7 @@
                       </div>
                     </el-col>
                   </el-row>
-                  <el-row>
+                  <el-row v-if="item.fpTime">
                     <el-col :span="8">
                       <div class="text-center left-bg-block">
                         <span>{{$t('发票日期')}}</span>
@@ -819,7 +874,7 @@
                       </div>
                     </el-col>
                   </el-row>
-                  <el-row>
+                  <el-row v-if="item.fpNo">
                     <el-col :span="8">
                       <div class="text-center left-bg-block">
                         <span>{{$t('发票号码')}}</span>
@@ -831,7 +886,7 @@
                       </div>
                     </el-col>
                   </el-row>
-                  <el-row>
+                  <el-row v-if="item.fpCode">
                     <el-col :span="8">
                       <div class="text-center left-bg-block">
                         <span>{{$t('发票代码')}}</span>
@@ -843,7 +898,7 @@
                       </div>
                     </el-col>
                   </el-row>
-                  <el-row>
+                  <el-row v-if="item.fpCheckCode">
                     <el-col :span="8">
                       <div class="text-center left-bg-block">
                         <span>{{$t('发票验证码')}}</span>
@@ -855,7 +910,7 @@
                       </div>
                     </el-col>
                   </el-row>
-                  <el-row>
+                  <el-row v-if="item.fp.length > 0 ? item.fp[0].totalAmount : item.amount">
                     <el-col :span="8">
                       <div class="text-center left-bg-block">
                         <span>{{$t('金额')}}</span>
@@ -874,7 +929,7 @@
                       </div>
                     </el-col>
                   </el-row>
-                  <el-row>
+                  <el-row v-if="item.fp.length > 0 ? item.fp[0].invoiceType : item.fpType">
                     <el-col :span="8">
                       <div class="text-center left-bg-block">
                         <span>{{$t('类型')}}</span>
@@ -1606,6 +1661,7 @@ export default {
         textarea: '',
         amount: '',
         account: '',
+        labelPosition: 'left',
         schoolAccountIdList: [],
         images: [],
         uploadFileListUrl: common.upload_file,
@@ -2009,7 +2065,7 @@ export default {
   border: 1px solid #dddddd;
 }
 .info-item-block{
-  height: 35px;
+  /*height: 35px;*/
   line-height: 35px;
 }
 .left-bg-block{
@@ -2055,5 +2111,11 @@ export default {
 }
 .write-item-left-block{
   border-right: 1px solid #ebebeb;
+}
+.white-radius-shadow{
+  padding: 10px;
+  border-radius: 5px;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 10px #909399;
 }
 </style>

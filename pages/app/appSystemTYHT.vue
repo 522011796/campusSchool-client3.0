@@ -23,7 +23,7 @@
     </div>
     <div class="content-block" :style="{height: divHeight20.height}" style="overflow-y: auto">
       <div class="content-main-block">
-        <van-form ref="form" label-width="70" label-align="right" input-align="right" error-message-align="right">
+        <van-form ref="form" label-width="70" label-align="left" input-align="right" error-message-align="right">
           <van-field
             required
             v-model="form.title"
