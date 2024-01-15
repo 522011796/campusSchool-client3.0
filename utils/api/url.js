@@ -640,6 +640,7 @@ export const common = {
   invoice_save: '/proxy/school/user/invoice/save',//发票保存
 
   cost_list: '/proxy/school/applet/cost/list',//费用管理列表
+  cost_list_tree: '/proxy/school/applet/cost/list-tree',//费用管理列表树
   cost_tree: '/proxy/school/applet/cost/tree',//费用管理tree
   cost_sublist: '/proxy/school/applet/cost/sublist',//费用管理下级
   cost_info: '/proxy/school/applet/cost/info',//费用管理信息

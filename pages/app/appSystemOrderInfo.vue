@@ -229,10 +229,18 @@
       </div>
       <div :style="divHeight18">
         <template v-if="pageType == 'type'">
-          <van-picker
+<!--          <van-picker
             ref="typeRef"
             :columns="moneyList"
-          />
+          />-->
+          <el-cascader-panel
+            ref="typeRef"
+            :options="moneyTree"
+            style="overflow-x: auto"
+            v-model="money"
+            :props="{ checkStrictly: true }"
+            clearable></el-cascader-panel>
+
         </template>
 
 
@@ -603,6 +611,7 @@
         departmentPath: '',
         pageType: '',
         pageTypeStr: '',
+        money: '',
         searchTeacherValue: '',
         selFpObj: {},
         fpDetailInfo: {},
@@ -632,6 +641,9 @@
         dataModalBakList: [],
         orderInfoList: [],
         formObj: {},
+        moneyTree: [],
+        moneyMapping: [],
+        cascaderValue: '',
         slTypeOptions: [
           {
             label: '0%',
@@ -717,6 +729,39 @@
             this.moneyList = array;
           }
         })
+      },
+      initMoneyTree(){
+        let params = {
+          processId: this.$route.query.id && this.$route.query.id != '' ? this.$route.query.id : ''
+        };
+        this.$axios.get(common.cost_list_tree, {params: params, loading: false}).then(res => {
+          if (res.data.code == 200) {
+            let array = [];
+            for (let i = 0; i < res.data.data.length; i++){
+              array.push(this.formatData(res.data.data[i]))
+            }
+            this.moneyTree = array;
+          }
+        })
+      },
+      formatData(data) {
+        let res = {
+          label: data.cost_name,
+          text: data.cost_name,
+          processId: data.form_process_id,
+          value: data.cost_id,
+          disabled: !data.permission
+        }
+
+        this.moneyMapping[data.cost_id] = res
+        if(data.child_list && data.child_list.length>0){
+          let childs = []
+          for (let i = 0; i < data.child_list.length; i++){
+            childs.push(this.formatData(data.child_list[i]))
+          }
+          res.children = childs
+        }
+        return res
       },
       initFpList(){
         let params = {};
@@ -824,7 +869,7 @@
         this.pageType = type;
         this.pageTypeStr = data;
         if (type == 'type'){
-          this.initMoneyList();
+          this.initMoneyTree();
           this.showBottomPicker = true;
         }else if (type == 'time'){
           this.showTimePicker = true;
@@ -1029,14 +1074,23 @@
       },
       okPop(value, index){
         if (this.pageType == 'type'){
-          if (this.$refs.typeRef.getValues().length == 0 || (this.$refs.typeRef.getValues().length > 0 && !this.$refs.typeRef.getValues()[0])){
+          if (!this.money || !this.money.length){
+            Toast(this.$t("请选择信息!"));
+            return;
+          }
+
+          this.form.type = this.money[this.money.length-1]
+          this.form.typeId = this.money[this.money.length-1]
+          this.form.typeStr = this.moneyMapping[this.form.typeId].label
+          this.form.processId = this.moneyMapping[this.form.typeId].processId
+          /*if (this.$refs.typeRef.getValues().length == 0 || (this.$refs.typeRef.getValues().length > 0 && !this.$refs.typeRef.getValues()[0])){
             Toast(this.$t("请选择信息!"));
             return;
           }
           this.form.type = this.$refs.typeRef.getValues().length > 0 ? this.$refs.typeRef.getValues()[0].value : '';
           this.form.typeId = this.$refs.typeRef.getValues().length > 0 ? this.$refs.typeRef.getValues()[0].value : '';
           this.form.typeStr = this.$refs.typeRef.getValues().length > 0 ? this.$refs.typeRef.getValues()[0].label : '';
-          this.form.processId = this.$refs.typeRef.getValues().length > 0 ? this.$refs.typeRef.getValues()[0].processId : '';
+          this.form.processId = this.$refs.typeRef.getValues().length > 0 ? this.$refs.typeRef.getValues()[0].processId : '';*/
         }else if (this.pageType == 'sl'){
           if (this.$refs.slRef.getValues().length == 0 || (this.$refs.slRef.getValues().length > 0 && !this.$refs.slRef.getValues()[0])){
             Toast(this.$t("请选择信息!"));

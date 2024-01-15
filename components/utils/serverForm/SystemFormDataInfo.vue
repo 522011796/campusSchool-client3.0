@@ -4,7 +4,17 @@
       <div slot="content" class="color-muted">
         <el-form ref="form" :model="form" :rules="rules" label-width="100px">
           <el-form-item :label="$t('费用类型')" prop="type">
-            <my-select size="small" :sel-value="form.type" :options="moneyList" width-style="415" @change="selBlockFun($event, 'type')"></my-select>
+<!--            <my-select size="small" :sel-value="form.type" :options="moneyList" width-style="415" @change="selBlockFun($event, 'type')"></my-select>-->
+
+            <el-cascader
+              size="small"
+              :options="moneyTree"
+              v-model="form.type"
+              :props="{ checkStrictly: true }"
+              @change="selBlockFun($event, 'type')"
+              ></el-cascader>
+
+
           </el-form-item>
           <el-form-item :label="$t('日期')" prop="time">
             <my-date-picker size="small" width-style="415" :sel-value="form.time" @change="selBlockFun($event, 'time')"></my-date-picker>
@@ -418,7 +428,8 @@
     computed: {
       selectModel(){
         if (this.dialogVisible == true){
-          this.initMoneyList();
+          //this.initMoneyList();
+          this.initMoneyTree();
         }
         this.dialogVisibleInner = this.dialogVisible;
       }
@@ -443,6 +454,8 @@
         props: {},
         searchTreeTempIdData: [],
         moneyList: [],
+        moneyTree: [],
+        moneyMapping: [],
         pageType: '',
         pageTypeStr: '',
         loading: false,
@@ -506,6 +519,39 @@
             this.moneyList = array;
           }
         })
+      },
+      initMoneyTree(){
+        let params = {
+          processId: this.processId && this.processId != '' ? this.processId : ''
+        };
+        this.$axios.get(common.cost_list_tree, {params: params, loading: false}).then(res => {
+          if (res.data.code == 200) {
+            let array = [];
+            for (let i = 0; i < res.data.data.length; i++){
+              array.push(this.formatData(res.data.data[i]))
+            }
+            this.moneyTree = array;
+          }
+        })
+      },
+      formatData(data) {
+        let res = {
+          label: data.cost_name,
+          text: data.cost_name,
+          processId: data.form_process_id,
+          value: data.cost_id,
+          disabled: !data.permission
+        }
+
+        this.moneyMapping[data.cost_id] = res
+        if(data.child_list && data.child_list.length>0){
+          let childs = []
+          for (let i = 0; i < data.child_list.length; i++){
+            childs.push(this.formatData(data.child_list[i]))
+          }
+          res.children = childs
+        }
+        return res
       },
       handleAvatarSuccess(res, file){
         // 如果上传成功
@@ -691,13 +737,18 @@
         }else if (type == 'time'){
           this.form.time = data;
         }else if (type == 'type'){
-          let obj = {};
+
+          /*let obj = {};
           obj = this.moneyList.find((item)=>{
             return item.value === data;
           });
           this.form.typeStr = obj.label;
           this.form.type = data;
-          this.form.typeId = data;
+          this.form.typeId = data;*/
+          console.info(11111111111)
+          this.form.type = data[data.length-1]
+          this.form.typeId = data[data.length-1]
+          this.form.typeStr = this.moneyMapping[this.form.typeId]? this.moneyMapping[this.form.typeId].label:''
         }
       },
       cancelDialog(){

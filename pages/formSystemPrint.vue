@@ -67,8 +67,8 @@
       <div>
         <table class="custom-table-black">
           <tr v-for="(item, index) in detailData.applyData['cost_info20230501'].value" :key="index">
-            <td style="width: 10%" class="font-size-12 font-bold">{{item.typeStr}}</td>
-            <td style="width: 20%" class="color-black font-size-12">{{item.fp.length > 0 ? item.fp[0].totalAmount : '--'}}</td>
+            <td style="width: 20%" class="font-size-12 font-bold">{{item.typeStr}}</td>
+            <td style="width: 80%" class="color-black font-size-12">{{item.amount ? item.amount : '--'}}</td>
           </tr>
         </table>
       </div>
