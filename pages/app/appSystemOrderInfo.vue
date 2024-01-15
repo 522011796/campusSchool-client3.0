@@ -40,6 +40,7 @@
             v-model="form.money"
             required
             :label="$t('金额')"
+            :readonly="moneyReadonly"
             :name="$t('金额')"
             placeholder="请填写信息"
             :rules="[{ pattern: moneyReg, message: '请设置整数或者2位小数' }]"
@@ -629,6 +630,7 @@
         formValue: '',
         serchName: '',
         showCalendar: false,
+        moneyReadonly: false,
         dateTime: '',
         searchDept: [],
         searchCollege: [],
@@ -750,9 +752,10 @@
           text: data.cost_name,
           processId: data.form_process_id,
           value: data.cost_id,
+          fixed: data.fixed,
+          fixedAmount: data.fixed_amount,
           disabled: !data.permission
         }
-
         this.moneyMapping[data.cost_id] = res
         if(data.child_list && data.child_list.length>0){
           let childs = []
@@ -1078,11 +1081,18 @@
             Toast(this.$t("请选择信息!"));
             return;
           }
-
           this.form.type = this.money[this.money.length-1]
           this.form.typeId = this.money[this.money.length-1]
-          this.form.typeStr = this.moneyMapping[this.form.typeId].label
-          this.form.processId = this.moneyMapping[this.form.typeId].processId
+          let moneyType = this.moneyMapping[this.form.typeId]
+          this.form.typeStr = moneyType.label
+          this.form.processId = moneyType.processId
+          if(moneyType.fixed){
+            this.moneyReadonly = true
+            this.form.money = moneyType.fixedAmount
+          }else{
+            this.moneyReadonly = false
+            this.form.money = 0
+          }
           /*if (this.$refs.typeRef.getValues().length == 0 || (this.$refs.typeRef.getValues().length > 0 && !this.$refs.typeRef.getValues()[0])){
             Toast(this.$t("请选择信息!"));
             return;
