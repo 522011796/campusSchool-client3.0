@@ -107,7 +107,7 @@
         <span class="title-block-text color-black">{{$t("表单内容")}}</span>
       </div>
       <table class="custom-table-black">
-        <tr v-for="(item, index) in detailApplyContentData" :key="index" :style="{'height':item.title.indexOf('签字') > 1 ? '120px !important' : '', 'line-height':item.title.indexOf('签字') > 1 ? '120px !important' : ''}">
+        <tr v-for="(item, index) in detailApplyContentData" :key="index" :style="{'height':item.title.indexOf('签字') > 1 ? '60px !important' : '', 'line-height':item.title.indexOf('签字') > 1 ? '60px !important' : ''}">
           <template  v-if="item.type != 'fc-editor' && item.type != 'upload'">
             <td style="width: 20%;text-align: right;padding-right: 15px">
               <span class="color-black">
