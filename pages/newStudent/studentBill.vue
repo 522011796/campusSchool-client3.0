@@ -16,7 +16,8 @@
         </div>
       </van-col>
       <van-col span="6">
-        <van-button v-if="!$route.query.sessionId" size="small" type="warning" plain native-type="button" @click="payManage($event, 1)">{{$t("去支付")}}</van-button>
+        <van-button v-if="!isMiniprogram&&!$route.query.sessionId" size="small" type="warning" plain native-type="button" @click="payManage($event, 1)">{{$t("去支付")}}</van-button>
+        <van-button v-if="isMiniprogram" size="small" type="warning" plain native-type="button" @click="wxPayManage($event)">{{$t("微信支付")}}</van-button>
         <span v-else>&nbsp;</span>
       </van-col>
     </div>
@@ -163,7 +164,8 @@
 
 <script>
   import {common} from "../../utils/api/url";
-
+  import wx from "weixin-js-sdk";
+  import qs from "qs";
   import mixins from "~/utils/mixins";
   import mixinsBridge from "~/utils/mixinsBridge";
   import MySex from "~/components/MySex";
@@ -202,6 +204,7 @@
         itemUserList: [],
         billList: [],
         showDetail: false,
+        isMiniprogram: false,
         billDetail: '',
         drCode: '',
         billBtnShow: false,
@@ -213,6 +216,12 @@
 
     },
     created() {
+      this.isMiniprogram = false;
+      wx.miniProgram.getEnv(res => {
+        if (res.miniprogram) {
+          this.isMiniprogram = true;
+        }
+      });
       this.initAppServer();
     },
     methods: {
@@ -300,6 +309,20 @@
         this.drCode = '';
         this.getPayInfo();
         this.dialogPayDrCode = true;
+      },
+      async wxPayManage(){
+        let params = {};
+        params = this.$qs.stringify(params);
+        this.$axios.post(common.enroll_wx_pay_item_pay, params, {loading: false}).then(res => {
+          if (res.data.code === 200){
+            let params = qs.stringify(res.data.data);
+            wx.miniProgram.navigateTo({
+              url: '/pages/wxpay/wxpay?' + params,
+            })
+          }else {
+            MessageError(res.data.desc);
+          }
+        });
       },
       async okPayDialog(event){
         // if(this.billBtnShow == false){

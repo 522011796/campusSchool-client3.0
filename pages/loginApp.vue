@@ -256,6 +256,8 @@
         userSubType: '2',
         userAccountType : '0',
         pageType: '',
+        openId: '',
+        appId: '',
         dialogLoading: false,
         modalVisible: false,
         showContent: false,
@@ -296,6 +298,8 @@
         }
       }
       this.hh();
+      this.openId = this.$route.query.openId ? this.$route.query.openId : "";
+      this.appId = this.$route.query.appId ? this.$route.query.appId : "";
     },
     methods: {
       hh(){
@@ -330,6 +334,8 @@
         let params = {
           clientType: 3,
           accountType: 0,
+          openId: this.openId,
+          appId: this.appId,
           account: this.form.username,
           password: getmd5(this.form.password),
         };

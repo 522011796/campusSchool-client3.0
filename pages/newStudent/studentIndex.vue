@@ -2,8 +2,8 @@
   <div class="container">
     <div :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' " :style="{height: navHeight+'px'}"></div>
     <div class="header-title-block" :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' ">
-      <van-col span="2">
-        <div class="text-left padding-lr-10 color-white" v-if="globalAppShow && globalAppShow != ''">
+      <van-col span="4">
+        <div class="text-left padding-lr-10 color-white" v-if="!isMiniprogram && globalAppShow && globalAppShow != ''">
             <span class="font-bold font-size-14" @click="returnIndex">
               <i class="fa fa-chevron-left"></i>
               {{$t("返回")}}
@@ -13,13 +13,15 @@
           &nbsp;
         </div>
       </van-col>
-      <van-col span="20">
+      <van-col span="16">
         <div class="text-center color-white font-size-16 font-bold">
           <span>{{$t('智慧迎新')}}</span>
         </div>
       </van-col>
-      <van-col span="2">
-        &nbsp;
+      <van-col span="4">
+        &nbsp;<span v-if="isMiniprogram" class="font-bold color-white font-size-14" @click="logout">
+            {{$t("退出")}}
+          </span>
       </van-col>
     </div>
     <div class="content-block">
@@ -246,6 +248,7 @@
 
   import mixins from "~/utils/mixins";
   import mixinsBridge from "~/utils/mixinsBridge";
+  import wx from "weixin-js-sdk";
   export default {
     name: 'studentIndex',
     layout: 'defaultAppScreen',
@@ -266,6 +269,7 @@
         headLogo: '',
         showDr: false,
         showSign: false,
+        isMiniprogram: false,
         completedStatus: '',
         detailData: '',
         formSign: {
@@ -281,6 +285,12 @@
 
     },
     created() {
+      this.isMiniprogram = false;
+      wx.miniProgram.getEnv(res => {
+        if (res.miniprogram) {
+          this.isMiniprogram = true;
+        }
+      });
       this.active = this.$route.query.activeType ? this.$route.query.activeType : 6;
       if (this.$route.query.sessionId){
         this.initAppConfig();
@@ -496,6 +506,13 @@
           this.initSign();
           this.showSign = true;
         }
+      },
+      logout(){
+        this.$axios.post(common.logout_url).then(res => {
+          if (res.data.code == 200){
+            this.$router.push("/loginApp");
+          }
+        });
       },
       activeTabMenu(name){
         this.noticeAppList = [];
