@@ -3,49 +3,49 @@ import Router from 'vue-router'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-const _1e4b9f14 = () => interopDefault(import('..\\pages\\formPrint.vue' /* webpackChunkName: "pages/formPrint" */))
-const _6d281a47 = () => interopDefault(import('..\\pages\\formSystemPrint.vue' /* webpackChunkName: "pages/formSystemPrint" */))
-const _53b89286 = () => interopDefault(import('..\\pages\\indexBak.vue' /* webpackChunkName: "pages/indexBak" */))
-const _6ce3d216 = () => interopDefault(import('..\\pages\\login.vue' /* webpackChunkName: "pages/login" */))
-const _f38ed84a = () => interopDefault(import('..\\pages\\loginApp.vue' /* webpackChunkName: "pages/loginApp" */))
-const _dd4a60aa = () => interopDefault(import('..\\pages\\loginBakApp.vue' /* webpackChunkName: "pages/loginBakApp" */))
-const _7f16c7c6 = () => interopDefault(import('..\\pages\\myInfo.vue' /* webpackChunkName: "pages/myInfo" */))
-const _7cdbf884 = () => interopDefault(import('..\\pages\\signOrder.vue' /* webpackChunkName: "pages/signOrder" */))
-const _4021daa8 = () => interopDefault(import('..\\pages\\student.vue' /* webpackChunkName: "pages/student" */))
-const _162f70b1 = () => interopDefault(import('..\\pages\\app\\appAllServer.vue' /* webpackChunkName: "pages/app/appAllServer" */))
-const _8fa4806a = () => interopDefault(import('..\\pages\\app\\appAllServerBak.vue' /* webpackChunkName: "pages/app/appAllServerBak" */))
-const _1e2dbcbf = () => interopDefault(import('..\\pages\\app\\appIndex.vue' /* webpackChunkName: "pages/app/appIndex" */))
-const _7e6f0ec2 = () => interopDefault(import('..\\pages\\app\\appMsgDetail.vue' /* webpackChunkName: "pages/app/appMsgDetail" */))
-const _a4c6ac72 = () => interopDefault(import('..\\pages\\app\\appMyNotice.vue' /* webpackChunkName: "pages/app/appMyNotice" */))
-const _a9a5d3c0 = () => interopDefault(import('..\\pages\\app\\appOtherServer.vue' /* webpackChunkName: "pages/app/appOtherServer" */))
-const _10cc38a6 = () => interopDefault(import('..\\pages\\app\\appServer.vue' /* webpackChunkName: "pages/app/appServer" */))
-const _2f4cf08a = () => interopDefault(import('..\\pages\\app\\appServerForm.vue' /* webpackChunkName: "pages/app/appServerForm" */))
-const _770e4a51 = () => interopDefault(import('..\\pages\\app\\appStatic.vue' /* webpackChunkName: "pages/app/appStatic" */))
-const _feb92780 = () => interopDefault(import('..\\pages\\app\\appSystemBZBX.vue' /* webpackChunkName: "pages/app/appSystemBZBX" */))
-const _0572e902 = () => interopDefault(import('..\\pages\\app\\appSystemCGHT.vue' /* webpackChunkName: "pages/app/appSystemCGHT" */))
-const _6601dfdc = () => interopDefault(import('..\\pages\\app\\appSystemDGDK.vue' /* webpackChunkName: "pages/app/appSystemDGDK" */))
-const _92ed53c4 = () => interopDefault(import('..\\pages\\app\\appSystemFPJ.vue' /* webpackChunkName: "pages/app/appSystemFPJ" */))
-const _0662103d = () => interopDefault(import('..\\pages\\app\\appSystemGRXX.vue' /* webpackChunkName: "pages/app/appSystemGRXX" */))
-const _4367bc8c = () => interopDefault(import('..\\pages\\app\\appSystemHKGL.vue' /* webpackChunkName: "pages/app/appSystemHKGL" */))
-const _a3e30910 = () => interopDefault(import('..\\pages\\app\\appSystemJKGL.vue' /* webpackChunkName: "pages/app/appSystemJKGL" */))
-const _4a700f3c = () => interopDefault(import('..\\pages\\app\\appSystemMoneyForm.vue' /* webpackChunkName: "pages/app/appSystemMoneyForm" */))
-const _4317784c = () => interopDefault(import('..\\pages\\app\\appSystemOrderInfo.vue' /* webpackChunkName: "pages/app/appSystemOrderInfo" */))
-const _0d24c40a = () => interopDefault(import('..\\pages\\app\\appSystemPTGL.vue' /* webpackChunkName: "pages/app/appSystemPTGL" */))
-const _5d5d904a = () => interopDefault(import('..\\pages\\app\\appSystemSKD.vue' /* webpackChunkName: "pages/app/appSystemSKD" */))
-const _b8d1e33a = () => interopDefault(import('..\\pages\\app\\appSystemTYHT.vue' /* webpackChunkName: "pages/app/appSystemTYHT" */))
-const _05b65e59 = () => interopDefault(import('..\\pages\\app\\appSystemXSHT.vue' /* webpackChunkName: "pages/app/appSystemXSHT" */))
-const _f269d5c6 = () => interopDefault(import('..\\pages\\newStudent\\studentAllSever.vue' /* webpackChunkName: "pages/newStudent/studentAllSever" */))
-const _66e23534 = () => interopDefault(import('..\\pages\\newStudent\\studentBill.vue' /* webpackChunkName: "pages/newStudent/studentBill" */))
-const _7e551db3 = () => interopDefault(import('..\\pages\\newStudent\\studentDorm.vue' /* webpackChunkName: "pages/newStudent/studentDorm" */))
-const _4e177771 = () => interopDefault(import('..\\pages\\newStudent\\studentForm.vue' /* webpackChunkName: "pages/newStudent/studentForm" */))
-const _e054cfc2 = () => interopDefault(import('..\\pages\\newStudent\\studentGuide.vue' /* webpackChunkName: "pages/newStudent/studentGuide" */))
-const _4910aa16 = () => interopDefault(import('..\\pages\\newStudent\\studentIndex.vue' /* webpackChunkName: "pages/newStudent/studentIndex" */))
-const _3c76ca5b = () => interopDefault(import('..\\pages\\newStudent\\studentInfo.vue' /* webpackChunkName: "pages/newStudent/studentInfo" */))
-const _177b291e = () => interopDefault(import('..\\pages\\newStudent\\studentOrder.vue' /* webpackChunkName: "pages/newStudent/studentOrder" */))
-const _15218b97 = () => interopDefault(import('..\\pages\\newStudent\\studentStation.vue' /* webpackChunkName: "pages/newStudent/studentStation" */))
-const _25d7f990 = () => interopDefault(import('..\\pages\\studentDetail\\detailIndex.vue' /* webpackChunkName: "pages/studentDetail/detailIndex" */))
-const _915c714a = () => interopDefault(import('..\\pages\\studentDetail\\detailRecord.vue' /* webpackChunkName: "pages/studentDetail/detailRecord" */))
-const _b987a202 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
+const _1a6f63c8 = () => interopDefault(import('../pages/formPrint.vue' /* webpackChunkName: "pages/formPrint" */))
+const _228a0819 = () => interopDefault(import('../pages/formSystemPrint.vue' /* webpackChunkName: "pages/formSystemPrint" */))
+const _3251d12b = () => interopDefault(import('../pages/indexBak.vue' /* webpackChunkName: "pages/indexBak" */))
+const _54a90330 = () => interopDefault(import('../pages/login.vue' /* webpackChunkName: "pages/login" */))
+const _3b32a36e = () => interopDefault(import('../pages/loginApp.vue' /* webpackChunkName: "pages/loginApp" */))
+const _ab1f1306 = () => interopDefault(import('../pages/loginBakApp.vue' /* webpackChunkName: "pages/loginBakApp" */))
+const _70a27a0b = () => interopDefault(import('../pages/myInfo.vue' /* webpackChunkName: "pages/myInfo" */))
+const _29b191e0 = () => interopDefault(import('../pages/signOrder.vue' /* webpackChunkName: "pages/signOrder" */))
+const _d4a08b0c = () => interopDefault(import('../pages/student.vue' /* webpackChunkName: "pages/student" */))
+const _d409a9bc = () => interopDefault(import('../pages/app/appAllServer.vue' /* webpackChunkName: "pages/app/appAllServer" */))
+const _754323ba = () => interopDefault(import('../pages/app/appAllServerBak.vue' /* webpackChunkName: "pages/app/appAllServerBak" */))
+const _2edb50a0 = () => interopDefault(import('../pages/app/appIndex.vue' /* webpackChunkName: "pages/app/appIndex" */))
+const _40943310 = () => interopDefault(import('../pages/app/appMsgDetail.vue' /* webpackChunkName: "pages/app/appMsgDetail" */))
+const _5f275d36 = () => interopDefault(import('../pages/app/appMyNotice.vue' /* webpackChunkName: "pages/app/appMyNotice" */))
+const _66f3f851 = () => interopDefault(import('../pages/app/appOtherServer.vue' /* webpackChunkName: "pages/app/appOtherServer" */))
+const _da0a0856 = () => interopDefault(import('../pages/app/appServer.vue' /* webpackChunkName: "pages/app/appServer" */))
+const _ae0ef78e = () => interopDefault(import('../pages/app/appServerForm.vue' /* webpackChunkName: "pages/app/appServerForm" */))
+const _0d85e500 = () => interopDefault(import('../pages/app/appStatic.vue' /* webpackChunkName: "pages/app/appStatic" */))
+const _0b620022 = () => interopDefault(import('../pages/app/appSystemBZBX.vue' /* webpackChunkName: "pages/app/appSystemBZBX" */))
+const _7f1e7cb1 = () => interopDefault(import('../pages/app/appSystemCGHT.vue' /* webpackChunkName: "pages/app/appSystemCGHT" */))
+const _40a518ea = () => interopDefault(import('../pages/app/appSystemDGDK.vue' /* webpackChunkName: "pages/app/appSystemDGDK" */))
+const _3655108f = () => interopDefault(import('../pages/app/appSystemFPJ.vue' /* webpackChunkName: "pages/app/appSystemFPJ" */))
+const _ffe4b828 = () => interopDefault(import('../pages/app/appSystemGRXX.vue' /* webpackChunkName: "pages/app/appSystemGRXX" */))
+const _57f7b569 = () => interopDefault(import('../pages/app/appSystemHKGL.vue' /* webpackChunkName: "pages/app/appSystemHKGL" */))
+const _27ba0f27 = () => interopDefault(import('../pages/app/appSystemJKGL.vue' /* webpackChunkName: "pages/app/appSystemJKGL" */))
+const _91ff4bda = () => interopDefault(import('../pages/app/appSystemMoneyForm.vue' /* webpackChunkName: "pages/app/appSystemMoneyForm" */))
+const _8aa6b4ea = () => interopDefault(import('../pages/app/appSystemOrderInfo.vue' /* webpackChunkName: "pages/app/appSystemOrderInfo" */))
+const _731931aa = () => interopDefault(import('../pages/app/appSystemPTGL.vue' /* webpackChunkName: "pages/app/appSystemPTGL" */))
+const _45ad6a8a = () => interopDefault(import('../pages/app/appSystemSKD.vue' /* webpackChunkName: "pages/app/appSystemSKD" */))
+const _1d42a212 = () => interopDefault(import('../pages/app/appSystemTYHT.vue' /* webpackChunkName: "pages/app/appSystemTYHT" */))
+const _7f61f208 = () => interopDefault(import('../pages/app/appSystemXSHT.vue' /* webpackChunkName: "pages/app/appSystemXSHT" */))
+const _3aa41d48 = () => interopDefault(import('../pages/newStudent/studentAllSever.vue' /* webpackChunkName: "pages/newStudent/studentAllSever" */))
+const _1f77ea42 = () => interopDefault(import('../pages/newStudent/studentBill.vue' /* webpackChunkName: "pages/newStudent/studentBill" */))
+const _07b6f35e = () => interopDefault(import('../pages/newStudent/studentDorm.vue' /* webpackChunkName: "pages/newStudent/studentDorm" */))
+const _510d65c8 = () => interopDefault(import('../pages/newStudent/studentForm.vue' /* webpackChunkName: "pages/newStudent/studentForm" */))
+const _32ae77d4 = () => interopDefault(import('../pages/newStudent/studentGuide.vue' /* webpackChunkName: "pages/newStudent/studentGuide" */))
+const _7e508aaa = () => interopDefault(import('../pages/newStudent/studentIndex.vue' /* webpackChunkName: "pages/newStudent/studentIndex" */))
+const _744ebff4 = () => interopDefault(import('../pages/newStudent/studentInfo.vue' /* webpackChunkName: "pages/newStudent/studentInfo" */))
+const _d1c969b4 = () => interopDefault(import('../pages/newStudent/studentOrder.vue' /* webpackChunkName: "pages/newStudent/studentOrder" */))
+const _6541520c = () => interopDefault(import('../pages/newStudent/studentStation.vue' /* webpackChunkName: "pages/newStudent/studentStation" */))
+const _3e6646dd = () => interopDefault(import('../pages/studentDetail/detailIndex.vue' /* webpackChunkName: "pages/studentDetail/detailIndex" */))
+const _df700f54 = () => interopDefault(import('../pages/studentDetail/detailRecord.vue' /* webpackChunkName: "pages/studentDetail/detailRecord" */))
+const _0c03db51 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 
 // TODO: remove in Nuxt 3
 const emptyFn = () => {}
@@ -65,175 +65,175 @@ export const routerOptions = {
 
   routes: [{
     path: "/formPrint",
-    component: _1e4b9f14,
+    component: _1a6f63c8,
     name: "formPrint"
   }, {
     path: "/formSystemPrint",
-    component: _6d281a47,
+    component: _228a0819,
     name: "formSystemPrint"
   }, {
     path: "/indexBak",
-    component: _53b89286,
+    component: _3251d12b,
     name: "indexBak"
   }, {
     path: "/login",
-    component: _6ce3d216,
+    component: _54a90330,
     name: "login"
   }, {
     path: "/loginApp",
-    component: _f38ed84a,
+    component: _3b32a36e,
     name: "loginApp"
   }, {
     path: "/loginBakApp",
-    component: _dd4a60aa,
+    component: _ab1f1306,
     name: "loginBakApp"
   }, {
     path: "/myInfo",
-    component: _7f16c7c6,
+    component: _70a27a0b,
     name: "myInfo"
   }, {
     path: "/signOrder",
-    component: _7cdbf884,
+    component: _29b191e0,
     name: "signOrder"
   }, {
     path: "/student",
-    component: _4021daa8,
+    component: _d4a08b0c,
     name: "student"
   }, {
     path: "/app/appAllServer",
-    component: _162f70b1,
+    component: _d409a9bc,
     name: "app-appAllServer"
   }, {
     path: "/app/appAllServerBak",
-    component: _8fa4806a,
+    component: _754323ba,
     name: "app-appAllServerBak"
   }, {
     path: "/app/appIndex",
-    component: _1e2dbcbf,
+    component: _2edb50a0,
     name: "app-appIndex"
   }, {
     path: "/app/appMsgDetail",
-    component: _7e6f0ec2,
+    component: _40943310,
     name: "app-appMsgDetail"
   }, {
     path: "/app/appMyNotice",
-    component: _a4c6ac72,
+    component: _5f275d36,
     name: "app-appMyNotice"
   }, {
     path: "/app/appOtherServer",
-    component: _a9a5d3c0,
+    component: _66f3f851,
     name: "app-appOtherServer"
   }, {
     path: "/app/appServer",
-    component: _10cc38a6,
+    component: _da0a0856,
     name: "app-appServer"
   }, {
     path: "/app/appServerForm",
-    component: _2f4cf08a,
+    component: _ae0ef78e,
     name: "app-appServerForm"
   }, {
     path: "/app/appStatic",
-    component: _770e4a51,
+    component: _0d85e500,
     name: "app-appStatic"
   }, {
     path: "/app/appSystemBZBX",
-    component: _feb92780,
+    component: _0b620022,
     name: "app-appSystemBZBX"
   }, {
     path: "/app/appSystemCGHT",
-    component: _0572e902,
+    component: _7f1e7cb1,
     name: "app-appSystemCGHT"
   }, {
     path: "/app/appSystemDGDK",
-    component: _6601dfdc,
+    component: _40a518ea,
     name: "app-appSystemDGDK"
   }, {
     path: "/app/appSystemFPJ",
-    component: _92ed53c4,
+    component: _3655108f,
     name: "app-appSystemFPJ"
   }, {
     path: "/app/appSystemGRXX",
-    component: _0662103d,
+    component: _ffe4b828,
     name: "app-appSystemGRXX"
   }, {
     path: "/app/appSystemHKGL",
-    component: _4367bc8c,
+    component: _57f7b569,
     name: "app-appSystemHKGL"
   }, {
     path: "/app/appSystemJKGL",
-    component: _a3e30910,
+    component: _27ba0f27,
     name: "app-appSystemJKGL"
   }, {
     path: "/app/appSystemMoneyForm",
-    component: _4a700f3c,
+    component: _91ff4bda,
     name: "app-appSystemMoneyForm"
   }, {
     path: "/app/appSystemOrderInfo",
-    component: _4317784c,
+    component: _8aa6b4ea,
     name: "app-appSystemOrderInfo"
   }, {
     path: "/app/appSystemPTGL",
-    component: _0d24c40a,
+    component: _731931aa,
     name: "app-appSystemPTGL"
   }, {
     path: "/app/appSystemSKD",
-    component: _5d5d904a,
+    component: _45ad6a8a,
     name: "app-appSystemSKD"
   }, {
     path: "/app/appSystemTYHT",
-    component: _b8d1e33a,
+    component: _1d42a212,
     name: "app-appSystemTYHT"
   }, {
     path: "/app/appSystemXSHT",
-    component: _05b65e59,
+    component: _7f61f208,
     name: "app-appSystemXSHT"
   }, {
     path: "/newStudent/studentAllSever",
-    component: _f269d5c6,
+    component: _3aa41d48,
     name: "newStudent-studentAllSever"
   }, {
     path: "/newStudent/studentBill",
-    component: _66e23534,
+    component: _1f77ea42,
     name: "newStudent-studentBill"
   }, {
     path: "/newStudent/studentDorm",
-    component: _7e551db3,
+    component: _07b6f35e,
     name: "newStudent-studentDorm"
   }, {
     path: "/newStudent/studentForm",
-    component: _4e177771,
+    component: _510d65c8,
     name: "newStudent-studentForm"
   }, {
     path: "/newStudent/studentGuide",
-    component: _e054cfc2,
+    component: _32ae77d4,
     name: "newStudent-studentGuide"
   }, {
     path: "/newStudent/studentIndex",
-    component: _4910aa16,
+    component: _7e508aaa,
     name: "newStudent-studentIndex"
   }, {
     path: "/newStudent/studentInfo",
-    component: _3c76ca5b,
+    component: _744ebff4,
     name: "newStudent-studentInfo"
   }, {
     path: "/newStudent/studentOrder",
-    component: _177b291e,
+    component: _d1c969b4,
     name: "newStudent-studentOrder"
   }, {
     path: "/newStudent/studentStation",
-    component: _15218b97,
+    component: _6541520c,
     name: "newStudent-studentStation"
   }, {
     path: "/studentDetail/detailIndex",
-    component: _25d7f990,
+    component: _3e6646dd,
     name: "studentDetail-detailIndex"
   }, {
     path: "/studentDetail/detailRecord",
-    component: _915c714a,
+    component: _df700f54,
     name: "studentDetail-detailRecord"
   }, {
     path: "/",
-    component: _b987a202,
+    component: _0c03db51,
     name: "index"
   }],
 

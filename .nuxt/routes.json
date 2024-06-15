@@ -2,302 +2,302 @@
   {
     "name": "formPrint",
     "path": "/formPrint",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\formPrint.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/formPrint.vue",
     "chunkName": "pages/formPrint",
-    "_name": "_1e4b9f14"
+    "_name": "_1a6f63c8"
   },
   {
     "name": "formSystemPrint",
     "path": "/formSystemPrint",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\formSystemPrint.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/formSystemPrint.vue",
     "chunkName": "pages/formSystemPrint",
-    "_name": "_6d281a47"
+    "_name": "_228a0819"
   },
   {
     "name": "indexBak",
     "path": "/indexBak",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\indexBak.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/indexBak.vue",
     "chunkName": "pages/indexBak",
-    "_name": "_53b89286"
+    "_name": "_3251d12b"
   },
   {
     "name": "login",
     "path": "/login",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\login.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/login.vue",
     "chunkName": "pages/login",
-    "_name": "_6ce3d216"
+    "_name": "_54a90330"
   },
   {
     "name": "loginApp",
     "path": "/loginApp",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\loginApp.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/loginApp.vue",
     "chunkName": "pages/loginApp",
-    "_name": "_f38ed84a"
+    "_name": "_3b32a36e"
   },
   {
     "name": "loginBakApp",
     "path": "/loginBakApp",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\loginBakApp.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/loginBakApp.vue",
     "chunkName": "pages/loginBakApp",
-    "_name": "_dd4a60aa"
+    "_name": "_ab1f1306"
   },
   {
     "name": "myInfo",
     "path": "/myInfo",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\myInfo.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/myInfo.vue",
     "chunkName": "pages/myInfo",
-    "_name": "_7f16c7c6"
+    "_name": "_70a27a0b"
   },
   {
     "name": "signOrder",
     "path": "/signOrder",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\signOrder.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/signOrder.vue",
     "chunkName": "pages/signOrder",
-    "_name": "_7cdbf884"
+    "_name": "_29b191e0"
   },
   {
     "name": "student",
     "path": "/student",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\student.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/student.vue",
     "chunkName": "pages/student",
-    "_name": "_4021daa8"
+    "_name": "_d4a08b0c"
   },
   {
     "name": "app-appAllServer",
     "path": "/app/appAllServer",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\app\\\\appAllServer.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appAllServer.vue",
     "chunkName": "pages/app/appAllServer",
-    "_name": "_162f70b1"
+    "_name": "_d409a9bc"
   },
   {
     "name": "app-appAllServerBak",
     "path": "/app/appAllServerBak",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\app\\\\appAllServerBak.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appAllServerBak.vue",
     "chunkName": "pages/app/appAllServerBak",
-    "_name": "_8fa4806a"
+    "_name": "_754323ba"
   },
   {
     "name": "app-appIndex",
     "path": "/app/appIndex",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\app\\\\appIndex.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appIndex.vue",
     "chunkName": "pages/app/appIndex",
-    "_name": "_1e2dbcbf"
+    "_name": "_2edb50a0"
   },
   {
     "name": "app-appMsgDetail",
     "path": "/app/appMsgDetail",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\app\\\\appMsgDetail.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appMsgDetail.vue",
     "chunkName": "pages/app/appMsgDetail",
-    "_name": "_7e6f0ec2"
+    "_name": "_40943310"
   },
   {
     "name": "app-appMyNotice",
     "path": "/app/appMyNotice",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\app\\\\appMyNotice.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appMyNotice.vue",
     "chunkName": "pages/app/appMyNotice",
-    "_name": "_a4c6ac72"
+    "_name": "_5f275d36"
   },
   {
     "name": "app-appOtherServer",
     "path": "/app/appOtherServer",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\app\\\\appOtherServer.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appOtherServer.vue",
     "chunkName": "pages/app/appOtherServer",
-    "_name": "_a9a5d3c0"
+    "_name": "_66f3f851"
   },
   {
     "name": "app-appServer",
     "path": "/app/appServer",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\app\\\\appServer.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appServer.vue",
     "chunkName": "pages/app/appServer",
-    "_name": "_10cc38a6"
+    "_name": "_da0a0856"
   },
   {
     "name": "app-appServerForm",
     "path": "/app/appServerForm",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\app\\\\appServerForm.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appServerForm.vue",
     "chunkName": "pages/app/appServerForm",
-    "_name": "_2f4cf08a"
+    "_name": "_ae0ef78e"
   },
   {
     "name": "app-appStatic",
     "path": "/app/appStatic",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\app\\\\appStatic.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appStatic.vue",
     "chunkName": "pages/app/appStatic",
-    "_name": "_770e4a51"
+    "_name": "_0d85e500"
   },
   {
     "name": "app-appSystemBZBX",
     "path": "/app/appSystemBZBX",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\app\\\\appSystemBZBX.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemBZBX.vue",
     "chunkName": "pages/app/appSystemBZBX",
-    "_name": "_feb92780"
+    "_name": "_0b620022"
   },
   {
     "name": "app-appSystemCGHT",
     "path": "/app/appSystemCGHT",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\app\\\\appSystemCGHT.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemCGHT.vue",
     "chunkName": "pages/app/appSystemCGHT",
-    "_name": "_0572e902"
+    "_name": "_7f1e7cb1"
   },
   {
     "name": "app-appSystemDGDK",
     "path": "/app/appSystemDGDK",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\app\\\\appSystemDGDK.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemDGDK.vue",
     "chunkName": "pages/app/appSystemDGDK",
-    "_name": "_6601dfdc"
+    "_name": "_40a518ea"
   },
   {
     "name": "app-appSystemFPJ",
     "path": "/app/appSystemFPJ",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\app\\\\appSystemFPJ.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemFPJ.vue",
     "chunkName": "pages/app/appSystemFPJ",
-    "_name": "_92ed53c4"
+    "_name": "_3655108f"
   },
   {
     "name": "app-appSystemGRXX",
     "path": "/app/appSystemGRXX",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\app\\\\appSystemGRXX.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemGRXX.vue",
     "chunkName": "pages/app/appSystemGRXX",
-    "_name": "_0662103d"
+    "_name": "_ffe4b828"
   },
   {
     "name": "app-appSystemHKGL",
     "path": "/app/appSystemHKGL",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\app\\\\appSystemHKGL.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemHKGL.vue",
     "chunkName": "pages/app/appSystemHKGL",
-    "_name": "_4367bc8c"
+    "_name": "_57f7b569"
   },
   {
     "name": "app-appSystemJKGL",
     "path": "/app/appSystemJKGL",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\app\\\\appSystemJKGL.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemJKGL.vue",
     "chunkName": "pages/app/appSystemJKGL",
-    "_name": "_a3e30910"
+    "_name": "_27ba0f27"
   },
   {
     "name": "app-appSystemMoneyForm",
     "path": "/app/appSystemMoneyForm",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\app\\\\appSystemMoneyForm.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemMoneyForm.vue",
     "chunkName": "pages/app/appSystemMoneyForm",
-    "_name": "_4a700f3c"
+    "_name": "_91ff4bda"
   },
   {
     "name": "app-appSystemOrderInfo",
     "path": "/app/appSystemOrderInfo",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\app\\\\appSystemOrderInfo.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemOrderInfo.vue",
     "chunkName": "pages/app/appSystemOrderInfo",
-    "_name": "_4317784c"
+    "_name": "_8aa6b4ea"
   },
   {
     "name": "app-appSystemPTGL",
     "path": "/app/appSystemPTGL",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\app\\\\appSystemPTGL.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemPTGL.vue",
     "chunkName": "pages/app/appSystemPTGL",
-    "_name": "_0d24c40a"
+    "_name": "_731931aa"
   },
   {
     "name": "app-appSystemSKD",
     "path": "/app/appSystemSKD",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\app\\\\appSystemSKD.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemSKD.vue",
     "chunkName": "pages/app/appSystemSKD",
-    "_name": "_5d5d904a"
+    "_name": "_45ad6a8a"
   },
   {
     "name": "app-appSystemTYHT",
     "path": "/app/appSystemTYHT",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\app\\\\appSystemTYHT.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemTYHT.vue",
     "chunkName": "pages/app/appSystemTYHT",
-    "_name": "_b8d1e33a"
+    "_name": "_1d42a212"
   },
   {
     "name": "app-appSystemXSHT",
     "path": "/app/appSystemXSHT",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\app\\\\appSystemXSHT.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/app/appSystemXSHT.vue",
     "chunkName": "pages/app/appSystemXSHT",
-    "_name": "_05b65e59"
+    "_name": "_7f61f208"
   },
   {
     "name": "newStudent-studentAllSever",
     "path": "/newStudent/studentAllSever",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\newStudent\\\\studentAllSever.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/newStudent/studentAllSever.vue",
     "chunkName": "pages/newStudent/studentAllSever",
-    "_name": "_f269d5c6"
+    "_name": "_3aa41d48"
   },
   {
     "name": "newStudent-studentBill",
     "path": "/newStudent/studentBill",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\newStudent\\\\studentBill.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/newStudent/studentBill.vue",
     "chunkName": "pages/newStudent/studentBill",
-    "_name": "_66e23534"
+    "_name": "_1f77ea42"
   },
   {
     "name": "newStudent-studentDorm",
     "path": "/newStudent/studentDorm",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\newStudent\\\\studentDorm.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/newStudent/studentDorm.vue",
     "chunkName": "pages/newStudent/studentDorm",
-    "_name": "_7e551db3"
+    "_name": "_07b6f35e"
   },
   {
     "name": "newStudent-studentForm",
     "path": "/newStudent/studentForm",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\newStudent\\\\studentForm.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/newStudent/studentForm.vue",
     "chunkName": "pages/newStudent/studentForm",
-    "_name": "_4e177771"
+    "_name": "_510d65c8"
   },
   {
     "name": "newStudent-studentGuide",
     "path": "/newStudent/studentGuide",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\newStudent\\\\studentGuide.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/newStudent/studentGuide.vue",
     "chunkName": "pages/newStudent/studentGuide",
-    "_name": "_e054cfc2"
+    "_name": "_32ae77d4"
   },
   {
     "name": "newStudent-studentIndex",
     "path": "/newStudent/studentIndex",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\newStudent\\\\studentIndex.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/newStudent/studentIndex.vue",
     "chunkName": "pages/newStudent/studentIndex",
-    "_name": "_4910aa16"
+    "_name": "_7e508aaa"
   },
   {
     "name": "newStudent-studentInfo",
     "path": "/newStudent/studentInfo",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\newStudent\\\\studentInfo.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/newStudent/studentInfo.vue",
     "chunkName": "pages/newStudent/studentInfo",
-    "_name": "_3c76ca5b"
+    "_name": "_744ebff4"
   },
   {
     "name": "newStudent-studentOrder",
     "path": "/newStudent/studentOrder",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\newStudent\\\\studentOrder.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/newStudent/studentOrder.vue",
     "chunkName": "pages/newStudent/studentOrder",
-    "_name": "_177b291e"
+    "_name": "_d1c969b4"
   },
   {
     "name": "newStudent-studentStation",
     "path": "/newStudent/studentStation",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\newStudent\\\\studentStation.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/newStudent/studentStation.vue",
     "chunkName": "pages/newStudent/studentStation",
-    "_name": "_15218b97"
+    "_name": "_6541520c"
   },
   {
     "name": "studentDetail-detailIndex",
     "path": "/studentDetail/detailIndex",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\studentDetail\\\\detailIndex.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/studentDetail/detailIndex.vue",
     "chunkName": "pages/studentDetail/detailIndex",
-    "_name": "_25d7f990"
+    "_name": "_3e6646dd"
   },
   {
     "name": "studentDetail-detailRecord",
     "path": "/studentDetail/detailRecord",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\studentDetail\\\\detailRecord.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/studentDetail/detailRecord.vue",
     "chunkName": "pages/studentDetail/detailRecord",
-    "_name": "_915c714a"
+    "_name": "_df700f54"
   },
   {
     "name": "index",
     "path": "/",
-    "component": "E:\\\\SourceCodeOld\\\\IDEA\\\\campus-private\\\\campus-client\\\\pages\\\\index.vue",
+    "component": "/Users/likai/工作/object/vuejs/campusSchool-client3.0/pages/index.vue",
     "chunkName": "pages/index",
-    "_name": "_b987a202"
+    "_name": "_0c03db51"
   }
 ]

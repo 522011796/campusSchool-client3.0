@@ -156,7 +156,7 @@ export default (ctx, inject) => {
   // baseURL
   const baseURL = process.browser
     ? (runtimeConfig.browserBaseURL || runtimeConfig.baseURL || '/')
-      : (runtimeConfig.baseURL || process.env._AXIOS_BASE_URL_ || 'http://localhost:8889/')
+      : (runtimeConfig.baseURL || process.env._AXIOS_BASE_URL_ || 'http://localhost:8888/')
 
   // Create fresh objects for all default header scopes
   // Axios creates only one which is shared across SSR requests!

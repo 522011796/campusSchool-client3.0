@@ -13,18 +13,18 @@ import { createStore } from './store.js'
 
 /* Plugins */
 
-import nuxt_plugin_plugin_eeee47c8 from 'nuxt_plugin_plugin_eeee47c8' // Source: .\\components\\plugin.js (mode: 'all')
-import nuxt_plugin_axios_3ef49a3f from 'nuxt_plugin_axios_3ef49a3f' // Source: .\\axios.js (mode: 'all')
-import nuxt_plugin_elementui_d905880e from 'nuxt_plugin_elementui_d905880e' // Source: ..\\plugins\\element-ui (mode: 'all')
-import nuxt_plugin_axios_2228ef02 from 'nuxt_plugin_axios_2228ef02' // Source: ..\\plugins\\axios (mode: 'all')
-import nuxt_plugin_i18n_926bd3dc from 'nuxt_plugin_i18n_926bd3dc' // Source: ..\\plugins\\i18n (mode: 'all')
-import nuxt_plugin_qs_170fd1d4 from 'nuxt_plugin_qs_170fd1d4' // Source: ..\\plugins\\qs (mode: 'all')
-import nuxt_plugin_moment_36f1f0f4 from 'nuxt_plugin_moment_36f1f0f4' // Source: ..\\plugins\\moment (mode: 'all')
-import nuxt_plugin_echarts_295016f4 from 'nuxt_plugin_echarts_295016f4' // Source: ..\\plugins\\echarts (mode: 'all')
-import nuxt_plugin_formCreate_26e3fdf7 from 'nuxt_plugin_formCreate_26e3fdf7' // Source: ..\\plugins\\formCreate (mode: 'client')
-import nuxt_plugin_vuequillcustomeditor_b5f1e5d8 from 'nuxt_plugin_vuequillcustomeditor_b5f1e5d8' // Source: ..\\plugins\\vue-quill-custom-editor.js (mode: 'client')
-import nuxt_plugin_vantui_6b945fbc from 'nuxt_plugin_vantui_6b945fbc' // Source: ..\\plugins\\vant-ui (mode: 'all')
-import nuxt_plugin_vuePageTrasition_373de3e8 from 'nuxt_plugin_vuePageTrasition_373de3e8' // Source: ..\\plugins\\vuePageTrasition (mode: 'all')
+import nuxt_plugin_plugin_5fbee497 from 'nuxt_plugin_plugin_5fbee497' // Source: ./components/plugin.js (mode: 'all')
+import nuxt_plugin_axios_1959fa2d from 'nuxt_plugin_axios_1959fa2d' // Source: ./axios.js (mode: 'all')
+import nuxt_plugin_elementui_d905880e from 'nuxt_plugin_elementui_d905880e' // Source: ../plugins/element-ui (mode: 'all')
+import nuxt_plugin_axios_2228ef02 from 'nuxt_plugin_axios_2228ef02' // Source: ../plugins/axios (mode: 'all')
+import nuxt_plugin_i18n_926bd3dc from 'nuxt_plugin_i18n_926bd3dc' // Source: ../plugins/i18n (mode: 'all')
+import nuxt_plugin_qs_170fd1d4 from 'nuxt_plugin_qs_170fd1d4' // Source: ../plugins/qs (mode: 'all')
+import nuxt_plugin_moment_36f1f0f4 from 'nuxt_plugin_moment_36f1f0f4' // Source: ../plugins/moment (mode: 'all')
+import nuxt_plugin_echarts_295016f4 from 'nuxt_plugin_echarts_295016f4' // Source: ../plugins/echarts (mode: 'all')
+import nuxt_plugin_formCreate_26e3fdf7 from 'nuxt_plugin_formCreate_26e3fdf7' // Source: ../plugins/formCreate (mode: 'client')
+import nuxt_plugin_vuequillcustomeditor_b5f1e5d8 from 'nuxt_plugin_vuequillcustomeditor_b5f1e5d8' // Source: ../plugins/vue-quill-custom-editor.js (mode: 'client')
+import nuxt_plugin_vantui_6b945fbc from 'nuxt_plugin_vantui_6b945fbc' // Source: ../plugins/vant-ui (mode: 'all')
+import nuxt_plugin_vuePageTrasition_373de3e8 from 'nuxt_plugin_vuePageTrasition_373de3e8' // Source: ../plugins/vuePageTrasition (mode: 'all')
 
 // Component: <ClientOnly>
 Vue.component(ClientOnly.name, ClientOnly)
@@ -206,12 +206,12 @@ async function createApp(ssrContext, config = {}) {
   }
   // Plugin execution
 
-  if (typeof nuxt_plugin_plugin_eeee47c8 === 'function') {
-    await nuxt_plugin_plugin_eeee47c8(app.context, inject)
+  if (typeof nuxt_plugin_plugin_5fbee497 === 'function') {
+    await nuxt_plugin_plugin_5fbee497(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_axios_3ef49a3f === 'function') {
-    await nuxt_plugin_axios_3ef49a3f(app.context, inject)
+  if (typeof nuxt_plugin_axios_1959fa2d === 'function') {
+    await nuxt_plugin_axios_1959fa2d(app.context, inject)
   }
 
   if (typeof nuxt_plugin_elementui_d905880e === 'function') {
