@@ -273,6 +273,24 @@
                        @click="showHardPicker = true"
                        :rules="[{ required: true, message: '请选择信息' }]">
             </van-field>
+            <van-field v-model="form.channelTypeLabel"
+                       :name="$t('报考我院渠道')"
+                       :label="$t('报考我院渠道')"
+                       readonly
+                       clickable
+                       :placeholder="$t('请选择')"
+                       @click="showChannelPicker = true"
+                       :rules="[{ required: true, message: '请选择信息' }]">
+            </van-field>
+            <van-field v-model="form.channelDes"
+                       v-if="channelType == true"
+                       :name="$t('渠道信息')"
+                       :label="$t('渠道信息')"
+                       :placeholder="channelDetailHolder"
+                       autocomplete="off"
+                       :maxlength="20"
+                       :rules="[{ required: true, message: channelDetailHolder }]">
+            </van-field>
           </van-form>
         </div>
       </div>
@@ -327,6 +345,16 @@
         @confirm="onAdProvince"
       />
     </van-popup>
+
+    <van-popup v-model="showChannelPicker" position="bottom">
+      <van-picker
+          show-toolbar
+          title="报考我院渠道"
+          :columns="filterChannelTypePop"
+          @cancel="onShowPickerCancel"
+          @confirm="onChannel"
+      />
+    </van-popup>
   </div>
 </template>
 
@@ -366,6 +394,7 @@
         showRetirePicker: false,
         showHardPicker: false,
         showAdProvince: false,
+        showChannelPicker: false,
         emailReg: /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/,
         phoneReg: /^[1][3,4,5,6,7,8,9][0-9]{9}$/,
         posterCodeReg: /^[1][3,4,5,6,7,8,9][0-9]{9}$/,
@@ -421,6 +450,8 @@
         }],
         detailData: '',
         connType: [],
+        channelDetailHolder:this.$t("请输入信息"),
+        channelType: false,
         form: {
           id: '',
           phone: '',
@@ -447,7 +478,10 @@
           adProvinceLabel: '',
           bzrName: '',
           bzrPhone: '',
-          postalCode: ''
+          postalCode: '',
+          channelType: [],
+          channelTypeLabel: '',
+          channelDes: ''
         }
       }
     },
@@ -547,7 +581,13 @@
               bzrName: res.data.data.master_name,
               bzrPhone: res.data.data.master_phone,
               postalCode: res.data.data.postal_code,
+              channelType: res.data.data.channel_type ? res.data.data.channel_type.split(",") : '',
+              channelTypeLabel: res.data.data.channel_type,
+              channelDes: res.data.data.channel_des,
             };
+            let channelType = res.data.data.channel_type ? res.data.data.channel_type.split(",") : [];
+            console.log(channelType);
+            this.setChannelTypeInfo(channelType, res.data.data.channel_des);
             if (!res.data.data.enroll_province || !res.data.data.enroll_city){
               this.form.adProvince = [];
               this.form.adProvinceLabel = "";
@@ -569,9 +609,11 @@
         this.$refs.form.validate().then(() => {
           this.btnLoading = true;
           let url = common.server_enroll_app_student_update;
-          // if (this.form.headImg == ""){
-          //   Toast(this.$t("请设置照片！"));
-          //   return;
+          // if (this.channelTypeValue == '教培机构' || this.channelTypeValue == '学校推荐' || this.channelTypeValue == '其他渠道' || this.channelTypeValue == '其他'){
+          //   if (this.form.channelDes == ''){
+          //     Toast("请输入渠道信息");
+          //     return;
+          //   }
           // }
           let params = {
             url: this.form.headImg,
@@ -593,7 +635,9 @@
             enrollCity: this.form.adProvince.length > 0 ? this.form.adProvince[1] : '',
             masterName: this.form.bzrName,
             masterPhone: this.form.bzrPhone,
-            postalCode: this.form.postalCode
+            postalCode: this.form.postalCode,
+            channelType: this.form.channelType.join(),
+            channelDes: this.form.channelDes
           };
           params = this.$qs.stringify(params);
           this.$axios.post(url, params).then(res => {
@@ -639,6 +683,7 @@
         this.showPoliticsPicker = false;
         this.showHardPicker = false;
         this.showAdProvince = false;
+        this.showChannelPicker = false;
       },
       onGraduationChange(value, index){
         this.form.graduationLabel = value.label;
@@ -665,10 +710,60 @@
         this.form.adProvinceLabel = value.join()
         this.showAdProvince = false;
       },
+      onChannel(value, index){
+        let channelValueLabel = value.join();
+        let channelValue = value;
+        if (value.length == 2){
+          if (value[1] == ''){
+            channelValueLabel = value[0];
+            channelValue = [value[0]];
+          }
+        }
+        this.form.channelType = channelValue;
+        this.form.channelTypeLabel = channelValueLabel;
+        this.setChannelTypeInfo(value, '');
+        this.showChannelPicker = false;
+      },
       handleChangeConnType(data){
         console.log(data);
         this.connType = data;
         this.$set(this.form, 'connType', data);
+      },
+      setChannelTypeInfo(event, des){
+        let value = "";
+        let channelValue = [];
+        if (event.length == 1){
+          value = event[0];
+          channelValue = event;
+          if (value == "报考机构"){
+            this.channelDetailHolder = '请输入机构名称';
+          }else if (value == "辅导机构"){
+            this.channelDetailHolder = '请输入机构名称';
+          }else if (value == "学校推荐"){
+            this.channelDetailHolder = '请输入老师姓名';
+          }else if (value == "报考机构"){
+            this.channelDetailHolder = '请输入机构名称';
+          }else {
+            this.channelDetailHolder = '请输入信息';
+          }
+        }else if (event.length == 2) {
+          if (event[1] == ''){
+            value = event[0];
+            channelValue = [event[0]];
+          }else {
+            value = event[1];
+            channelValue = event;
+          }
+        }
+        this.form.channelType = channelValue;
+        this.form.channelDes = des ? des : '';
+        this.channelTypeValue = channelValue;
+        console.log(event);
+        if (value == '教培机构' || value == '学校推荐' || value == '其他渠道' || value == '其他'){
+          this.channelType = true;
+        }else {
+          this.channelType = false;
+        }
       }
     }
   }

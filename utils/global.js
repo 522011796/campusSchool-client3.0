@@ -421,6 +421,67 @@ const filterAccountType = [
   { text: "其他账户", value: '99' ,label: '其他账户', name: "其他账户"},
 ];
 
+const  filterChannelType = [
+  { text: "教培机构", value: '教培机构' ,label: '教培机构'},
+  { text: "学校推荐", value: '学校推荐' ,label: '学校推荐'},
+  { text: "线下渠道", value: '线下渠道' ,label: '线下渠道',children:[
+      {text: "家长、同学或朋友推荐", value: '家长、同学或朋友推荐' ,label: '家长、同学或朋友推荐'},
+      {text: "我院学生推荐", value: '我院学生推荐' ,label: '我院学生推荐'},
+      {text: "招生电话", value: '招生电话' ,label: '招生电话'}
+    ]
+  },
+  { text: "线上渠道", value: '线上渠道' ,label: '线上渠道',children:[
+      {text: "抖音", value: '抖音' ,label: '抖音'},
+      {text: "快手", value: '快手' ,label: '快手'},
+      {text: "小红书", value: '小红书' ,label: '小红书'},
+      {text: "公众号", value: '公众号' ,label: '公众号'},
+      {text: "官方网站", value: '官方网站' ,label: '官方网站'},
+      {text: "其他", value: '其他' ,label: '其他'}
+    ]
+  },
+  { text: "自行报考", value: '自行报考' ,label: '自行报考',children:[
+      {text: "提前了解信息后报考", value: '提前了解信息后报考' ,label: '提前了解信息后报考'},
+      {text: "随意报考", value: '随意报考' ,label: '随意报考'}
+    ]
+  },
+  { text: "其他渠道", value: '其他渠道' ,label: '其他渠道'}
+];
+
+const filterChannelTypePop = [
+  { text: "教培机构", value: '教培机构' ,label: '教培机构',children:[
+      {text: "", value: '' ,label: ''}
+    ]
+  },
+  { text: "学校推荐", value: '学校推荐' ,label: '学校推荐',children:[
+      {text: "", value: '' ,label: ''}
+    ]
+  },
+  { text: "线下渠道", value: '线下渠道' ,label: '线下渠道',children:[
+      {text: "家长、同学或朋友推荐", value: '家长、同学或朋友推荐' ,label: '家长、同学或朋友推荐'},
+      {text: "我院学生推荐", value: '我院学生推荐' ,label: '我院学生推荐'},
+      {text: "招生电话", value: '招生电话' ,label: '招生电话'}
+    ]
+  },
+  { text: "线上渠道", value: '线上渠道' ,label: '线上渠道',children:[
+      {text: "抖音", value: '抖音' ,label: '抖音'},
+      {text: "快手", value: '快手' ,label: '快手'},
+      {text: "小红书", value: '小红书' ,label: '小红书'},
+      {text: "公众号", value: '公众号' ,label: '公众号'},
+      {text: "官方网站", value: '官方网站' ,label: '官方网站'},
+      {text: "其他", value: '其他' ,label: '其他'}
+    ]
+  },
+  { text: "自行报考", value: '自行报考' ,label: '自行报考',children:[
+      {text: "提前了解信息后报考", value: '提前了解信息后报考' ,label: '提前了解信息后报考'},
+      {text: "随意报考", value: '随意报考' ,label: '随意报考'}
+    ]
+  },
+  { text: "其他渠道", value: '其他渠道' ,label: '其他渠道',children:[
+      {text: "", value: '' ,label: ''}
+    ]
+  }
+];
+
 export default {
   total,
   page,
@@ -507,5 +568,7 @@ export default {
   filterHardType,
   filterFpType,
   filterBillTypes,
-  filterAccountType
+  filterAccountType,
+  filterChannelType,
+  filterChannelTypePop
 }

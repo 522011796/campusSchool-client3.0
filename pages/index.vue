@@ -171,7 +171,7 @@
               </div>
               <el-row v-else :gutter="16">
                 <el-col :span="6" v-for="(item, index) in serverDataList" v-if="item.form_code != 'XMGL'" :key="index" @click.native="serverClick($event, item)" class="margin-bottom-20">
-                  <el-card shadow="always" :body-style="{padding: '18px',background: '#EBEEF5'}">
+                  <el-card shadow="always" :body-style="{padding: '18px',background: '#EBEEF5',height:'40px'}">
                     <div class="moon-content-text-ellipsis-class">
                       <el-image class="block-icon-class" :src="item.form_logo">
                         <div slot="error" class="block-icon-class">

@@ -253,7 +253,7 @@
             <span class="tag-text-class font-bold">{{$t('联系信息')}}</span>
           </div>
           <div>
-            <el-form :model="form" :rules="rules" ref="form" label-width="100px">
+            <el-form :model="form" :rules="rules" ref="form" label-width="120px">
               <el-row>
                 <el-col :span="12">
                   <el-form-item :label="$t('手机号')" prop="phone">
@@ -367,14 +367,25 @@
               <el-row>
                 <el-col :span="12">
                   <el-form-item :label="$t('邮政编码')" prop="postalCode">
-                    <el-input v-model="form.postalCode" size="small" class="width-415" :placeholder="$t('请填写邮政编码')"></el-input>
+                    <el-input v-model="form.postalCode" size="small" class="width-430" :placeholder="$t('请填写邮政编码')"></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
                 <el-col :span="24">
                   <el-form-item :label="$t('详细地址')" prop="address">
-                    <el-input v-model="form.address" size="small" class="width-415" :placeholder="$t('请填写详细地址至楼号门牌号')"></el-input>
+                    <el-input v-model="form.address" size="small" class="width-430" :placeholder="$t('请填写详细地址至楼号门牌号')"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="24">
+                  <el-form-item :label="$t('报考我院渠道')" prop="address">
+                    <div class="layout-inline">
+                      <el-cascader ref="selectorChannelType" size="small" v-model="form.channelType" :options="filterChannelType" @change="handleSelectChange($event, 10)" style="width: 200px" class="layout-item"></el-cascader>
+
+                      <el-input  v-if="channelType == true" size="small" :placeholder="channelDetailHolder" v-model="form.channelDes" style="width: 220px" class="layout-item"></el-input>
+                    </div>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -1098,6 +1109,9 @@
         itemUserList: [],
         billList: [],
         qrCode: '',
+        channelDetailHolder:this.$t("请输入信息"),
+        channelType: false,
+        channelTypeValue: '',
         form: {
           id: '',
           phone: '',
@@ -1119,7 +1133,9 @@
           adProvince: [],
           bzrName: '',
           bzrPhone: '',
-          postalCode: ''
+          postalCode: '',
+          channelType:[],
+          channelDes:''
         },
         formStation: {
           id: '',
@@ -1444,8 +1460,13 @@
               adCity: res.data.data.enroll_city+'',
               bzrName: res.data.data.master_name,
               bzrPhone: res.data.data.master_phone,
-              postalCode: res.data.data.postal_code
+              postalCode: res.data.data.postal_code,
+              channelType: res.data.data.channel_type ? res.data.data.channel_type.split(",") : '',
+              channelDes: res.data.data.channel_des,
             };
+            let channelType = res.data.data.channel_type ? res.data.data.channel_type.split(",") : [];
+            this.setChannelTypeInfo(channelType, res.data.data.channel_des);
+
             if (!res.data.data.enroll_province || !res.data.data.enroll_city){
               this.form.adProvince = [];
             }
@@ -1616,12 +1637,41 @@
           this.form.hard = event;
         }else if (type == 9){
           this.form.adProvince = event;
+        }else if (type == 10){
+          this.setChannelTypeInfo(event, '');
         }
       },
       handleChangeConnType(data){
         console.log(data);
         this.connType = data;
         this.$set(this.form, 'connType', data);
+      },
+      setChannelTypeInfo(event, des){
+        let value = "";
+        if (event.length == 1){
+          value = event[0];
+          if (value == "报考机构"){
+            this.channelDetailHolder = '请输入机构名称';
+          }else if (value == "辅导机构"){
+            this.channelDetailHolder = '请输入机构名称';
+          }else if (value == "学校推荐"){
+            this.channelDetailHolder = '请输入老师姓名';
+          }else if (value == "报考机构"){
+            this.channelDetailHolder = '请输入机构名称';
+          }else {
+            this.channelDetailHolder = '请输入信息';
+          }
+        }else if (event.length == 2) {
+          value = event[1];
+        }
+        this.form.channelType = event;
+        this.form.channelDes = des ? des : '';
+        this.channelTypeValue = value;
+        if (value == '教培机构' || value == '学校推荐' || value == '其他渠道' || value == '其他'){
+          this.channelType = true;
+        }else {
+          this.channelType = false;
+        }
       },
       uploadFileSuccess(res, file){
         if (res.code == 200){
@@ -1652,7 +1702,9 @@
           adProvince: [],
           bzrName: '',
           bzrPhone: '',
-          postalCode: ''
+          postalCode: '',
+          channelType: [],
+          channelDes: ''
         };
         this.formStation = {
           id: '',
@@ -1770,12 +1822,14 @@
       okDialog(){
         this.$refs['form'].validate((valid) => {
           if (valid) {
-            this.btnLoading = true;
             let url = common.server_enroll_app_student_update;
-            // if (this.form.headImg == ""){
-            //   MessageWarning(this.$t("请设置照片！"));
-            //   return;
-            // }
+            if (this.channelTypeValue == '教培机构' || this.channelTypeValue == '学校推荐' || this.channelTypeValue == '其他渠道' || this.channelTypeValue == '其他'){
+              if (this.form.channelDes == ''){
+                MessageWarning("请输入渠道信息");
+                return;
+              }
+            }
+            this.btnLoading = true;
             console.log(this.form.adProvince);
             let params = {
               url: this.form.headImg,
@@ -1797,7 +1851,9 @@
               enrollCity: this.form.adProvince.length > 0 ? this.form.adProvince[1] : '',
               masterName: this.form.bzrName,
               masterPhone: this.form.bzrPhone,
-              postalCode: this.form.postalCode
+              postalCode: this.form.postalCode,
+              channelType: this.form.channelType.join(),
+              channelDes: this.form.channelDes
             };
             params = this.$qs.stringify(params);
             this.$axios.post(url, params).then(res => {
