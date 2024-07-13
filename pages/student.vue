@@ -358,11 +358,11 @@
                     <my-select size="small" :disabled="form.id != '' && oprType == 'detail'" :sel-value="form.politics" :options="filterPoliticsType" width-style="150" @change="handleSelectChange($event, 2)"></my-select>
                   </el-form-item>
                 </el-col>
-                <el-col :span="12">
-                  <el-form-item :label="$t('所在省市')" prop="adProvince">
-                    <el-cascader ref="selectorProvince" size="small" :disabled="form.id != '' && oprType == 'detail'" v-model="form.adProvince" :options="provinceInfoText()" @change="handleSelectChange($event, 9)" style="width: 150px"></el-cascader>
-                  </el-form-item>
-                </el-col>
+<!--                <el-col :span="12">-->
+<!--                  <el-form-item :label="$t('所在省市')" prop="adProvince">-->
+<!--                    <el-cascader ref="selectorProvince" size="small" :disabled="form.id != '' && oprType == 'detail'" v-model="form.adProvince" :options="provinceInfoText()" @change="handleSelectChange($event, 9)" style="width: 150px"></el-cascader>-->
+<!--                  </el-form-item>-->
+<!--                </el-col>-->
               </el-row>
               <el-row>
                 <el-col :span="12">
@@ -1456,7 +1456,7 @@
               hard: res.data.data.difficulty_type ? res.data.data.difficulty_type : '',
               graduationSchool: res.data.data.high_school ? res.data.data.high_school : '',
               connType: [],
-              adProvince: [res.data.data.enroll_province,res.data.data.enroll_city],
+              //adProvince: [res.data.data.enroll_province,res.data.data.enroll_city],
               adCity: res.data.data.enroll_city+'',
               bzrName: res.data.data.master_name,
               bzrPhone: res.data.data.master_phone,
@@ -1830,7 +1830,6 @@
               }
             }
             this.btnLoading = true;
-            console.log(this.form.adProvince);
             let params = {
               url: this.form.headImg,
               phone: this.form.phone,
@@ -1847,8 +1846,8 @@
               soldier: this.form.retire,
               difficultyType: this.form.hard,
               highSchool: this.form.graduationSchool,
-              enrollProvince: this.form.adProvince.length > 0 ? this.form.adProvince[0] : '',
-              enrollCity: this.form.adProvince.length > 0 ? this.form.adProvince[1] : '',
+              //enrollProvince: this.form.adProvince.length > 0 ? this.form.adProvince[0] : '',
+              // enrollCity: this.form.adProvince.length > 0 ? this.form.adProvince[1] : '',
               masterName: this.form.bzrName,
               masterPhone: this.form.bzrPhone,
               postalCode: this.form.postalCode,

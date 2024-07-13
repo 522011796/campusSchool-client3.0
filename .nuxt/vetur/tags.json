@@ -77,12 +77,6 @@
   "LazyLayoutTb": {
     "description": "Auto imported from components/Layout/LayoutTb.vue"
   },
-  "MyServerDialog": {
-    "description": "Auto imported from components/dialog/MyServerDialog.vue"
-  },
-  "LazyMyServerDialog": {
-    "description": "Auto imported from components/dialog/MyServerDialog.vue"
-  },
   "BarChart": {
     "description": "Auto imported from components/charts/BarChart.vue"
   },
@@ -154,6 +148,12 @@
   },
   "LazyTableBarChart": {
     "description": "Auto imported from components/charts/TableBarChart.vue"
+  },
+  "MyServerDialog": {
+    "description": "Auto imported from components/dialog/MyServerDialog.vue"
+  },
+  "LazyMyServerDialog": {
+    "description": "Auto imported from components/dialog/MyServerDialog.vue"
   },
   "MyBlockListChildTree": {
     "description": "Auto imported from components/tree/MyBlockListChildTree.vue"
@@ -515,18 +515,6 @@
   "LazyMyFlowType": {
     "description": "Auto imported from components/utils/status/MyFlowType.vue"
   },
-  "QuillBlock": {
-    "description": "Auto imported from components/utils/upload/QuillBlock.vue"
-  },
-  "LazyQuillBlock": {
-    "description": "Auto imported from components/utils/upload/QuillBlock.vue"
-  },
-  "UploadSquare": {
-    "description": "Auto imported from components/utils/upload/UploadSquare.vue"
-  },
-  "LazyUploadSquare": {
-    "description": "Auto imported from components/utils/upload/UploadSquare.vue"
-  },
   "ClassroomTreeAndList": {
     "description": "Auto imported from components/utils/treeAndList/ClassroomTreeAndList.vue"
   },
@@ -580,5 +568,17 @@
   },
   "LazyTeacherTreeAndListNoPage": {
     "description": "Auto imported from components/utils/treeAndList/TeacherTreeAndListNoPage.vue"
+  },
+  "QuillBlock": {
+    "description": "Auto imported from components/utils/upload/QuillBlock.vue"
+  },
+  "LazyQuillBlock": {
+    "description": "Auto imported from components/utils/upload/QuillBlock.vue"
+  },
+  "UploadSquare": {
+    "description": "Auto imported from components/utils/upload/UploadSquare.vue"
+  },
+  "LazyUploadSquare": {
+    "description": "Auto imported from components/utils/upload/UploadSquare.vue"
   }
 }

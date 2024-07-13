@@ -230,15 +230,15 @@
                        autocomplete="off"
                        :rules="telRules">
             </van-field>
-            <van-field v-model="form.adProvinceLabel"
-                       :name="$t('所在省份')"
-                       :label="$t('所在省份')"
-                       readonly
-                       clickable
-                       :placeholder="$t('请选择')"
-                       @click="showAdProvince = true"
-                       :rules="[{ required: true, message: '请选择信息' }]">
-            </van-field>
+<!--            <van-field v-model="form.adProvinceLabel"-->
+<!--                       :name="$t('所在省份')"-->
+<!--                       :label="$t('所在省份')"-->
+<!--                       readonly-->
+<!--                       clickable-->
+<!--                       :placeholder="$t('请选择')"-->
+<!--                       @click="showAdProvince = true"-->
+<!--                       :rules="[{ required: true, message: '请选择信息' }]">-->
+<!--            </van-field>-->
             <van-field v-model="form.postalCode"
                        :name="$t('邮政编码')"
                        :label="$t('邮政编码')"
@@ -577,7 +577,7 @@
               connType: [],
               adProvince: [res.data.data.enroll_province,res.data.data.enroll_city],
               adCity: res.data.data.enroll_city+'',
-              adProvinceLabel: res.data.data.enroll_province+","+res.data.data.enroll_city,
+              //adProvinceLabel: res.data.data.enroll_province+","+res.data.data.enroll_city,
               bzrName: res.data.data.master_name,
               bzrPhone: res.data.data.master_phone,
               postalCode: res.data.data.postal_code,
@@ -631,8 +631,8 @@
             soldier: this.form.retire,
             difficultyType: this.form.hard,
             highSchool: this.form.graduationSchool,
-            enrollProvince: this.form.adProvince.length > 0 ? this.form.adProvince[0] : '',
-            enrollCity: this.form.adProvince.length > 0 ? this.form.adProvince[1] : '',
+            // enrollProvince: this.form.adProvince.length > 0 ? this.form.adProvince[0] : '',
+            // enrollCity: this.form.adProvince.length > 0 ? this.form.adProvince[1] : '',
             masterName: this.form.bzrName,
             masterPhone: this.form.bzrPhone,
             postalCode: this.form.postalCode,
