@@ -217,11 +217,11 @@
     },
     created() {
       this.isMiniprogram = false;
-      wx.miniProgram.getEnv(res => {
-        if (res.miniprogram) {
-          this.isMiniprogram = true;
-        }
-      });
+      // wx.miniProgram.getEnv(res => {
+      //   if (res.miniprogram) {
+      //     this.isMiniprogram = true;
+      //   }
+      // });
       this.initAppServer();
     },
     methods: {
@@ -316,9 +316,9 @@
         this.$axios.post(common.enroll_wx_pay_item_pay, params, {loading: false}).then(res => {
           if (res.data.code === 200){
             let params = qs.stringify(res.data.data);
-            wx.miniProgram.navigateTo({
-              url: '/pages/wxpay/wxpay?' + params,
-            })
+            // wx.miniProgram.navigateTo({
+            //   url: '/pages/wxpay/wxpay?' + params,
+            // })
           }else {
             MessageError(res.data.desc);
           }
