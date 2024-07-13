@@ -286,11 +286,11 @@
     },
     created() {
       this.isMiniprogram = false;
-      // wx.miniProgram.getEnv(res => {
-      //   if (res.miniprogram) {
-      //     this.isMiniprogram = true;
-      //   }
-      // });
+      wx.miniProgram.getEnv(res => {
+        if (res.miniprogram) {
+          this.isMiniprogram = true;
+        }
+      });
       this.active = this.$route.query.activeType ? this.$route.query.activeType : 6;
       if (this.$route.query.sessionId){
         this.initAppConfig();
