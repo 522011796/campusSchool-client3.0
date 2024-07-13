@@ -1654,9 +1654,9 @@
             this.channelDetailHolder = '请输入机构名称';
           }else if (value == "辅导机构"){
             this.channelDetailHolder = '请输入机构名称';
-          }else if (value == "学校推荐"){
+          }else if (value == "老师推荐"){
             this.channelDetailHolder = '请输入老师姓名';
-          }else if (value == "报考机构"){
+          }else if (value == "教培机构"){
             this.channelDetailHolder = '请输入机构名称';
           }else {
             this.channelDetailHolder = '请输入信息';
@@ -1667,7 +1667,7 @@
         this.form.channelType = event;
         this.form.channelDes = des ? des : '';
         this.channelTypeValue = value;
-        if (value == '教培机构' || value == '学校推荐' || value == '其他渠道' || value == '其他'){
+        if (value == '教培机构' || value == '老师推荐' || value == '其他渠道' || value == '其他'){
           this.channelType = true;
         }else {
           this.channelType = false;
@@ -1823,7 +1823,7 @@
         this.$refs['form'].validate((valid) => {
           if (valid) {
             let url = common.server_enroll_app_student_update;
-            if (this.channelTypeValue == '教培机构' || this.channelTypeValue == '学校推荐' || this.channelTypeValue == '其他渠道' || this.channelTypeValue == '其他'){
+            if (this.channelTypeValue == '教培机构' || this.channelTypeValue == '老师推荐' || this.channelTypeValue == '其他渠道' || this.channelTypeValue == '其他'){
               if (this.form.channelDes == ''){
                 MessageWarning("请输入渠道信息");
                 return;

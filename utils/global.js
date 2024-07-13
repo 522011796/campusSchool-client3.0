@@ -423,7 +423,7 @@ const filterAccountType = [
 
 const  filterChannelType = [
   { text: "教培机构", value: '教培机构' ,label: '教培机构'},
-  { text: "学校推荐", value: '学校推荐' ,label: '学校推荐'},
+  { text: "老师推荐", value: '老师推荐' ,label: '老师推荐'},
   { text: "线下渠道", value: '线下渠道' ,label: '线下渠道',children:[
       {text: "家长、同学或朋友推荐", value: '家长、同学或朋友推荐' ,label: '家长、同学或朋友推荐'},
       {text: "我院学生推荐", value: '我院学生推荐' ,label: '我院学生推荐'},
@@ -452,7 +452,7 @@ const filterChannelTypePop = [
       {text: "", value: '' ,label: ''}
     ]
   },
-  { text: "学校推荐", value: '学校推荐' ,label: '学校推荐',children:[
+  { text: "老师推荐", value: '老师推荐' ,label: '老师推荐',children:[
       {text: "", value: '' ,label: ''}
     ]
   },
