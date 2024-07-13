@@ -3,7 +3,8 @@
     <div :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' " :style="{height: navHeight+'px'}"></div>
     <div class="header-title-block" :class="loginUserAppType == 4 ? 'bg-app-success_teacher' : 'bg-app-success' ">
       <van-col span="4">
-        <div class="text-left padding-lr-10 color-white" v-if="!isMiniprogram && globalAppShow && globalAppShow != ''">
+<!--        <div class="text-left padding-lr-10 color-white" v-if="!isMiniprogram && globalAppShow && globalAppShow != ''">-->
+        <div class="text-left padding-lr-10 color-white" v-if="globalAppShow && globalAppShow != ''">
             <span class="font-bold font-size-14" @click="returnIndex">
               <i class="fa fa-chevron-left"></i>
               {{$t("返回")}}
@@ -285,7 +286,7 @@
 
     },
     created() {
-      this.isMiniprogram = false;
+      //this.isMiniprogram = false;
       // wx.miniProgram.getEnv(res => {
       //   if (res.miniprogram) {
       //     this.isMiniprogram = true;

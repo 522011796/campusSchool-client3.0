@@ -40,8 +40,6 @@ export { default as AuditStatusButton } from '../../components/utils/button/Audi
 export { default as DormAttendStatusButtonGroup } from '../../components/utils/button/DormAttendStatusButtonGroup.vue'
 export { default as TabGroupButton } from '../../components/utils/button/TabGroupButton.vue'
 export { default as TimeoutButton } from '../../components/utils/button/TimeoutButton.vue'
-export { default as MyHeadImg } from '../../components/utils/common/MyHeadImg.vue'
-export { default as MyViewImg } from '../../components/utils/common/MyViewImg.vue'
 export { default as AuditButton } from '../../components/utils/auditDetail/AuditButton.vue'
 export { default as CreditDetail } from '../../components/utils/auditDetail/CreditDetail.vue'
 export { default as FaceDetail } from '../../components/utils/auditDetail/FaceDetail.vue'
@@ -51,16 +49,13 @@ export { default as StudoorDetail } from '../../components/utils/auditDetail/Stu
 export { default as StuleaveDetail } from '../../components/utils/auditDetail/StuleaveDetail.vue'
 export { default as TerdoorDetail } from '../../components/utils/auditDetail/TerdoorDetail.vue'
 export { default as TerleaveDetail } from '../../components/utils/auditDetail/TerleaveDetail.vue'
+export { default as MyHeadImg } from '../../components/utils/common/MyHeadImg.vue'
+export { default as MyViewImg } from '../../components/utils/common/MyViewImg.vue'
 export { default as DialogNormal } from '../../components/utils/dialog/DialogNormal.vue'
 export { default as DrawerLayoutRight } from '../../components/utils/dialog/DrawerLayoutRight.vue'
 export { default as DrawerRight } from '../../components/utils/dialog/DrawerRight.vue'
 export { default as MyNormalDialog } from '../../components/utils/dialog/MyNormalDialog.vue'
 export { default as MyCascader } from '../../components/utils/select/MyCascader.vue'
-export { default as FormSystemDetail } from '../../components/utils/formDetail/FormSystemDetail.vue'
-export { default as FormSystemH5NormalDetail } from '../../components/utils/formDetail/FormSystemH5NormalDetail.vue'
-export { default as FormSystemNormalDetail } from '../../components/utils/formDetail/FormSystemNormalDetail.vue'
-export { default as FormSystemOrderDetail } from '../../components/utils/formDetail/FormSystemOrderDetail.vue'
-export { default as FormSystemTagsDetail } from '../../components/utils/formDetail/FormSystemTagsDetail.vue'
 export { default as SystemFormBzbx } from '../../components/utils/serverForm/SystemFormBZBX.vue'
 export { default as SystemFormCght } from '../../components/utils/serverForm/SystemFormCGHT.vue'
 export { default as SystemFormDgdk } from '../../components/utils/serverForm/SystemFormDGDK.vue'
@@ -93,6 +88,11 @@ export { default as MyFlowCondition } from '../../components/utils/status/MyFlow
 export { default as MyFlowProcess } from '../../components/utils/status/MyFlowProcess.vue'
 export { default as MyFlowProcessList } from '../../components/utils/status/MyFlowProcessList.vue'
 export { default as MyFlowType } from '../../components/utils/status/MyFlowType.vue'
+export { default as FormSystemDetail } from '../../components/utils/formDetail/FormSystemDetail.vue'
+export { default as FormSystemH5NormalDetail } from '../../components/utils/formDetail/FormSystemH5NormalDetail.vue'
+export { default as FormSystemNormalDetail } from '../../components/utils/formDetail/FormSystemNormalDetail.vue'
+export { default as FormSystemOrderDetail } from '../../components/utils/formDetail/FormSystemOrderDetail.vue'
+export { default as FormSystemTagsDetail } from '../../components/utils/formDetail/FormSystemTagsDetail.vue'
 export { default as QuillBlock } from '../../components/utils/upload/QuillBlock.vue'
 export { default as UploadSquare } from '../../components/utils/upload/UploadSquare.vue'
 
@@ -138,8 +138,6 @@ export const LazyAuditStatusButton = import('../../components/utils/button/Audit
 export const LazyDormAttendStatusButtonGroup = import('../../components/utils/button/DormAttendStatusButtonGroup.vue' /* webpackChunkName: "components/utils/button/DormAttendStatusButtonGroup" */).then(c => c.default || c)
 export const LazyTabGroupButton = import('../../components/utils/button/TabGroupButton.vue' /* webpackChunkName: "components/utils/button/TabGroupButton" */).then(c => c.default || c)
 export const LazyTimeoutButton = import('../../components/utils/button/TimeoutButton.vue' /* webpackChunkName: "components/utils/button/TimeoutButton" */).then(c => c.default || c)
-export const LazyMyHeadImg = import('../../components/utils/common/MyHeadImg.vue' /* webpackChunkName: "components/utils/common/MyHeadImg" */).then(c => c.default || c)
-export const LazyMyViewImg = import('../../components/utils/common/MyViewImg.vue' /* webpackChunkName: "components/utils/common/MyViewImg" */).then(c => c.default || c)
 export const LazyAuditButton = import('../../components/utils/auditDetail/AuditButton.vue' /* webpackChunkName: "components/utils/auditDetail/AuditButton" */).then(c => c.default || c)
 export const LazyCreditDetail = import('../../components/utils/auditDetail/CreditDetail.vue' /* webpackChunkName: "components/utils/auditDetail/CreditDetail" */).then(c => c.default || c)
 export const LazyFaceDetail = import('../../components/utils/auditDetail/FaceDetail.vue' /* webpackChunkName: "components/utils/auditDetail/FaceDetail" */).then(c => c.default || c)
@@ -149,16 +147,13 @@ export const LazyStudoorDetail = import('../../components/utils/auditDetail/Stud
 export const LazyStuleaveDetail = import('../../components/utils/auditDetail/StuleaveDetail.vue' /* webpackChunkName: "components/utils/auditDetail/StuleaveDetail" */).then(c => c.default || c)
 export const LazyTerdoorDetail = import('../../components/utils/auditDetail/TerdoorDetail.vue' /* webpackChunkName: "components/utils/auditDetail/TerdoorDetail" */).then(c => c.default || c)
 export const LazyTerleaveDetail = import('../../components/utils/auditDetail/TerleaveDetail.vue' /* webpackChunkName: "components/utils/auditDetail/TerleaveDetail" */).then(c => c.default || c)
+export const LazyMyHeadImg = import('../../components/utils/common/MyHeadImg.vue' /* webpackChunkName: "components/utils/common/MyHeadImg" */).then(c => c.default || c)
+export const LazyMyViewImg = import('../../components/utils/common/MyViewImg.vue' /* webpackChunkName: "components/utils/common/MyViewImg" */).then(c => c.default || c)
 export const LazyDialogNormal = import('../../components/utils/dialog/DialogNormal.vue' /* webpackChunkName: "components/utils/dialog/DialogNormal" */).then(c => c.default || c)
 export const LazyDrawerLayoutRight = import('../../components/utils/dialog/DrawerLayoutRight.vue' /* webpackChunkName: "components/utils/dialog/DrawerLayoutRight" */).then(c => c.default || c)
 export const LazyDrawerRight = import('../../components/utils/dialog/DrawerRight.vue' /* webpackChunkName: "components/utils/dialog/DrawerRight" */).then(c => c.default || c)
 export const LazyMyNormalDialog = import('../../components/utils/dialog/MyNormalDialog.vue' /* webpackChunkName: "components/utils/dialog/MyNormalDialog" */).then(c => c.default || c)
 export const LazyMyCascader = import('../../components/utils/select/MyCascader.vue' /* webpackChunkName: "components/utils/select/MyCascader" */).then(c => c.default || c)
-export const LazyFormSystemDetail = import('../../components/utils/formDetail/FormSystemDetail.vue' /* webpackChunkName: "components/utils/formDetail/FormSystemDetail" */).then(c => c.default || c)
-export const LazyFormSystemH5NormalDetail = import('../../components/utils/formDetail/FormSystemH5NormalDetail.vue' /* webpackChunkName: "components/utils/formDetail/FormSystemH5NormalDetail" */).then(c => c.default || c)
-export const LazyFormSystemNormalDetail = import('../../components/utils/formDetail/FormSystemNormalDetail.vue' /* webpackChunkName: "components/utils/formDetail/FormSystemNormalDetail" */).then(c => c.default || c)
-export const LazyFormSystemOrderDetail = import('../../components/utils/formDetail/FormSystemOrderDetail.vue' /* webpackChunkName: "components/utils/formDetail/FormSystemOrderDetail" */).then(c => c.default || c)
-export const LazyFormSystemTagsDetail = import('../../components/utils/formDetail/FormSystemTagsDetail.vue' /* webpackChunkName: "components/utils/formDetail/FormSystemTagsDetail" */).then(c => c.default || c)
 export const LazySystemFormBzbx = import('../../components/utils/serverForm/SystemFormBZBX.vue' /* webpackChunkName: "components/utils/serverForm/SystemFormBZBX" */).then(c => c.default || c)
 export const LazySystemFormCght = import('../../components/utils/serverForm/SystemFormCGHT.vue' /* webpackChunkName: "components/utils/serverForm/SystemFormCGHT" */).then(c => c.default || c)
 export const LazySystemFormDgdk = import('../../components/utils/serverForm/SystemFormDGDK.vue' /* webpackChunkName: "components/utils/serverForm/SystemFormDGDK" */).then(c => c.default || c)
@@ -191,5 +186,10 @@ export const LazyMyFlowCondition = import('../../components/utils/status/MyFlowC
 export const LazyMyFlowProcess = import('../../components/utils/status/MyFlowProcess.vue' /* webpackChunkName: "components/utils/status/MyFlowProcess" */).then(c => c.default || c)
 export const LazyMyFlowProcessList = import('../../components/utils/status/MyFlowProcessList.vue' /* webpackChunkName: "components/utils/status/MyFlowProcessList" */).then(c => c.default || c)
 export const LazyMyFlowType = import('../../components/utils/status/MyFlowType.vue' /* webpackChunkName: "components/utils/status/MyFlowType" */).then(c => c.default || c)
+export const LazyFormSystemDetail = import('../../components/utils/formDetail/FormSystemDetail.vue' /* webpackChunkName: "components/utils/formDetail/FormSystemDetail" */).then(c => c.default || c)
+export const LazyFormSystemH5NormalDetail = import('../../components/utils/formDetail/FormSystemH5NormalDetail.vue' /* webpackChunkName: "components/utils/formDetail/FormSystemH5NormalDetail" */).then(c => c.default || c)
+export const LazyFormSystemNormalDetail = import('../../components/utils/formDetail/FormSystemNormalDetail.vue' /* webpackChunkName: "components/utils/formDetail/FormSystemNormalDetail" */).then(c => c.default || c)
+export const LazyFormSystemOrderDetail = import('../../components/utils/formDetail/FormSystemOrderDetail.vue' /* webpackChunkName: "components/utils/formDetail/FormSystemOrderDetail" */).then(c => c.default || c)
+export const LazyFormSystemTagsDetail = import('../../components/utils/formDetail/FormSystemTagsDetail.vue' /* webpackChunkName: "components/utils/formDetail/FormSystemTagsDetail" */).then(c => c.default || c)
 export const LazyQuillBlock = import('../../components/utils/upload/QuillBlock.vue' /* webpackChunkName: "components/utils/upload/QuillBlock" */).then(c => c.default || c)
 export const LazyUploadSquare = import('../../components/utils/upload/UploadSquare.vue' /* webpackChunkName: "components/utils/upload/UploadSquare" */).then(c => c.default || c)

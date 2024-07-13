@@ -310,7 +310,7 @@
     <van-popup round v-model="showTopOprPicker" position="bottom"  :style="{ height: '35%' }">
       <div class="padding-lr-30 padding-top-20">
         <el-row>
-          <el-col :span="8" v-for="(item, index) in serverAppList" :key="index">
+          <el-col :span="8" v-for="(item, index) in serverAppList" :key="index">npm
             <div class="text-center form-type" @click="selAppFun(index+1, item.form_code)">
                 <img
                   src="~static/img/pick_write_file_icon.png"

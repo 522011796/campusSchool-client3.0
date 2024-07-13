@@ -251,18 +251,6 @@
   "LazyTimeoutButton": {
     "description": "Auto imported from components/utils/button/TimeoutButton.vue"
   },
-  "MyHeadImg": {
-    "description": "Auto imported from components/utils/common/MyHeadImg.vue"
-  },
-  "LazyMyHeadImg": {
-    "description": "Auto imported from components/utils/common/MyHeadImg.vue"
-  },
-  "MyViewImg": {
-    "description": "Auto imported from components/utils/common/MyViewImg.vue"
-  },
-  "LazyMyViewImg": {
-    "description": "Auto imported from components/utils/common/MyViewImg.vue"
-  },
   "AuditButton": {
     "description": "Auto imported from components/utils/auditDetail/AuditButton.vue"
   },
@@ -317,6 +305,18 @@
   "LazyTerleaveDetail": {
     "description": "Auto imported from components/utils/auditDetail/TerleaveDetail.vue"
   },
+  "MyHeadImg": {
+    "description": "Auto imported from components/utils/common/MyHeadImg.vue"
+  },
+  "LazyMyHeadImg": {
+    "description": "Auto imported from components/utils/common/MyHeadImg.vue"
+  },
+  "MyViewImg": {
+    "description": "Auto imported from components/utils/common/MyViewImg.vue"
+  },
+  "LazyMyViewImg": {
+    "description": "Auto imported from components/utils/common/MyViewImg.vue"
+  },
   "DialogNormal": {
     "description": "Auto imported from components/utils/dialog/DialogNormal.vue"
   },
@@ -346,36 +346,6 @@
   },
   "LazyMyCascader": {
     "description": "Auto imported from components/utils/select/MyCascader.vue"
-  },
-  "FormSystemDetail": {
-    "description": "Auto imported from components/utils/formDetail/FormSystemDetail.vue"
-  },
-  "LazyFormSystemDetail": {
-    "description": "Auto imported from components/utils/formDetail/FormSystemDetail.vue"
-  },
-  "FormSystemH5NormalDetail": {
-    "description": "Auto imported from components/utils/formDetail/FormSystemH5NormalDetail.vue"
-  },
-  "LazyFormSystemH5NormalDetail": {
-    "description": "Auto imported from components/utils/formDetail/FormSystemH5NormalDetail.vue"
-  },
-  "FormSystemNormalDetail": {
-    "description": "Auto imported from components/utils/formDetail/FormSystemNormalDetail.vue"
-  },
-  "LazyFormSystemNormalDetail": {
-    "description": "Auto imported from components/utils/formDetail/FormSystemNormalDetail.vue"
-  },
-  "FormSystemOrderDetail": {
-    "description": "Auto imported from components/utils/formDetail/FormSystemOrderDetail.vue"
-  },
-  "LazyFormSystemOrderDetail": {
-    "description": "Auto imported from components/utils/formDetail/FormSystemOrderDetail.vue"
-  },
-  "FormSystemTagsDetail": {
-    "description": "Auto imported from components/utils/formDetail/FormSystemTagsDetail.vue"
-  },
-  "LazyFormSystemTagsDetail": {
-    "description": "Auto imported from components/utils/formDetail/FormSystemTagsDetail.vue"
   },
   "SystemFormBzbx": {
     "description": "Auto imported from components/utils/serverForm/SystemFormBZBX.vue"
@@ -568,6 +538,36 @@
   },
   "LazyMyFlowType": {
     "description": "Auto imported from components/utils/status/MyFlowType.vue"
+  },
+  "FormSystemDetail": {
+    "description": "Auto imported from components/utils/formDetail/FormSystemDetail.vue"
+  },
+  "LazyFormSystemDetail": {
+    "description": "Auto imported from components/utils/formDetail/FormSystemDetail.vue"
+  },
+  "FormSystemH5NormalDetail": {
+    "description": "Auto imported from components/utils/formDetail/FormSystemH5NormalDetail.vue"
+  },
+  "LazyFormSystemH5NormalDetail": {
+    "description": "Auto imported from components/utils/formDetail/FormSystemH5NormalDetail.vue"
+  },
+  "FormSystemNormalDetail": {
+    "description": "Auto imported from components/utils/formDetail/FormSystemNormalDetail.vue"
+  },
+  "LazyFormSystemNormalDetail": {
+    "description": "Auto imported from components/utils/formDetail/FormSystemNormalDetail.vue"
+  },
+  "FormSystemOrderDetail": {
+    "description": "Auto imported from components/utils/formDetail/FormSystemOrderDetail.vue"
+  },
+  "LazyFormSystemOrderDetail": {
+    "description": "Auto imported from components/utils/formDetail/FormSystemOrderDetail.vue"
+  },
+  "FormSystemTagsDetail": {
+    "description": "Auto imported from components/utils/formDetail/FormSystemTagsDetail.vue"
+  },
+  "LazyFormSystemTagsDetail": {
+    "description": "Auto imported from components/utils/formDetail/FormSystemTagsDetail.vue"
   },
   "QuillBlock": {
     "description": "Auto imported from components/utils/upload/QuillBlock.vue"
